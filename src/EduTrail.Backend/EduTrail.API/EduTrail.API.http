@@ -1,0 +1,6 @@
+@EduTrail.API_HostAddress = http://localhost:5232
+
+GET {{EduTrail.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

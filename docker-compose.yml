@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  database-edu-trail:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: edu-trail-sql
+    environment:
+      SA_PASSWORD: "EduTrail123!"
+      MSSQL_DB: "EduTrailDb"  
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+volumes:
+  sql_data:
