@@ -72,7 +72,14 @@ Configure Application to Run on Debug mode
 DataMigration Configuration SetUP
 
 Middleware
-Exception Handle
+Exception Handle //done
+Middleware order
+app.UseGlobalExceptionHandler();   // 1️⃣ Catch everything
+app.UseHttpsRedirection();         // 2️⃣ Security
+app.UseAuthentication();           // 3️⃣ Auth
+app.UseAuthorization();            // 4️⃣ Permissions
+app.MapControllers();              // 5️⃣ Endpoints
+
 
 ---
 

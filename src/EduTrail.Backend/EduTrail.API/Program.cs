@@ -2,6 +2,7 @@ using EduTrail.Infrastructure;
 using EduTrail.Application;
 using EduTrail.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using EduTrail.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
@@ -9,6 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
 
 static void UpdateDatabase(IApplicationBuilder app)
 {
@@ -29,8 +31,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseGlobalExceptionHandler();
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.Run();
 
