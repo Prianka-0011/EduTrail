@@ -61,11 +61,18 @@ dotnet add reference ../Edutrail.Domain/Edutrail.Domain.csproj
 
 
 
-# Infrastructure → Domain & Application
+# Infrastructure → Domain & Applicationv
 cd ../Edutrail.Infrastructure
 dotnet add reference ../Edutrail.Domain/Edutrail.Domain.csproj
 
+Configure Application to Run on Debug mode
+.vscode/launch.json
+.vscode/tasks.json
 
+DataMigration Configuration SetUP
+
+Middleware
+Exception Handle
 
 ---
 
