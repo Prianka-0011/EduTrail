@@ -292,6 +292,9 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+              "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj": {
+                "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj"
+              },
               "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj": {
                 "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj"
               }

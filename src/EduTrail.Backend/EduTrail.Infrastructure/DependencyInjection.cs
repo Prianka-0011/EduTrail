@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EduTrail.Infrastructure.Data;
+using EduTrail.Infrastructure.Repositories;
+using EduTrail.Application.Tests;
 
 namespace EduTrail.Infrastructure
 {
@@ -71,7 +73,7 @@ namespace EduTrail.Infrastructure
 
             // Register other services, repositories, etc.
             // services.AddScoped<IUserRepository, UserRepository>();
-            
+            services.AddScoped<ITestRepository, TestRepository>();
 
             return services;
         }

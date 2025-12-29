@@ -2,6 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using System.Reflection;
 using AutoMapper;
+using EduTrail.Application.Tests;
+
 
 namespace EduTrail.Application
 {
@@ -15,9 +17,9 @@ namespace EduTrail.Application
             });
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
+    
             // services.AddScoped<IApplicationSettings, ApplicationSettings>();
-
+            
             return services;
         }
     }

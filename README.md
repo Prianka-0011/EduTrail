@@ -80,7 +80,7 @@ app.UseAuthentication();           // 3️⃣ Auth
 app.UseAuthorization();            // 4️⃣ Permissions
 app.MapControllers();              // 5️⃣ Endpoints
 
-
+Add Audit trail for entity.
 ---
 
 ## **Frontend Project Setup (Commands)**

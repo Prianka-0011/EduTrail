@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Edutrail.Domain\Edutrail.Domain.csproj" />
+    <ProjectReference Include="..\Edutrail.Application\Edutrail.Application.csproj" />
   </ItemGroup>
 
 </Project>
