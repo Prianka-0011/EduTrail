@@ -15,9 +15,9 @@ namespace EduTrail.Domain.Entities
         public Guid TermId { get; set; }
         public Term Term { get; set; }
 
-        [Required]
-        public Guid InstructorId { get; set; }
-        public User Instructor { get; set; }
+      
+        public Guid? InstructorId { get; set; }
+        public User? Instructor { get; set; }
         public ICollection<Assessment> Assessments { get; set; }
         public ICollection<Enrollment> Enrollments { get; set; }
         public DateTimeOffset? CreatedDate { get; set; }

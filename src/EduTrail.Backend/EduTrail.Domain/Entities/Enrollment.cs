@@ -12,13 +12,12 @@ namespace EduTrail.Domain.Entities
         public Guid CourseOfferingId { get; set; }
         public CourseOffering CourseOffering { get; set; }
 
-        [Required]
-        public Guid StudentId { get; set; }
-        public User Student { get; set; }
+       
+        public Guid? StudentId { get; set; }
+        public User? Student { get; set; }
 
         public DateTimeOffset EnrolledDate { get; set; } 
 
-        // Optional statuses (can extend later)
         public bool IsActive { get; set; } = true;
         // Audit fields
         

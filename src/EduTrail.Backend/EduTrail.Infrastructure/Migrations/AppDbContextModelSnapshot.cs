@@ -31,22 +31,25 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CourseOfferingId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("DueDate")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("OpenDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("OpenDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -56,12 +59,14 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("CourseOfferingId");
 
                     b.ToTable("Assessments");
                 });
@@ -85,14 +90,20 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Institute")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("TimeZone")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -111,10 +122,10 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid>("InstructorId")
+                    b.Property<Guid?>("InstructorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TermId")
@@ -123,8 +134,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -135,6 +146,45 @@ namespace EduTrail.Infrastructure.Migrations
                     b.HasIndex("TermId");
 
                     b.ToTable("CourseOfferings");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Enrollment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CourseOfferingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("EnrolledDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseOfferingId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Enrollments");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
@@ -149,8 +199,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid>("QuestionTypeId")
                         .HasColumnType("uniqueidentifier");
@@ -167,8 +217,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -195,8 +245,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("GeneratedParametersJson")
                         .IsRequired()
@@ -217,8 +267,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -239,8 +289,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -258,8 +308,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -275,8 +325,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -291,8 +341,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -308,8 +358,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid>("QuestionAttemptId")
                         .HasColumnType("uniqueidentifier");
@@ -321,14 +371,14 @@ namespace EduTrail.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("SubmittedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("SubmittedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -346,25 +396,25 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("EndDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("StartDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -383,8 +433,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -397,8 +447,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -414,8 +464,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -451,8 +501,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -512,10 +562,14 @@ namespace EduTrail.Infrastructure.Migrations
             modelBuilder.Entity("EduTrail.Domain.Entities.Assessment", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Course", "Course")
-                        .WithMany("Assessments")
+                        .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("EduTrail.Domain.Entities.CourseOffering", null)
+                        .WithMany("Assessments")
+                        .HasForeignKey("CourseOfferingId");
 
                     b.Navigation("Course");
                 });
@@ -530,9 +584,7 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasOne("EduTrail.Domain.Entities.User", "Instructor")
                         .WithMany()
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InstructorId");
 
                     b.HasOne("EduTrail.Domain.Entities.Term", "Term")
                         .WithMany()
@@ -545,6 +597,23 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("Instructor");
 
                     b.Navigation("Term");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Enrollment", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.CourseOffering", "CourseOffering")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("CourseOfferingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduTrail.Domain.Entities.User", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("CourseOffering");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
@@ -599,9 +668,14 @@ namespace EduTrail.Infrastructure.Migrations
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Course", b =>
                 {
+                    b.Navigation("CourseOfferings");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.CourseOffering", b =>
+                {
                     b.Navigation("Assessments");
 
-                    b.Navigation("CourseOfferings");
+                    b.Navigation("Enrollments");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.QuestionType", b =>

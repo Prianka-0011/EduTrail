@@ -37,9 +37,11 @@ namespace EduTrail.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CourseCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CourseName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TimeZone = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    Institute = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -59,9 +61,9 @@ namespace EduTrail.Infrastructure.Migrations
                     CorrectAnswerJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StudentAnswerJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Score = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -78,9 +80,9 @@ namespace EduTrail.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -95,9 +97,9 @@ namespace EduTrail.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -112,11 +114,11 @@ namespace EduTrail.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    StartDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    EndDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -131,9 +133,9 @@ namespace EduTrail.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -153,40 +155,14 @@ namespace EduTrail.Infrastructure.Migrations
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordSalt = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Assessments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OpenDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Assessments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Assessments_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -197,10 +173,10 @@ namespace EduTrail.Infrastructure.Migrations
                     QuestionAttemptId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StudentAnswerJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Score = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SubmittedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SubmittedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -221,10 +197,10 @@ namespace EduTrail.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TermId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    InstructorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    InstructorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -246,8 +222,7 @@ namespace EduTrail.Infrastructure.Migrations
                         name: "FK_CourseOfferings_Users_InstructorId",
                         column: x => x.InstructorId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -275,6 +250,68 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Assessments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OpenDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    DueDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CourseOfferingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assessments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Assessments_CourseOfferings_CourseOfferingId",
+                        column: x => x.CourseOfferingId,
+                        principalTable: "CourseOfferings",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Assessments_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Enrollments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CourseOfferingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EnrolledDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Enrollments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Enrollments_CourseOfferings_CourseOfferingId",
+                        column: x => x.CourseOfferingId,
+                        principalTable: "CourseOfferings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Enrollments_Users_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Questions",
                 columns: table => new
                 {
@@ -283,9 +320,9 @@ namespace EduTrail.Infrastructure.Migrations
                     Template = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuestionTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AssessmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -311,6 +348,11 @@ namespace EduTrail.Infrastructure.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Assessments_CourseOfferingId",
+                table: "Assessments",
+                column: "CourseOfferingId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CourseOfferings_CourseId",
                 table: "CourseOfferings",
                 column: "CourseId");
@@ -324,6 +366,16 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "IX_CourseOfferings_TermId",
                 table: "CourseOfferings",
                 column: "TermId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_CourseOfferingId",
+                table: "Enrollments",
+                column: "CourseOfferingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_StudentId",
+                table: "Enrollments",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_AssessmentId",
@@ -353,7 +405,7 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "AuditEntries");
 
             migrationBuilder.DropTable(
-                name: "CourseOfferings");
+                name: "Enrollments");
 
             migrationBuilder.DropTable(
                 name: "Questions");
@@ -368,9 +420,6 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Tests");
 
             migrationBuilder.DropTable(
-                name: "Term");
-
-            migrationBuilder.DropTable(
                 name: "Assessments");
 
             migrationBuilder.DropTable(
@@ -380,13 +429,19 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Role");
 
             migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
                 name: "QuestionAttempt");
 
             migrationBuilder.DropTable(
+                name: "CourseOfferings");
+
+            migrationBuilder.DropTable(
                 name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "Term");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

@@ -4,12 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 using EduTrail.Infrastructure.Data;
 using EduTrail.Infrastructure.Repositories;
 using EduTrail.Application.Tests;
+using EduTrail.Application.Courses;
 
 namespace EduTrail.Infrastructure
 {
     public static class DependencyInjection
     {
-        private static string dbHost => 
+        private static string dbHost =>
             Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"
                 ? "edu-trail-sql"
                 : "localhost";
@@ -74,6 +75,7 @@ namespace EduTrail.Infrastructure
             // Register other services, repositories, etc.
             // services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITestRepository, TestRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
 
             return services;
         }
