@@ -1,0 +1,64 @@
+<mat-drawer-container class="admin-container" autosize>
+
+  <!-- Sidebar / Drawer -->
+  <mat-drawer #drawer mode="side" opened class="sidebar" [ngClass]="{ collapsed: isCollapsed }">
+    <div class="sidebar-header">
+      <h3>{{ isCollapsed ? 'ET' : 'EduTrail' }}</h3>
+    </div>
+
+    <mat-nav-list>
+      <ng-container *ngFor="let item of menu">
+
+        <mat-list-item class="nav-item" *ngIf="!item.children" [routerLink]="[item.route]" routerLinkActive="active">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span class="label" [class.hidden]="isCollapsed">{{ item.label }}</span>
+        </mat-list-item>
+
+        <mat-list-item class="nav-item parent-item" *ngIf="item.children" [class.active-parent]="item.isActiveParent">
+          <div class="parent-content" (click)="toggleSubmenu(item)">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span class="label" [class.hidden]="isCollapsed">{{ item.label }}</span>
+            <span class="spacer"></span>
+            <mat-icon *ngIf="!isCollapsed">
+              {{ item.isOpen ? 'expand_more' : 'chevron_right' }}
+            </mat-icon>
+          </div>
+        </mat-list-item>
+
+        <div class="sub-menu" [class.open]="item.isOpen && !isCollapsed" *ngIf="item.children && !isCollapsed">
+          <div class="submenu-bar"></div>
+          <mat-list-item class="sub-item" *ngFor="let child of item.children" [routerLink]="[child.route]"
+            routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [class.active]="child.isActive">
+           
+              <mat-icon>{{ child.icon }}</mat-icon>
+              <span>{{ child.label }}</span>
+          </mat-list-item>
+        </div>
+
+      </ng-container>
+    </mat-nav-list>
+
+  </mat-drawer>
+
+  <!-- Main content -->
+  <mat-drawer-content class="main-content">
+    <mat-toolbar color="primary" class="topbar">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="toolbar-title">Admin Panel</span>
+      <span class="spacer"></span>
+      <button mat-icon-button>
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+
+</mat-drawer-container>

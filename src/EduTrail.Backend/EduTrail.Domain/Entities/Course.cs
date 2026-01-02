@@ -14,7 +14,7 @@ namespace EduTrail.Domain.Entities
         [Required]
         [MaxLength(150)]
         public string CourseName { get; set; }
-        public DateTimeOffset? TimeZone { get; set; }
+        public string? TimeZone { get; set; }
         public string? Institute { get; set; }
 
         // Audit fields

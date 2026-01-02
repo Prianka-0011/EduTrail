@@ -96,8 +96,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<string>("Institute")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset?>("TimeZone")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<string>("TimeZone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");

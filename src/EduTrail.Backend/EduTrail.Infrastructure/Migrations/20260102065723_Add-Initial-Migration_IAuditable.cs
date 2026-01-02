@@ -37,7 +37,7 @@ namespace EduTrail.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CourseCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CourseName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    TimeZone = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    TimeZone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Institute = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),

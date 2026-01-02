@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <SpaRoot>..\..\WebSpa\</SpaRoot>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,5 +24,14 @@
     <ProjectReference Include="..\EduTrail.Application\EduTrail.Application.csproj" />
     <ProjectReference Include="..\EduTrail.Infrastructure\EduTrail.Infrastructure.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <!-- Don't publish SPA source, only dist -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Remove="$(SpaRoot)**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    <!-- Ensure dist folder is copied -->
+    <Content Include="..\..\WebSpa\dist\web-spa\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

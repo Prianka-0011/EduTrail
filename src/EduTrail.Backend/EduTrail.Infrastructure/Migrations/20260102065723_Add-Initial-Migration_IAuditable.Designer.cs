@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251229075000_Add-Initial-Migration_IAuditable")]
+    [Migration("20260102065723_Add-Initial-Migration_IAuditable")]
     partial class AddInitialMigration_IAuditable
     {
         /// <inheritdoc />
@@ -99,8 +99,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<string>("Institute")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset?>("TimeZone")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<string>("TimeZone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
