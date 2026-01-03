@@ -13,4 +13,7 @@ export class CourseService {
   getCourses() : Observable<ICourse[]> {
     return this.http.get<ICourse[]>(this.baseUrl);
   }
+  createCourse(course: ICourse) : Observable<ICourse> {
+    return this.http.post<ICourse>(this.baseUrl, course);
+  }
 }

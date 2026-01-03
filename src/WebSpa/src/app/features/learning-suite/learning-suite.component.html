@@ -1,6 +1,87 @@
-<mat-drawer-container class="admin-container" autosize>
+<div class="admin-container d-flex">
 
-  <!-- Sidebar / Drawer -->
+  <!-- Sidebar -->
+  <aside class="sidebar d-flex flex-column" [class.collapsed]="isCollapsed">
+    <div class="sidebar-header text-center py-3">
+      <h3>{{ isCollapsed ? 'ET' : 'EduTrail' }}</h3>
+    </div>
+
+    <ul class="nav flex-column px-2">
+
+      <ng-container *ngFor="let item of menu">
+
+        <!-- Single item -->
+        <li class="nav-item" *ngIf="!item.children">
+          <a class="nav-link nav-item-link" [routerLink]="item.route" routerLinkActive="active"
+            [attr.title]="isCollapsed ? item.label : null">
+            <i class="bi bi-{{ item.icon }}"></i>
+            <span class="label" *ngIf="!isCollapsed">{{ item.label }}</span>
+          </a>
+        </li>
+
+        <!-- Parent item -->
+        <li class="nav-item parent-item" *ngIf="item.children">
+          <div class="nav-item-link parent-content" [class.active]="item.isOpen" (click)="toggleSubmenu(item)"
+            [attr.title]="isCollapsed ? item.label : null">
+            <i class="bi bi-{{ item.icon }}"></i>
+            <span class="label" *ngIf="!isCollapsed">{{ item.label }}</span>
+            <span class="ms-auto" *ngIf="!isCollapsed">
+              <i class="bi" [ngClass]="item.isOpen ? 'bi-chevron-down' : 'bi-chevron-right'">
+              </i>
+            </span>
+          </div>
+
+          <!-- Sub menu -->
+          <div class="sub-menu" *ngIf="item.isOpen && !isCollapsed">
+            <span class="submenu-bar"></span>
+
+            <a *ngFor="let child of item.children" class="sub-item" [routerLink]="child.route" routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">
+              <i class="bi bi-{{ child.icon }}"></i>
+              <span>{{ child.label }}</span>
+            </a>
+          </div>
+        </li>
+
+      </ng-container>
+
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-content flex-grow-1">
+
+    <!-- Topbar -->
+    <nav class="topbar navbar px-3">
+      <button class="btn btn-light" (click)="toggleSidebar()">
+        <i *ngIf="isCollapsed; else expanded" class="bi bi-chevron-double-right"></i>
+        <ng-template #expanded>
+          <i class="bi bi-chevron-double-left"></i>
+        </ng-template>
+      </button>
+
+      <div class="ms-auto d-flex gap-2">
+        <button class="btn btn-light">
+          <i class="bi bi-bell"></i>
+        </button>
+        <button class="btn btn-light">
+          <i class="bi bi-person-circle"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- <mat-drawer-container class="admin-container" autosize>
+
+
   <mat-drawer #drawer mode="side" opened class="sidebar" [ngClass]="{ collapsed: isCollapsed }">
     <div class="sidebar-header">
       <h3>{{ isCollapsed ? 'ET' : 'EduTrail' }}</h3>
@@ -40,7 +121,7 @@
 
   </mat-drawer>
 
-  <!-- Main content -->
+
   <mat-drawer-content class="main-content">
     <mat-toolbar color="primary" class="topbar">
       <button mat-icon-button (click)="drawer.toggle()">
@@ -61,4 +142,4 @@
     </div>
   </mat-drawer-content>
 
-</mat-drawer-container>
+</mat-drawer-container> -->

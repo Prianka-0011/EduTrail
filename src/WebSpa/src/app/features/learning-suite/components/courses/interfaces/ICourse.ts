@@ -3,4 +3,5 @@ export interface ICourse {
     courseCode: string;
     courseName: string;
     institute: string;
+    timezone: string;
 }

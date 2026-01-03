@@ -1,66 +1,132 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ICourse } from '../interfaces/ICourse';
 import { CourseService } from '../services/course.service';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
+import { CourseCreateOrUpdateComponent } from '../course-create-or-update/course-create-or-update.component';
 
 @Component({
   selector: 'app-course-list',
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule
-  ],
+  standalone: true,
+  imports: [CommonModule, FormsModule, SideDrawerComponent, CourseCreateOrUpdateComponent],
   templateUrl: './course-list.component.html',
   styleUrl: './course-list.component.scss'
 })
-export class CourseListComponent implements OnInit, AfterViewInit {
+export class CourseListComponent implements OnInit {
 
   courses: ICourse[] = [];
-  displayedColumns: string[] = ['courseCode', 'courseName'];
-  dataSource!: MatTableDataSource<ICourse>;
+  filteredCourses: ICourse[] = [];
+  pagedCourses: ICourse[] = [];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  pageSizeOptions = [5, 10, 20];
+  pageSize = 10;
+  currentPage = 1;
+  totalItems = 0;
 
-  constructor(private courseService: CourseService) {}
+  sortColumn: keyof ICourse | '' = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
+  searchText = '';
+  drawerOpen = false;
+
+  openCreateDrawer() {
+    this.drawerOpen = true;
+  }
+
+  closeDrawer() {
+    this.drawerOpen = false;
+  }
+
+  onCourseSaved() {
+    this.closeDrawer();
+    this.getCourses(); // refresh table
+  }
+
+  constructor(private courseService: CourseService) { }
 
   ngOnInit(): void {
     this.getCourses();
   }
 
-  ngAfterViewInit(): void {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
-
   getCourses() {
     this.courseService.getCourses().subscribe({
-      next: (courses) => {
-        this.courses = courses;
-        this.dataSource = new MatTableDataSource(this.courses);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+      next: (data) => {
+        this.courses = data;
+        this.applyFilter();
       },
       error: (err) => console.error(err)
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  applyFilter() {
+    const value = this.searchText.toLowerCase().trim();
+
+    this.filteredCourses = this.courses.filter(c =>
+      c.courseCode.toLowerCase().includes(value) ||
+      c.courseName.toLowerCase().includes(value)
+    );
+
+    this.totalItems = this.filteredCourses.length;
+    this.currentPage = 1;
+
+    this.applySort();
+  }
+
+  applySort(column?: keyof ICourse) {
+    if (column) {
+      if (this.sortColumn === column) {
+        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.sortColumn = column;
+        this.sortDirection = 'asc';
+      }
     }
+
+    if (this.sortColumn) {
+      const key = this.sortColumn;
+
+      this.filteredCourses.sort((a, b) => {
+        const valueA = String(a[key]).toLowerCase();
+        const valueB = String(b[key]).toLowerCase();
+
+        return this.sortDirection === 'asc'
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
+      });
+    }
+
+    this.updatePage();
+  }
+
+
+
+  updatePage() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.pagedCourses = this.filteredCourses.slice(start, end);
+  }
+
+  changePageSize(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
+    this.updatePage();
+  }
+
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.updatePage();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.pageSize);
+  }
+
+  get rangeLabel(): string {
+    if (!this.totalItems) return '0 of 0';
+    const start = (this.currentPage - 1) * this.pageSize + 1;
+    const end = Math.min(this.currentPage * this.pageSize, this.totalItems);
+    return `${start} – ${end} of ${this.totalItems}`;
   }
 }

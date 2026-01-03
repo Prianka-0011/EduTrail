@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { CourseListComponent } from "./components/courses/course-list/course-list.component";
 import { DashboardComponent } from "./components/dashboard/dashboard/dashboard.component";
+import { CourseCreateOrUpdateComponent } from "./components/courses/course-create-or-update/course-create-or-update.component";
 
 
 export const learningSuiteRoutes : Routes = [
@@ -15,6 +16,16 @@ export const learningSuiteRoutes : Routes = [
   },
   {
     path: 'courses',
-    component: CourseListComponent
+    component: CourseListComponent,
+     children: [
+      {
+        path: 'create',
+        component: CourseCreateOrUpdateComponent
+      },
+      {
+        path: 'edit/:id',
+        component: CourseCreateOrUpdateComponent
+      }
+    ]
   }
 ] 

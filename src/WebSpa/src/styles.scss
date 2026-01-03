@@ -5,7 +5,8 @@
 /* Global Poppins font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -19,8 +20,26 @@ html, body {
   vertical-align: middle;
 }
 
+.table-container {
+  max-width: 100%;
+  padding: 24px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(63, 81, 181, 0.15);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  h2 {
+    font-weight: 600;
+    font-size: 26px;
+    margin-bottom: 24px;
+    color: #2c3e50;
+  }
+}
+
 /* =========================
-   TABLE STYLES
+   TABLE
    ========================= */
 .table-container {
   max-width: 100%;
@@ -38,194 +57,120 @@ html, body {
     margin-bottom: 24px;
     color: #2c3e50;
   }
-
-  .filter-input {
-    width: 320px;
-    margin-bottom: 20px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
-    border-radius: 14px;
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-
-    th.mat-header-cell {
-      background: linear-gradient(135deg, #3f51b5, #5c6bc0) !important;
-      color: #fff !important;
-      font-weight: 600;
-      font-size: 14px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      padding: 14px 16px;
-      border-bottom: none;
-
-      &:first-child {
-        border-top-left-radius: 14px;
-      }
-      &:last-child {
-        border-top-right-radius: 14px;
-      }
-    }
-
-    td.mat-cell {
-      font-size: 14px;
-      color: #374151;
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    }
-
-    tr.mat-row {
-      transition: all 0.25s ease;
-
-      &:last-child td {
-        border-bottom: none;
-      }
-
-      &:hover {
-        background: linear-gradient(
-          90deg,
-          rgba(63, 81, 181, 0.08),
-          rgba(63, 81, 181, 0.03)
-        );
-        box-shadow: inset 4px 0 0 #3f51b5;
-      }
-    }
-  }
-}
-
-/* Table header alternative (optional light gradient) */
-.mat-mdc-table .mat-mdc-header-cell {
-  background: linear-gradient(180deg, #f9fafb, #f3f4f6) !important;
-  color: #374151 !important;
-  font-weight: 600;
-  text-transform: uppercase;
 }
 
 /* =========================
-   MODERN PAGINATOR
+   TABLE
    ========================= */
+.custom-table {
+  border-radius: 14px !important;
+  overflow: hidden;
 
-.mat-mdc-paginator {
-  margin-top: 20px;
+  margin-bottom: 0;
+
+
+  thead th {
+    background: #2c3e50;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    // border: none;
+
+  }
+  
+
+  tbody td {
+    font-size: 14px;
+    color: #374151;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  tbody tr {
+    transition: all 0.25s ease;
+    position: relative;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+
+  tbody tr:hover {
+    background-color: red !important;
+    cursor: pointer;
+  }
+
+  // tbody tr:hover::before {
+  //   content: '';
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   height: 100%;
+  //   width: 4px;
+  //   background: #3f51b5;
+  //   border: thin dashed red;
+  //   z-index: 1;
+  //   /* make sure it’s above the row background */
+  // }
+}
+
+/* =========================
+   PAGINATOR
+   ========================= */
+.custom-paginator {
   padding: 14px 18px;
   border-radius: 14px;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  font-family: inherit;
-}
-
-.mat-mdc-paginator .mat-mdc-paginator-container {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-/* Items per page label */
-.mat-mdc-paginator-page-size-label {
   font-size: 13px;
+}
+
+/* Items per page */
+.page-size-label {
   font-weight: 500;
   color: #6b7280;
 }
 
-/* Items per page wrapper */
-.mat-mdc-paginator-page-size {
-  display: flex;
-  align-items: center;
-}
-
-/* =========================
-   PILL DROPDOWN STYLING
-   ========================= */
-
-/* Trigger box */
-.mat-mdc-paginator .mat-mdc-select-trigger {
+.page-size-select {
   min-height: 32px;
   padding: 6px 16px;
-  border-radius: 999px !important;       /* pill shape */
-  background: #f9fafb !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  border-radius: 999px;
+  background: #f9fafb;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
   font-size: 13px;
   font-weight: 600;
   color: #111827;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+  width: auto;
 }
 
-/* Hover/focus effect */
-.mat-mdc-paginator .mat-mdc-select.mat-focused .mat-mdc-select-trigger,
-.mat-mdc-paginator .mat-mdc-select-trigger:hover {
+.page-size-select:focus {
   box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.15);
-  background: #ffffff !important;
-  border-color: rgba(63,81,181,0.3) !important;
-}
-
-/* Arrow icon */
-.mat-mdc-paginator .mat-mdc-select-arrow {
-  color: #6b7280 !important;
-  margin-left: 6px !important;
-}
-
-/* Dropdown panel */
-.mat-mdc-select-panel {
-  background: #ffffff !important;
-  border-radius: 14px !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  padding: 4px 0 !important;
-}
-
-/* Options inside panel */
-.mat-mdc-option {
-  font-size: 13px;
-  font-weight: 500;
-  padding: 10px 16px;
-  border-radius: 8px;
-  transition: background 0.2s ease;
-}
-
-.mat-mdc-option:hover {
-  background: rgba(63, 81, 181, 0.08);
-}
-
-.mat-mdc-option.mat-mdc-option-active {
-  background: rgba(63, 81, 181, 0.15);
-  font-weight: 600;
-}
-
-/* Remove default MDC outlines/ripples */
-.mat-mdc-select .mdc-notched-outline,
-.mat-mdc-select .mdc-line-ripple {
-  display: none !important;
-}
-
-.mat-mdc-text-field-wrapper {
-  border: none !important;
+  border-color: rgba(63, 81, 181, 0.3);
 }
 
 /* Range label */
-.mat-mdc-paginator-range-label {
-  margin-left: auto;
+.range-label {
   font-size: 13px;
   font-weight: 500;
-  color: #4b5563;
+  color: #225aa8;
 }
 
 /* Pagination buttons */
-.mat-mdc-paginator button.mat-mdc-icon-button {
+.icon-btn {
   width: 36px;
   height: 36px;
   border-radius: 10px;
+  border: none;
+  background: transparent;
   transition: all 0.2s ease;
 }
 
-.mat-mdc-paginator button.mat-mdc-icon-button:hover {
+.icon-btn:hover {
   background: rgba(63, 81, 181, 0.1);
 }
