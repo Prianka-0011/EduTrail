@@ -7,3 +7,20 @@
 .search-bar {
   width: 100%;
 }
+
+.search-input-wrapper {
+  position: relative;
+}
+
+.search-input-wrapper input {
+  // padding-right: 2.5rem; /* space for icon */
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  pointer-events: none; /* allows click through */
+}

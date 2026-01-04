@@ -1,18 +1,24 @@
 <div class="table-container">
   <!-- Search -->
-  <div class="row justify-content-end">
-    <div class="col-md-6 col-12 d-flex align-items-center gap-3">
+  <div class="row justify-content-start">
+    <div class="col-md-6 col-12 d-flex align-items-center gap-1">
       <h2 class="mb-0">Courses</h2>
 
-      <button class="btn btn-primary btn-sm" (click)="openCreateDrawer()">
+      <button class="icon-btn" (click)="openCreateDrawer()" aria-label="Create course">
         <i class="bi bi-plus-lg me-1"></i>
-        Create Course
       </button>
     </div>
 
-    <div class="col-md-4 col-10">
-      <input type="text" class="form-control mb-3" placeholder="Search courses..." [(ngModel)]="searchText"
-        (input)="applyFilter()" />
+  </div>
+
+  <div class="row justify-content-end">
+
+    <div class="col-md-4 col-10 mb-4">
+      <div class="search-input-wrapper">
+        <input type="text" class="form-control" placeholder="Search courses..." [(ngModel)]="searchText"
+          (input)="applyFilter()" />
+        <i class="bi bi-search search-icon"></i>
+      </div>
     </div>
   </div>
 
@@ -38,6 +44,10 @@
                }">
             </i>
           </th>
+
+          <th>
+            Action
+          </th>
         </tr>
       </thead>
 
@@ -45,6 +55,8 @@
         <tr *ngFor="let course of pagedCourses">
           <td>{{ course.courseCode }}</td>
           <td>{{ course.courseName }}</td>
+          <td><button class="edit-icon-btn" (click)="openEditDrawer(course.id)"><i
+                class="bi bi-pencil-square"></i></button></td>
         </tr>
 
         <tr *ngIf="pagedCourses.length === 0">
@@ -96,9 +108,22 @@
 
 </div>
 <!-- SIDE DRAWER -->
-<app-side-drawer [opened]="drawerOpen" title="Create Course" (closed)="closeDrawer()">
-
-  <app-course-create-or-update (saved)="onCourseSaved()" (cancel)="closeDrawer()">
-  </app-course-create-or-update>
+<app-side-drawer [opened]="drawerOpen" width="600px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+  
+  <ng-container *ngIf="drawerOpen">
+    <app-course-create-or-update
+      (saved)="onCourseSaved()"
+      (cancel)="closeDrawer()"
+      >
+    </app-course-create-or-update>
+  </ng-container>
 
 </app-side-drawer>
+
+<!-- Custom header template -->
+<ng-template #drawerHeader>
+  <div class="d-flex align-items-center gap-2">
+    <i class="bi" [ngClass]="selectedCourseId ? 'bi bi-book-half' : 'bi bi-book-half'"></i>
+    <span>{{ selectedCourseId ? 'Edit Course Details' : 'Create New Course' }}</span>
+  </div>
+</ng-template>

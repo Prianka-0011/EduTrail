@@ -8,19 +8,21 @@
 .side-drawer {
   position: fixed;
   top: 0;
-  right: -420px;
-  width: 420px;
+  right: 0;                 /* 🔒 right edge fixed */
   height: 100%;
   background: #fff;
   box-shadow: -12px 0 30px rgba(0, 0, 0, 0.15);
   z-index: 1050;
-  transition: right 0.3s ease;
+
   display: flex;
   flex-direction: column;
 
-  &.open {
-    right: 0;
-  }
+  transform: translateX(100%); /* hide completely */
+  transition: transform 0.3s ease;
+}
+
+.side-drawer.open {
+  transform: translateX(0);    /* slide in */
 }
 
 .drawer-header {

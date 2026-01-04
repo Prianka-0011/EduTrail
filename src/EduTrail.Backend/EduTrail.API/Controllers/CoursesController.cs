@@ -22,13 +22,13 @@ namespace EduTrail.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> Create(CreateCourseCommand command)
+        public async Task<ActionResult<CourseDto>> Create([FromBody]CreateCourseCommand command)
         {
-            var courseId = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetById), new { id = courseId }, courseId);
+            var courseDto = await _mediator.Send(command);
+            return courseDto;
         }
-        [HttpPut]
-        public async Task<ActionResult> Update(Guid id, UpdateCourseCommand command)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(Guid id, [FromBody]UpdateCourseCommand command)
         {
             if (id != command.courseDto.Id)
             {

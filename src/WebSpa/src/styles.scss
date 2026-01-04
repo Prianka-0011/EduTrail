@@ -20,6 +20,26 @@ body {
   vertical-align: middle;
 }
 
+.icon-btn {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  color: #2c3e50; /* optional hover color */
+}
+
+.icon-btn:focus {
+  outline: none;
+}
+
 .table-container {
   max-width: 100%;
   padding: 24px;
@@ -100,7 +120,7 @@ body {
 
 
   tbody tr:hover {
-    background-color: red !important;
+
     cursor: pointer;
   }
 
@@ -173,4 +193,61 @@ body {
 
 .icon-btn:hover {
   background: rgba(63, 81, 181, 0.1);
+}
+
+// form floating label
+.floating {
+  position: relative;
+  width: 100%;
+}
+
+.floating .form-control,
+.floating .form-select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+
+.floating label {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: #6c757d;
+  background: #fff;
+  padding: 0 4px;
+  pointer-events: none;
+  transition: all 0.2s ease-out;
+}
+
+/* Label floats when input/select is focused OR has value */
+.floating .form-control.active,
+.floating .form-select.active {
+  border-color: #2444e5;
+  box-shadow: none;
+}
+
+.floating .form-control.active + label,
+.floating .form-select.active + label {
+  top: 0;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  color: #2444e5;
+}
+.warning-label {
+  font-size: 10px;
+}
+.submit-btn {
+  background: #2c3e50 !important;
+  border: none !important;
+}
+.edit-icon-btn {
+  border: none;
+  background: transparent;
 }

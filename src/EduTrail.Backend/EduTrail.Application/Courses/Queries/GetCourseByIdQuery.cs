@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using System.Reflection.Metadata;
 using AutoMapper;
 using MediatR;
@@ -19,7 +20,15 @@ namespace EduTrail.Application.Courses
             public async Task<CourseDto> Handle(GetCourseByIdQuery request, CancellationToken cancellationToken)
             {
                 var course = await _courseRepository.GetByIdAsync(request.Id);
-                return _mapper.Map<CourseDto>(course);
+                if(course==null)
+                {
+                    return new CourseDto
+                    {
+                        Id = Guid.Empty,
+                    };
+                }
+                var courseDto = _mapper.Map<CourseDto>(course);
+                return courseDto;
             }
         }
     }

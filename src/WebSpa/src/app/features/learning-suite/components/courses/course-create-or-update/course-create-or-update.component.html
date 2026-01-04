@@ -1,100 +1,84 @@
 <div class="container mt-5">
-  <div class="card shadow-sm border-0">
-    <div class="card-header bg-primary text-white">
-      <h3 class="mb-0">{{ course?.id ? 'Edit Course' : 'Create Course' }}</h3>
-    </div>
+  <div class="card border-1">
     <div class="card-body">
       <form #courseForm="ngForm" (ngSubmit)="onSubmit(courseForm)" novalidate>
         <div class="row g-3">
 
           <!-- Course Code -->
-          <div class="col-md-6">
-            <div class="form-floating">
-              <input
-                type="text"
-                id="courseCode"
-                name="courseCode"
-                class="form-control"
-                placeholder="Course Code"
-                [(ngModel)]="course.courseCode"
-                #courseCode="ngModel"
-                required
-              />
-              <label for="courseCode">Course Code</label>
-              <div class="text-danger small mt-1" *ngIf="courseCode.invalid && courseCode.touched">
-                Course code is required
-              </div>
+          <div class="col-md-12">
+            <div class="floating">
+              <input type="text" id="courseCode" name="courseCode" class="form-control" [(ngModel)]="course.courseCode"
+                #courseCode="ngModel" (focus)="isCourseCodeFocused = true" (blur)="isCourseCodeFocused = false"
+                [ngClass]="{'active': course.courseCode || isCourseCodeFocused}" required />
+              <label for="courseCode">Course Code *</label>
+            </div>
+            <div class="text-danger warning-label small mt-1" *ngIf="courseCode.invalid && courseCode.touched">
+              *Course code is required
             </div>
           </div>
 
           <!-- Course Name -->
-          <div class="col-md-6">
-            <div class="form-floating">
-              <input
-                type="text"
-                id="courseName"
-                name="courseName"
-                class="form-control"
-                placeholder="Course Name"
-                [(ngModel)]="course.courseName"
-                #courseName="ngModel"
-                required
-              />
-              <label for="courseName">Course Name</label>
-              <div class="text-danger small mt-1" *ngIf="courseName.invalid && courseName.touched">
-                Course name is required
-              </div>
+          <div class="col-md-12">
+            <div class="floating">
+              <input type="text" id="courseName" name="courseName" class="form-control" [(ngModel)]="course.courseName"
+                #courseName="ngModel" (focus)="isCourseNameFocused = true" (blur)="isCourseNameFocused = false"
+                [ngClass]="{'active': course.courseName || isCourseNameFocused}" required />
+              <label for="courseName">Course Name *</label>
+            </div>
+            <div class="text-danger warning-label small mt-1" *ngIf="courseName.invalid && courseName.touched">
+              *Course name is required
             </div>
           </div>
 
           <!-- Institute -->
-          <div class="col-md-6">
-            <div class="form-floating">
-              <input
-                type="text"
-                id="institute"
-                name="institute"
-                class="form-control"
-                placeholder="Institute"
-                [(ngModel)]="course.institute"
-                #institute="ngModel"
-                required
-              />
-              <label for="institute">Institute</label>
-              <div class="text-danger small mt-1" *ngIf="institute.invalid && institute.touched">
-                Institute is required
-              </div>
+          <div class="col-md-12">
+            <div class="floating">
+              <input type="text" id="institute" name="institute" class="form-control" [(ngModel)]="course.institute"
+                #institute="ngModel" (focus)="isInstituteFocused = true" (blur)="isInstituteFocused = false"
+                [ngClass]="{'active': course.institute || isInstituteFocused}" required />
+              <label for="institute">Institute *</label>
+
+            </div>
+            <div class="text-danger warning-label small mt-1" *ngIf="institute.invalid && institute.touched">
+              *Institute is required
             </div>
           </div>
 
           <!-- Time Zone -->
-          <div class="col-md-6">
-            <div class="form-floating">
-              <select
-                id="timezone"
-                name="timezone"
-                class="form-select"
-                [(ngModel)]="course.timezone"
-                #timezone="ngModel"
-                required
-              >
+          <!-- <div class="col-md-12">
+            <div class="floating">
+              <select id="timezone" name="timezone" class="form-select" [(ngModel)]="course.timezone"
+                #timezone="ngModel" (focus)="isTimezoneFocused = true" (blur)="isTimezoneFocused = false"
+                [ngClass]="{'active': course.timezone || isTimezoneFocused}" >
                 <option value="">Select Time Zone</option>
                 <option *ngFor="let tz of timezones" [value]="tz">{{ tz }}</option>
               </select>
               <label for="timezone">Time Zone</label>
-              <div class="text-danger small mt-1" *ngIf="timezone.invalid && timezone.touched">
-                Time zone is required
-              </div>
+            </div>
+            <div class="text-danger warning-label small mt-1" *ngIf="timezone.invalid && timezone.touched">
+              *Time zone is required
+            </div>
+          </div> -->
+
+          <div class="col-md-12">
+            <div class="floating">
+              <input type="text" id="timeZone" name="timeZone" class="form-control" [(ngModel)]="course.timeZone"
+                #timeZone="ngModel" (focus)="isTimeZoneFocused = true" (blur)="isTimeZoneFocused = false"
+                [ngClass]="{'active': course.timeZone || isTimeZoneFocused}" required />
+              <label for="timeZone">Time Zone *</label>
+
+            </div>
+            <div class="text-danger warning-label small mt-1" *ngIf="timeZone.invalid && timeZone.touched">
+              *Time Zone is required
             </div>
           </div>
-
         </div>
 
         <!-- Buttons -->
         <div class="mt-4 d-flex justify-content-end">
-          <button type="button" class="btn btn-secondary me-2" (click)="cancel()">Cancel</button>
-          <button type="submit" class="btn btn-primary" [disabled]="courseForm.invalid">
-            {{ course?.id ? 'Update Course' : 'Create Course' }}
+          <button type="button" class="btn btn-secondary me-2" (click)="cancelForm()">Cancel</button>
+          <button type="submit" class="btn btn-primary submit-btn" [disabled]="courseForm.invalid">
+            {{ course?.id !='00000000-0000-0000-0000-000000000000' ? 'Update Course' : 'Create Course' }}
           </button>
         </div>
       </form>

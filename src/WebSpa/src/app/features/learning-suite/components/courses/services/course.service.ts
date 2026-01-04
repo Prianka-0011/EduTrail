@@ -8,12 +8,45 @@ import { ICourse } from '../interfaces/ICourse';
   providedIn: 'root'
 })
 export class CourseService {
+
   constructor(private http: HttpClient) { }
   baseUrl = enviroment.baseUrl + 'courses/';
-  getCourses() : Observable<ICourse[]> {
+
+  getCourses(): Observable<ICourse[]> {
     return this.http.get<ICourse[]>(this.baseUrl);
   }
-  createCourse(course: ICourse) : Observable<ICourse> {
-    return this.http.post<ICourse>(this.baseUrl, course);
+
+  getCourseById(id: string): Observable<ICourse> {
+    return this.http.get<ICourse>(this.baseUrl + id);
   }
+
+  createCourse(course: ICourse): Observable<ICourse> {
+    console.log("Creating course:", course);
+    return this.http.post<ICourse>(this.baseUrl, {
+      courseDto: {
+        courseCode: course.courseCode,
+        courseName: course.courseName,
+        institute: course.institute,
+        timeZone: course.timeZone
+      }
+    });
+  }
+
+  updateCourse(course: ICourse): Observable<ICourse> {
+    if (!course.id || course.id === '00000000-0000-0000-0000-000000000000') {
+      throw new Error('Cannot update course with invalid ID');
+    }
+
+    return this.http.put<ICourse>(`${this.baseUrl}${course.id}`, {
+      courseDto: {
+        id: course.id,
+        courseCode: course.courseCode,
+        courseName: course.courseName,
+        institute: course.institute,
+        timeZone: course.timeZone
+      }
+    });
+  }
+
+
 }
