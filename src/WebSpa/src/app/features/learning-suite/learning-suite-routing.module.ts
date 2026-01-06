@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { CourseListComponent } from "./components/courses/course-list/course-list.component";
 import { DashboardComponent } from "./components/dashboard/dashboard/dashboard.component";
 import { CourseCreateOrUpdateComponent } from "./components/courses/course-create-or-update/course-create-or-update.component";
+import { UserDashboardComponent } from "./components/dashboard/user-dashboard/user-dashboard.component";
 
 
 export const learningSuiteRoutes : Routes = [
@@ -13,6 +14,10 @@ export const learningSuiteRoutes : Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'user-dashboard',
+    component: UserDashboardComponent
   },
   {
     path: 'courses',

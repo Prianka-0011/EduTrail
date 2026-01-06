@@ -69,8 +69,6 @@ export class CourseCreateOrUpdateComponent implements OnInit, OnChanges {
       next: data => this.course = data
     });
   } else {
-    // New course or drawer closed → reset
-    // this.course = this.getEmptyCourse();
     if (this.courseForm) this.courseForm.resetForm(this.course);
   }
 });

@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-learning-suite',
   standalone: true,
-  imports: [ RouterOutlet,
+  imports: [RouterOutlet,
     RouterLink,
     RouterLinkActive,
     CommonModule,],
@@ -21,6 +21,8 @@ export class LearningSuiteComponent {
 
   menu: MenuItem[] = [
     { label: 'Dashboard', icon: 'speedometer2', route: 'dashboard' },
+    { label: 'User Dashboard', icon: 'bi bi-person-vcard', route: 'user-dashboard' },
+
     {
       label: 'Courses',
       icon: 'book',
