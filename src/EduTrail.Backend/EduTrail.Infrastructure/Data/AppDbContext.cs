@@ -25,6 +25,7 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<Course> Courses { get; set; } = null!;
         public DbSet<Enrollment> Enrollments { get; set; } = null!;
         public DbSet<CourseOffering> CourseOfferings { get; set; } = null!;
+        public DbSet<Term> Terms { get; set; }
 
     }
 }
