@@ -46,11 +46,11 @@ export class TermListComponent implements OnInit {
     })
   }
 
-  openEditDrawer(courseId: string) {
-    this.selecteTermId = courseId;
+  openEditDrawer(termId: string) {
+    this.selecteTermId = termId;
     this.drawerOpen = true;
     this.router.navigate([], {
-      queryParams: { id: courseId },
+      queryParams: { id: termId },
       queryParamsHandling: 'merge'
     });
   }
@@ -64,7 +64,7 @@ export class TermListComponent implements OnInit {
     });
   }
 
-  onCourseSaved() {
+  onTermSaved() {
     this.closeDrawer();
     this.getAllTerms();
   }
@@ -78,7 +78,7 @@ export class TermListComponent implements OnInit {
     })
   }
 
-    // Filter courses based on search text
+    // Filter Terms based on search text
   
     applyFilter() {
       const value = this.searchText.toLowerCase().trim();
@@ -86,7 +86,7 @@ export class TermListComponent implements OnInit {
       this.filtered = this.terms.filter(c =>
         c.name.toLowerCase().includes(value) 
         // ||
-        // c.courseName.toLowerCase().includes(value)
+        // c.TermName.toLowerCase().includes(value)
       );
   
       this.totalItems = this.filtered.length;
