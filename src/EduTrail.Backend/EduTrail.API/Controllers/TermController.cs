@@ -22,5 +22,20 @@ namespace EduTrail.API.Controllers
         {
             return Ok(await _mediator.Send(new GetCourseByIdQuery { Id = id }));
         }
+        [HttpPost]
+        public async Task<ActionResult<TermDto>> Create(CreateTermCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+        [HttpPut]
+        public async Task<ActionResult<TermDto>> Update(Guid id, UpdateTermCommand command)
+        {
+
+            if (id != command.termDto.Id)
+            {
+                return BadRequest("Course ID mismatch");
+            }
+            return Ok(await _mediator.Send(command));
+        }
     }
 }

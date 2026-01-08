@@ -3,9 +3,10 @@ import { CourseListComponent } from "./components/courses/course-list/course-lis
 import { DashboardComponent } from "./components/dashboard/dashboard/dashboard.component";
 import { CourseCreateOrUpdateComponent } from "./components/courses/course-create-or-update/course-create-or-update.component";
 import { UserDashboardComponent } from "./components/dashboard/user-dashboard/user-dashboard.component";
+import { TermListComponent } from "./components/terms/term-list/term-list.component";
 
 
-export const learningSuiteRoutes : Routes = [
+export const learningSuiteRoutes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
@@ -20,9 +21,13 @@ export const learningSuiteRoutes : Routes = [
     component: UserDashboardComponent
   },
   {
+    path: 'term',
+    component: TermListComponent
+  },
+  {
     path: 'courses',
     component: CourseListComponent,
-     children: [
+    children: [
       {
         path: 'create',
         component: CourseCreateOrUpdateComponent
