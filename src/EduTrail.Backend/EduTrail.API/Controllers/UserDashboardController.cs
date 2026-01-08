@@ -8,10 +8,10 @@ namespace EduTrail.API.Controllers
         public UserDashboardController(IMediator mediator) : base(mediator)
         {
         }
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<string[]>>GetAllCoursesByUser(Guid userId)
-        {
+        // [HttpGet("{userId}")]
+        // public async Task<ActionResult<string[]>>GetAllCoursesByUser(Guid userId)
+        // {
             
-        }
+        // }
     }
 }

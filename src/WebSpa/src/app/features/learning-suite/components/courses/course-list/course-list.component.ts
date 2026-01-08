@@ -19,6 +19,7 @@ import { ICourse } from '../interfaces/iCourse';
 export class CourseListComponent implements OnInit {
   constructor(private courseService: CourseService, private router: Router) { }
   courses: ICourse[] = [];
+  selectedCourseId: string | null = null;
   filteredCourses: ICourse[] = [];
   pagedCourses: ICourse[] = [];
 
@@ -32,13 +33,13 @@ export class CourseListComponent implements OnInit {
 
   searchText = '';
   drawerOpen = false;
-  selectedCourseId: string | null = null;
+
 
   openCreateDrawer() {
     this.selectedCourseId = null;
     this.drawerOpen = true;
     this.router.navigate([], {
-      queryParams: {id: "00000000-0000-0000-0000-000000000000"},
+      queryParams: { id: "00000000-0000-0000-0000-000000000000" },
       queryParamsHandling: 'merge'
     })
   }
@@ -56,14 +57,14 @@ export class CourseListComponent implements OnInit {
     this.drawerOpen = false;
     this.selectedCourseId = null;
     this.router.navigate([], {
-    queryParams: { id: undefined },
-    queryParamsHandling: 'merge'
-  });
+      queryParams: { id: undefined },
+      queryParamsHandling: 'merge'
+    });
   }
 
   onCourseSaved() {
     this.closeDrawer();
-    this.getCourses(); 
+    this.getCourses();
   }
 
 

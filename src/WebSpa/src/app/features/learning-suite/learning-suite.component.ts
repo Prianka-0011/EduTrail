@@ -22,6 +22,7 @@ export class LearningSuiteComponent {
   menu: MenuItem[] = [
     { label: 'Dashboard', icon: 'speedometer2', route: 'dashboard' },
     { label: 'User Dashboard', icon: 'bi bi-person-vcard', route: 'user-dashboard' },
+    { label: 'Terms', icon: 'bi bi-person-vcard', route: 'terms' },
 
     {
       label: 'Courses',

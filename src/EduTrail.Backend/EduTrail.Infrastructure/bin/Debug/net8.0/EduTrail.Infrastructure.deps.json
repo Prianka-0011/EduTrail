@@ -1008,17 +1008,17 @@
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0"
         },
         "runtime": {
-          "EduTrail.Application.dll": {
+          "Edutrail.Application.dll": {
             "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
+            "fileVersion": ""
           }
         }
       },
       "Edutrail.Domain/1.0.0": {
         "runtime": {
-          "EduTrail.Domain.dll": {
+          "Edutrail.Domain.dll": {
             "assemblyVersion": "1.0.0",
-            "fileVersion": ""
+            "fileVersion": "1.0.0.0"
           }
         }
       }

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EduTrail.API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class TermController : BaseController
     {
         public TermController(IMediator mediator) : base(mediator)
@@ -27,7 +29,7 @@ namespace EduTrail.API.Controllers
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<ActionResult<TermDto>> Update(Guid id, UpdateTermCommand command)
         {
 

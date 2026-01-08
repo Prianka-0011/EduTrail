@@ -13,4 +13,4 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net8.0\EduTrail.
 D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net8.0\refint\EduTrail.Application.dll
 D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net8.0\EduTrail.Application.pdb
 D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net8.0\ref\EduTrail.Application.dll
-D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net8.0\EduTrail.D1CC7AB6.Up2Date
+D:\EduTrail\src\EduTrail.Backend\Edutrail.Application\obj\Debug\net8.0\Edutrail.7BC810C5.Up2Date

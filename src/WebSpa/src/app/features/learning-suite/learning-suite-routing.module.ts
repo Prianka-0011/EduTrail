@@ -21,7 +21,7 @@ export const learningSuiteRoutes: Routes = [
     component: UserDashboardComponent
   },
   {
-    path: 'term',
+    path: 'terms',
     component: TermListComponent
   },
   {

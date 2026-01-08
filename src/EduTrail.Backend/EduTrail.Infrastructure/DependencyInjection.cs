@@ -5,6 +5,7 @@ using EduTrail.Infrastructure.Data;
 using EduTrail.Infrastructure.Repositories;
 using EduTrail.Application.Tests;
 using EduTrail.Application.Courses;
+using EduTrail.Application.Terms;
 
 namespace EduTrail.Infrastructure
 {
@@ -76,6 +77,7 @@ namespace EduTrail.Infrastructure
             // services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITestRepository, TestRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();
+             services.AddScoped<ITermRepository, TermRepository>();
 
             return services;
         }
