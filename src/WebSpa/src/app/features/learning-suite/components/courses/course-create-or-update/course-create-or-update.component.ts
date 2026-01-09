@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';import { ICourse } from '../interfaces/iCourse';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core'; import { ICourse } from '../interfaces/iCourse';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -14,9 +14,9 @@ import { CourseService } from '../services/course.service';
 export class CourseCreateOrUpdateComponent implements OnInit, OnChanges {
   @Output() saved = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
-  @Input() resetTrigger:boolean = false;
-
+  @Input() resetTrigger: boolean = false;
   @ViewChild('courseForm') courseForm!: NgForm;
+
   course: ICourse = {
     id: '00000000-0000-0000-0000-000000000000',
     courseCode: '',
@@ -25,6 +25,21 @@ export class CourseCreateOrUpdateComponent implements OnInit, OnChanges {
     timeZone: ''
   };
   constructor(private route: ActivatedRoute, private courseService: CourseService) { }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const courseId = params['id'];
+
+      if (courseId && courseId !== '00000000-0000-0000-0000-000000000000') {
+        this.courseService.getCourseById(courseId).subscribe({
+          next: data => this.course = data
+        });
+      } else {
+        if (this.courseForm) this.courseForm.resetForm(this.course);
+      }
+    });
+
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['resetTrigger'] && changes['resetTrigger'].currentValue && this.courseForm) {
@@ -59,26 +74,11 @@ export class CourseCreateOrUpdateComponent implements OnInit, OnChanges {
 
   timezones: string[] = Intl.supportedValuesOf('timeZone');
 
-  ngOnInit(): void {
- this.route.queryParams.subscribe(params => {
-  const courseId = params['id'];
-
-  if (courseId && courseId !== '00000000-0000-0000-0000-000000000000') {
-    this.courseService.getCourseById(courseId).subscribe({
-      next: data => this.course = data
-    });
-  } else {
-    if (this.courseForm) this.courseForm.resetForm(this.course);
-  }
-});
-
-  }
-
   onSubmit(form: NgForm) {
     if (!form.valid) return;
 
     if (this.course.id && this.course.id !== '00000000-0000-0000-0000-000000000000') {
-      console.log("form.valid",this.course)
+      console.log("form.valid", this.course)
       this.courseService.updateCourse(this.course).subscribe({
         next: () => this.saved.emit(),
         error: (err) => console.error(err)

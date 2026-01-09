@@ -25,13 +25,25 @@ export class TermService {
   create(term: ITerm): Observable<ITerm> {
     return this.http.post<ITerm>(this.baseUrl, {
       termDto: {
-        name : term.name,
-        year : term.year,
-        startDate : term.startDate,
-        endDate : term.endDate
+        id: term.id,
+        name: term.name,
+        year: term.year,
+        startDate: term.startDate,
+        endDate: term.endDate
       }
     })
   }
 
+  update(term: ITerm): Observable<ITerm> {
+    return this.http.put<ITerm>(this.baseUrl + term.id, {
+      termDto: {
+        id: term.id,
+        name: term.name,
+        year: term.year,
+        startDate: term.startDate,
+        endDate: term.endDate
+      }
+    })
+  }
 
 }

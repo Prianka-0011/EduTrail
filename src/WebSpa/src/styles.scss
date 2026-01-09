@@ -279,3 +279,11 @@ body {
   color: #6c757d;
   pointer-events: none; /* allows click through */
 }
+//date contorl
+input[type='date']:not(.active)::-webkit-datetime-edit {
+  color: transparent;
+}
+
+input[type='date'].active::-webkit-datetime-edit {
+  color: inherit;
+}

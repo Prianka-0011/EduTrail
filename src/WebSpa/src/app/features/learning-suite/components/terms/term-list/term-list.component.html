@@ -108,13 +108,9 @@
 </div>
 <!-- SIDE DRAWER -->
 <app-side-drawer [opened]="drawerOpen" width="600px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
-
     <ng-container *ngIf="drawerOpen">
-        <!-- <app-course-create-or-update
-      (saved)="onCourseSaved()"
-      (cancel)="closeDrawer()"
-      >
-    </app-course-create-or-update> -->
+        <app-term-create-or-uppdate (saved)="onTermSaved()" (cancel)="closeDrawer()">
+        </app-term-create-or-uppdate>
     </ng-container>
 
 </app-side-drawer>

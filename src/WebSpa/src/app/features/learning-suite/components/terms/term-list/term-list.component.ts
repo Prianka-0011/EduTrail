@@ -5,12 +5,13 @@ import { SideDrawerComponent } from '../../../../../shared/components/side-drawe
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { TermCreateOrUppdateComponent } from '../term-create-or-uppdate/term-create-or-uppdate.component';
 
 
 
 @Component({
   selector: 'app-term-list',
-  imports: [CommonModule, FormsModule, SideDrawerComponent],
+  imports: [CommonModule, FormsModule, SideDrawerComponent, TermCreateOrUppdateComponent],
   templateUrl: './term-list.component.html',
   styleUrl: './term-list.component.scss'
 })
