@@ -108,9 +108,9 @@
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
       "Edutrail.Domain/1.0.0": {
         "runtime": {
-          "EduTrail.Domain.dll": {
+          "Edutrail.Domain.dll": {
             "assemblyVersion": "1.0.0",
-            "fileVersion": ""
+            "fileVersion": "1.0.0.0"
           }
         }
       }

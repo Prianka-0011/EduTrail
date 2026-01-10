@@ -11,15 +11,14 @@ namespace EduTrail.Domain.Entities
         public string Title { get; set; }
 
         [Required]
-        public string Template { get; set; } // "What is {a} + {b}?"
-
-        [Required]
         public Guid QuestionTypeId { get; set; }
         public QuestionType QuestionType { get; set; }
 
-        
+
         public Guid AssessmentId { get; set; }
         public Assessment Assessment { get; set; }
+        public ICollection<QuestionVariantTemplate> VariantTemplates { get; set; }
+        public ICollection<QuestionVariationRule> VariationRules { get; set; }
 
         // Audit fields
         public DateTimeOffset? CreatedDate { get; set; }

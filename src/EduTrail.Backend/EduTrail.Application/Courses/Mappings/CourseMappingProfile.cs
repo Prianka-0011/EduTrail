@@ -1,15 +1,16 @@
 using AutoMapper;
+using EduTrail.Application.Questions;
 using EduTrail.Domain.Entities;
 namespace EduTrail.Application.Courses
 {
-   public class CourseMappingProfile : Profile
+   public class QuestionMappingProfile : Profile
 {
-    public CourseMappingProfile()
+    public QuestionMappingProfile()
     {
-        CreateMap<CourseDto, Course>();
+        CreateMap<QuestionDto, Question>();
             // .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); 
 
-        CreateMap<Course, CourseDto>();
+        CreateMap<Question, QuestionDto>();
     }
 }
 

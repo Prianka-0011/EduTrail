@@ -7,15 +7,35 @@ namespace EduTrail.API.Controllers
     [ApiController]
     public class QuestionsController : BaseController
     {
+
         public QuestionsController(IMediator mediator) : base(mediator) { }
-        public async Task<ActionResult<QuestionDto>> GetAll()
+        [HttpGet]
+        public async Task<ActionResult<List<QuestionDto>>> GetAll()
         {
-            return Ok(this._mediator.Send(new QuestionDto()));
+            return Ok(this._mediator.Send(new GetAllQuestionQuery()));
         }
-        public async Task<IActionResult> Create([FromBody] QuestionDto questionDto)
+
+        public async Task<ActionResult<QuestionDto>> GetById(Guid id)
         {
-            var result = await _mediator.Send(new CreateQuestionCommand { questionDto = questionDto });
+            var result = await _mediator.Send(new GetQuestionByIdQuery { Id = id });
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<QuestionDto>> Create([FromBody] CreateQuestionCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<QuestionDto>> Update(Guid id, UpdateQuestionCommand command)
+        {
+            if (id != command.questionDto.Id)
+            {
+                return BadRequest("Question ID mismatch");
+            }
+            return Ok(await _mediator.Send(command));
         }
     }
 }

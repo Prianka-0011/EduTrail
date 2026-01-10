@@ -6,6 +6,6 @@ namespace EduTrail.Application.Questions
 
         public string Title { get; set; }
 
-        public string Template { get; set; } // "What is {a} + {b}?"
+        public string Template { get; set; } 
     }
 }
