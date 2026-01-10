@@ -7,8 +7,15 @@ namespace EduTrail.Application.Questions
     {
         public QuestionMappingProfile()
         {
-            CreateMap<QuestionDto, Question>();
-            CreateMap<Question, QuestionDto>();
+             CreateMap<Question, QuestionDto>()
+                .ForMember(dest => dest.Template, opt => opt.MapFrom(src => src.VariantTemplates.FirstOrDefault().Template))
+                .ForMember(dest => dest.Language, opt => opt.MapFrom(src => src.VariantTemplates.FirstOrDefault().Language))
+                .ForMember(dest => dest.VariationRules, opt => opt.MapFrom(src => src.VariationRules));
+
+            // DTO → Entity
+            CreateMap<QuestionDto, Question>()
+                .ForMember(dest => dest.VariantTemplates, opt => opt.Ignore()) // handled manually in handler
+                .ForMember(dest => dest.VariationRules, opt => opt.Ignore()); 
         }
     }
 }
