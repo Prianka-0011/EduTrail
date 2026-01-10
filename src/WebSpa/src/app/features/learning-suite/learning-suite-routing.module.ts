@@ -4,6 +4,7 @@ import { DashboardComponent } from "./components/dashboard/dashboard/dashboard.c
 import { CourseCreateOrUpdateComponent } from "./components/courses/course-create-or-update/course-create-or-update.component";
 import { UserDashboardComponent } from "./components/dashboard/user-dashboard/user-dashboard.component";
 import { TermListComponent } from "./components/terms/term-list/term-list.component";
+import { QuestionListComponent } from "./components/questions/question-list/question-list.component";
 
 
 export const learningSuiteRoutes: Routes = [
@@ -24,6 +25,11 @@ export const learningSuiteRoutes: Routes = [
     path: 'terms',
     component: TermListComponent
   },
+  {
+    path: 'questions',
+    component: QuestionListComponent
+  }
+  ,
   {
     path: 'courses',
     component: CourseListComponent,
