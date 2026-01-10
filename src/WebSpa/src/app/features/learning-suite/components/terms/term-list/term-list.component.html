@@ -36,7 +36,7 @@
                         </i>
                     </th>
 
-                    <th (click)="applySort('name')" role="button">
+                    <th (click)="applySort('year')" role="button">
                         Year
                         <i class="bi ms-1" [ngClass]="{
                  'bi-caret-up-fill': sortColumn === 'year' && sortDirection === 'asc',
@@ -44,6 +44,24 @@
                }">
                         </i>
                     </th>
+                    <th (click)="applySort('startDate')" role="button">
+                        Start Date
+                        <i class="bi ms-1" [ngClass]="{
+       'bi-caret-up-fill': sortColumn === 'startDate' && sortDirection === 'asc',
+       'bi-caret-down-fill': sortColumn === 'startDate' && sortDirection === 'desc'
+     }">
+                        </i>
+                    </th>
+
+                    <th (click)="applySort('endDate')" role="button">
+                        End Date
+                        <i class="bi ms-1" [ngClass]="{
+       'bi-caret-up-fill': sortColumn === 'endDate' && sortDirection === 'asc',
+       'bi-caret-down-fill': sortColumn === 'endDate' && sortDirection === 'desc'
+     }">
+                        </i>
+                    </th>
+
                     <th>
                         Action
                     </th>
@@ -54,6 +72,8 @@
                 <tr *ngFor="let term of paged">
                     <td>{{ term.name }}</td>
                     <td>{{ term.year }}</td>
+                    <td>{{ term.startDate | date:'MMM dd, yyyy' }}</td>
+                    <td>{{ term.endDate | date:'MMM dd, yyyy' }}</td>
                     <td><button class="edit-icon-btn" (click)="openEditDrawer(term.id)"><i
                                 class="bi bi-pencil-square"></i></button></td>
                 </tr>
@@ -118,7 +138,7 @@
 <!-- Custom header template -->
 <ng-template #drawerHeader>
     <div class="d-flex align-items-center gap-2">
-        <i class="bi" [ngClass]="selecteTermId  ? 'bi bi-book-half' : 'bi bi-book-half'"></i>
-        <span>{{ selecteTermId ? 'Edit Term Details' : 'Create New Term' }}</span>
+        <i class="bi" [ngClass]="selectedTermId   ? 'bi bi-book-half' : 'bi bi-book-half'"></i>
+        <span>{{ selectedTermId ? 'Edit Term Details' : 'Create New Term' }}</span>
     </div>
 </ng-template>

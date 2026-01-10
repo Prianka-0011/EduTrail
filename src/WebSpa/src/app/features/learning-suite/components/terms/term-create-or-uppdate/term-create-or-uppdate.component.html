@@ -4,12 +4,10 @@
       <form #termForm="ngForm" (ngSubmit)="onSubmit(termForm)" novalidate>
         <div class="row g-3">
 
-          <!-- Term Name -->
           <div class="col-md-12">
             <div class="floating">
               <input
                 type="text"
-                id="name"
                 name="name"
                 class="form-control"
                 [(ngModel)]="term.name"
@@ -19,19 +17,17 @@
                 [ngClass]="{ 'active': term.name || isNameFocused }"
                 required
               />
-              <label for="name">Term Name *</label>
+              <label>Term Name *</label>
             </div>
-            <div class="text-danger warning-label small mt-1" *ngIf="name.invalid && name.touched">
-              *Term name is required
+            <div class="text-danger small" *ngIf="name.invalid && name.touched">
+              Term name is required
             </div>
           </div>
 
-          <!-- Year -->
           <div class="col-md-12">
             <div class="floating">
               <input
                 type="number"
-                id="year"
                 name="year"
                 class="form-control"
                 [(ngModel)]="term.year"
@@ -40,64 +36,65 @@
                 (blur)="isYearFocused = false"
                 [ngClass]="{ 'active': term.year || isYearFocused }"
                 required
+                readonly
               />
-              <label for="year">Year *</label>
-            </div>
-            <div class="text-danger warning-label small mt-1" *ngIf="year.invalid && year.touched">
-              *Year is required
+              <label>Year *</label>
             </div>
           </div>
 
-          <!-- Start Date -->
           <div class="col-md-12">
             <div class="floating">
               <input
                 type="date"
-                id="startDate"
                 name="startDate"
                 class="form-control"
                 [(ngModel)]="term.startDate"
                 #startDate="ngModel"
+                (change)="onStartDateChange()"
                 (focus)="isStartDateFocused = true"
                 (blur)="isStartDateFocused = false"
                 [ngClass]="{ 'active': term.startDate || isStartDateFocused }"
                 required
               />
-              <label for="startDate">Start Date *</label>
+              <label>Start Date *</label>
             </div>
-            <div class="text-danger warning-label small mt-1" *ngIf="startDate.invalid && startDate.touched">
-              *Start date is required
+            <div class="text-danger small" *ngIf="startDate.invalid && startDate.touched">
+              Start date is required
             </div>
           </div>
 
-          <!-- End Date -->
           <div class="col-md-12">
             <div class="floating">
               <input
                 type="date"
-                id="endDate"
                 name="endDate"
                 class="form-control"
                 [(ngModel)]="term.endDate"
                 #endDate="ngModel"
+                [min]="minEndDate"
                 (focus)="isEndDateFocused = true"
                 (blur)="isEndDateFocused = false"
                 [ngClass]="{ 'active': term.endDate || isEndDateFocused }"
                 required
               />
-              <label for="endDate">End Date *</label>
+              <label>End Date *</label>
             </div>
-            <div class="text-danger warning-label small mt-1" *ngIf="endDate.invalid && endDate.touched">
-              *End date is required
+            <div class="text-danger small" *ngIf="!isDateRangeValid() && endDate.touched">
+              End date must be after start date
             </div>
           </div>
 
         </div>
 
-        <!-- Buttons -->
         <div class="mt-4 d-flex justify-content-end">
-          <button type="button" class="btn btn-secondary me-2" (click)="cancelForm()">Cancel</button>
-          <button type="submit" class="btn btn-primary submit-btn" [disabled]="termForm.invalid">
+          <button type="button" class="btn btn-secondary me-2" (click)="cancelForm()">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="termForm.invalid || !isDateRangeValid()"
+          >
             {{ term.id !== '00000000-0000-0000-0000-000000000000' ? 'Update Term' : 'Create Term' }}
           </button>
         </div>

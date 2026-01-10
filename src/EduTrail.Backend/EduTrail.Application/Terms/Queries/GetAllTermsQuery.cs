@@ -9,9 +9,10 @@ namespace EduTrail.Application.Terms
         {
             private readonly ITermRepository _repository;
             private readonly IMapper _mapper;
-            public Handler(ITermRepository repository)
+            public Handler(ITermRepository repository, IMapper mapper)
             {
                 _repository = repository;
+                _mapper = mapper;
             }
             public async Task<List<TermDto>> Handle(GetAllTermsQuery request, CancellationToken cancellationToken)
             {

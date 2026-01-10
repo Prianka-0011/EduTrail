@@ -14,6 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
+
 @Component({
   selector: 'app-term-create-or-uppdate',
   standalone: true,
@@ -28,104 +30,104 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
   @Output() cancel = new EventEmitter<void>();
   @ViewChild('termForm') termForm!: NgForm;
 
-  term: ITerm = {
-    id: '00000000-0000-0000-0000-000000000000',
-    name: '',
-    year: 0,
-    startDate: '',
-    endDate: ''
-  };
+  term: ITerm = this.getEmptyTerm();
 
   isNameFocused = false;
   isYearFocused = false;
   isStartDateFocused = false;
   isEndDateFocused = false;
 
+  minEndDate = '';
+
   constructor(
     private service: TermService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const termId = params['id'];
-
-      if (termId && termId !== this.term.id) {
-        this.service.getById(termId).subscribe({
-          next: data => this.term = data
+      if (termId && termId !== EMPTY_ID) {
+        this.service.getById(termId).subscribe(data => {
+          this.term = {
+            ...data,
+            startDate: data.startDate ? data.startDate.split('T')[0] : '',
+            endDate: data.endDate ? data.endDate.split('T')[0] : ''
+          };
+          console.log("Edit form", this.term)
+          this.syncDerivedFields();
         });
       }
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     if (changes['resetTrigger']?.currentValue && this.termForm) {
+      console.log("resetTrigger")
       this.resetForm();
     }
   }
 
   onSubmit(form: NgForm): void {
-    if (!form.valid) return;
+    if (form.invalid || !this.isDateRangeValid()) return;
 
-    const isUpdate =
-      this.term.id !== '00000000-0000-0000-0000-000000000000';
+    const payload: ITerm = {
+      ...this.term,
+      startDate: new Date(this.term.startDate).toISOString(),
+      endDate: new Date(this.term.endDate).toISOString()
+    };
 
-    if (isUpdate) {
-      this.service.update(this.term).subscribe({
-        next: () => this.saved.emit(),
-        error: err => console.error(err)
-      });
-    } else {
-      this.service.create(this.term).subscribe({
-        next: () => this.saved.emit(),
-        error: err => console.error(err)
-      });
-    }
+    const request$ =
+      this.term.id === EMPTY_ID
+        ? this.service.create(payload)
+        : this.service.update(payload);
+
+    request$.subscribe(() => {
+      this.saved.emit();
+      this.resetForm();
+    });
   }
 
+
   cancelForm(): void {
+    this.resetForm();
     this.cancel.emit();
   }
 
-  onNameFocus() {
-    this.isNameFocused = true;
+  onStartDateChange(): void {
+    this.syncDerivedFields();
+    if (this.term.endDate && !this.isDateRangeValid()) {
+      this.term.endDate = '';
+    }
   }
 
-  onNameBlur() {
-    this.isNameFocused = false;
+  syncDerivedFields(): void {
+    if (this.term.startDate) {
+      this.minEndDate = this.term.startDate;
+      this.term.year = new Date(this.term.startDate).getFullYear();
+    }
   }
 
-  onYearFocus() {
-    this.isYearFocused = true;
+  isDateRangeValid(): boolean {
+    if (!this.term.startDate || !this.term.endDate) return true;
+    return new Date(this.term.endDate) >= new Date(this.term.startDate);
   }
 
-  onYearBlur() {
-    this.isYearFocused = false;
+
+  resetForm(): void {
+    this.term = this.getEmptyTerm();
+    this.minEndDate = '';
+    this.termForm.resetForm(this.term);
   }
 
-  onStartDateFocus() {
-    this.isStartDateFocused = true;
-  }
-
-  onStartDateBlur() {
-    this.isStartDateFocused = false;
-  }
-
-  onEndDateFocus() {
-    this.isEndDateFocused = true;
-  }
-
-  onEndDateBlur() {
-    this.isEndDateFocused = false;
-  }
-
-  private resetForm(): void {
-    this.termForm.resetForm({
-      id: '00000000-0000-0000-0000-000000000000',
+  getEmptyTerm(): ITerm {
+    return {
+      id: EMPTY_ID,
       name: '',
       year: 0,
       startDate: '',
       endDate: ''
-    });
+    };
   }
 }

@@ -22,7 +22,7 @@ namespace EduTrail.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TermDto>> GetById(Guid id)
         {
-            return Ok(await _mediator.Send(new GetCourseByIdQuery { Id = id }));
+            return Ok(await _mediator.Send(new GetTermByIdQuery { Id = id }));
         }
         [HttpPost]
         public async Task<ActionResult<TermDto>> Create(CreateTermCommand command)
