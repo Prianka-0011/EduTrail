@@ -7,12 +7,13 @@ import { QuestionService } from '../services/question.service';
 
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { IQuestion } from '../interfaces/iQuestion';
+import { QuestionCreateOrUpdateComponent } from '../question-create-or-update/question-create-or-update.component';
 // import { QuestionCreateOrUpdateComponent } from '../question-create-or-update/question-create-or-update.component';
 
 @Component({
   selector: 'app-question-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, SideDrawerComponent],
+  imports: [CommonModule, FormsModule, SideDrawerComponent, QuestionCreateOrUpdateComponent],
   templateUrl: './question-list.component.html',
   styleUrls: ['./question-list.component.scss']
 })
