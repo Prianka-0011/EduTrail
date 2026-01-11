@@ -20,22 +20,47 @@ export class QuestionService {
   }
 
   getById(id: string): Observable<IQuestion> {
-    return this.http.get<IQuestion>(`${this.baseUrl}/${id}`);
+    return this.http.get<IQuestion>(`${this.baseUrl}${id}`);
   }
 
   create(question: IQuestion): Observable<IQuestion> {
-    return this.http.post<IQuestion>(this.baseUrl, question);
+    console.log('Creating question:', question);
+    const payload = {
+      questionDto: {
+        title: question.title,
+        template: question.template,
+        language: question.language,
+        variationRules: question.variationRules?.map(rule => ({
+          key: rule.key,
+          options: rule.options
+        }))
+      }
+    };
+
+    return this.http.post<IQuestion>(this.baseUrl, payload);
   }
 
   update(id: string, question: IQuestion): Observable<IQuestion> {
-    return this.http.put<IQuestion>(`${this.baseUrl}/${id}`, question);
+    const payload = {
+      questionDto: {
+        title: question.title,
+        template: question.template,
+        language: question.language,
+        variationRules: question.variationRules?.map(rule => ({
+          key: rule.key,
+          options: rule.options
+        }))
+      }
+    };
+
+    return this.http.put<IQuestion>(`${this.baseUrl}/${id}`, payload);
   }
 
   getGeneratedQuestion(id: string): Observable<IGeneratedQuestion> {
-    return this.http.get<IGeneratedQuestion>(`${this.baseUrl}/generate/${id}`);
+    return this.http.get<IGeneratedQuestion>(`${this.baseUrl}generate/${id}`);
   }
 
   submitAnswer(questionId: string, answerOrder: string[]): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/submit/${questionId}`, { answerOrder });
+    return this.http.post<any>(`${this.baseUrl}submit/${questionId}`, { answerOrder });
   }
 }

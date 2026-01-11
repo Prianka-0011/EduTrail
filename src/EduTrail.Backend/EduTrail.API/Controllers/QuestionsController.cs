@@ -14,7 +14,8 @@ namespace EduTrail.API.Controllers
         {
             return Ok( await _mediator.Send(new GetAllQuestionQuery()));
         }
-
+        
+        [HttpGet("{id}")]
         public async Task<ActionResult<QuestionDto>> GetById(Guid id)
         {
             var result = await _mediator.Send(new GetQuestionByIdQuery { Id = id });

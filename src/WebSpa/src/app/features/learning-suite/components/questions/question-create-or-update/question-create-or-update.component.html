@@ -1,90 +1,154 @@
 <div class="container mt-5">
-    <div class="card border-1">
-        <div class="card-body">
-            <form #questionForm="ngForm" (ngSubmit)="onSubmit(questionForm)" novalidate>
-                <div class="row g-3">
+  <div class="card border-1">
+    <div class="card-body">
+      <form #questionForm="ngForm" (ngSubmit)="onSubmit(questionForm)" novalidate>
+        <div class="row g-3">
 
-                    <!-- Question Title -->
-                    <div class="col-md-12">
-                        <div class="floating">
-                            <input type="text" name="title" class="form-control" [(ngModel)]="question.title"
-                                #title="ngModel" (focus)="isTitleFocused = true" (blur)="isTitleFocused = false"
-                                [ngClass]="{ 'active': question.title || isTitleFocused }" required />
-                            <label>Question Title *</label>
-                        </div>
-                        <div class="text-danger small" *ngIf="title.invalid && title.touched">
-                            Question title is required
-                        </div>
-                    </div>
+          <!-- Question Title -->
+          <div class="col-md-12">
+            <div class="floating">
+              <input
+                type="text"
+                name="title"
+                class="form-control"
+                [(ngModel)]="question.title"
+                #title="ngModel"
+                (focus)="isTitleFocused = true"
+                (blur)="isTitleFocused = false"
+                [ngClass]="{ 'active': question.title || isTitleFocused }"
+                required
+              />
+              <label>Question Title *</label>
+            </div>
+            <div class="text-danger small" *ngIf="title.invalid && title.touched">
+              Question title is required
+            </div>
+          </div>
 
-                    <!-- Language -->
-                    <div class="col-md-12">
-                        <div class="floating">
-                            <select name="language" class="form-control" [(ngModel)]="question.language"
-                                #language="ngModel" (focus)="isLanguageFocused = true"
-                                (blur)="isLanguageFocused = false"
-                                [ngClass]="{ 'active': question.language || isLanguageFocused }" required>
-                                <option value="C++">C++</option>
-                                <option value="C#">C#</option>
-                                <option value="Java">Java</option>
-                                <option value="Python">Python</option>
-                            </select>
-                            <label>Language *</label>
-                        </div>
-                        <div class="text-danger small" *ngIf="language.invalid && language.touched">
-                            Language is required
-                        </div>
-                    </div>
+          <!-- Language -->
+          <div class="col-md-12">
+            <div class="floating">
+              <select
+                name="language"
+                class="form-control"
+                [(ngModel)]="question.language"
+                #language="ngModel"
+                (focus)="isLanguageFocused = true"
+                (blur)="isLanguageFocused = false"
+                [ngClass]="{ 'active': question.language || isLanguageFocused }"
+                required
+              >
+                <option value="C++">C++</option>
+                <option value="C#">C#</option>
+                <option value="Java">Java</option>
+                <option value="Python">Python</option>
+              </select>
+              <label>Language *</label>
+            </div>
+            <div class="text-danger small" *ngIf="language.invalid && language.touched">
+              Language is required
+            </div>
+          </div>
 
-                    <!-- Template -->
-                    <div class="col-md-12">
-                        <div class="floating">
-                            <textarea name="template" class="form-control" rows="4" [(ngModel)]="question.template"
-                                #template="ngModel" (focus)="isTemplateFocused = true"
-                                (blur)="isTemplateFocused = false"
-                                [ngClass]="{ 'active': question.template || isTemplateFocused }" required></textarea>
-                            <label>Template *</label>
-                        </div>
-                        <div class="text-danger small" *ngIf="template.invalid && template.touched">
-                            Question template is required
-                        </div>
-                    </div>
+          <!-- Template -->
+          <div class="col-md-12">
+            <div class="floating">
+              <textarea
+                name="template"
+                class="form-control"
+                rows="4"
+                [(ngModel)]="question.template"
+                #template="ngModel"
+                (focus)="isTemplateFocused = true"
+                (blur)="isTemplateFocused = false"
+                [ngClass]="{ 'active': question.template || isTemplateFocused }"
+                required
+              ></textarea>
+              <label>Template *</label>
+            </div>
+            <div class="text-danger small" *ngIf="template.invalid && template.touched">
+              Question template is required
+            </div>
+          </div>
 
-                    <!-- Variation Rules / Placeholders -->
-                    <div class="col-md-12" *ngFor="let rule of question.variationRules; let i = index">
-                        <div class="card mb-3 p-2">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <strong>Replacement Key: {{ rule.key }}</strong>
-                                <button type="button" class="btn btn-sm btn-danger"
-                                    (click)="removeRule(i)">Remove</button>
-                            </div>
-                            <div class="mt-2">
-                                <label>Options (comma separated)</label>
-                                <input type="text" class="form-control" [(ngModel)]="rule.optionsStr"
-                                    name="options-{{i}}" placeholder="option1, option2, option3" required />
-                            </div>
-                        </div>
-                    </div>
+          <!-- Variation Rules -->
+          <div
+            class="col-md-12"
+            *ngFor="let rule of question.variationRules; let i = index"
+          >
+            <div class="card mb-3 p-3">
 
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-outline-primary" (click)="addRule()">
-                            + Replacement Key
-                        </button>
-                    </div>
+              <!-- Replacement Key INPUT -->
+              <div class="mb-2">
+                <label>Replacement Key</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="rule.key"
+                  name="key-{{ i }}"
+                  placeholder="Key..."
+                  required
+                />
+              </div>
 
-                </div>
+              <!-- Options INPUT -->
+              <div class="mb-2">
+                <label>Options (comma separated)</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="rule.optionsStr"
+                  name="options-{{ i }}"
+                  placeholder="Value..."
+                  required
+                />
+              </div>
 
-                <div class="mt-4 d-flex justify-content-end">
-                    <button type="button" class="btn btn-secondary me-2" (click)="cancelForm()">
-                        Cancel
-                    </button>
-                    <button type="submit" class="btn btn-primary"
-                        [disabled]="questionForm.invalid || !question.variationRules || question.variationRules.length === 0">
-                        {{ question.id !== '00000000-0000-0000-0000-000000000000' ? 'Update Question' : 'Create
-                        Question' }}
-                    </button>
-                </div>
-            </form>
+              <div class="text-end">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  (click)="removeRule(i)"
+                >
+                  Remove
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="addRule()"
+            >
+              + Replacement Key
+            </button>
+          </div>
+
         </div>
+
+        <div class="mt-4 d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-secondary me-2"
+            (click)="cancelForm()"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            
+          >
+            {{ question.id !== '00000000-0000-0000-0000-000000000000'
+              ? 'Update Question'
+              : 'Create Question' }}
+          </button>
+        </div>
+
+      </form>
     </div>
+  </div>
 </div>
