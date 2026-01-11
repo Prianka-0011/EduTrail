@@ -1,5 +1,5 @@
 import { IVariationRule } from "./iVariationRule";
-import { IQuestionLine } from "./iVariationRule copy";
+import { IQuestionLine } from "./iQuestionLine";
 
 export interface IQuestion {
   id: string;

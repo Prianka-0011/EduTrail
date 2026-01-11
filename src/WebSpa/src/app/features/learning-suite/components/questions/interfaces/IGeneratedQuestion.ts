@@ -1,4 +1,4 @@
-import { IQuestionLine } from "./iVariationRule copy";
+import { IQuestionLine } from "./iQuestionLine";
 
 export interface IGeneratedQuestion {
   questionId: string;

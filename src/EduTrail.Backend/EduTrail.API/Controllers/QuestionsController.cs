@@ -12,7 +12,7 @@ namespace EduTrail.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<QuestionDto>>> GetAll()
         {
-            return Ok(this._mediator.Send(new GetAllQuestionQuery()));
+            return Ok( await _mediator.Send(new GetAllQuestionQuery()));
         }
 
         public async Task<ActionResult<QuestionDto>> GetById(Guid id)

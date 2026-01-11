@@ -11,7 +11,7 @@ import { IGeneratedQuestion } from '../interfaces/IGeneratedQuestion';
   providedIn: 'root'
 })
 export class QuestionService {
-  baseUrl = enviroment.baseUrl + "/Questions"
+  baseUrl = enviroment.baseUrl + "Questions/"
 
   constructor(private http: HttpClient) { }
 
