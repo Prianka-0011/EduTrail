@@ -38,7 +38,6 @@ export class CourseCreateOrUpdateComponent implements OnInit, OnChanges {
         if (this.courseForm) this.courseForm.resetForm(this.course);
       }
     });
-
   }
 
   ngOnChanges(changes: SimpleChanges) {

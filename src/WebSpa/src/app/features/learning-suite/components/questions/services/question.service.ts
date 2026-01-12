@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { enviroment } from '../../../../../../environments/environment';
-import { IQuestion } from '../interfaces/iQuestionDetail';
+
 import { IGeneratedQuestion } from '../interfaces/iGeneratedQuestion';
+import { IQuestion } from '../interfaces/iQuestion';
+import { IQuestionDetail } from '../interfaces/iQuestionDetail';
 
 
 
@@ -15,15 +17,15 @@ export class QuestionService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<IQuestion[]> {
-    return this.http.get<IQuestion[]>(this.baseUrl);
+  getAll(): Observable<IQuestionDetail[]> {
+    return this.http.get<IQuestionDetail[]>(this.baseUrl);
   }
 
   getById(id: string): Observable<IQuestion> {
     return this.http.get<IQuestion>(`${this.baseUrl}${id}`);
   }
 
-  create(question: IQuestion): Observable<IQuestion> {
+  create(question: IQuestionDetail): Observable<IQuestionDetail> {
     console.log('Creating question:', question);
     const payload = {
       questionDetailDto: {
@@ -37,10 +39,10 @@ export class QuestionService {
       }
     };
 
-    return this.http.post<IQuestion>(this.baseUrl, payload);
+    return this.http.post<IQuestionDetail>(this.baseUrl, payload);
   }
 
-  update(id: string, question: IQuestion): Observable<IQuestion> {
+  update(id: string, question: IQuestionDetail): Observable<IQuestionDetail> {
     const payload = {
       questionDetailDto: {
         title: question.title,
@@ -53,7 +55,7 @@ export class QuestionService {
       }
     };
 
-    return this.http.put<IQuestion>(`${this.baseUrl}/${id}`, payload);
+    return this.http.put<IQuestionDetail>(`${this.baseUrl}/${id}`, payload);
   }
 
   getGeneratedQuestion(id: string): Observable<IGeneratedQuestion> {

@@ -1,7 +1,7 @@
 import { IVariationRule } from "./iVariationRule";
 import { IQuestionLine } from "./iQuestionLine";
 
-export interface IQuestion {
+export interface IQuestionDetail {
   id: string;
   title: string;
   questionTypeId: string;

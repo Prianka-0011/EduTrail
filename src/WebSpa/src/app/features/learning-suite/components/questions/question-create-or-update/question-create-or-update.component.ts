@@ -60,6 +60,7 @@ export class QuestionCreateOrUpdateComponent implements OnChanges {
     if (!this.question.variationRules) this.question.variationRules = [];
     this.question.variationRules.push({
       key: '',
+
       options: [],
       optionsStr: ''
     });
