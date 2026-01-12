@@ -50,5 +50,15 @@ namespace EduTrail.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<QuestionType>> GetAllQuestionType()
+        {
+            return await _context.QuestionTypes.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Assessment>> GetAllAssessment()
+        {
+            return await _context.Assessments.ToListAsync();
+        }
     }
 }

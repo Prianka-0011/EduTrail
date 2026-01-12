@@ -26,7 +26,7 @@ export class QuestionService {
   create(question: IQuestion): Observable<IQuestion> {
     console.log('Creating question:', question);
     const payload = {
-      questionDto: {
+      questionDetailDto: {
         title: question.title,
         template: question.template,
         language: question.language,
@@ -42,7 +42,7 @@ export class QuestionService {
 
   update(id: string, question: IQuestion): Observable<IQuestion> {
     const payload = {
-      questionDto: {
+      questionDetailDto: {
         title: question.title,
         template: question.template,
         language: question.language,

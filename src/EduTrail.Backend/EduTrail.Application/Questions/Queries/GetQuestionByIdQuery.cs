@@ -19,8 +19,12 @@ namespace EduTrail.Application.Questions
             public async Task<QuestionDto> Handle(GetQuestionByIdQuery request, CancellationToken cancellationToken)
             {
                 var entity = await _repository.GetByIdAsync(request.Id);
-                var questionDto = _mapper.Map<QuestionDto>(entity);
-                return questionDto;
+                var questionDetailDto = _mapper.Map<QuestionDetailDto>(entity);
+                var questionDto = new QuestionDto
+                {
+                    Types = await _repository.GetAllQuestionType().
+                }
+                return questionDetailDto;
             }
         }
     }

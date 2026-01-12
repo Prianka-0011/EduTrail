@@ -1,8 +1,12 @@
+using EduTrail.Application.Shared.Dtos;
+
 namespace EduTrail.Application.Questions
 {
     public class QuestionDto
     {
-     
+        public QuestionDetailDto Details { get; set; }
+        public List<DropdownItemDto> Types { get; set; }
+         public List<DropdownItemDto> Assesments { get; set; }
     }
 
     public class QuestionDetailDto
