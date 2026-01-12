@@ -7,18 +7,36 @@
           <!-- Question Type -->
           <div class="col-md-12">
             <div class="floating">
-              <select id="timezone" name="timezone" class="form-select" [(ngModel)]="course.timezone"
-                #timezone="ngModel" (focus)="isTimezoneFocused = true" (blur)="isTimezoneFocused = false"
-                [ngClass]="{'active': course.timezone || isTimezoneFocused}">
-                <option value="">Select Time Zone</option>
-                <option *ngFor="let tz of timezones" [value]="tz">{{ tz }}</option>
+              <select name="questionTypeId" class="form-select" [(ngModel)]="question.questionTypeId"
+                #questionTypeId="ngModel" required>
+                <option value="">Select Question Type</option>
+                <option *ngFor="let t of types" [value]="t.id">
+                  {{ t.name }}
+                </option>
               </select>
-              <label for="timezone">Time Zone</label>
+              <label>Question Type *</label>
             </div>
-            <div class="text-danger warning-label small mt-1" *ngIf="timezone.invalid && timezone.touched">
-              *Time zone is required
+            <div class="text-danger small" *ngIf="questionTypeId.invalid && questionTypeId.touched">
+              Question Type is required
             </div>
           </div>
+          
+          <div class="col-md-12">
+            <div class="floating">
+              <select name="assessmentId" class="form-select" [(ngModel)]="question.assessmentId"
+                #assessmentId="ngModel" required>
+                <option value="">Select Assessment</option>
+                <option *ngFor="let a of assesments" [value]="a.id">
+                  {{ a.name }}
+                </option>
+              </select>
+              <label>Assessment *</label>
+            </div>
+            <div class="text-danger small" *ngIf="assessmentId.invalid && assessmentId.touched">
+              Assessment is required
+            </div>
+          </div>
+
 
           <!-- Question Title -->
           <div class="col-md-12">
