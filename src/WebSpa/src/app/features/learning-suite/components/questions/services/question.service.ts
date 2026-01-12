@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { enviroment } from '../../../../../../environments/environment';
-import { IQuestion } from '../interfaces/iQuestion';
-import { IGeneratedQuestion } from '../interfaces/IGeneratedQuestion';
+import { IQuestion } from '../interfaces/iQuestionDetail';
+import { IGeneratedQuestion } from '../interfaces/iGeneratedQuestion';
 
 
 

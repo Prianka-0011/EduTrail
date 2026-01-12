@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { IQuestion } from '../interfaces/iQuestion';
+import { IQuestion } from '../interfaces/iQuestionDetail';
 import { QuestionService } from '../services/question.service';
 import { CommonModule } from '@angular/common';
 

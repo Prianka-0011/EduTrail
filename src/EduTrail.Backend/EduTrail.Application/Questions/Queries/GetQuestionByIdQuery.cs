@@ -1,4 +1,5 @@
 using AutoMapper;
+using EduTrail.Application.Shared.Dtos;
 using MediatR;
 
 namespace EduTrail.Application.Questions
@@ -8,7 +9,7 @@ namespace EduTrail.Application.Questions
         public Guid Id { get; set; }
         public class Handler : IRequestHandler<GetQuestionByIdQuery, QuestionDto>
         {
-            private readonly  IQuestionRepository _repository;
+            private readonly IQuestionRepository _repository;
             private readonly IMapper _mapper;
             public Handler(IQuestionRepository repository, IMapper mapper)
             {
@@ -22,9 +23,23 @@ namespace EduTrail.Application.Questions
                 var questionDetailDto = _mapper.Map<QuestionDetailDto>(entity);
                 var questionDto = new QuestionDto
                 {
-                    Types = await _repository.GetAllQuestionType().
-                }
-                return questionDetailDto;
+                    Types = (await _repository.GetAllQuestionType())
+                            .Select(x => new DropdownItemDto
+                            {
+                                Id = x.Id,
+                                Name = x.Name
+                            })
+                            .ToList(),
+                    Assesments = (await _repository.GetAllAssessment())
+                                .Select(x => new DropdownItemDto
+                                {
+                                    Id = x.Id,
+                                    Name = x.Title
+                                })
+                                .ToList(),
+                    Details = questionDetailDto
+                };
+                return questionDto;
             }
         }
     }
