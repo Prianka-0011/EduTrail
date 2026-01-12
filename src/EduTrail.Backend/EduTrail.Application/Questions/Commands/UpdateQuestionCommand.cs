@@ -4,10 +4,10 @@ using MediatR;
 
 namespace EduTrail.Application.Questions
 {
-    public class UpdateQuestionCommand : IRequest<QuestionDto>
+    public class UpdateQuestionCommand : IRequest<QuestionDetailDto>
     {
-        public QuestionDto questionDto { get; set; }
-        public class Handler : IRequestHandler<UpdateQuestionCommand, QuestionDto>
+        public QuestionDetailDto questionDetailDto { get; set; }
+        public class Handler : IRequestHandler<UpdateQuestionCommand, QuestionDetailDto>
         {
             private readonly IQuestionRepository _repository;
             private readonly IMapper _mapper;
@@ -16,12 +16,12 @@ namespace EduTrail.Application.Questions
                 _repository = repository;
                 _mapper = mapper;
             }
-            public async Task<QuestionDto> Handle(UpdateQuestionCommand request, CancellationToken cancellationToken)
+            public async Task<QuestionDetailDto> Handle(UpdateQuestionCommand request, CancellationToken cancellationToken)
             {
-                var entity = _mapper.Map<Question>(request.questionDto);
+                var entity = _mapper.Map<Question>(request.questionDetailDto);
                 var result = await _repository.UpdateAsync(entity);
-                var questionDto = _mapper.Map<QuestionDto>(result);
-                return questionDto;
+                var questionDetailDto = _mapper.Map<QuestionDetailDto>(result);
+                return questionDetailDto;
             }
         }
     }

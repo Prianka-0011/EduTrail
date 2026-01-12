@@ -3,9 +3,9 @@ using MediatR;
 
 namespace EduTrail.Application.Questions
 {
-    public class GetAllQuestionQuery : IRequest<List<QuestionDto>>
+    public class GetAllQuestionQuery : IRequest<List<QuestionDetailDto>>
     {
-        public class Handler : IRequestHandler<GetAllQuestionQuery, List<QuestionDto>>
+        public class Handler : IRequestHandler<GetAllQuestionQuery, List<QuestionDetailDto>>
         {
             private IQuestionRepository _repository;
             private IMapper _mapper;
@@ -14,11 +14,11 @@ namespace EduTrail.Application.Questions
                 _repository = repository;
                 _mapper = mapper;
             }
-            public async Task<List<QuestionDto>> Handle(GetAllQuestionQuery request, CancellationToken cancellationToken)
+            public async Task<List<QuestionDetailDto>> Handle(GetAllQuestionQuery request, CancellationToken cancellationToken)
             {
                 var questions = await _repository.GetAllAsync();
-                var questionDtos = _mapper.Map<List<QuestionDto>>(questions);
-                return questionDtos;
+                var questionDetailDto = _mapper.Map<List<QuestionDetailDto>>(questions);
+                return questionDetailDto;
             }
         }
     }

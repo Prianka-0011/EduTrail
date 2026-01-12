@@ -6,10 +6,10 @@ namespace EduTrail.Application.Questions
     using System.Text.Json;
     using AutoMapper;
 
-    public class CreateQuestionCommand : IRequest<QuestionDto>
+    public class CreateQuestionCommand : IRequest<QuestionDetailDto>
     {
-        public QuestionDto QuestionDto { get; set; }
-        public class Handler : IRequestHandler<CreateQuestionCommand, QuestionDto>
+        public QuestionDetailDto QuestionDetailDto { get; set; }
+        public class Handler : IRequestHandler<CreateQuestionCommand, QuestionDetailDto>
         {
             private readonly IQuestionRepository _repository;
             private readonly IMapper _mapper;
@@ -18,12 +18,12 @@ namespace EduTrail.Application.Questions
                 _repository = repository;
                 _mapper = mapper;
             }
-            public async Task<QuestionDto> Handle(CreateQuestionCommand request, CancellationToken cancellationToken)
+            public async Task<QuestionDetailDto> Handle(CreateQuestionCommand request, CancellationToken cancellationToken)
             {
                 var question = new Question
                 {
                     Id = Guid.NewGuid(),
-                    Title = request.QuestionDto.Title,
+                    Title = request.QuestionDetailDto.Title,
                     VariantTemplates = new List<QuestionVariantTemplate>(),
                     VariationRules = new List<QuestionVariationRule>()
                 };
@@ -32,13 +32,13 @@ namespace EduTrail.Application.Questions
                 {
                     Id = Guid.NewGuid(),
                     QuestionId = question.Id,
-                    Template = request.QuestionDto.Template,
-                    Language = request.QuestionDto.Language
+                    Template = request.QuestionDetailDto.Template,
+                    Language = request.QuestionDetailDto.Language
                 });
 
-                if (request.QuestionDto.VariationRules != null)
+                if (request.QuestionDetailDto.VariationRules != null)
                 {
-                    foreach (var ruleDto in request.QuestionDto.VariationRules)
+                    foreach (var ruleDto in request.QuestionDetailDto.VariationRules)
                     {
                         question.VariationRules.Add(new QuestionVariationRule
                         {
@@ -50,7 +50,7 @@ namespace EduTrail.Application.Questions
                     }
                 }
                 var result = await _repository.CreateAsync(question);
-                var responseDto = _mapper.Map<QuestionDto>(result);
+                var responseDto = _mapper.Map<QuestionDetailDto>(result);
                 return responseDto;
             }
         }
