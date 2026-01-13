@@ -1,5 +1,4 @@
 using EduTrail.Application.Courses;
-using EduTrail.Application.Types;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
