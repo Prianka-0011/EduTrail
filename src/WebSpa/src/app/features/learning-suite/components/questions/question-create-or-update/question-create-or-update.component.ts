@@ -42,10 +42,24 @@ export class QuestionCreateOrUpdateComponent implements OnInit {
       this.questionService.getById(id).subscribe({
         next: data => {
           this.question = data;
-          this.types = data.types;
-          this.assesments = data.assesments;
+
+          if (!this.question.details) {
+            this.question.details = {
+              id: EMPTY_ID,
+              title: '',
+              language: '',
+              template: '',
+              questionTypeId: EMPTY_ID,
+              assessmentId: EMPTY_ID,
+              variationRules: []
+            };
+          }
 
           this.question.details.variationRules ??= [];
+
+          this.types = data.types ?? [];
+          this.assesments = data.assesments ?? [];
+
           this.question.details.variationRules.forEach(rule => {
             rule.optionsStr = rule.options?.join(', ') || '';
           });
