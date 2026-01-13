@@ -1,19 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { QuestionService } from '../services/question.service';
-import { IQuestionDetail } from '../interfaces/iQuestionDetail';
 import { IDropdownItem } from '../../../../../shared/interface/iDropdownItem';
 import { IQuestion } from '../interfaces/iQuestion';
-import { ActivatedRoute } from '@angular/router';
 
 const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 
@@ -26,7 +17,6 @@ const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 })
 export class QuestionCreateOrUpdateComponent implements OnInit {
 
-  @Input() questionId: string | null = null;
   @Output() saved = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -39,41 +29,34 @@ export class QuestionCreateOrUpdateComponent implements OnInit {
   isLanguageFocused = false;
   isTemplateFocused = false;
 
-  constructor(private questionService: QuestionService, private route: ActivatedRoute) { }
+  constructor(
+    private questionService: QuestionService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const questionId = params['id'];
-      this.questionService.getById(questionId).subscribe({
-        next: (data) => {
-          this.question = data
-          this.assesments = data.assesments
-          this.types = data.types
-           this.question.details.variationRules?.forEach(rule => {
-          rule.optionsStr = rule.options?.join(', ') || '';
-        });
+      const id = params['id'];
+      if (!id) return;
+
+      this.questionService.getById(id).subscribe({
+        next: data => {
+          this.question = data;
+          this.types = data.types;
+          this.assesments = data.assesments;
+
+          this.question.details.variationRules ??= [];
+          this.question.details.variationRules.forEach(rule => {
+            rule.optionsStr = rule.options?.join(', ') || '';
+          });
         }
-      })
+      });
     });
-  }
-
-
-  getEmptyQuestionDetail(): IQuestionDetail {
-    return {
-      id: EMPTY_ID,
-      title: '',
-      language: '',
-      template: '',
-      questionTypeId: EMPTY_ID,
-      assessmentId: EMPTY_ID,
-      variationRules: []
-    };
   }
 
   getEmptyQuestion(): IQuestion {
     return {
-      details:
-      {
+      details: {
         id: EMPTY_ID,
         title: '',
         language: '',
@@ -84,11 +67,22 @@ export class QuestionCreateOrUpdateComponent implements OnInit {
       },
       types: [],
       assesments: []
-
     };
   }
 
   addRule(): void {
+    if (!this.question.details) {
+      this.question.details = {
+        id: EMPTY_ID,
+        title: '',
+        language: '',
+        template: '',
+        questionTypeId: EMPTY_ID,
+        assessmentId: EMPTY_ID,
+        variationRules: []
+      };
+    }
+
     if (!this.question.details.variationRules) {
       this.question.details.variationRules = [];
     }
@@ -122,17 +116,12 @@ export class QuestionCreateOrUpdateComponent implements OnInit {
       delete (rule as any).optionsStr;
     });
 
-    if (this.question.details.id === EMPTY_ID) {
-      this.questionService.create(this.question.details).subscribe({
-        next: () => this.saved.emit(),
-        error: err => console.error(err)
-      });
-    } else {
-      this.questionService.update(this.question.details.id, this.question.details).subscribe({
-        next: () => this.saved.emit(),
-        error: err => console.error(err)
-      });
-    }
+    const action =
+      this.question.details.id === EMPTY_ID
+        ? this.questionService.create(this.question.details)
+        : this.questionService.update(this.question.details.id, this.question.details);
+
+    action.subscribe(() => this.saved.emit());
   }
 
   cancelForm(): void {

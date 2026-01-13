@@ -6,8 +6,9 @@ import { Router } from '@angular/router';
 import { QuestionService } from '../services/question.service';
 
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
-import { IQuestion } from '../interfaces/iQuestionDetail';
+
 import { QuestionCreateOrUpdateComponent } from '../question-create-or-update/question-create-or-update.component';
+import { IQuestionDetail } from '../interfaces/iQuestionDetail';
 // import { QuestionCreateOrUpdateComponent } from '../question-create-or-update/question-create-or-update.component';
 
 @Component({
@@ -18,9 +19,9 @@ import { QuestionCreateOrUpdateComponent } from '../question-create-or-update/qu
   styleUrls: ['./question-list.component.scss']
 })
 export class QuestionListComponent implements OnInit {
-  questions: IQuestion[] = [];
-  filtered: IQuestion[] = [];
-  paged: IQuestion[] = [];
+  questions: IQuestionDetail[] = [];
+  filtered: IQuestionDetail[] = [];
+  paged: IQuestionDetail[] = [];
 
   selectedQuestionId: string | null = null;
   drawerOpen = false;
@@ -30,7 +31,7 @@ export class QuestionListComponent implements OnInit {
   currentPage = 1;
   totalItems = 0;
 
-  sortColumn: keyof IQuestion | '' = '';
+  sortColumn: keyof IQuestionDetail | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   searchText = '';
@@ -91,7 +92,7 @@ export class QuestionListComponent implements OnInit {
     this.applySort();
   }
 
-  applySort(column?: keyof IQuestion) {
+  applySort(column?: keyof IQuestionDetail) {
     if (column) {
       if (this.sortColumn === column) {
         this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
