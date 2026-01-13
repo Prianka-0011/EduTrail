@@ -12,6 +12,10 @@ import { CommonModule } from '@angular/common';
 import { QuestionService } from '../services/question.service';
 import { IQuestionDetail } from '../interfaces/iQuestionDetail';
 import { IDropdownItem } from '../../../../../shared/interface/iDropdownItem';
+import { IQuestion } from '../interfaces/iQuestion';
+import { ActivatedRoute } from '@angular/router';
+
+const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 
 @Component({
   selector: 'app-question-create-or-update',
@@ -20,13 +24,13 @@ import { IDropdownItem } from '../../../../../shared/interface/iDropdownItem';
   templateUrl: './question-create-or-update.component.html',
   styleUrls: ['./question-create-or-update.component.scss']
 })
-export class QuestionCreateOrUpdateComponent implements OnInit, OnChanges {
+export class QuestionCreateOrUpdateComponent implements OnInit {
 
   @Input() questionId: string | null = null;
   @Output() saved = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
-  question: IQuestionDetail = this.getEmptyQuestion();
+  question: IQuestion = this.getEmptyQuestion();
 
   types: IDropdownItem[] = [];
   assesments: IDropdownItem[] = [];
@@ -35,74 +39,81 @@ export class QuestionCreateOrUpdateComponent implements OnInit, OnChanges {
   isLanguageFocused = false;
   isTemplateFocused = false;
 
-  constructor(private questionService: QuestionService) {}
+  constructor(private questionService: QuestionService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.loadDropdowns();
+    this.route.queryParams.subscribe(params => {
+      const questionId = params['id'];
+      this.questionService.getById(questionId).subscribe({
+        next: (data) => {
+          this.question = data
+          this.assesments = data.assesments
+          this.types = data.types
+           this.question.details.variationRules?.forEach(rule => {
+          rule.optionsStr = rule.options?.join(', ') || '';
+        });
+        }
+      })
+    });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes['questionId'] &&
-      this.questionId &&
-      this.questionId !== '00000000-0000-0000-0000-000000000000'
-    ) {
-      this.loadQuestion(this.questionId);
-    } else {
-      this.question = this.getEmptyQuestion();
-    }
-  }
 
-  getEmptyQuestion(): IQuestionDetail {
+  getEmptyQuestionDetail(): IQuestionDetail {
     return {
-      id: '00000000-0000-0000-0000-000000000000',
+      id: EMPTY_ID,
       title: '',
       language: '',
       template: '',
-      questionTypeId: null,
-      assessmentId: null,
+      questionTypeId: EMPTY_ID,
+      assessmentId: EMPTY_ID,
       variationRules: []
     };
   }
 
-  loadDropdowns(): void {
-    this.questionService.getCreateMeta().subscribe({
-      next: res => {
-        this.types = res.types;
-        this.assesments = res.assesments;
+  getEmptyQuestion(): IQuestion {
+    return {
+      details:
+      {
+        id: EMPTY_ID,
+        title: '',
+        language: '',
+        template: '',
+        questionTypeId: EMPTY_ID,
+        assessmentId: EMPTY_ID,
+        variationRules: []
       },
-      error: err => console.error(err)
-    });
-  }
+      types: [],
+      assesments: []
 
-  loadQuestion(id: string): void {
-    this.questionService.getById(id).subscribe({
-      next: data => {
-        this.question = data;
-        this.question.variationRules?.forEach(rule => {
-          rule.optionsStr = rule.options?.join(', ') || '';
-        });
-      },
-      error: err => console.error(err)
-    });
+    };
   }
 
   addRule(): void {
-    this.question.variationRules.push({
+    if (!this.question.details.variationRules) {
+      this.question.details.variationRules = [];
+    }
+
+    this.question.details.variationRules.push({
       key: '',
       options: [],
       optionsStr: ''
     });
   }
 
+
   removeRule(index: number): void {
-    this.question.variationRules.splice(index, 1);
+    if (!this.question.details.variationRules) {
+      this.question.details.variationRules = [];
+    }
+    this.question.details.variationRules.splice(index, 1);
   }
 
   onSubmit(form: NgForm): void {
     if (form.invalid) return;
-
-    this.question.variationRules.forEach(rule => {
+    if (!this.question.details.variationRules) {
+      this.question.details.variationRules = [];
+    }
+    this.question.details.variationRules.forEach(rule => {
       rule.options =
         rule.optionsStr
           ?.split(',')
@@ -111,13 +122,13 @@ export class QuestionCreateOrUpdateComponent implements OnInit, OnChanges {
       delete (rule as any).optionsStr;
     });
 
-    if (this.question.id === '00000000-0000-0000-0000-000000000000') {
-      this.questionService.create(this.question).subscribe({
+    if (this.question.details.id === EMPTY_ID) {
+      this.questionService.create(this.question.details).subscribe({
         next: () => this.saved.emit(),
         error: err => console.error(err)
       });
     } else {
-      this.questionService.update(this.question.id!, this.question).subscribe({
+      this.questionService.update(this.question.details.id, this.question.details).subscribe({
         next: () => this.saved.emit(),
         error: err => console.error(err)
       });
