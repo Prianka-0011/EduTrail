@@ -3,62 +3,37 @@
     <div class="card-body">
       <form #questionForm="ngForm" (ngSubmit)="onSubmit(questionForm)" novalidate>
         <div class="row g-3">
-
           <div class="col-md-12">
             <div class="floating">
-              <select
-                name="questionTypeId"
-                class="form-select"
-                [(ngModel)]="question.details.questionTypeId"
-                #questionTypeId="ngModel"
-                required
-              >
-                <option value="">Select Question Type</option>
+              <select name="questionTypeId" class="form-select" [(ngModel)]="question.details.questionTypeId"
+                #questionTypeId="ngModel" (focus)="isTypeFocused = true" (blur)="isTypeFocused = false"
+                [ngClass]="{ 'active': question.details.questionTypeId || isTypeFocused }" required>
                 <option *ngFor="let t of types" [value]="t.id">
                   {{ t.name }}
                 </option>
               </select>
               <label>Question Type *</label>
             </div>
-            <div class="text-danger small" *ngIf="questionTypeId.invalid && questionTypeId.touched">
-              Question Type is required
-            </div>
           </div>
 
           <div class="col-md-12">
             <div class="floating">
-              <select
-                name="assessmentId"
-                class="form-select"
-                [(ngModel)]="question.details.assessmentId"
-                #assessmentId="ngModel"
-                required
-              >
-                <option value="">Select Assessment</option>
+              <select name="assessmentId" class="form-select" [(ngModel)]="question.details.assessmentId"
+                #assessmentId="ngModel" (focus)="isAssessmentFocused = true" (blur)="isAssessmentFocused = false"
+                [ngClass]="{ 'active': question.details.assessmentId || isAssessmentFocused }" required>
                 <option *ngFor="let a of assesments" [value]="a.id">
                   {{ a.name }}
                 </option>
               </select>
               <label>Assessment *</label>
             </div>
-            <div class="text-danger small" *ngIf="assessmentId.invalid && assessmentId.touched">
-              Assessment is required
-            </div>
           </div>
 
           <div class="col-md-12">
             <div class="floating">
-              <input
-                type="text"
-                name="title"
-                class="form-control"
-                [(ngModel)]="question.details.title"
-                #title="ngModel"
-                (focus)="isTitleFocused = true"
-                (blur)="isTitleFocused = false"
-                [ngClass]="{ 'active': question.details.title || isTitleFocused }"
-                required
-              />
+              <input type="text" name="title" class="form-control" [(ngModel)]="question.details.title" #title="ngModel"
+                (focus)="isTitleFocused = true" (blur)="isTitleFocused = false"
+                [ngClass]="{ 'active': question.details.title || isTitleFocused }" required />
               <label>Question Title *</label>
             </div>
             <div class="text-danger small" *ngIf="title.invalid && title.touched">
@@ -68,16 +43,9 @@
 
           <div class="col-md-12">
             <div class="floating">
-              <select
-                name="language"
-                class="form-control"
-                [(ngModel)]="question.details.language"
-                #language="ngModel"
-                (focus)="isLanguageFocused = true"
-                (blur)="isLanguageFocused = false"
-                [ngClass]="{ 'active': question.details.language || isLanguageFocused }"
-                required
-              >
+              <select name="language" class="form-control" [(ngModel)]="question.details.language" #language="ngModel"
+                (focus)="isLanguageFocused = true" (blur)="isLanguageFocused = false"
+                [ngClass]="{ 'active': question.details.language || isLanguageFocused }" required>
                 <option value="C++">C++</option>
                 <option value="C#">C#</option>
                 <option value="Java">Java</option>
@@ -92,17 +60,9 @@
 
           <div class="col-md-12">
             <div class="floating">
-              <textarea
-                name="template"
-                class="form-control"
-                rows="4"
-                [(ngModel)]="question.details.template"
-                #template="ngModel"
-                (focus)="isTemplateFocused = true"
-                (blur)="isTemplateFocused = false"
-                [ngClass]="{ 'active': question.details.template || isTemplateFocused }"
-                required
-              ></textarea>
+              <textarea name="template" class="form-control" rows="4" [(ngModel)]="question.details.template"
+                #template="ngModel" (focus)="isTemplateFocused = true" (blur)="isTemplateFocused = false"
+                [ngClass]="{ 'active': question.details.template || isTemplateFocused }" required></textarea>
               <label>Template *</label>
             </div>
             <div class="text-danger small" *ngIf="template.invalid && template.touched">
@@ -110,39 +70,20 @@
             </div>
           </div>
 
-          <div
-            class="col-md-12"
-            *ngFor="let rule of question.details.variationRules; let i = index"
-          >
+          <div class="col-md-12" *ngFor="let rule of question.details.variationRules; let i = index">
             <div class="card mb-3 p-3">
               <div class="mb-2">
                 <label>Replacement Key</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="rule.key"
-                  name="key-{{ i }}"
-                  required
-                />
+                <input type="text" class="form-control" [(ngModel)]="rule.key" name="key-{{ i }}" required />
               </div>
 
               <div class="mb-2">
                 <label>Options (comma separated)</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="rule.optionsStr"
-                  name="options-{{ i }}"
-                  required
-                />
+                <input type="text" class="form-control" [(ngModel)]="rule.optionsStr" name="options-{{ i }}" required />
               </div>
 
               <div class="text-end">
-                <button
-                  type="button"
-                  class="btn btn-sm btn-danger"
-                  (click)="removeRule(i)"
-                >
+                <button type="button" class="btn btn-sm btn-danger" (click)="removeRule(i)">
                   Remove
                 </button>
               </div>
@@ -150,11 +91,7 @@
           </div>
 
           <div class="col-md-12">
-            <button
-              type="button"
-              class="btn btn-outline-primary"
-              (click)="addRule()"
-            >
+            <button type="button" class="btn btn-outline-primary" (click)="addRule()">
               + Replacement Key
             </button>
           </div>
@@ -162,17 +99,13 @@
         </div>
 
         <div class="mt-4 d-flex justify-content-end">
-          <button
-            type="button"
-            class="btn btn-secondary me-2"
-            (click)="cancelForm()"
-          >
+          <button type="button" class="btn btn-secondary me-2" (click)="cancelForm()">
             Cancel
           </button>
           <button type="submit" class="btn btn-primary">
             {{ question.details.id !== '00000000-0000-0000-0000-000000000000'
-              ? 'Update Question'
-              : 'Create Question' }}
+            ? 'Update Question'
+            : 'Create Question' }}
           </button>
         </div>
       </form>

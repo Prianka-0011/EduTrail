@@ -28,6 +28,8 @@ export class QuestionCreateOrUpdateComponent implements OnInit {
   isTitleFocused = false;
   isLanguageFocused = false;
   isTemplateFocused = false;
+  isTypeFocused = false;
+  isAssessmentFocused = false;
 
   constructor(
     private questionService: QuestionService,
