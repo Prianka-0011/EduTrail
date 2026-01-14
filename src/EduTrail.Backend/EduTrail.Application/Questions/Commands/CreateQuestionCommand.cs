@@ -49,7 +49,16 @@ namespace EduTrail.Application.Questions
                         });
                     }
                 }
-                var result = await _repository.CreateAsync(question);
+                var result = new Question();
+                try
+                {
+                    result = await _repository.CreateAsync(question);
+                }
+                catch (Exception ex)
+                {
+
+                }
+
                 var responseDto = _mapper.Map<QuestionDetailDto>(result);
                 return responseDto;
             }
