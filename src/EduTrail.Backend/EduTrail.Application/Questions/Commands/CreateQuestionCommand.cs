@@ -24,6 +24,8 @@ namespace EduTrail.Application.Questions
                 {
                     Id = Guid.NewGuid(),
                     Title = request.QuestionDetailDto.Title,
+                    AssessmentId = request.QuestionDetailDto.AssessmentId,
+                    QuestionTypeId = request.QuestionDetailDto.QuestionTypeId,
                     VariantTemplates = new List<QuestionVariantTemplate>(),
                     VariationRules = new List<QuestionVariationRule>()
                 };
