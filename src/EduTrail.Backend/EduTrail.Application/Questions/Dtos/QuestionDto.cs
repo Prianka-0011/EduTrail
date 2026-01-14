@@ -7,7 +7,6 @@ namespace EduTrail.Application.Questions
         public QuestionDetailDto Details { get; set; }
         public List<DropdownItemDto> Types { get; set; }
          public List<DropdownItemDto> Assesments { get; set; }
-         
     }
 
     public class QuestionDetailDto
