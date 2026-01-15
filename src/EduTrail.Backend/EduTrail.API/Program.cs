@@ -16,6 +16,7 @@ builder.Services.AddCors(option=> option.AddPolicy("AllowWebSpa", policy =>
           .AllowAnyHeader()
           .AllowAnyMethod();
 }));
+
 builder.Services.AddSpaStaticFiles(configuration =>
 {
     configuration.RootPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "..", "..", "WebSpa", "dist", "web-spa");
