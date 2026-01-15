@@ -6,10 +6,11 @@ namespace EduTrail.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AssesmentController : BaseController
+    public class AssesmentsController : BaseController
     {
-        public AssesmentController(IMediator mediator) : base(mediator)
+        public AssesmentsController(IMediator mediator) : base(mediator)
         {
         }
+        public async Task<>
     }
 }
