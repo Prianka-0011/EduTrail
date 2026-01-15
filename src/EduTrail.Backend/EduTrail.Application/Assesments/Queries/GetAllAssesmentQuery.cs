@@ -6,6 +6,7 @@ namespace EduTrail.Application.Assesments
     {
         public class Handler : IRequestHandler<GetAllAssesmentQuery, AssesmentDetailDto>
         {
+            private readonly 
             public Handler()
             {
                 
