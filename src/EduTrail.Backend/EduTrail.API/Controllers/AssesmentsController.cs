@@ -1,3 +1,4 @@
+using EduTrail.Application.Assesments;
 using EduTrail.Application.Courses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,10 @@ namespace EduTrail.API.Controllers
         public AssesmentsController(IMediator mediator) : base(mediator)
         {
         }
-        public async Task<>
+        public async Task<ActionResult<AssesmentDetailDto>> GetAll()
+        {
+            var result = _mediator.Send()
+            return Ok()
+        }
     }
 }
