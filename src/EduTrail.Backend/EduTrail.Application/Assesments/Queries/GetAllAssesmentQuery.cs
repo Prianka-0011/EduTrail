@@ -1,3 +1,4 @@
+using AutoMapper;
 using MediatR;
 
 namespace EduTrail.Application.Assesments
@@ -6,10 +7,12 @@ namespace EduTrail.Application.Assesments
     {
         public class Handler : IRequestHandler<GetAllAssesmentQuery, AssesmentDetailDto>
         {
-            private readonly 
-            public Handler()
+            private readonly IAssesmentRepository _repository;
+            private readonly IMapper _mapper;
+            public Handler(IAssesmentRepository repository, IMapper mapper)
             {
-                
+                _repository = repository;
+                _mapper = mapper;
             }
         }
     }
