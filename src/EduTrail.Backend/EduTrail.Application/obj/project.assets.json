@@ -151,14 +151,14 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "Edutrail.Domain/1.0.0": {
+      "EduTrail.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "compile": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
+          "bin/placeholder/EduTrail.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
+          "bin/placeholder/EduTrail.Domain.dll": {}
         }
       }
     }
@@ -405,17 +405,17 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Edutrail.Domain/1.0.0": {
+    "EduTrail.Domain/1.0.0": {
       "type": "project",
-      "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
-      "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
+      "path": "../EduTrail.Domain/EduTrail.Domain.csproj",
+      "msbuildProject": "../EduTrail.Domain/EduTrail.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "AutoMapper >= 12.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
-      "Edutrail.Domain >= 1.0.0",
+      "EduTrail.Domain >= 1.0.0",
       "MediatR >= 12.0.1",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 11.1.0"
     ]
@@ -453,8 +453,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj"
             }
           }
         }

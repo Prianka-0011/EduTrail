@@ -32,6 +32,8 @@ export class QuestionService {
         title: question.title,
         template: question.template,
         language: question.language,
+        questionTypeId: question.questionTypeId,
+        assessmentId: question.assessmentId,
         variationRules: question.variationRules?.map(rule => ({
           key: rule.key,
           options: rule.options
