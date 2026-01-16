@@ -12,9 +12,15 @@ namespace EduTrail.API.Controllers
         public AssesmentsController(IMediator mediator) : base(mediator)
         {
         }
-        public async Task<ActionResult<List<AssesmentDetailDto>>>GetAll()
+        public async Task<ActionResult<List<AssesmentDetailDto>>> GetAll()
         {
             var result = _mediator.Send(new GetAllAssesmentQuery());
+            return Ok(result);
+        }
+
+        public async Task<ActionResult<List<AssesmentDetailDto>>> GetById(Guid id)
+        {
+            var result = _mediator.Send(new GetAssesmentByIdQuery());
             return Ok(result);
         }
     }
