@@ -19,7 +19,6 @@ namespace EduTrail.Application.Assesments
             {
                 var entities = await _repository.GetAllAsync();
                 var results = _mapper.Map<List<AssesmentDetailDto>>(entities);
-
                 return results;
             }
         }

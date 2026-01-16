@@ -9,11 +9,11 @@ using EduTrail.Application.Assesments;
 
 namespace EduTrail.Infrastructure.Repositories
 {
-    public class AssementRepository : IAssesmentRepository
+    public class AssesmentRepository : IAssesmentRepository
     {
         private readonly AppDbContext _context;
 
-        public AssementRepository(AppDbContext context)
+        public AssesmentRepository(AppDbContext context)
         {
             _context = context;
         }
