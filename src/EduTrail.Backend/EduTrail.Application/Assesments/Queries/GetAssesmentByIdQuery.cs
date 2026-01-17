@@ -4,6 +4,9 @@ namespace EduTrail.Application.Assesments
 {
     public class GetAssesmentByIdQuery : IRequest<AssesmentDto>
     {
-        public 
+        public class GetAssesmentByIdQuery : IRequestHandler<GetAssesmentByIdQuery, AssesmentDto>
+        {
+            
+        }
     }
 }
