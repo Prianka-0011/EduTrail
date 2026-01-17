@@ -6,6 +6,7 @@ namespace EduTrail.Application.Assesments
 {
     public class GetAssesmentByIdQuery : IRequest<AssesmentDto>
     {
+        private Guid Id {get; set;}
         public class Handler : IRequestHandler<GetAssesmentByIdQuery, AssesmentDto>
         {
             private readonly IAssesmentRepository _repository;
@@ -15,9 +16,11 @@ namespace EduTrail.Application.Assesments
                 _repository = repository;
             }
 
-            public Task<AssesmentDto> Handle(GetAssesmentByIdQuery request, CancellationToken cancellationToken)
+            public async Task<AssesmentDto> Handle(GetAssesmentByIdQuery request, CancellationToken cancellationToken)
             {
-                throw new NotImplementedException();
+                var entity = await _repository.GetByIdAsync(request.Id);
+                var dto = _mapper.Map<AssesmentDto>(entity);
+                return dto;
             }
         }
     }
