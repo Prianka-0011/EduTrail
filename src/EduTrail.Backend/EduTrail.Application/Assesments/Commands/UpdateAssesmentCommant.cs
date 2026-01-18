@@ -1,10 +1,12 @@
 using AutoMapper;
+using EduTrail.Domain.Entities;
 using MediatR;
 
 namespace EduTrail.Application.Assesments
 {
     public class UpdateAssesmentCommant : IRequest<AssesmentDto>
     {
+        public AssesmentDto AssesmentDto { get; set; }
         public class Handler : IRequestHandler<UpdateAssesmentCommant, AssesmentDto>
         {
             private readonly IAssesmentRepository _repository;
@@ -15,9 +17,12 @@ namespace EduTrail.Application.Assesments
                 _mapper = mapper;
             }
 
-            public Task<AssesmentDto> Handle(UpdateAssesmentCommant request, CancellationToken cancellationToken)
+            public async Task<AssesmentDto> Handle(UpdateAssesmentCommant request, CancellationToken cancellationToken)
             {
-                throw new NotImplementedException();
+                var entity = _mapper.Map<Assessment>(request.AssesmentDto);
+                var result = await _repository.UpdateAsync(entity);
+                var assesmentDto = _mapper.Map<AssesmentDto>(result);
+                return assesmentDto;
             }
         }
     }
