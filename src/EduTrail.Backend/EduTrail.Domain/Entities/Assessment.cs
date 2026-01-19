@@ -13,6 +13,8 @@ namespace EduTrail.Domain.Entities
 
         [MaxLength(500)]
         public string Description { get; set; }
+        public int Credit	 { get; set; } = 0;
+        public int MaxScore	 { get; set; } = 0;
 
         [Required]
         public Guid CourseId { get; set; }

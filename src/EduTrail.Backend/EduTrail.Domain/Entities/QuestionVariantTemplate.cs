@@ -15,6 +15,7 @@ namespace EduTrail.Domain.Entities
 
         [Required, MaxLength(50)]
         public string Language { get; set; } // Example: "C++", "Python"
+        public int AttemptScore { get; set; } // Optional starter code snippet
 
         [Required]
         public string Template { get; set; } // Contains placeholders like {{DECLARATION}}
