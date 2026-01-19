@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IAssesment } from '../interface/iAssesment';
 
 @Component({
   selector: 'app-assesment-list',
@@ -8,17 +9,17 @@ import { Component } from '@angular/core';
 })
 export class AssesmentListComponent implements OnInit {
   constructor(private courseService: CourseService, private router: Router) { }
-  courses: ICourse[] = [];
+  courses: IAssesment[] = [];
   selectedCourseId: string | null = null;
-  filteredCourses: ICourse[] = [];
-  pagedCourses: ICourse[] = [];
+  filteredCourses: IAssesment[] = [];
+  pagedCourses: IAssesment[] = [];
 
   pageSizeOptions = [5, 10, 20];
   pageSize = 10;
   currentPage = 1;
   totalItems = 0;
 
-  sortColumn: keyof ICourse | '' = '';
+  sortColumn: keyof IAssesment | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   searchText = '';
@@ -89,7 +90,7 @@ export class AssesmentListComponent implements OnInit {
     this.applySort();
   }
 
-  applySort(column?: keyof ICourse) {
+  applySort(column?: keyof IAssesment) {
     if (column) {
       if (this.sortColumn === column) {
         this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
