@@ -23,5 +23,17 @@ namespace EduTrail.API.Controllers
             var result = _mediator.Send(new GetAssesmentByIdQuery());
             return Ok(result);
         }
+
+        public async Task<ActionResult<AssesmentDto>> Create([FromBody] CreateAssesmentCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        public async Task<ActionResult<AssesmentDto>> Update([FromBody] UpdateAssesmentCommant command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }   
     }
 }
