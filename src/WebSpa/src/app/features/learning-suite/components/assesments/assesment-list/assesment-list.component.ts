@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { IAssesment } from '../interface/iAssesment';
 import { Router } from '@angular/router';
+import { AssesmentService } from '../services/assesment.service';
+import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-assesment-list',
-  imports: [],
+  imports: [CommonModule, FormsModule, SideDrawerComponent],
   templateUrl: './assesment-list.component.html',
   styleUrl: './assesment-list.component.scss'
 })
 export class AssesmentListComponent implements OnInit {
-  constructor(private courseService: CourseService, private router: Router) { }
-  courses: IAssesment[] = [];
+  constructor(private assesmentService: AssesmentService, private router: Router) { }
+  assesments: IAssesment[] = [];
   selectedCourseId: string | null = null;
-  filteredCourses: IAssesment[] = [];
-  pagedCourses: IAssesment[] = [];
+  filteredAssesments: IAssesment[] = [];
+  pagedAssesments: IAssesment[] = [];
 
   pageSizeOptions = [5, 10, 20];
   pageSize = 10;
@@ -54,21 +58,21 @@ export class AssesmentListComponent implements OnInit {
     });
   }
 
-  onCourseSaved() {
+  onAssesmentSaved() {
     this.closeDrawer();
-    this.getCourses();
+    this.getAssesments();
   }
 
 
 
   ngOnInit(): void {
-    this.getCourses();
+    this.getAssesments();
   }
 
-  getCourses() {
-    this.courseService.getCourses().subscribe({
+  getAssesments() {
+    this.assesmentService.getAssesments().subscribe({
       next: (data) => {
-        this.courses = data;
+        this.assesments = data;
         this.applyFilter();
       },
       error: (err) => console.error(err)
@@ -80,12 +84,12 @@ export class AssesmentListComponent implements OnInit {
   applyFilter() {
     const value = this.searchText.toLowerCase().trim();
 
-    this.filteredCourses = this.courses.filter(c =>
-      c.courseCode.toLowerCase().includes(value) ||
-      c.courseName.toLowerCase().includes(value)
+    this.filteredAssesments = this.assesments.filter(c =>
+      c.title.toLowerCase().includes(value) ||
+      c.description.toLowerCase().includes(value)
     );
 
-    this.totalItems = this.filteredCourses.length;
+    this.totalItems = this.filteredAssesments.length;
     this.currentPage = 1;
 
     this.applySort();
@@ -104,7 +108,7 @@ export class AssesmentListComponent implements OnInit {
     if (this.sortColumn) {
       const key = this.sortColumn;
 
-      this.filteredCourses.sort((a, b) => {
+      this.filteredAssesments.sort((a, b) => {
         const valueA = String(a[key]).toLowerCase();
         const valueB = String(b[key]).toLowerCase();
 
@@ -120,7 +124,7 @@ export class AssesmentListComponent implements OnInit {
   updatePage() {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-    this.pagedCourses = this.filteredCourses.slice(start, end);
+    this.pagedAssesments = this.filteredAssesments.slice(start, end);
   }
 
   changePageSize(size: number) {

@@ -34,7 +34,7 @@ export class LearningSuiteComponent {
         { label: 'Create Course', icon: 'plus-circle', route: 'courses/create' }
       ]
     },
-    { label: 'Assignments', icon: 'clipboard-check', route: 'assignments' },
+    { label: 'Assignments', icon: 'clipboard-check', route: 'assesments' },
     { label: 'Settings', icon: 'gear', route: 'settings' }
   ];
 

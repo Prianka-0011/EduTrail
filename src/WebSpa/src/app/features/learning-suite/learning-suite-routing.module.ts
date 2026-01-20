@@ -5,6 +5,7 @@ import { CourseCreateOrUpdateComponent } from "./components/courses/course-creat
 import { UserDashboardComponent } from "./components/dashboard/user-dashboard/user-dashboard.component";
 import { TermListComponent } from "./components/terms/term-list/term-list.component";
 import { QuestionListComponent } from "./components/questions/question-list/question-list.component";
+import { AssesmentListComponent } from "./components/assesments/assesment-list/assesment-list.component";
 
 
 export const learningSuiteRoutes: Routes = [
@@ -28,8 +29,7 @@ export const learningSuiteRoutes: Routes = [
   {
     path: 'questions',
     component: QuestionListComponent
-  }
-  ,
+  },
   {
     path: 'courses',
     component: CourseListComponent,
@@ -43,5 +43,9 @@ export const learningSuiteRoutes: Routes = [
         component: CourseCreateOrUpdateComponent
       }
     ]
+  },
+  {
+    path: 'assesments',
+    component: AssesmentListComponent
   }
 ] 

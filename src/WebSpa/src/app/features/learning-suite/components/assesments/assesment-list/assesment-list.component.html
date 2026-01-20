@@ -1,21 +1,24 @@
 <div class="table-container">
-  <!-- Search -->
+  <!-- Header -->
   <div class="row justify-content-start">
     <div class="col-md-6 col-12 d-flex align-items-center gap-1">
-      <h2 class="mb-0">Courses</h2>
+      <h2 class="mb-0">Assessments</h2>
 
-      <button class="icon-btn" (click)="openCreateDrawer()" aria-label="Create course">
+      <button class="icon-btn" (click)="openCreateDrawer()" aria-label="Create assessment">
         <i class="bi bi-plus-lg me-1"></i>
       </button>
     </div>
-
   </div>
 
+  <!-- Search -->
   <div class="row justify-content-end">
-
     <div class="col-md-4 col-10 mb-4">
       <div class="search-input-wrapper">
-        <input type="text" class="form-control" placeholder="Search courses..." [(ngModel)]="searchText"
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search assessments..."
+          [(ngModel)]="searchText"
           (input)="applyFilter()" />
         <i class="bi bi-search search-icon"></i>
       </div>
@@ -27,40 +30,45 @@
     <table class="table custom-table">
       <thead>
         <tr>
-          <th (click)="applySort('courseCode')" role="button">
-            Code
-            <i class="bi ms-1" [ngClass]="{
-                 'bi-caret-up-fill': sortColumn === 'courseCode' && sortDirection === 'asc',
-                 'bi-caret-down-fill': sortColumn === 'courseCode' && sortDirection === 'desc'
-               }">
+          <th (click)="applySort('title')" role="button">
+            Title
+            <i
+              class="bi ms-1"
+              [ngClass]="{
+                'bi-caret-up-fill': sortColumn === 'title' && sortDirection === 'asc',
+                'bi-caret-down-fill': sortColumn === 'title' && sortDirection === 'desc'
+              }">
             </i>
           </th>
 
-          <th (click)="applySort('courseName')" role="button">
-            Name
-            <i class="bi ms-1" [ngClass]="{
-                 'bi-caret-up-fill': sortColumn === 'courseName' && sortDirection === 'asc',
-                 'bi-caret-down-fill': sortColumn === 'courseName' && sortDirection === 'desc'
-               }">
+          <th (click)="applySort('description')" role="button">
+            Description
+            <i
+              class="bi ms-1"
+              [ngClass]="{
+                'bi-caret-up-fill': sortColumn === 'description' && sortDirection === 'asc',
+                'bi-caret-down-fill': sortColumn === 'description' && sortDirection === 'desc'
+              }">
             </i>
           </th>
 
-          <th>
-            Action
-          </th>
+          <th>Action</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr *ngFor="let course of pagedCourses">
-          <td>{{ course.courseCode }}</td>
-          <td>{{ course.courseName }}</td>
-          <td><button class="edit-icon-btn" (click)="openEditDrawer(course.id)"><i
-                class="bi bi-pencil-square"></i></button></td>
+        <tr *ngFor="let assesment of pagedAssesments">
+          <td>{{ assesment.title }}</td>
+          <td>{{ assesment.description }}</td>
+          <td>
+            <button class="edit-icon-btn" (click)="openEditDrawer(assesment.id)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </td>
         </tr>
 
-        <tr *ngIf="pagedCourses.length === 0">
-          <td colspan="2" class="text-center py-4 text-muted">
+        <tr *ngIf="pagedAssesments.length === 0">
+          <td colspan="3" class="text-center py-4 text-muted">
             No records found
           </td>
         </tr>
@@ -70,11 +78,12 @@
 
   <!-- Paginator -->
   <div class="custom-paginator d-flex align-items-center mt-4">
-
     <div class="d-flex align-items-center gap-2">
       <span class="page-size-label">Items per page:</span>
 
-      <select class="form-select page-size-select" [value]="pageSize"
+      <select
+        class="form-select page-size-select"
+        [value]="pageSize"
         (change)="changePageSize($any($event.target).value)">
         <option *ngFor="let size of pageSizeOptions" [value]="size">
           {{ size }}
@@ -103,27 +112,31 @@
         <i class="bi bi-chevron-double-right"></i>
       </button>
     </div>
-
   </div>
-
 </div>
+
 <!-- SIDE DRAWER -->
-<app-side-drawer [opened]="drawerOpen" width="600px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
-  
+<app-side-drawer
+  [opened]="drawerOpen"
+  width="600px"
+  (closed)="closeDrawer()"
+  [headerTemplate]="drawerHeader">
+
   <ng-container *ngIf="drawerOpen">
-    <app-course-create-or-update
-      (saved)="onCourseSaved()"
-      (cancel)="closeDrawer()"
-      >
-    </app-course-create-or-update>
+    <!-- <app-course-create-or-update
+      (saved)="onAssesmentSaved()"
+      (cancel)="closeDrawer()">
+    </app-course-create-or-update> -->
   </ng-container>
 
 </app-side-drawer>
 
-<!-- Custom header template -->
+<!-- Drawer Header -->
 <ng-template #drawerHeader>
   <div class="d-flex align-items-center gap-2">
-    <i class="bi" [ngClass]="selectedCourseId ? 'bi bi-book-half' : 'bi bi-book-half'"></i>
-    <span>{{ selectedCourseId ? 'Edit Course Details' : 'Create New Course' }}</span>
+    <i class="bi bi-clipboard-check"></i>
+    <span>
+      {{ selectedCourseId ? 'Edit Assessment' : 'Create New Assessment' }}
+    </span>
   </div>
 </ng-template>
