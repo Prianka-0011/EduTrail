@@ -5,10 +5,11 @@ import { AssesmentService } from '../services/assesment.service';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CreateOrUpdateAssesmentComponent } from '../create-or-update-assesment/create-or-update-assesment.component';
 
 @Component({
   selector: 'app-assesment-list',
-  imports: [CommonModule, FormsModule, SideDrawerComponent],
+  imports: [CommonModule, FormsModule, SideDrawerComponent, CreateOrUpdateAssesmentComponent],
   templateUrl: './assesment-list.component.html',
   styleUrl: './assesment-list.component.scss'
 })
