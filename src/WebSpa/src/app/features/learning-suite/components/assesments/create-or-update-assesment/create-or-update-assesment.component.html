@@ -1,1 +1,59 @@
-<p>create-or-update-assesment works!</p>
+<div class="container mt-5">
+  <div class="card border-1">
+    <div class="card-body">
+      <form #assessmentForm="ngForm" (ngSubmit)="onSubmit(assessmentForm)" novalidate>
+        <div class="row g-3">
+
+          <div class="col-md-12">
+            <div class="floating">
+              <input type="text" id="title" name="title" class="form-control"
+                     [(ngModel)]="assessment.title"
+                     #title="ngModel"
+                     (focus)="isTitleFocused = true"
+                     (blur)="isTitleFocused = false"
+                     [ngClass]="{ 'active': assessment.title || isTitleFocused }"
+                     required />
+              <label for="title">Assessment Title *</label>
+            </div>
+            <div class="text-danger small mt-1" *ngIf="title.invalid && title.touched">
+              *Title is required
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="floating">
+              <textarea id="description" name="description" class="form-control"
+                        [(ngModel)]="assessment.description"
+                        rows="3"
+                        (focus)="isDescriptionFocused = true"
+                        (blur)="isDescriptionFocused = false"
+                        [ngClass]="{ 'active': assessment.description || isDescriptionFocused }">
+              </textarea>
+              <label for="description">Description</label>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="floating">
+              <input type="datetime-local" id="openDate" name="openDate" class="form-control"
+                     [(ngModel)]="assessment.openDate"
+                     #openDate="ngModel"
+                     (focus)="isOpenDateFocused = true"
+                     (blur)="isOpenDateFocused = false"
+                     [ngClass]="{ 'active': assessment.openDate || isOpenDateFocused }"
+                     required />
+              <label for="openDate">Open Date *</label>
+            </div>
+            <div class="text-danger small mt-1" *ngIf="openDate.invalid && openDate.touched">
+              *Open date is required
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="floating">
+              <input type="datetime-local" id="dueDate" name="dueDate" class="form-control"
+                     [(ngModel)]="assessment.dueDate"
+                     #dueDate="ngModel"
+                     (focus)="isDueDateFocused = true"
+                     (blur)="isDueDateFocused = false"
+                     [ngClass]="{ 'active': assessment.dueDate || isDueDateFocused }"

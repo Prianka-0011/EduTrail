@@ -1,6 +1,9 @@
-export interface IAssesment {
-    id: string;
-    title: string;
-    description: string;
-    totalMarks: number;
+export interface IAssessment {
+  id: string;
+  title: string;
+  description?: string;
+  courseId: string;
+  openDate: string;
+  dueDate: string;
+  maxPoints: number;
 }

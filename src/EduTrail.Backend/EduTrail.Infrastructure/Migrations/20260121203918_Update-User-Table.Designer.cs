@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260121192255_Update-User-Table")]
+    [Migration("20260121203918_Update-User-Table")]
     partial class UpdateUserTable
     {
         /// <inheritdoc />
@@ -31,6 +31,9 @@ namespace EduTrail.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("AvailableCredit")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
@@ -42,9 +45,6 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset?>("CreatedDate")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<int>("Credit")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -211,6 +211,12 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("CreatedDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<decimal>("MaxPoints")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("OriginalValue")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("QuestionTypeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -246,6 +252,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<string>("CorrectAnswerJson")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CorrectScorePercentage")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
