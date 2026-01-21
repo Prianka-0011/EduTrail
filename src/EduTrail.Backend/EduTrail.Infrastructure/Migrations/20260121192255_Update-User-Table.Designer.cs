@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260102065723_Add-Initial-Migration_IAuditable")]
-    partial class AddInitialMigration_IAuditable
+    [Migration("20260121192255_Update-User-Table")]
+    partial class UpdateUserTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("CreatedDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int>("Credit")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -50,6 +53,9 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset>("DueDate")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("MaxScore")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("OpenDate")
                         .HasColumnType("datetimeoffset");
@@ -208,10 +214,6 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid>("QuestionTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Template")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -278,6 +280,42 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("QuestionAttempt");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.QuestionLine", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CodeLine")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CorrectOrder")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IsMovable")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestionLines");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.QuestionType", b =>
                 {
                     b.Property<Guid>("Id")
@@ -317,6 +355,83 @@ namespace EduTrail.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("QuestionTypes");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.QuestionVariantTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AttemptScore")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Template")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("QuestionVariantTemplates");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.QuestionVariationRule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OptionsJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("QuestionVariationRules");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Role", b =>
@@ -424,7 +539,7 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Term");
+                    b.ToTable("Terms");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Test", b =>
@@ -638,6 +753,28 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("QuestionType");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.QuestionVariantTemplate", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Question", "Question")
+                        .WithMany("VariantTemplates")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.QuestionVariationRule", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Question", "Question")
+                        .WithMany("VariationRules")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.Submission", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.QuestionAttempt", "QuestionAttempt")
@@ -679,6 +816,13 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("Assessments");
 
                     b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
+                {
+                    b.Navigation("VariantTemplates");
+
+                    b.Navigation("VariationRules");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.QuestionType", b =>

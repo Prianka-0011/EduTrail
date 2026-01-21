@@ -40,6 +40,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("CreatedDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int>("Credit")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -47,6 +50,9 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset>("DueDate")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("MaxScore")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("OpenDate")
                         .HasColumnType("datetimeoffset");
@@ -353,6 +359,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AttemptScore")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");

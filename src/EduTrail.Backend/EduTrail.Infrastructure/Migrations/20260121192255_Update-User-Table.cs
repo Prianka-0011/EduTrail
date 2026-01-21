@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EduTrail.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddInitialMigration_IAuditable : Migration
+    public partial class UpdateUserTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -72,6 +72,25 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "QuestionLines",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CodeLine = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CorrectOrder = table.Column<int>(type: "int", nullable: false),
+                    IsMovable = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionLines", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "QuestionTypes",
                 columns: table => new
                 {
@@ -108,7 +127,7 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Term",
+                name: "Terms",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -123,7 +142,7 @@ namespace EduTrail.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Term", x => x.Id);
+                    table.PrimaryKey("PK_Terms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -213,9 +232,9 @@ namespace EduTrail.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseOfferings_Term_TermId",
+                        name: "FK_CourseOfferings_Terms_TermId",
                         column: x => x.TermId,
-                        principalTable: "Term",
+                        principalTable: "Terms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -256,6 +275,8 @@ namespace EduTrail.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Credit = table.Column<int>(type: "int", nullable: false),
+                    MaxScore = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OpenDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DueDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
@@ -317,7 +338,6 @@ namespace EduTrail.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Template = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuestionTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AssessmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -338,6 +358,55 @@ namespace EduTrail.Infrastructure.Migrations
                         name: "FK_Questions_QuestionTypes_QuestionTypeId",
                         column: x => x.QuestionTypeId,
                         principalTable: "QuestionTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionVariantTemplates",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Language = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    AttemptScore = table.Column<int>(type: "int", nullable: false),
+                    Template = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionVariantTemplates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_QuestionVariantTemplates_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionVariationRules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    OptionsJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionVariationRules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_QuestionVariationRules_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -388,6 +457,16 @@ namespace EduTrail.Infrastructure.Migrations
                 column: "QuestionTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_QuestionVariantTemplates_QuestionId",
+                table: "QuestionVariantTemplates",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionVariationRules_QuestionId",
+                table: "QuestionVariationRules",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RoleUser_UsersId",
                 table: "RoleUser",
                 column: "UsersId");
@@ -408,7 +487,13 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Enrollments");
 
             migrationBuilder.DropTable(
-                name: "Questions");
+                name: "QuestionLines");
+
+            migrationBuilder.DropTable(
+                name: "QuestionVariantTemplates");
+
+            migrationBuilder.DropTable(
+                name: "QuestionVariationRules");
 
             migrationBuilder.DropTable(
                 name: "RoleUser");
@@ -420,10 +505,7 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Tests");
 
             migrationBuilder.DropTable(
-                name: "Assessments");
-
-            migrationBuilder.DropTable(
-                name: "QuestionTypes");
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "Role");
@@ -432,13 +514,19 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QuestionAttempt");
 
             migrationBuilder.DropTable(
+                name: "Assessments");
+
+            migrationBuilder.DropTable(
+                name: "QuestionTypes");
+
+            migrationBuilder.DropTable(
                 name: "CourseOfferings");
 
             migrationBuilder.DropTable(
                 name: "Courses");
 
             migrationBuilder.DropTable(
-                name: "Term");
+                name: "Terms");
 
             migrationBuilder.DropTable(
                 name: "Users");
