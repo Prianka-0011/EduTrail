@@ -57,7 +57,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let assesment of pagedAssesments">
+        <tr *ngFor="let assesment of pagedAssessments">
           <td>{{ assesment.title }}</td>
           <td>{{ assesment.description }}</td>
           <td>
@@ -67,7 +67,7 @@
           </td>
         </tr>
 
-        <tr *ngIf="pagedAssesments.length === 0">
+        <tr *ngIf="pagedAssessments.length === 0">
           <td colspan="3" class="text-center py-4 text-muted">
             No records found
           </td>
@@ -123,10 +123,10 @@
   [headerTemplate]="drawerHeader">
 
   <ng-container *ngIf="drawerOpen">
-    <app-create-or-update-assesment
+    <!-- <app-assessment-create-or-update
       (saved)="onAssesmentSaved()"
       (cancel)="closeDrawer()">
-    </app-create-or-update-assesment>
+    </app-assessment-create-or-update> -->
   </ng-container>
 
 </app-side-drawer>

@@ -1,6 +1,6 @@
 namespace EduTrail.Application.Assesments
 {
-    public class AssesmentDetailDto
+    public class AssessmentDetailDto
     {
         public Guid Id { get; set; }
 

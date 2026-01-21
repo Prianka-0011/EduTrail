@@ -1,31 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { IAssesment } from '../interface/iAssesment';
+import { IAssessment } from '../interface/iAssessment';
 import { Router } from '@angular/router';
-import { AssesmentService } from '../services/assesment.service';
+
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CreateOrUpdateAssesmentComponent } from '../create-or-update-assesment/create-or-update-assesment.component';
+
+import { AssessmentService } from '../services/assessment.service';
+import { CreateOrEditAssessmentComponent } from '../create-or-edit-assessment/create-or-edit-assessment.component';
+// import { CreateOrEditAssessmentComponent } from '../create-or-edit-assessment/create-or-edit-assessment.component';
+
 
 @Component({
-  selector: 'app-assesment-list',
-  imports: [CommonModule, FormsModule, SideDrawerComponent, CreateOrUpdateAssesmentComponent],
-  templateUrl: './assesment-list.component.html',
-  styleUrl: './assesment-list.component.scss'
+  selector: 'app-assessment-list',
+  imports: [CommonModule, FormsModule, SideDrawerComponent, CreateOrEditAssessmentComponent],
+  templateUrl: './assessment-list.component.html',
+  styleUrl: './assessment-list.component.scss'
 })
-export class AssesmentListComponent implements OnInit {
-  constructor(private assesmentService: AssesmentService, private router: Router) { }
-  assesments: IAssesment[] = [];
+export class AssessmentListComponent implements OnInit {
+  constructor(private assessmentService: AssessmentService, private router: Router) { }
+  assessments: IAssessment[] = [];
   selectedCourseId: string | null = null;
-  filteredAssesments: IAssesment[] = [];
-  pagedAssesments: IAssesment[] = [];
+  filteredAssessments: IAssessment[] = [];
+  pagedAssessments: IAssessment[] = [];
 
   pageSizeOptions = [5, 10, 20];
   pageSize = 10;
   currentPage = 1;
   totalItems = 0;
 
-  sortColumn: keyof IAssesment | '' = '';
+  sortColumn: keyof IAssessment | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   searchText = '';
@@ -71,9 +75,9 @@ export class AssesmentListComponent implements OnInit {
   }
 
   getAssesments() {
-    this.assesmentService.getAssesments().subscribe({
+    this.assessmentService.getAssessments().subscribe({
       next: (data) => {
-        this.assesments = data;
+        this.assessments = data;
         this.applyFilter();
       },
       error: (err) => console.error(err)
@@ -85,18 +89,18 @@ export class AssesmentListComponent implements OnInit {
   applyFilter() {
     const value = this.searchText.toLowerCase().trim();
 
-    this.filteredAssesments = this.assesments.filter(c =>
+    this.filteredAssessments = this.assessments.filter(c =>
       c.title.toLowerCase().includes(value) ||
-      c.description.toLowerCase().includes(value)
+      c.description?.toLowerCase().includes(value)
     );
 
-    this.totalItems = this.filteredAssesments.length;
+    this.totalItems = this.filteredAssessments.length;
     this.currentPage = 1;
 
     this.applySort();
   }
 
-  applySort(column?: keyof IAssesment) {
+  applySort(column?: keyof IAssessment) {
     if (column) {
       if (this.sortColumn === column) {
         this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -109,7 +113,7 @@ export class AssesmentListComponent implements OnInit {
     if (this.sortColumn) {
       const key = this.sortColumn;
 
-      this.filteredAssesments.sort((a, b) => {
+      this.filteredAssessments.sort((a, b) => {
         const valueA = String(a[key]).toLowerCase();
         const valueB = String(b[key]).toLowerCase();
 
@@ -125,7 +129,7 @@ export class AssesmentListComponent implements OnInit {
   updatePage() {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-    this.pagedAssesments = this.filteredAssesments.slice(start, end);
+    this.pagedAssessments = this.filteredAssessments.slice(start, end);
   }
 
   changePageSize(size: number) {

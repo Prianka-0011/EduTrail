@@ -5,7 +5,8 @@ import { CourseCreateOrUpdateComponent } from "./components/courses/course-creat
 import { UserDashboardComponent } from "./components/dashboard/user-dashboard/user-dashboard.component";
 import { TermListComponent } from "./components/terms/term-list/term-list.component";
 import { QuestionListComponent } from "./components/questions/question-list/question-list.component";
-import { AssesmentListComponent } from "./components/assesments/assesment-list/assesment-list.component";
+import { AssessmentListComponent } from "./components/assesments/assessment-list/assessment-list.component";
+
 
 
 export const learningSuiteRoutes: Routes = [
@@ -46,6 +47,6 @@ export const learningSuiteRoutes: Routes = [
   },
   {
     path: 'assesments',
-    component: AssesmentListComponent
+    component: AssessmentListComponent
   }
 ] 

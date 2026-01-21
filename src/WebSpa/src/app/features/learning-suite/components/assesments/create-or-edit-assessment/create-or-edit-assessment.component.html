@@ -24,6 +24,7 @@
             <div class="floating">
               <textarea id="description" name="description" class="form-control"
                         [(ngModel)]="assessment.description"
+                        #description="ngModel"
                         rows="3"
                         (focus)="isDescriptionFocused = true"
                         (blur)="isDescriptionFocused = false"
@@ -57,3 +58,25 @@
                      (focus)="isDueDateFocused = true"
                      (blur)="isDueDateFocused = false"
                      [ngClass]="{ 'active': assessment.dueDate || isDueDateFocused }"
+                     required />
+              <label for="dueDate">Due Date *</label>
+            </div>
+            <div class="text-danger small mt-1" *ngIf="dueDate.invalid && dueDate.touched">
+              *Due date is required
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="cancelForm()">Cancel</button>
+          <button type="submit" class="btn btn-primary"
+                  [disabled]="assessmentForm.invalid">
+            {{ assessment.id !== emptyGuid ? 'Update Assessment' : 'Create Assessment' }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
