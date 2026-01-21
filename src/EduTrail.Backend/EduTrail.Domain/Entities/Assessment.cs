@@ -15,7 +15,6 @@ namespace EduTrail.Domain.Entities
         public string Description { get; set; }
         public int AvailableCredit	 { get; set; } = 0;
         public int MaxScore	 { get; set; } = 0; // Highest possible score from all the assessment questions
-        public decimal TotalPoint { get; set; }
 
         [Required]
         public Guid CourseId { get; set; }

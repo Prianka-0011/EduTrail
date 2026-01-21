@@ -9,12 +9,13 @@ namespace EduTrail.Domain.Entities
 
         [Required, MaxLength(200)]
         public string Title { get; set; }
+        public int OriginalValue { get; set; }
+        public decimal MaxPoints { get; set; }
+
 
         [Required]
         public Guid QuestionTypeId { get; set; }
         public QuestionType QuestionType { get; set; }
-        public int Value { get; set; }
-        public decimal TotalPoint { get; set; }
 
 
         public Guid AssessmentId { get; set; }
