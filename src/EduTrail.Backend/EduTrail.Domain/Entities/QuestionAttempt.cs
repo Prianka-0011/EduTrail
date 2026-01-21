@@ -19,6 +19,7 @@ namespace EduTrail.Domain.Entities
         public string? StudentAnswerJson { get; set; }
 
         public decimal Score { get; set; }  // 0.0 – 1.0
+        public int CorrectScorePercentage { get; set; }
 
         // Audit fields
         public DateTimeOffset? CreatedDate { get; set; }

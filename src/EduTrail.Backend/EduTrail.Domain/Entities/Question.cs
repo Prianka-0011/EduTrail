@@ -13,6 +13,8 @@ namespace EduTrail.Domain.Entities
         [Required]
         public Guid QuestionTypeId { get; set; }
         public QuestionType QuestionType { get; set; }
+        public int Value { get; set; }
+        public decimal TotalPoint { get; set; }
 
 
         public Guid AssessmentId { get; set; }
