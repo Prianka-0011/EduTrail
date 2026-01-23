@@ -1,4 +1,4 @@
-namespace EduTrail.Application.Assesments
+namespace EduTrail.Application.Assessments
 {
     public class AssessmentDetailDto
     {

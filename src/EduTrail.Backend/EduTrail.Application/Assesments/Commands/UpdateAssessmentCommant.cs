@@ -2,16 +2,16 @@ using AutoMapper;
 using EduTrail.Domain.Entities;
 using MediatR;
 
-namespace EduTrail.Application.Assesments
+namespace EduTrail.Application.Assessments
 {
     public class UpdateAssessmentCommand : IRequest<AssessmentDetailDto>
     {
         public AssessmentDetailDto AssessmentDetailDto { get; set; }
         public class Handler : IRequestHandler<UpdateAssessmentCommand, AssessmentDetailDto>
         {
-            private readonly IAssesmentRepository _repository;
+            private readonly IAssessmentRepository _repository;
             private readonly IMapper _mapper;
-            public Handler(IAssesmentRepository repository, IMapper mapper)
+            public Handler(IAssessmentRepository repository, IMapper mapper)
             {
                 _repository = repository;
                 _mapper = mapper;

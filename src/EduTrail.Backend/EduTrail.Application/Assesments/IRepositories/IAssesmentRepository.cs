@@ -1,8 +1,8 @@
 using EduTrail.Domain.Entities;
 
-namespace EduTrail.Application.Assesments
+namespace EduTrail.Application.Assessments
 {
-    public interface IAssesmentRepository
+    public interface IAssessmentRepository
     {
          Task<Assessment> CreateAsync(Assessment Assessment);
         Task<IEnumerable<Assessment>> GetAllAsync();

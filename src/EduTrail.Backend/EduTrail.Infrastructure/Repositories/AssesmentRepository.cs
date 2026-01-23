@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using EduTrail.Infrastructure.Data;
 using EduTrail.Domain.Entities;
 using EduTrail.Application.Courses;
-using EduTrail.Application.Assesments;
+using EduTrail.Application.Assessments;
 
 namespace EduTrail.Infrastructure.Repositories
 {
-    public class AssesmentRepository : IAssesmentRepository
+    public class AssesmentRepository : IAssessmentRepository
     {
         private readonly AppDbContext _context;
 

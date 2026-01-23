@@ -2,16 +2,16 @@ using AutoMapper;
 using EduTrail.Application.CourseOfferings;
 using MediatR;
 
-namespace EduTrail.Application.Assesments
+namespace EduTrail.Application.Assessments
 {
     public class GetAssessmentByIdQuery : IRequest<AssessmentDto>
     {
         private Guid Id {get; set;}
         public class Handler : IRequestHandler<GetAssessmentByIdQuery, AssessmentDto>
         {
-            private readonly IAssesmentRepository _repository;
+            private readonly IAssessmentRepository _repository;
             private readonly IMapper _mapper;
-            public Handler(IAssesmentRepository repository, IMapper mapper)
+            public Handler(IAssessmentRepository repository, IMapper mapper)
             {
                 _repository = repository;
             }

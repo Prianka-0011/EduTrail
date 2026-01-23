@@ -1,6 +1,6 @@
 using EduTrail.Domain.Interfaces;
 
-namespace EduTrail.Application.Assesments
+namespace EduTrail.Application.Assessments
 {
     public class AssessmentDto
     {

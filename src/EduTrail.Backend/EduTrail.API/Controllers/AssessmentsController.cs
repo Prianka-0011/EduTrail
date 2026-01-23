@@ -1,4 +1,5 @@
-using EduTrail.Application.Assesments;
+
+using EduTrail.Application.Assessments;
 using EduTrail.Application.Courses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ namespace EduTrail.API.Controllers
         public AssessmentsController(IMediator mediator) : base(mediator)
         {
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<List<AssessmentDetailDto>>> GetAll()
         {
