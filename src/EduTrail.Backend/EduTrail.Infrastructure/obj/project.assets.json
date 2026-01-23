@@ -1613,7 +1613,7 @@
         "dependencies": {
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
-          "EduTrail.Domain": "1.0.0",
+          "Edutrail.Domain": "1.0.0",
           "MediatR": "12.0.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0"
         },
@@ -1624,14 +1624,14 @@
           "bin/placeholder/EduTrail.Application.dll": {}
         }
       },
-      "EduTrail.Domain/1.0.0": {
+      "Edutrail.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "compile": {
-          "bin/placeholder/EduTrail.Domain.dll": {}
+          "bin/placeholder/Edutrail.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/EduTrail.Domain.dll": {}
+          "bin/placeholder/Edutrail.Domain.dll": {}
         }
       }
     }
@@ -4318,16 +4318,16 @@
       "path": "../EduTrail.Application/EduTrail.Application.csproj",
       "msbuildProject": "../EduTrail.Application/EduTrail.Application.csproj"
     },
-    "EduTrail.Domain/1.0.0": {
+    "Edutrail.Domain/1.0.0": {
       "type": "project",
-      "path": "../EduTrail.Domain/EduTrail.Domain.csproj",
-      "msbuildProject": "../EduTrail.Domain/EduTrail.Domain.csproj"
+      "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
+      "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "EduTrail.Application >= 1.0.0",
-      "EduTrail.Domain >= 1.0.0",
+      "Edutrail.Domain >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 8.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.10",
@@ -4372,8 +4372,8 @@
             "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj": {
               "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj"
             },
-            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj"
             }
           }
         }
