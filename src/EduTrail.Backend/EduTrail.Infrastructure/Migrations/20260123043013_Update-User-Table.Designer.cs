@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260121203918_Update-User-Table")]
+    [Migration("20260123043013_Update-User-Table")]
     partial class UpdateUserTable
     {
         /// <inheritdoc />
