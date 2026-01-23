@@ -31,6 +31,7 @@ export class AssessmentService {
 
   createAssessment(assessment: IAssessment) : Observable<IAssessment>
   {
+    console.log('Creating assessment:', assessment);
     return this.http.post<IAssessment>(this.baseUrl, assessment);
   }
 }
