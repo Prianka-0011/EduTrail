@@ -6,4 +6,5 @@ export interface IAssessment {
   openDate: string;
   dueDate: string;
   maxPoints: number;
+  availableCredit: number;
 }

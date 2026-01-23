@@ -29,13 +29,15 @@ export class CreateOrEditAssessmentComponent implements OnInit, OnChanges {
     courseId: '',
     openDate: '',
     dueDate: '',
-    maxPoints: 0
+    maxPoints: 0,
+    availableCredit: 100
   };
 
   isTitleFocused = false;
   isDescriptionFocused = false;
   isOpenDateFocused = false;
   isDueDateFocused = false;
+  isAvailableCreditFocused = false;
 
   constructor(
     private route: ActivatedRoute,

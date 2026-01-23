@@ -20,6 +20,22 @@
             </div>
           </div>
 
+           <div class="col-md-12">
+            <div class="floating">
+              <input type="number" id="availableCredit" name="availableCredit" class="form-control"
+                     [(ngModel)]="assessment.availableCredit"
+                     #availableCredit="ngModel"
+                     (focus)="isAvailableCreditFocused = true"
+                     (blur)="isAvailableCreditFocused = false"
+                     [ngClass]="{ 'active': assessment.availableCredit || isAvailableCreditFocused }"
+                     required />
+              <label for="availableCredit">Available Credit *</label>
+            </div>
+            <div class="text-danger small mt-1" *ngIf="availableCredit.invalid && availableCredit.touched">
+              *Available credit is required
+            </div>
+          </div>
+
           <div class="col-md-12">
             <div class="floating">
               <textarea id="description" name="description" class="form-control"
