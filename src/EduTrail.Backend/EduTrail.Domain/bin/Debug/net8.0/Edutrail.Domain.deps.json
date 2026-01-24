@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "Edutrail.Domain/1.0.0": {
+      "EduTrail.Domain/1.0.0": {
         "runtime": {
-          "Edutrail.Domain.dll": {}
+          "EduTrail.Domain.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "Edutrail.Domain/1.0.0": {
+    "EduTrail.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
