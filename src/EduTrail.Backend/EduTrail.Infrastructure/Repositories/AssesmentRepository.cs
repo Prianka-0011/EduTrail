@@ -27,15 +27,7 @@ namespace EduTrail.Infrastructure.Repositories
 
         public async Task<IEnumerable<Assessment>> GetAllAsync()
         {
-            try
-            {
-                var test = _context.Assessments.ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                var msg = ex.Message;
-            }
-            // return await _context.Assessments.ToListAsync();
+            return await _context.Assessments.ToListAsync();
         }
 
         public async Task<Assessment> GetByIdAsync(Guid id)
