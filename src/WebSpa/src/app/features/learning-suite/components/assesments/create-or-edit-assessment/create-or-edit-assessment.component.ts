@@ -29,7 +29,7 @@ export class CreateOrEditAssessmentComponent implements OnInit, OnChanges {
     courseId: '',
     openDate: '',
     dueDate: '',
-    maxPoints: 0,
+    maxScore: 0,
     availableCredit: 100
   };
 
@@ -75,7 +75,7 @@ export class CreateOrEditAssessmentComponent implements OnInit, OnChanges {
     if (!form.valid) return;
 
     if (this.assessment.id !== this.emptyGuid) {
-      this.assessmentService.updateAssessment(this.assessment).subscribe({
+      this.assessmentService.updateAssessment(this.assessment.id, this.assessment).subscribe({
         next: () => this.saved.emit()
       });
     } else {

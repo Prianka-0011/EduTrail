@@ -17,17 +17,9 @@ namespace EduTrail.Application.Assessments
 
             public async Task<List<AssessmentDetailDto>> Handle(GetAllAssessmentQuery request, CancellationToken cancellationToken)
             {
-                IEnumerable<Domain.Entities.Assessment> entities = new List<Domain.Entities.Assessment>();
-                try
-                {
-                    entities = await _repository.GetAllAsync();
-                }
-                catch (Exception ex)
-                {
-                    var msg = ex.Message;
-                }
-                var results = _mapper.Map<List<AssessmentDetailDto>>(entities);
-                return results;
+                var entities = await _repository.GetAllAsync();
+                return _mapper.Map<List<AssessmentDetailDto>>(entities);
+
             }
         }
     }

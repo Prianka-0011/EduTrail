@@ -25,13 +25,32 @@ export class AssessmentService {
     return this.http.get<IAssessment>(this.baseUrl + assesmentId);
   }
 
-  updateAssessment(assessment: IAssessment): Observable<IAssessment> {
-    return this.http.put<IAssessment>(this.baseUrl + assessment.id, assessment);
+  updateAssessment(id: string, assessment: IAssessment): Observable<IAssessment> {
+    const payload = {
+      assessmentDetailDto: {
+        title: assessment.title,
+        description: assessment.description,
+        courseId: assessment.courseId,
+        availableCredit: assessment.availableCredit,
+        maxScore: assessment.maxScore
+      }
+    };
+
+    return this.http.put<IAssessment>(`${this.baseUrl}${id}`, payload);
   }
 
-  createAssessment(assessment: IAssessment) : Observable<IAssessment>
-  {
-    console.log('Creating assessment:', assessment);
-    return this.http.post<IAssessment>(this.baseUrl, assessment);
+  createAssessment(assessment: IAssessment): Observable<IAssessment> {
+    const payload = {
+      assessmentDetailDto: {
+        title: assessment.title,
+        description: assessment.description,
+        courseId: assessment.courseId,
+        availableCredit: assessment.availableCredit,
+        maxScore: assessment.maxScore
+      }
+    };
+
+    return this.http.post<IAssessment>(this.baseUrl, payload);
   }
+
 }

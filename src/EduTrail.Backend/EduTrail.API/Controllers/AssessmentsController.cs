@@ -17,14 +17,14 @@ namespace EduTrail.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<AssessmentDetailDto>>> GetAll()
         {
-            var result = _mediator.Send(new GetAllAssessmentQuery());
+            var result = await _mediator.Send(new GetAllAssessmentQuery());
             return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<List<AssessmentDetailDto>>> GetById(Guid id)
         {
-            var result = _mediator.Send(new GetAssessmentByIdQuery());
+            var result = await _mediator.Send(new GetAssessmentByIdQuery());
             return Ok(result);
         }
 

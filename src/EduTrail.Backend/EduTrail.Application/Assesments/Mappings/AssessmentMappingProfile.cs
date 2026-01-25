@@ -8,8 +8,8 @@ namespace EduTrail.Application.Assessments
         public AssessmentMappingProfile()
         {
 
-            CreateMap<AssessmentDto, Assessment>();
-            CreateMap<Assessment, AssessmentDto>();
+            CreateMap<AssessmentDetailDto, Assessment>();
+            CreateMap<Assessment, AssessmentDetailDto>();
         }
     }
 

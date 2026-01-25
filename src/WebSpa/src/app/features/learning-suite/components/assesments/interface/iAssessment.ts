@@ -1,10 +1,11 @@
 export interface IAssessment {
   id: string;
   title: string;
-  description?: string;
-  courseId: string;
-  openDate: string;
-  dueDate: string;
-  maxPoints: number;
-  availableCredit: number;
+  description?: string | null;
+  availableCredit?: number | null;
+  maxScore?: number | null;
+  courseId?: string | null;
+  courseName?: string | null;
+  openDate?: string;
+  dueDate?: string;
 }
