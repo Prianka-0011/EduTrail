@@ -22,9 +22,9 @@ namespace EduTrail.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<AssessmentDetailDto>>> GetById(Guid id)
+        public async Task<ActionResult<AssessmentDetailDto>> GetById(Guid id)
         {
-            var result = await _mediator.Send(new GetAssessmentByIdQuery());
+            var result = await _mediator.Send(new GetAssessmentByIdQuery { Id = id });
             return Ok(result);
         }
 

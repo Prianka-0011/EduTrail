@@ -6,7 +6,7 @@ namespace EduTrail.Application.Assessments
 {
     public class GetAssessmentByIdQuery : IRequest<AssessmentDto>
     {
-        private Guid Id {get; set;}
+        public Guid Id {get; set;}
         public class Handler : IRequestHandler<GetAssessmentByIdQuery, AssessmentDto>
         {
             private readonly IAssessmentRepository _repository;

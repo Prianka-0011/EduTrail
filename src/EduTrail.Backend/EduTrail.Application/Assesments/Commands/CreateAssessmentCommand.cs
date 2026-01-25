@@ -19,6 +19,7 @@ namespace EduTrail.Application.Assessments
             public async Task<AssessmentDetailDto> Handle(CreateAssessmentCommand request, CancellationToken cancellationToken)
             {
                 var entity = _mapper.Map<Assessment>(request.AssessmentDetailDto);
+                entity.CourseId = Guid.Parse("ab2455ef-c41a-4d30-b47b-08de5bc13710");
                 var result = await _repository.CreateAsync(entity);
                 var assessmentDto = _mapper.Map<AssessmentDetailDto>(result);
                 return assessmentDto;
