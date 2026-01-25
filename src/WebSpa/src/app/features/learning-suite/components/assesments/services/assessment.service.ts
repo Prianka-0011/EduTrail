@@ -10,7 +10,7 @@ import { IAssessment } from '../interface/iAssessment';
 })
 export class AssessmentService {
 
-  baseUrl: string = enviroment.baseUrl + 'assesments/';
+  baseUrl: string = enviroment.baseUrl + 'assessments/';
   constructor(private http: HttpClient) { }
 
   getAssessments(): Observable<IAssessment[]> {
