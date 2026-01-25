@@ -3,15 +3,14 @@ using EduTrail.Application.Questions;
 using EduTrail.Domain.Entities;
 namespace EduTrail.Application.Courses
 {
-   public class QuestionMappingProfile : Profile
-{
-    public QuestionMappingProfile()
+    public class CourseMappingProfile : Profile
     {
-        CreateMap<QuestionDto, Question>();
-            // .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()); 
+        public CourseMappingProfile()
+        {
 
-        CreateMap<Question, QuestionDto>();
+            CreateMap<CourseDto, Course>();
+            CreateMap<Course, CourseDto>();
+        }
     }
-}
 
 }
