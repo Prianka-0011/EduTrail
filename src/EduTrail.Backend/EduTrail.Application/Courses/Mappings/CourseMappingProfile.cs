@@ -7,7 +7,6 @@ namespace EduTrail.Application.Courses
     {
         public CourseMappingProfile()
         {
-
             CreateMap<CourseDto, Course>();
             CreateMap<Course, CourseDto>();
         }
