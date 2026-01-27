@@ -14,6 +14,7 @@ namespace EduTrail.Application.Assessments
             public Handler(IAssessmentRepository repository, IMapper mapper)
             {
                 _repository = repository;
+                _mapper = mapper;
             }
 
             public async Task<AssessmentDetailDto> Handle(GetAssessmentByIdQuery request, CancellationToken cancellationToken)
