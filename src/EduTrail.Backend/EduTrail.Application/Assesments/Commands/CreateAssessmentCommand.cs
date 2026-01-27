@@ -2,27 +2,26 @@ using AutoMapper;
 using EduTrail.Domain.Entities;
 using MediatR;
 
-namespace EduTrail.Application.Assessments
+namespace EduTrail.Application.QuestionTypes
 {
-    public class CreateAssessmentCommand : IRequest<AssessmentDetailDto>
+    public class CreateQuestionTypeCommand : IRequest<QuestionTypeDetailDto>
     {
-        public AssessmentDetailDto AssessmentDetailDto { get; set; }
-        public class Handler : IRequestHandler<CreateAssessmentCommand, AssessmentDetailDto>
+        public QuestionTypeDetailDto QuestionTypeDetailDto { get; set; }
+        public class Handler : IRequestHandler<CreateQuestionTypeCommand, QuestionTypeDetailDto>
         {
-            private readonly IAssessmentRepository _repository;
+            private readonly IQuestionTypeRepository _repository;
             private readonly IMapper _mapper;
-            public Handler(IAssessmentRepository repository, IMapper mapper)
+            public Handler(IQuestionTypeRepository repository, IMapper mapper)
             {
                 _repository = repository;
                 _mapper = mapper;
             }
-            public async Task<AssessmentDetailDto> Handle(CreateAssessmentCommand request, CancellationToken cancellationToken)
+            public async Task<QuestionTypeDetailDto> Handle(CreateQuestionTypeCommand request, CancellationToken cancellationToken)
             {
-                var entity = _mapper.Map<Assessment>(request.AssessmentDetailDto);
-                entity.CourseId = Guid.Parse("ab2455ef-c41a-4d30-b47b-08de5bc13710");
+                var entity = _mapper.Map<QuestionType>(request.QuestionTypeDetailDto);
                 var result = await _repository.CreateAsync(entity);
-                var assessmentDto = _mapper.Map<AssessmentDetailDto>(result);
-                return assessmentDto;
+                var questionTypeDto = _mapper.Map<QuestionTypeDetailDto>(result);
+                return questionTypeDto;
             }
         }
     } 
