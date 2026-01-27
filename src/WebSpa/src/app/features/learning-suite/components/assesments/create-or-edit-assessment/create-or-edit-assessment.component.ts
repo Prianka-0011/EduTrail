@@ -44,10 +44,19 @@ export class CreateOrEditAssessmentComponent implements OnInit, OnChanges {
     private assessmentService: AssessmentService
   ) { }
 
-  private toDateTimeLocal(value?: string | null): string | undefined {
-    if (!value) return undefined;
+  private toDateTimeLocal(value?: string | null): string {
+    if (!value) return '';
     const date = new Date(value);
-    return date.toISOString().slice(0, 16);
+    // format as yyyy-MM-ddTHH:mm
+    const pad = (n: number) => n.toString().padStart(2, '0');
+
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1); // months are 0-based
+    const day = pad(date.getDate());
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 
   ngOnInit(): void {
@@ -64,7 +73,6 @@ export class CreateOrEditAssessmentComponent implements OnInit, OnChanges {
             };
           }
         });
-
       } else {
         this.assessment.courseId = this.courseId;
       }

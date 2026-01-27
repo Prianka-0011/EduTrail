@@ -32,7 +32,9 @@ export class AssessmentService {
         description: assessment.description,
         courseId: assessment.courseId,
         availableCredit: assessment.availableCredit,
-        maxScore: assessment.maxScore
+        maxScore: assessment.maxScore,
+        openDate: assessment.openDate,
+        dueDate: assessment.dueDate
       }
     };
 
@@ -46,7 +48,9 @@ export class AssessmentService {
         description: assessment.description,
         courseId: assessment.courseId,
         availableCredit: assessment.availableCredit,
-        maxScore: assessment.maxScore
+        maxScore: assessment.maxScore,
+        openDate: assessment.openDate,
+        dueDate: assessment.dueDate
       }
     };
 
