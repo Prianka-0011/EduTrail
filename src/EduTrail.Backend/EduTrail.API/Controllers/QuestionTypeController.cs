@@ -1,4 +1,5 @@
 using EduTrail.Application.Courses;
+using EduTrail.Application.QuestionTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +33,7 @@ namespace EduTrail.API.Controllers
         public async Task<ActionResult<QuestionTypeDetailDto>> Update(Guid id, UpdateQuestionTypeCommand command)
         {
 
-            if (id != command.TypeDto.Id)
+            if (id != command.QuestionTypeDetailDto.Id)
             {
                 return BadRequest("Course ID mismatch");
             }
