@@ -4,10 +4,10 @@ using MediatR;
 
 namespace EduTrail.Application.Assessments
 {
-    public class GetAssessmentByIdQuery : IRequest<AssessmentDto>
+    public class GetAssessmentByIdQuery : IRequest<AssessmentDetailDto>
     {
         public Guid Id {get; set;}
-        public class Handler : IRequestHandler<GetAssessmentByIdQuery, AssessmentDto>
+        public class Handler : IRequestHandler<GetAssessmentByIdQuery, AssessmentDetailDto>
         {
             private readonly IAssessmentRepository _repository;
             private readonly IMapper _mapper;
@@ -16,10 +16,10 @@ namespace EduTrail.Application.Assessments
                 _repository = repository;
             }
 
-            public async Task<AssessmentDto> Handle(GetAssessmentByIdQuery request, CancellationToken cancellationToken)
+            public async Task<AssessmentDetailDto> Handle(GetAssessmentByIdQuery request, CancellationToken cancellationToken)
             {
                 var entity = await _repository.GetByIdAsync(request.Id);
-                var dto = _mapper.Map<AssessmentDto>(entity);
+                var dto = _mapper.Map<AssessmentDetailDto>(entity);
                 return dto;
             }
         }
