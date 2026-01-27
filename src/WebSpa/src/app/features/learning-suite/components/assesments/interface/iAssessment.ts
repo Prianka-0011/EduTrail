@@ -2,10 +2,10 @@ export interface IAssessment {
   id: string;
   title: string;
   description?: string | null;
-  availableCredit?: number | null;
-  maxScore?: number | null;
   courseId?: string | null;
   courseName?: string | null;
-  openDate?: string;
-  dueDate?: string;
+  openDate?: string | null;
+  dueDate?: string | null;
+  availableCredit?: number | null;
+  maxScore?: number | null;
 }

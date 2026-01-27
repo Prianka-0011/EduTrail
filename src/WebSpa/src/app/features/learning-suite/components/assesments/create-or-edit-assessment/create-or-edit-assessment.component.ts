@@ -41,8 +41,14 @@ export class CreateOrEditAssessmentComponent implements OnInit, OnChanges {
 
   constructor(
     private route: ActivatedRoute,
-    private assessmentService: AssessmentService 
-  ) {}
+    private assessmentService: AssessmentService
+  ) { }
+
+  private toDateTimeLocal(value?: string | null): string | undefined {
+    if (!value) return undefined;
+    const date = new Date(value);
+    return date.toISOString().slice(0, 16);
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -50,8 +56,15 @@ export class CreateOrEditAssessmentComponent implements OnInit, OnChanges {
 
       if (id && id !== this.emptyGuid) {
         this.assessmentService.getAssessmentById(id).subscribe({
-          next: data => this.assessment = data
+          next: data => {
+            this.assessment = {
+              ...data,
+              openDate: this.toDateTimeLocal(data.openDate),
+              dueDate: this.toDateTimeLocal(data.dueDate)
+            };
+          }
         });
+
       } else {
         this.assessment.courseId = this.courseId;
       }
@@ -74,12 +87,18 @@ export class CreateOrEditAssessmentComponent implements OnInit, OnChanges {
   onSubmit(form: NgForm) {
     if (!form.valid) return;
 
+    const payload: IAssessment = {
+      ...this.assessment,
+      openDate: this.assessment.openDate ? new Date(this.assessment.openDate).toISOString() : undefined,
+      dueDate: this.assessment.dueDate ? new Date(this.assessment.dueDate).toISOString() : undefined
+    };
+
     if (this.assessment.id !== this.emptyGuid) {
-      this.assessmentService.updateAssessment(this.assessment.id, this.assessment).subscribe({
+      this.assessmentService.updateAssessment(this.assessment.id, payload).subscribe({
         next: () => this.saved.emit()
       });
     } else {
-      this.assessmentService.createAssessment(this.assessment).subscribe({
+      this.assessmentService.createAssessment(payload).subscribe({
         next: () => this.saved.emit()
       });
     }
