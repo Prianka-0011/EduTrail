@@ -1,15 +1,15 @@
 using AutoMapper;
 using EduTrail.Application.Questions;
 using EduTrail.Domain.Entities;
-namespace EduTrail.Application.Assessments
+namespace EduTrail.Application.QuestionTypes
 {
-    public class AssessmentMappingProfile : Profile
+    public class QuestionTypeMappingProfile : Profile
     {
-        public AssessmentMappingProfile()
+        public QuestionTypeMappingProfile()
         {
 
-            CreateMap<AssessmentDetailDto, Assessment>();
-            CreateMap<Assessment, AssessmentDetailDto>();
+            CreateMap<QuestionTypeDetailDto, QuestionType>();
+            CreateMap<QuestionType, QuestionTypeDetailDto>();
         }
     }
 
