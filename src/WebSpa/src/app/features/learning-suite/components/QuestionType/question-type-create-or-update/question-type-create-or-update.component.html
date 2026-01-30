@@ -1,1 +1,75 @@
-<p>question-type-create-or-update works!</p>
+<div class="container mt-5">
+  <div class="card border-1">
+    <div class="card-body">
+      <form #typeForm="ngForm" (ngSubmit)="onSubmit(typeForm)" novalidate>
+        <div class="row g-3">
+
+          <div class="col-md-12">
+            <div class="floating">
+              <input
+                type="text"
+                name="Code"
+                class="form-control"
+                [(ngModel)]="questionType.Code"
+                #code="ngModel"
+                (focus)="isCodeFocused = true"
+                (blur)="isCodeFocused = false"
+                [ngClass]="{ 'active': questionType.Code || isCodeFocused }"
+                required
+              />
+              <label>Code *</label>
+            </div>
+            <div class="text-danger small" *ngIf="code.invalid && code.touched">
+              Code is required
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="floating">
+              <input
+                type="text"
+                name="Name"
+                class="form-control"
+                [(ngModel)]="questionType.Name"
+                #name="ngModel"
+                (focus)="isNameFocused = true"
+                (blur)="isNameFocused = false"
+                [ngClass]="{ 'active': questionType.Name || isNameFocused }"
+              />
+              <label>Name</label>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="floating">
+              <textarea
+                name="Description"
+                class="form-control"
+                rows="4"
+                [(ngModel)]="questionType.Description"
+                #description="ngModel"
+                (focus)="isDescriptionFocused = true"
+                (blur)="isDescriptionFocused = false"
+                [ngClass]="{ 'active': questionType.Description || isDescriptionFocused }"
+              ></textarea>
+              <label>Description</label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="cancelForm()">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            {{ questionType.id !== '00000000-0000-0000-0000-000000000000'
+              ? 'Update Question Type'
+              : 'Create Question Type' }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

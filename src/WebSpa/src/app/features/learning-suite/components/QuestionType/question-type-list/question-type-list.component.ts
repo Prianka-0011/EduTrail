@@ -5,13 +5,15 @@ import { Router } from '@angular/router';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { QuestionTypeCreateOrUpdateComponent } from '../question-type-create-or-update/question-type-create-or-update.component';
 
 @Component({
   selector: 'app-question-type-list',
-  imports: [  
+  imports: [
     CommonModule,
     FormsModule,
-    SideDrawerComponent,],
+    SideDrawerComponent,
+    QuestionTypeCreateOrUpdateComponent],
   templateUrl: './question-type-list.component.html',
   styleUrl: './question-type-list.component.scss'
 })
@@ -36,7 +38,7 @@ export class QuestionTypeListComponent implements OnInit {
   constructor(
     private questionTypeService: QuestionTypeService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAll();
