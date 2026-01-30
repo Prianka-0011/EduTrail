@@ -23,7 +23,7 @@ export class LearningSuiteComponent {
     { label: 'Dashboard', icon: 'speedometer2', route: 'dashboard' },
     { label: 'User Dashboard', icon: 'bi bi-person-vcard', route: 'user-dashboard' },
     { label: 'Terms', icon: 'bi bi-person-vcard', route: 'terms' },
-     { label: 'Questions', icon: 'bi bi-person-vcard', route: 'questions' },
+    { label: 'Questions', icon: 'bi bi-person-vcard', route: 'questions' },
 
     {
       label: 'Courses',
@@ -35,6 +35,7 @@ export class LearningSuiteComponent {
       ]
     },
     { label: 'Assesment', icon: 'clipboard-check', route: 'assesments' },
+    { label: 'Question Types', icon: 'clipboard-check', route: 'question-types' },
     { label: 'Settings', icon: 'gear', route: 'settings' }
   ];
 

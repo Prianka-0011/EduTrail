@@ -6,6 +6,7 @@ import { UserDashboardComponent } from "./components/dashboard/user-dashboard/us
 import { TermListComponent } from "./components/terms/term-list/term-list.component";
 import { QuestionListComponent } from "./components/questions/question-list/question-list.component";
 import { AssessmentListComponent } from "./components/assesments/assessment-list/assessment-list.component";
+import { QuestionTypeListComponent } from "./components/QuestionType/question-type-list/question-type-list.component";
 
 
 
@@ -48,5 +49,9 @@ export const learningSuiteRoutes: Routes = [
   {
     path: 'assesments',
     component: AssessmentListComponent
+  },
+  {
+    path: 'question-types',
+    component: QuestionTypeListComponent
   }
 ] 

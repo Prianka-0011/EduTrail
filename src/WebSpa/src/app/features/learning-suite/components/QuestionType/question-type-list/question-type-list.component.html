@@ -1,1 +1,121 @@
-<p>question-type-list works!</p>
+<div class="table-container">
+  <div class="row justify-content-start">
+    <div class="col-md-6 col-12 d-flex align-items-center gap-1">
+      <h2 class="mb-0">Question Types</h2>
+      <button class="icon-btn" (click)="openCreateDrawer()">
+        <i class="bi bi-plus-lg me-1"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-md-4 col-10 mb-4">
+      <div class="search-input-wrapper">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search question types..."
+          [(ngModel)]="searchText"
+          (input)="applyFilter()"
+        />
+        <i class="bi bi-search search-icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table custom-table">
+      <thead>
+        <tr>
+          <th (click)="applySort('Code')" role="button">
+            Code
+            <i class="bi ms-1" [ngClass]="{
+              'bi-caret-up-fill': sortColumn === 'Code' && sortDirection === 'asc',
+              'bi-caret-down-fill': sortColumn === 'Code' && sortDirection === 'desc'
+            }"></i>
+          </th>
+
+          <th (click)="applySort('Name')" role="button">
+            Name
+            <i class="bi ms-1" [ngClass]="{
+              'bi-caret-up-fill': sortColumn === 'Name' && sortDirection === 'asc',
+              'bi-caret-down-fill': sortColumn === 'Name' && sortDirection === 'desc'
+            }"></i>
+          </th>
+
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let type of paged">
+          <td>{{ type.Code }}</td>
+          <td>{{ type.Name || '-' }}</td>
+          <td>{{ type.Description || '-' }}</td>
+          <td>
+            <button class="edit-icon-btn" (click)="openEditDrawer(type.id)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="paged.length === 0">
+          <td colspan="4" class="text-center py-4 text-muted">
+            No records found
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="custom-paginator d-flex align-items-center mt-4">
+    <div class="d-flex align-items-center gap-2">
+      <span class="page-size-label">Items per page:</span>
+      <select
+        class="form-select page-size-select"
+        [value]="pageSize"
+        (change)="changePageSize($any($event.target).value)"
+      >
+        <option *ngFor="let size of pageSizeOptions" [value]="size">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+
+    <span class="range-label ms-auto">{{ rangeLabel }}</span>
+
+    <div class="d-flex gap-2 ms-3">
+      <button class="btn icon-btn" (click)="goToPage(1)">
+        <i class="bi bi-chevron-double-left"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(currentPage - 1)">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(currentPage + 1)">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(totalPages)">
+        <i class="bi bi-chevron-double-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-side-drawer
+  [opened]="drawerOpen"
+  width="700px"
+  (closed)="closeDrawer()"
+  [headerTemplate]="drawerHeader"
+>
+  <ng-container *ngIf="drawerOpen">
+    <!-- <app-question-type-create-or-update></app-question-type-create-or-update> -->
+  </ng-container>
+</app-side-drawer>
+
+<ng-template #drawerHeader>
+  <div class="d-flex align-items-center gap-2">
+    <i class="bi" [ngClass]="selectedTypeId ? 'bi-tags' : 'bi-plus-square'"></i>
+    <span>{{ selectedTypeId ? 'Edit Question Type' : 'Create Question Type' }}</span>
+  </div>
+</ng-template>
