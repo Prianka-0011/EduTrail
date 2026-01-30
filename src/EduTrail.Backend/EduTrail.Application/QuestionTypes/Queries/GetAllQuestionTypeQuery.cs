@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.VisualBasic;
 
 namespace EduTrail.Application.QuestionTypes
 {
@@ -18,7 +19,8 @@ namespace EduTrail.Application.QuestionTypes
             public async Task<List<QuestionTypeDetailDto>> Handle(GetAllQuestionTypeQuery request, CancellationToken cancellationToken)
             {
                 var entities = await _repository.GetAllAsync();
-                return _mapper.Map<List<QuestionTypeDetailDto>>(entities);
+                var list =_mapper.Map<List<QuestionTypeDetailDto>>(entities);
+                return list;
 
             }
         }
