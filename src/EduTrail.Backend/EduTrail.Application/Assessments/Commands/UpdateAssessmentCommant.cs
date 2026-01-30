@@ -4,10 +4,10 @@ using MediatR;
 
 namespace EduTrail.Application.QuestionTypes
 {
-    public class CreateQuestionTypeCommand : IRequest<QuestionTypeDetailDto>
+    public class UpdateQuestionTypeCommand : IRequest<QuestionTypeDetailDto>
     {
         public QuestionTypeDetailDto QuestionTypeDetailDto { get; set; }
-        public class Handler : IRequestHandler<CreateQuestionTypeCommand, QuestionTypeDetailDto>
+        public class Handler : IRequestHandler<UpdateQuestionTypeCommand, QuestionTypeDetailDto>
         {
             private readonly IQuestionTypeRepository _repository;
             private readonly IMapper _mapper;
@@ -16,13 +16,14 @@ namespace EduTrail.Application.QuestionTypes
                 _repository = repository;
                 _mapper = mapper;
             }
-            public async Task<QuestionTypeDetailDto> Handle(CreateQuestionTypeCommand request, CancellationToken cancellationToken)
+
+            public async Task<QuestionTypeDetailDto> Handle(UpdateQuestionTypeCommand request, CancellationToken cancellationToken)
             {
                 var entity = _mapper.Map<QuestionType>(request.QuestionTypeDetailDto);
-                var result = await _repository.CreateAsync(entity);
+                var result = await _repository.UpdateAsync(entity);
                 var questionTypeDto = _mapper.Map<QuestionTypeDetailDto>(result);
                 return questionTypeDto;
             }
         }
-    } 
+    }
 }

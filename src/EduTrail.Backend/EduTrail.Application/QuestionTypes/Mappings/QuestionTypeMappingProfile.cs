@@ -1,5 +1,6 @@
 using AutoMapper;
 using EduTrail.Application.Questions;
+using EduTrail.Application.QuestionTypes;
 using EduTrail.Domain.Entities;
 namespace EduTrail.Application.QuestionTypes
 {
