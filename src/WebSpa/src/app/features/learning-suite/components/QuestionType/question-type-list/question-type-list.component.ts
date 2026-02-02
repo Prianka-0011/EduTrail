@@ -9,11 +9,13 @@ import { QuestionTypeCreateOrUpdateComponent } from '../question-type-create-or-
 
 @Component({
   selector: 'app-question-type-list',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     SideDrawerComponent,
-    QuestionTypeCreateOrUpdateComponent],
+    QuestionTypeCreateOrUpdateComponent
+  ],
   templateUrl: './question-type-list.component.html',
   styleUrl: './question-type-list.component.scss'
 })
@@ -38,7 +40,7 @@ export class QuestionTypeListComponent implements OnInit {
   constructor(
     private questionTypeService: QuestionTypeService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getAll();
@@ -81,12 +83,19 @@ export class QuestionTypeListComponent implements OnInit {
     });
   }
 
+  onQuestionTypeSaved() {
+    this.closeDrawer();
+    this.getAll();
+  }
+
   applyFilter() {
     const value = this.searchText.toLowerCase().trim();
+
     this.filtered = this.types.filter(t =>
-      t.Code.toLowerCase().includes(value) ||
-      (t.Name || '').toLowerCase().includes(value)
+      t.code.toLowerCase().includes(value) ||
+      (t.name ?? '').toLowerCase().includes(value)
     );
+
     this.totalItems = this.filtered.length;
     this.currentPage = 1;
     this.applySort();
@@ -123,7 +132,7 @@ export class QuestionTypeListComponent implements OnInit {
   }
 
   changePageSize(size: number) {
-    this.pageSize = size;
+    this.pageSize = +size;
     this.currentPage = 1;
     this.updatePage();
   }

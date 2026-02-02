@@ -90,7 +90,9 @@
 
 <app-side-drawer [opened]="drawerOpen" width="950px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
     <ng-container *ngIf="drawerOpen">
-        <app-question-create-or-update >
+        <app-question-create-or-update 
+            (saved)="onQuestionSaved()" 
+            (cancel)="closeDrawer()">
         </app-question-create-or-update>
     </ng-container>
 </app-side-drawer>

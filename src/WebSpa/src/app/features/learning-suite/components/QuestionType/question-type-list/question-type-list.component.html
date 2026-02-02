@@ -27,20 +27,26 @@
     <table class="table custom-table">
       <thead>
         <tr>
-          <th (click)="applySort('Code')" role="button">
+          <th (click)="applySort('code')" role="button">
             Code
-            <i class="bi ms-1" [ngClass]="{
-              'bi-caret-up-fill': sortColumn === 'Code' && sortDirection === 'asc',
-              'bi-caret-down-fill': sortColumn === 'Code' && sortDirection === 'desc'
-            }"></i>
+            <i
+              class="bi ms-1"
+              [ngClass]="{
+                'bi-caret-up-fill': sortColumn === 'code' && sortDirection === 'asc',
+                'bi-caret-down-fill': sortColumn === 'code' && sortDirection === 'desc'
+              }"
+            ></i>
           </th>
 
-          <th (click)="applySort('Name')" role="button">
+          <th (click)="applySort('name')" role="button">
             Name
-            <i class="bi ms-1" [ngClass]="{
-              'bi-caret-up-fill': sortColumn === 'Name' && sortDirection === 'asc',
-              'bi-caret-down-fill': sortColumn === 'Name' && sortDirection === 'desc'
-            }"></i>
+            <i
+              class="bi ms-1"
+              [ngClass]="{
+                'bi-caret-up-fill': sortColumn === 'name' && sortDirection === 'asc',
+                'bi-caret-down-fill': sortColumn === 'name' && sortDirection === 'desc'
+              }"
+            ></i>
           </th>
 
           <th>Description</th>
@@ -50,9 +56,9 @@
 
       <tbody>
         <tr *ngFor="let type of paged">
-          <td>{{ type.Code }}</td>
-          <td>{{ type.Name || '-' }}</td>
-          <td>{{ type.Description || '-' }}</td>
+          <td>{{ type.code }}</td>
+          <td>{{ type.name || '-' }}</td>
+          <td>{{ type.description || '-' }}</td>
           <td>
             <button class="edit-icon-btn" (click)="openEditDrawer(type.id)">
               <i class="bi bi-pencil-square"></i>
@@ -109,7 +115,10 @@
   [headerTemplate]="drawerHeader"
 >
   <ng-container *ngIf="drawerOpen">
-    <app-question-type-create-or-update></app-question-type-create-or-update>
+    <app-question-type-create-or-update
+      (saved)="onQuestionTypeSaved()"
+      (cancel)="closeDrawer()"
+    ></app-question-type-create-or-update>
   </ng-container>
 </app-side-drawer>
 

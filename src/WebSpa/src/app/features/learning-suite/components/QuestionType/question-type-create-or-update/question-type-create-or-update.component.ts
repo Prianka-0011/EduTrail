@@ -10,11 +10,12 @@ const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 
 @Component({
   selector: 'app-question-type-create-or-update',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './question-type-create-or-update.component.html',
   styleUrl: './question-type-create-or-update.component.scss'
 })
-export class QuestionTypeCreateOrUpdateComponent  implements OnInit {
+export class QuestionTypeCreateOrUpdateComponent implements OnInit {
 
   @Output() saved = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
@@ -46,21 +47,21 @@ export class QuestionTypeCreateOrUpdateComponent  implements OnInit {
   getEmptyModel(): IQuestionType {
     return {
       id: EMPTY_ID,
-      Code: '',
-      Name: '',
-      Description: ''
+      code: '',
+      name: '',
+      description: ''
     };
   }
 
   onSubmit(form: NgForm): void {
     if (form.invalid) return;
 
-    const action =
+    const request =
       this.questionType.id === EMPTY_ID
         ? this.questionTypeService.create(this.questionType)
         : this.questionTypeService.update(this.questionType.id, this.questionType);
 
-    action.subscribe(() => this.saved.emit());
+    request.subscribe(() => this.saved.emit());
   }
 
   cancelForm(): void {

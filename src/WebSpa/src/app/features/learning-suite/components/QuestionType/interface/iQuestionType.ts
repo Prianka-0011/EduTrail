@@ -1,6 +1,6 @@
 export interface IQuestionType {
   id: string;
-  Code: string;
-  Name?: string | null;
-  Description?: string | null;
+  code: string;
+  name?: string | null;
+  description?: string | null;
 }

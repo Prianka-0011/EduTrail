@@ -22,9 +22,9 @@ export class QuestionTypeService {
   create(questionType: IQuestionType): Observable<IQuestionType> {
       const payload = {
         QuestionTypeDetailDto: {
-          Code: questionType.Code,
-          Name: questionType.Name,
-          Description: questionType.Description,
+          Code: questionType.code,
+          Name: questionType.name,
+          Description: questionType.description,
         }
       }
     return this.http.post<IQuestionType>(this.baseUrl, payload);
@@ -33,9 +33,9 @@ export class QuestionTypeService {
   update(id: string, questionType: IQuestionType): Observable<IQuestionType> {
     const payload = {
       QuestionTypeDetailDto: {
-        Code: questionType.Code,
-        Name: questionType.Name,
-        Description: questionType.Description,
+        Code: questionType.code,
+        Name: questionType.name,
+        Description: questionType.description,
       }
     }
     return this.http.put<IQuestionType>(`${this.baseUrl}/${id}`, payload);
