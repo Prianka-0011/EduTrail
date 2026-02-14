@@ -3,7 +3,7 @@ using EduTrail.Domain.Interfaces;
 namespace EduTrail.Domain.Entities
 {
 
-    public class Enrollment
+    public class Enrollment : IAuditable
     {
         [Key]
         public Guid Id { get; set; }

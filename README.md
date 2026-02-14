@@ -267,3 +267,41 @@ Backend (ASP.NET Core Web API)
 ├── Auto Grading
 ├── Courses / Assignments
 └── SQL Server / PostgreSQL
+
+
+UniversityLabQueue.sln
+│
+├── UniversityLabQueue.API
+│ ├── Controllers
+│ │ ├── AuthController.cs
+│ │ ├── StudentController.cs
+│ │ ├── TeacherController.cs
+│ │ ├── LabRequestController.cs
+│ │ ├── LabSessionController.cs
+│ │ ├── SubmissionController.cs
+│ │ └── QueueController.cs
+│ │
+│ ├── Program.cs
+│ └── appsettings.json
+│
+├── UniversityLabQueue.Application
+│ ├── DTOs
+│ ├── Interfaces
+│ ├── Services
+│ └── Validators
+│
+├── UniversityLabQueue.Domain
+│ ├── Entities
+│ ├── Enums
+│ └── ValueObjects
+│
+├── UniversityLabQueue.Infrastructure
+│ ├── Data
+│ │ ├── UniversityLabDbContext.cs
+│ │ └── Migrations
+│ ├── Repositories
+│ └── Configurations
+│
+└── UniversityLabQueue.Shared
+├── Constants
+└── Utilities

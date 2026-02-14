@@ -1,0 +1,109 @@
+<div class="table-container">
+
+  <div class="row justify-content-start">
+    <div class="col-md-6 col-12 d-flex align-items-center gap-1">
+      <h2 class="mb-0">Course Offerings</h2>
+
+      <button class="icon-btn" (click)="openCreateDrawer()">
+        <i class="bi bi-plus-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-md-4 col-10 mb-4">
+      <div class="search-input-wrapper">
+        <input type="text" class="form-control" placeholder="Search course offerings..." [(ngModel)]="searchText"
+          (input)="applyFilter()" />
+        <i class="bi bi-search search-icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table custom-table">
+      <thead>
+        <tr>
+          <th (click)="applySort('courseName')" role="button">
+            Course
+          </th>
+          <th (click)="applySort('instructorName')" role="button">
+            Instructor
+          </th>
+          <th (click)="applySort('termName')" role="button">
+            Term
+          </th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let offering of pagedCourseOfferings">
+          <td>{{ offering.courseName }}</td>
+          <td>{{ offering.instructorName }}</td>
+          <td>{{ offering.termName }}</td>
+          <td>
+            <button class="edit-icon-btn" (click)="openEditDrawer(offering.id!)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="pagedCourseOfferings.length === 0">
+          <td colspan="4" class="text-center py-4 text-muted">
+            No records found
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="custom-paginator d-flex align-items-center mt-4">
+
+    <div class="d-flex align-items-center gap-2">
+      <span>Items per page:</span>
+      <select class="form-select page-size-select" [value]="pageSize"
+        (change)="changePageSize($any($event.target).value)">
+        <option *ngFor="let size of pageSizeOptions" [value]="size">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+
+    <span class="ms-auto">{{ rangeLabel }}</span>
+
+    <div class="d-flex gap-2 ms-3">
+      <button class="btn icon-btn" (click)="goToPage(1)">
+        <i class="bi bi-chevron-double-left"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(currentPage - 1)">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(currentPage + 1)">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(totalPages)">
+        <i class="bi bi-chevron-double-right"></i>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<app-side-drawer [opened]="drawerOpen" width="600px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+
+  <ng-container *ngIf="drawerOpen">
+    <app-course-offering-create-or-update (saved)="onCourseOfferingSaved()" (cancel)="closeDrawer()">
+    </app-course-offering-create-or-update>
+  </ng-container>
+
+</app-side-drawer>
+
+<ng-template #drawerHeader>
+  <div class="d-flex align-items-center gap-2">
+    <i class="bi bi-journal-bookmark"></i>
+    <span>
+      {{ selectedCourseOfferingId ? 'Edit Course Offering' : 'Create Course Offering' }}
+    </span>
+  </div>
+</ng-template>

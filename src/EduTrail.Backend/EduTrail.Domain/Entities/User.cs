@@ -9,7 +9,7 @@ namespace EduTrail.Domain.Entities
 
         [Required]
         [MaxLength(100)]
-        public string FristName { get; set; }
+        public string FirstName { get; set; }
 
         [MaxLength(100)]
         public string MiddleName { get; set; }
@@ -27,6 +27,7 @@ namespace EduTrail.Domain.Entities
         [Required]
         public string PasswordSalt { get; set; }
         public bool IsActive { get; set; }
+        public Guid UserTypeId { get; set; }
         // Audit fields
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }

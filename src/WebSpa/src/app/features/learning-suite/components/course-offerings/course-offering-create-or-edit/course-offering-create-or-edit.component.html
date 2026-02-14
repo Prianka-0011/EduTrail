@@ -1,0 +1,100 @@
+<p>course-offering-create-or-edit works!</p>
+<div class="container mt-5">
+  <div class="card border-1">
+    <div class="card-body">
+      <form #courseForm="ngForm" (ngSubmit)="onSubmit(courseForm)" novalidate>
+        <div class="row g-3">
+
+          <div class="col-md-12">
+            <div class="floating">
+              <select
+                name="courseId"
+                class="form-select"
+                [(ngModel)]="courseOffering.detail.courseId"
+                #courseId="ngModel"
+                (focus)="isCourseFocused = true"
+                (blur)="isCourseFocused = false"
+                [ngClass]="{ 'active': courseOffering.detail.courseId || isCourseFocused }"
+                required
+              >
+                <option *ngFor="let c of courses" [value]="c.id">
+                  {{ c.name }}
+                </option>
+              </select>
+              <label>Course *</label>
+            </div>
+            <div class="text-danger small" *ngIf="courseId.invalid && courseId.touched">
+              Course is required
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="floating">
+              <select
+                name="termId"
+                class="form-select"
+                [(ngModel)]="courseOffering.detail.termId"
+                #termId="ngModel"
+                (focus)="isTermFocused = true"
+                (blur)="isTermFocused = false"
+                [ngClass]="{ 'active': courseOffering.detail.termId || isTermFocused }"
+                required
+              >
+                <option *ngFor="let t of terms" [value]="t.id">
+                  {{ t.name }}
+                </option>
+              </select>
+              <label>Term *</label>
+            </div>
+            <div class="text-danger small" *ngIf="termId.invalid && termId.touched">
+              Term is required
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="floating">
+              <select
+                name="instructorId"
+                class="form-select"
+                [(ngModel)]="courseOffering.detail.instructorId"
+                #instructorId="ngModel"
+                (focus)="isInstructorFocused = true"
+                (blur)="isInstructorFocused = false"
+                [ngClass]="{ 'active': courseOffering.detail.instructorId || isInstructorFocused }"
+                required
+              >
+                <option *ngFor="let i of instructors" [value]="i.id">
+                  {{ i.name }}
+                </option>
+              </select>
+              <label>Instructor *</label>
+            </div>
+            <div class="text-danger small" *ngIf="instructorId.invalid && instructorId.touched">
+              Instructor is required
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-secondary me-2"
+            (click)="cancelForm()"
+          >
+            Cancel
+          </button>
+
+          <button type="submit" class="btn btn-primary">
+            {{
+              courseOffering.detail.id !== '00000000-0000-0000-0000-000000000000'
+                ? 'Update Course Offering'
+                : 'Create Course Offering'
+            }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

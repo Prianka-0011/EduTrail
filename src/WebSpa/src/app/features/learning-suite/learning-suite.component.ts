@@ -36,6 +36,7 @@ export class LearningSuiteComponent {
     },
     { label: 'Assesment', icon: 'clipboard-check', route: 'assesments' },
     { label: 'Question Types', icon: 'clipboard-check', route: 'question-types' },
+    { label: 'Course Offerings', icon: 'clipboard-check', route: 'course-offerings' },
     { label: 'Settings', icon: 'gear', route: 'settings' }
   ];
 

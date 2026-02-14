@@ -1,3 +1,4 @@
+using AutoMapper;
 using MediatR;
 
 namespace EduTrail.Application.CourseOfferings
@@ -6,14 +7,19 @@ namespace EduTrail.Application.CourseOfferings
     {
         public class Handler : IRequestHandler<GetAllCourseOfferingQuery, CourseOfferingDto>
         {
-            public Handler()
+            private readonly ICourseOfferingRepository _courseOfferingRepository;
+            private readonly IMapper _mapper;
+            public Handler(ICourseOfferingRepository courseOfferingRepository, IMapper mapper)
             {
-                
+                _courseOfferingRepository = courseOfferingRepository;
+                _mapper = mapper;
             }
 
             public async Task<CourseOfferingDto> Handle(GetAllCourseOfferingQuery request, CancellationToken cancellationToken)
             {
-                throw new NotImplementedException();
+                var courseOfferings = await _courseOfferingRepository.GetAllAsync();
+                var courseOfferingDtos = _mapper.Map<List<CourseOfferingDetailDto>>(courseOfferings);
+                return new CourseOfferingDto { DetailDto = courseOfferingDtos.FirstOrDefault() };
             }
         }
         
