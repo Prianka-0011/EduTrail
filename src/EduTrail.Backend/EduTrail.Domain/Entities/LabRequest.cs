@@ -1,15 +1,19 @@
+using System.ComponentModel.DataAnnotations;
 using EduTrail.Domain.Interfaces;
 
 namespace EduTrail.Domain.Entities
 {
     public class LabRequest : IAuditable
     {
+        [Key]
         public Guid Id { get; set; }
+        [Required, MaxLength(50)]
         public string RequestNumber { get; set; } = null!;
-        public string ZoomLink { get; set; }
-        public string IssueTitle { get; set; }
-        public string IssueDescription { get; set; }
-        public string TrySofar { get; set; }
+        
+        public string? ZoomLink { get; set; }
+        public string? IssueTitle { get; set; }
+        public string? IssueDescription { get; set; }
+        public string? TrySofar { get; set; }
         public Guid StudentId { get; set; }
         public User Student { get; set; } = null!;
         public Guid CourseId { get; set; }

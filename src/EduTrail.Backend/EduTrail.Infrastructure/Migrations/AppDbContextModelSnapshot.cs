@@ -193,6 +193,109 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("Enrollments");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.Lab", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Labs");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.LabRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AssignedTeacherId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("IssueDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IssueTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateOnly>("RequestedDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("StatusId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TrySofar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ZoomLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedTeacherId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("LabRequests");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
                 {
                     b.Property<Guid>("Id")
@@ -473,6 +576,74 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("Role");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.Status", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("StatusTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatusTypeId");
+
+                    b.ToTable("Statuses");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.StatusType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StatusTypes");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.Submission", b =>
                 {
                     b.Property<Guid>("Id")
@@ -596,7 +767,7 @@ namespace EduTrail.Infrastructure.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("FristName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -627,6 +798,9 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset?>("UpdatedDate")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("UserTypeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -740,6 +914,39 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.LabRequest", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.User", "AssignedTeacher")
+                        .WithMany()
+                        .HasForeignKey("AssignedTeacherId");
+
+                    b.HasOne("EduTrail.Domain.Entities.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduTrail.Domain.Entities.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduTrail.Domain.Entities.User", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssignedTeacher");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Assessment", "Assessment")
@@ -779,6 +986,17 @@ namespace EduTrail.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Status", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.StatusType", "StatusType")
+                        .WithMany()
+                        .HasForeignKey("StatusTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StatusType");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Submission", b =>
