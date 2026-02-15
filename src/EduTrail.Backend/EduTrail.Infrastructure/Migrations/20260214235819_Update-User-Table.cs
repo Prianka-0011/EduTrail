@@ -128,6 +128,23 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StatusTypes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StatusTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Terms",
                 columns: table => new
                 {
@@ -168,13 +185,14 @@ namespace EduTrail.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FristName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordSalt = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    UserTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -206,6 +224,30 @@ namespace EduTrail.Infrastructure.Migrations
                         name: "FK_Submissions_QuestionAttempt_QuestionAttemptId",
                         column: x => x.QuestionAttemptId,
                         principalTable: "QuestionAttempt",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Statuses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StatusTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Statuses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Statuses_StatusTypes_StatusTypeId",
+                        column: x => x.StatusTypeId,
+                        principalTable: "StatusTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -264,6 +306,55 @@ namespace EduTrail.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_RoleUser_Users_UsersId",
                         column: x => x.UsersId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LabRequests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RequestNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ZoomLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IssueTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IssueDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrySofar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RequestedDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    AssignedTeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LabRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LabRequests_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LabRequests_Statuses_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Statuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LabRequests_Users_AssignedTeacherId",
+                        column: x => x.AssignedTeacherId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_LabRequests_Users_StudentId",
+                        column: x => x.StudentId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -334,6 +425,31 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Labs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Capacity = table.Column<int>(type: "int", nullable: true),
+                    CourseOfferingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Labs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Labs_CourseOfferings_CourseOfferingId",
+                        column: x => x.CourseOfferingId,
+                        principalTable: "CourseOfferings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Questions",
                 columns: table => new
                 {
@@ -363,6 +479,40 @@ namespace EduTrail.Infrastructure.Migrations
                         principalTable: "QuestionTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TALabHours",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EnrollmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DayOfWeek = table.Column<int>(type: "int", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Mode = table.Column<int>(type: "int", nullable: false),
+                    LabId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RemoteLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TALabHours", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TALabHours_Enrollments_EnrollmentId",
+                        column: x => x.EnrollmentId,
+                        principalTable: "Enrollments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TALabHours_Labs_LabId",
+                        column: x => x.LabId,
+                        principalTable: "Labs",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -450,6 +600,31 @@ namespace EduTrail.Infrastructure.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LabRequests_AssignedTeacherId",
+                table: "LabRequests",
+                column: "AssignedTeacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LabRequests_CourseId",
+                table: "LabRequests",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LabRequests_StatusId",
+                table: "LabRequests",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LabRequests_StudentId",
+                table: "LabRequests",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Labs_CourseOfferingId",
+                table: "Labs",
+                column: "CourseOfferingId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_AssessmentId",
                 table: "Questions",
                 column: "AssessmentId");
@@ -475,9 +650,24 @@ namespace EduTrail.Infrastructure.Migrations
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Statuses_StatusTypeId",
+                table: "Statuses",
+                column: "StatusTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Submissions_QuestionAttemptId",
                 table: "Submissions",
                 column: "QuestionAttemptId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TALabHours_EnrollmentId",
+                table: "TALabHours",
+                column: "EnrollmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TALabHours_LabId",
+                table: "TALabHours",
+                column: "LabId");
         }
 
         /// <inheritdoc />
@@ -487,7 +677,7 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "AuditEntries");
 
             migrationBuilder.DropTable(
-                name: "Enrollments");
+                name: "LabRequests");
 
             migrationBuilder.DropTable(
                 name: "QuestionLines");
@@ -505,7 +695,13 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Submissions");
 
             migrationBuilder.DropTable(
+                name: "TALabHours");
+
+            migrationBuilder.DropTable(
                 name: "Tests");
+
+            migrationBuilder.DropTable(
+                name: "Statuses");
 
             migrationBuilder.DropTable(
                 name: "Questions");
@@ -515,6 +711,15 @@ namespace EduTrail.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "QuestionAttempt");
+
+            migrationBuilder.DropTable(
+                name: "Enrollments");
+
+            migrationBuilder.DropTable(
+                name: "Labs");
+
+            migrationBuilder.DropTable(
+                name: "StatusTypes");
 
             migrationBuilder.DropTable(
                 name: "Assessments");

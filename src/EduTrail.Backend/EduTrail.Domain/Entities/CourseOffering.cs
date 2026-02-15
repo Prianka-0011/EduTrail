@@ -20,6 +20,7 @@ namespace EduTrail.Domain.Entities
         public User? Instructor { get; set; }
         public ICollection<Assessment> Assessments { get; set; }
         public ICollection<Enrollment> Enrollments { get; set; }
+        
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }
         public DateTimeOffset? UpdatedDate { get; set; }
