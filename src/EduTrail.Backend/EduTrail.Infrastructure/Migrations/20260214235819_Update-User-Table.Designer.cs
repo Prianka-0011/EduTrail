@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260214223524_Update-User-Table")]
+    [Migration("20260214235819_Update-User-Table")]
     partial class UpdateUserTable
     {
         /// <inheritdoc />
@@ -205,6 +205,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<int?>("Capacity")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("CourseOfferingId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
 
@@ -212,9 +215,6 @@ namespace EduTrail.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -229,6 +229,8 @@ namespace EduTrail.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseOfferingId");
 
                     b.ToTable("Labs");
                 });
@@ -685,6 +687,57 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("Submissions");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabHour", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<Guid>("EnrollmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("LabId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Mode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RemoteLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.HasIndex("LabId");
+
+                    b.ToTable("TALabHours");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.Term", b =>
                 {
                     b.Property<Guid>("Id")
@@ -917,6 +970,17 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.Lab", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.CourseOffering", "CourseOffering")
+                        .WithMany()
+                        .HasForeignKey("CourseOfferingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseOffering");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.LabRequest", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.User", "AssignedTeacher")
@@ -1013,6 +1077,23 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("QuestionAttempt");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabHour", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
+                        .WithMany("TALabHours")
+                        .HasForeignKey("EnrollmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduTrail.Domain.Entities.Lab", "Lab")
+                        .WithMany()
+                        .HasForeignKey("LabId");
+
+                    b.Navigation("Enrollment");
+
+                    b.Navigation("Lab");
+                });
+
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Role", null)
@@ -1043,6 +1124,11 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("Assessments");
 
                     b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Enrollment", b =>
+                {
+                    b.Navigation("TALabHours");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>

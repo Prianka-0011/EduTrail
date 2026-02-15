@@ -12,19 +12,19 @@ namespace EduTrail.Domain.Entities
         public Guid CourseOfferingId { get; set; }
         public CourseOffering CourseOffering { get; set; }
 
-       
+
         public Guid? StudentId { get; set; }
         public User? Student { get; set; }
 
-        public DateTimeOffset EnrolledDate { get; set; } 
+        public DateTimeOffset EnrolledDate { get; set; }
 
         public bool IsActive { get; set; } = true;
+        public ICollection<TALabHour> TALabHours { get; set; }
         // Audit fields
-        
+
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }
         public DateTimeOffset? UpdatedDate { get; set; }
         public Guid? UpdatedById { get; set; }
-
     }
 }

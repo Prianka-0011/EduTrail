@@ -34,7 +34,8 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<StatusType> StatusTypes { get; set; }
         public DbSet<Lab> Labs { get; set; }
         public DbSet<LabRequest> LabRequests { get; set; }
-        
+        public DbSet<TALabHour> TALabHours { get; set; }
+
 
     }
 }
