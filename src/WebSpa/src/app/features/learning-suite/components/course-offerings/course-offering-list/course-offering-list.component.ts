@@ -5,8 +5,10 @@ import { Router } from '@angular/router';
 
 import { CourseOfferingService } from '../services/course-offering.service';
 import { ICourseOffering } from '../interfaces/iCourseOffering';
-import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 
+import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
+import { CourseOfferingCreateOrEditComponent } from '../course-offering-create-or-edit/course-offering-create-or-edit.component';
+import { ICourseOfferingDetail } from '../interfaces/iCourseOfferignDetail';
 
 @Component({
   selector: 'app-course-offering-list',
@@ -15,7 +17,7 @@ import { SideDrawerComponent } from '../../../../../shared/components/side-drawe
     CommonModule,
     FormsModule,
     SideDrawerComponent,
-    // CourseOfferingCreateOrUpdateComponent
+    CourseOfferingCreateOrEditComponent
   ],
   templateUrl: './course-offering-list.component.html',
   styleUrl: './course-offering-list.component.scss'
@@ -41,7 +43,7 @@ export class CourseOfferingListComponent implements OnInit {
   currentPage = 1;
   totalItems = 0;
 
-  sortColumn: keyof ICourseOffering | '' = '';
+  sortColumn: keyof ICourseOfferingDetail | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   ngOnInit(): void {
@@ -53,8 +55,7 @@ export class CourseOfferingListComponent implements OnInit {
       next: data => {
         this.courseOfferings = data;
         this.applyFilter();
-      },
-      error: err => console.error(err)
+      }
     });
   }
 
@@ -97,9 +98,9 @@ export class CourseOfferingListComponent implements OnInit {
     const value = this.searchText.toLowerCase().trim();
 
     this.filteredCourseOfferings = this.courseOfferings.filter(o =>
-      o.courseName?.toLowerCase().includes(value) ||
-      o.instructorName?.toLowerCase().includes(value) ||
-      o.termName?.toLowerCase().includes(value)
+      o.detail.courseName?.toLowerCase().includes(value) ||
+      o.detail.instructorName?.toLowerCase().includes(value) ||
+      o.detail.termName?.toLowerCase().includes(value)
     );
 
     this.totalItems = this.filteredCourseOfferings.length;
@@ -108,7 +109,7 @@ export class CourseOfferingListComponent implements OnInit {
     this.applySort();
   }
 
-  applySort(column?: keyof ICourseOffering) {
+  applySort(column?: keyof ICourseOfferingDetail) {
     if (column) {
       if (this.sortColumn === column) {
         this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -122,8 +123,8 @@ export class CourseOfferingListComponent implements OnInit {
       const key = this.sortColumn;
 
       this.filteredCourseOfferings.sort((a, b) => {
-        const valueA = String(a[key] ?? '').toLowerCase();
-        const valueB = String(b[key] ?? '').toLowerCase();
+        const valueA = String(a.detail[key] ?? '').toLowerCase();
+        const valueB = String(b.detail[key] ?? '').toLowerCase();
 
         return this.sortDirection === 'asc'
           ? valueA.localeCompare(valueB)
