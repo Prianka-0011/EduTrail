@@ -45,6 +45,7 @@ export class CourseOfferingCreateOrEditComponent implements OnInit {
         this.courses = data.courses ?? [];
         this.terms = data.terms ?? [];
         this.instructors = data.instructors ?? [];
+        this
       });
     });
   }
@@ -53,9 +54,9 @@ export class CourseOfferingCreateOrEditComponent implements OnInit {
     return {
       detail: {
         id: EMPTY_ID,
-        courseId: EMPTY_ID,
-        termId: EMPTY_ID,
-        instructorId: EMPTY_ID,
+        courseId: "",
+        termId: "",
+        instructorId:"",
       },
       courses: [],
       terms: [],

@@ -4,7 +4,8 @@ namespace EduTrail.Application.CourseOfferings
 {
     public class CourseOfferingDto
     {
-        public CourseOfferingDetailDto DetailDto { get; set; }
+        public CourseOfferingDetailDto DetailDto { get; set; } = new CourseOfferingDetailDto();
+        public List<CourseOfferingDetailDto> DetailDtoList { get; set; } = new List<CourseOfferingDetailDto>();
         public List<DropdownItemDto> Courses { get; set; } = new List<DropdownItemDto>();
         public List<DropdownItemDto> Terms { get; set; } = new List<DropdownItemDto>();
         public List<DropdownItemDto> Instructors { get; set; } = new List<DropdownItemDto>();

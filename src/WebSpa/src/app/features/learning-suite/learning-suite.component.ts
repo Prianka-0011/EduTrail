@@ -34,6 +34,16 @@ export class LearningSuiteComponent {
         { label: 'Create Course', icon: 'plus-circle', route: 'courses/create' }
       ]
     },
+    {
+      label: 'Admin',
+      icon: 'bi bi-gear',
+      isOpen: false,
+      children: [
+        { label: 'User List', icon: 'list', route: 'users' },
+        // { label: 'Create User', icon: 'plus-circle', route: 'users/create' }
+      ]
+    },
+
     { label: 'Assesment', icon: 'clipboard-check', route: 'assesments' },
     { label: 'Question Types', icon: 'clipboard-check', route: 'question-types' },
     { label: 'Course Offerings', icon: 'clipboard-check', route: 'course-offerings' },

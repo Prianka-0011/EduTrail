@@ -27,7 +27,7 @@ namespace EduTrail.Domain.Entities
         [Required]
         public string PasswordSalt { get; set; }
         public bool IsActive { get; set; }
-        public Guid UserTypeId { get; set; }
+      
         // Audit fields
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }

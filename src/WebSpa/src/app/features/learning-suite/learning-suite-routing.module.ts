@@ -8,6 +8,7 @@ import { QuestionListComponent } from "./components/questions/question-list/ques
 import { AssessmentListComponent } from "./components/assesments/assessment-list/assessment-list.component";
 import { QuestionTypeListComponent } from "./components/question-type/question-type-list/question-type-list.component";
 import { CourseOfferingListComponent } from "./components/course-offerings/course-offering-list/course-offering-list.component";
+import { UserListComponent } from "./components/users/user-list/user-list.component";
 
 
 
@@ -59,5 +60,9 @@ export const learningSuiteRoutes: Routes = [
   {
     path: 'course-offerings',
     component: CourseOfferingListComponent
+  },
+  {
+    path: 'users',
+    component: UserListComponent
   }
 ] 

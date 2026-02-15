@@ -10,6 +10,7 @@ using EduTrail.Application.Questions;
 using EduTrail.Application.Assessments;
 using EduTrail.Application.QuestionTypes;
 using EduTrail.Application.CourseOfferings;
+using EduTrail.Application.Users;
 
 
 namespace EduTrail.Infrastructure
@@ -87,6 +88,7 @@ namespace EduTrail.Infrastructure
             services.AddScoped<IAssessmentRepository, AssessmentRepository>();
             services.AddScoped<IQuestionTypeRepository, QuestionTypeRepository>();
             services.AddScoped<ICourseOfferingRepository, CourseOfferingRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
