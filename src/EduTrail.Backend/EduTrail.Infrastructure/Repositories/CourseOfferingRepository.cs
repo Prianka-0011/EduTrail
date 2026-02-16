@@ -29,7 +29,9 @@ namespace EduTrail.Infrastructure.Repositories
         }
         public async Task<List<User>> GetAllInstructors()
         {
-            return await _context.Users.Where(u => u.UserTypeId == Guid.Parse("12345678-1234-1234-1234-123456789012")).ToListAsync();
+            return await _context.Users
+            // Where(u => u.UserTypeId == Guid.Parse("12345678-1234-1234-1234-123456789012"))
+            .ToListAsync();
         }
         public async Task<List<CourseOffering>> GetAllAsync()
         {
