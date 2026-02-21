@@ -3,7 +3,7 @@
 **EduTrail** is a modern, scalable e-commerce application built using **Angular** (frontend), **.NET Core** (backend), and **GraphQL**. The project follows **Clean Architecture principles** to ensure maintainability, testability, and scalability.
 
 ---
-dotnet ef migrations add Update-User-Table -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
+dotnet ef migrations add initial-migration -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
 
 ## **Folder Structure (Clean Architecture)**
 

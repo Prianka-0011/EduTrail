@@ -1,1 +1,124 @@
-<p>user-create-or-edit works!</p>
+<div class="container mt-5">
+  <div class="card border-1">
+    <div class="card-body">
+      <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" novalidate>
+        <div class="row g-3">
+
+          <div class="col-md-12">
+            <div class="floating">
+              <input type="text" name="firstName" class="form-control" [(ngModel)]="user.firstName" #firstName="ngModel"
+                (focus)="isFirstNameFocused = true" (blur)="isFirstNameFocused = false"
+                [ngClass]="{ 'active': user.firstName || isFirstNameFocused }" required />
+              <label>First Name *</label>
+            </div>
+            <div class="text-danger small" *ngIf="firstName.invalid && firstName.touched">
+              First name is required
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="floating">
+              <input type="text" name="middleName" class="form-control" [(ngModel)]="user.middleName"
+                #middleName="ngModel" (focus)="isMiddleNameFocused = true" (blur)="isMiddleNameFocused = false"
+                [ngClass]="{ 'active': user.middleName || isMiddleNameFocused }" />
+              <label>Middle Name</label>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="floating">
+              <input type="text" name="lastName" class="form-control" [(ngModel)]="user.lastName" #lastName="ngModel"
+                (focus)="isLastNameFocused = true" (blur)="isLastNameFocused = false"
+                [ngClass]="{ 'active': user.lastName || isLastNameFocused }" required />
+              <label>Last Name *</label>
+            </div>
+            <div class="text-danger small" *ngIf="lastName.invalid && lastName.touched">
+              Last name is required
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="floating">
+              <input type="email" name="email" class="form-control" [(ngModel)]="user.email" #email="ngModel"
+                (focus)="isEmailFocused = true" (blur)="isEmailFocused = false"
+                [ngClass]="{ 'active': user.email || isEmailFocused }" required email />
+              <label>Email *</label>
+            </div>
+            <div class="text-danger small" *ngIf="email.invalid && email.touched">
+              Valid email is required
+            </div>
+          </div>
+
+          <!-- <div class="col-md-12">
+            <div class="floating">
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                [(ngModel)]="user.password"
+                #password="ngModel"
+                (focus)="isPasswordFocused = true"
+                (blur)="isPasswordFocused = false"
+                [ngClass]="{ 'active': user.password || isPasswordFocused }"
+                [required]="user.id === '00000000-0000-0000-0000-000000000000'"
+              />
+              <label>Password {{ user.id === '00000000-0000-0000-0000-000000000000' ? '*' : '' }}</label>
+            </div>
+            <div class="text-danger small" *ngIf="password.invalid && password.touched">
+              Password is required
+            </div>
+          </div> -->
+          <div class="col-md-12">
+            <label class="form-label">Roles</label>
+
+            <input type="text" class="form-control" placeholder="Search roles..."
+              (input)="roleSearch$.next($any($event.target).value)" />
+
+            <!-- dropdown suggestions -->
+            <div class="list-group mt-1" *ngIf="roles.length">
+              <button type="button" class="list-group-item list-group-item-action" *ngFor="let role of roles"
+                (click)="selectRole(role)">
+                {{ role.name }}
+              </button>
+            </div>
+
+            <!-- selected roles -->
+            <div class="mt-2">
+              <span class="badge bg-primary me-1" *ngFor="let role of selectedRoles">
+                {{ role.name }}
+                <span class="ms-1 cursor-pointer" (click)="removeRole(role)">
+                  ×
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-check mt-2">
+              <input class="form-check-input" type="checkbox" id="isActive" name="isActive"
+                [(ngModel)]="user.isActive" />
+              <label class="form-check-label" for="isActive">
+                Active
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="cancelForm()">
+            Cancel
+          </button>
+
+          <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
+            {{ user.id !== '00000000-0000-0000-0000-000000000000'
+            ? 'Update User'
+            : 'Create User'
+            }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

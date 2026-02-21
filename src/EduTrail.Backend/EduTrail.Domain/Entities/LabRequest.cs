@@ -24,7 +24,7 @@ namespace EduTrail.Domain.Entities
         public User? AssignedTeacher { get; set; }
         public Guid StatusId { get; set; }
         public Status Status { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }

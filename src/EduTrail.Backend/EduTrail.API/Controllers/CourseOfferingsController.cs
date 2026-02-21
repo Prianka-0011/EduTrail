@@ -27,20 +27,20 @@ namespace EduTrail.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateCourseOffering([FromBody] CourseOfferingDetailDto courseOfferingDetailDto)
+        public async Task<ActionResult> CreateCourseOffering([FromBody] CreateCourseOfferingCommand command)
         {
-            var result = await _mediator.Send(new CreateCourseOfferingCommand { CourseOfferingDetailDto = courseOfferingDetailDto });
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateCourseOffering(Guid id, [FromBody] CourseOfferingDetailDto courseOfferingDetailDto)
+        public async Task<ActionResult> UpdateCourseOffering(Guid id, [FromBody] UpdateCourseOfferingCommand command)
         {
-            if (id != courseOfferingDetailDto.Id)
+            if (id != command.CourseOfferingDetailDto.Id)
             {
                 return BadRequest("ID mismatch");
             }
-            var result = await _mediator.Send(new UpdateCourseOfferingCommand { CourseOfferingDetailDto = courseOfferingDetailDto });
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
     }

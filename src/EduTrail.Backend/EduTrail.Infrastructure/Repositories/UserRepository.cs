@@ -1,3 +1,4 @@
+using EduTrail.Application.Shared.Dtos;
 using EduTrail.Application.Users;
 using EduTrail.Domain.Entities;
 using EduTrail.Infrastructure.Data;
@@ -28,7 +29,7 @@ namespace EduTrail.Infrastructure.Repositories
 
         public async Task<User> GetByIdAsync(Guid id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.Include(u => u.Roles).FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User> UpdateAsync(User user)
@@ -46,6 +47,17 @@ namespace EduTrail.Infrastructure.Repositories
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public Task<IEnumerable<Role>> GetAllRolesAsync()
+        {
+            return Task.FromResult(_context.Roles.AsEnumerable());
+        }
+
+        public Task<IEnumerable<Role>> GetRolesByIdsAsync(IEnumerable<DropdownItemDto> roleIds)
+        {
+            var roles = _context.Roles.Where(r => roleIds.Select(rId => rId.Id).Contains(r.Id)).AsEnumerable();
+            return Task.FromResult(roles);
         }
     }
 }

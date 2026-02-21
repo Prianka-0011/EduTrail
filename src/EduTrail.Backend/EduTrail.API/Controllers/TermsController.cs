@@ -7,9 +7,9 @@ namespace EduTrail.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TermController : BaseController
+    public class TermsController : BaseController
     {
-        public TermController(IMediator mediator) : base(mediator)
+        public TermsController(IMediator mediator) : base(mediator)
         {
         }
 

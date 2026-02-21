@@ -25,12 +25,15 @@ export const learningSuiteRoutes: Routes = [
   },
   {
     path: 'user-dashboard',
-    component: UserDashboardComponent
+    component: UserDashboardComponent,
+    children: [
+      {
+        path: 'profile', // show user profile name and detail anong with role
+        // component: UserDashboardComponent
+      },
+    ]
   },
-  {
-    path: 'terms',
-    component: TermListComponent
-  },
+
   {
     path: 'questions',
     component: QuestionListComponent
@@ -58,11 +61,25 @@ export const learningSuiteRoutes: Routes = [
     component: QuestionTypeListComponent
   },
   {
-    path: 'course-offerings',
-    component: CourseOfferingListComponent
-  },
-  {
     path: 'users',
     component: UserListComponent
+  },
+  {
+    path: 'course-offerings',
+    component: CourseOfferingListComponent,
+    children: [
+      {
+        path: 'enrolement-list/:courseOfferingId' //Enrollment List component to be created
+      },
+      {
+        path: 'lab-schedule/:courseOfferingId',
+      }
+
+    ]
+  },
+  {
+    path: 'terms',
+    component: TermListComponent
   }
+
 ] 

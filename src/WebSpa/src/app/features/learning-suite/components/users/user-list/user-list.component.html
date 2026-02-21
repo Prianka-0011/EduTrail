@@ -13,13 +13,8 @@
   <div class="row justify-content-end">
     <div class="col-md-4 col-10 mb-4">
       <div class="search-input-wrapper">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search users..."
-          [(ngModel)]="searchText"
-          (input)="applyFilter()"
-        />
+        <input type="text" class="form-control" placeholder="Search users..." [(ngModel)]="searchText"
+          (input)="applyFilter()" />
         <i class="bi bi-search search-icon"></i>
       </div>
     </div>
@@ -43,18 +38,12 @@
           <td>{{ user.lastName }}</td>
           <td>{{ user.email }}</td>
           <td>
-            <span
-              [class.text-success]="user.isActive"
-              [class.text-danger]="!user.isActive"
-            >
+            <span [class.text-success]="user.isActive" [class.text-danger]="!user.isActive">
               {{ user.isActive ? 'Active' : 'Inactive' }}
             </span>
           </td>
           <td>
-            <button
-              class="edit-icon-btn"
-              (click)="openEditDrawer(user.id)"
-            >
+            <button class="edit-icon-btn" (click)="openEditDrawer(user.id)">
               <i class="bi bi-pencil-square"></i>
             </button>
           </td>
@@ -73,11 +62,8 @@
 
     <div class="d-flex align-items-center gap-2">
       <span>Items per page:</span>
-      <select
-        class="form-select page-size-select"
-        [value]="pageSize"
-        (change)="changePageSize($any($event.target).value)"
-      >
+      <select class="form-select page-size-select" [value]="pageSize"
+        (change)="changePageSize($any($event.target).value)">
         <option *ngFor="let size of pageSizeOptions" [value]="size">
           {{ size }}
         </option>
@@ -106,17 +92,17 @@
 
 <!-- SIDE DRAWER -->
 <app-side-drawer [opened]="drawerOpen" width="600px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
-    <ng-container *ngIf="drawerOpen">
-        <!-- <app-user-create-or-update (saved)="onUserSaved()" (cancel)="closeDrawer()">
-        </app-user-create-or-update> -->
-    </ng-container>
+  <ng-container *ngIf="drawerOpen">
+    <app-user-create-or-edit (saved)="onUserSaved()" (cancel)="closeDrawer()">
+    </app-user-create-or-edit>
+  </ng-container>
 
 </app-side-drawer>
 
 <!-- Custom header template -->
 <ng-template #drawerHeader>
-    <div class="d-flex align-items-center gap-2">
-        <i class="bi" [ngClass]="selectedUserId   ? 'bi bi-person' : 'bi bi-person-plus'"></i>
-        <span>{{ selectedUserId ? 'Edit User Details' : 'Create New User' }}</span>
-    </div>
+  <div class="d-flex align-items-center gap-2">
+    <i class="bi" [ngClass]="selectedUserId   ? 'bi bi-person' : 'bi bi-person-plus'"></i>
+    <span>{{ selectedUserId ? 'Edit User Details' : 'Create New User' }}</span>
+  </div>
 </ng-template>

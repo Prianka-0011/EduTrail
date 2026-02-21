@@ -38,13 +38,13 @@
 
       <tbody>
         <tr *ngFor="let offering of pagedCourseOfferings">
-          <td>{{ offering.detail.courseName }}</td>
-          <td>{{ offering.detail.instructorName }}</td>
-          <td>{{ offering.detail.termName }}</td>
+          <td>{{ offering.courseName }}</td>
+          <td>{{ offering.instructorName }}</td>
+          <td>{{ offering.termName }}</td>
           <td>
             <button
               class="edit-icon-btn"
-              (click)="openEditDrawer(offering.detail.id)"
+              (click)="openEditDrawer(offering.id)"
             >
               <i class="bi bi-pencil-square"></i>
             </button>

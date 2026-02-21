@@ -1,3 +1,4 @@
+using EduTrail.Application.Shared.Dtos;
 using EduTrail.Domain.Entities;
 
 namespace EduTrail.Application.Users
@@ -9,5 +10,7 @@ namespace EduTrail.Application.Users
         Task<User> GetByIdAsync(Guid id);
         Task<User> UpdateAsync(User user);
         Task<bool> DeleteAsync(Guid id);
+        Task<IEnumerable<Role>> GetAllRolesAsync();
+        Task<IEnumerable<Role>> GetRolesByIdsAsync(IEnumerable<DropdownItemDto> roleIds);
     }
 }

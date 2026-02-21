@@ -29,9 +29,9 @@ export class CourseOfferingListComponent implements OnInit {
     private router: Router
   ) {}
 
-  courseOfferings: ICourseOffering[] = [];
-  filteredCourseOfferings: ICourseOffering[] = [];
-  pagedCourseOfferings: ICourseOffering[] = [];
+  courseOfferings: ICourseOfferingDetail[] = [];
+  filteredCourseOfferings: ICourseOfferingDetail[] = [];
+  pagedCourseOfferings: ICourseOfferingDetail[] = [];
 
   selectedCourseOfferingId: string | null = null;
   drawerOpen = false;
@@ -51,9 +51,9 @@ export class CourseOfferingListComponent implements OnInit {
   }
 
   getCourseOfferings() {
-    this.courseOfferingService.getCourses().subscribe({
+    this.courseOfferingService.getCourseOfferings().subscribe({
       next: data => {
-        this.courseOfferings = data;
+        this.courseOfferings = data.detailDtoList ?? [];
         this.applyFilter();
       }
     });
@@ -98,9 +98,9 @@ export class CourseOfferingListComponent implements OnInit {
     const value = this.searchText.toLowerCase().trim();
 
     this.filteredCourseOfferings = this.courseOfferings.filter(o =>
-      o.detail.courseName?.toLowerCase().includes(value) ||
-      o.detail.instructorName?.toLowerCase().includes(value) ||
-      o.detail.termName?.toLowerCase().includes(value)
+      o.courseName?.toLowerCase().includes(value) ||
+      o.instructorName?.toLowerCase().includes(value) ||
+      o.termName?.toLowerCase().includes(value)
     );
 
     this.totalItems = this.filteredCourseOfferings.length;
@@ -123,8 +123,8 @@ export class CourseOfferingListComponent implements OnInit {
       const key = this.sortColumn;
 
       this.filteredCourseOfferings.sort((a, b) => {
-        const valueA = String(a.detail[key] ?? '').toLowerCase();
-        const valueB = String(b.detail[key] ?? '').toLowerCase();
+        const valueA = String(a[key] ?? '').toLowerCase();
+        const valueB = String(b[key] ?? '').toLowerCase();
 
         return this.sortDirection === 'asc'
           ? valueA.localeCompare(valueB)

@@ -18,6 +18,7 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<AuditEntry> AuditEntries { get; set; } = null!;
         public DbSet<Test> Tests { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Role> Roles { get; set; } = null!;
         public DbSet<Question> Questions { get; set; } = null!;
         public DbSet<QuestionType> QuestionTypes { get; set; } = null!;
         public DbSet<QuestionVariantTemplate> QuestionVariantTemplates { get; set; } = null!;

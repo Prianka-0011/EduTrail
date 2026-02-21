@@ -1,4 +1,5 @@
 using AutoMapper;
+using EduTrail.Application.Shared.Dtos;
 using EduTrail.Domain.Entities;
 using MediatR;
 
@@ -20,11 +21,26 @@ namespace EduTrail.Application.Users
             public async Task<UserDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
             {
                 var user = await _repository.GetByIdAsync(request.Id);
-                var userDetailDto = _mapper.Map<UserDetailDto>(user);
+
+                var userDetailDto = _mapper.Map<UserDetailDto>(user) ?? new UserDetailDto();
+
+                if (user?.Roles != null)
+                {
+                    userDetailDto.SelectedRoleList = user.Roles
+                        .Select(r => new DropdownItemDto { Id = r.Id, Name = r.Name })
+                        .ToList();
+                }
+
+                var roles = await _repository.GetAllRolesAsync();
 
                 return new UserDto
                 {
-                    DetailDto = userDetailDto
+                    DetailDto = userDetailDto,
+                    DropdownRoleList = roles.Select(r => new DropdownItemDto
+                    {
+                        Id = r.Id,
+                        Name = r.Name
+                    }).ToList()
                 };
             }
         }

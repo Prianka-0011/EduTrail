@@ -22,10 +22,6 @@ export class CourseOfferingCreateOrEditComponent implements OnInit {
 
   courseOffering: ICourseOffering = this.getEmptyCourseOffering();
 
-  courses: IDropdownItem[] = [];
-  terms: IDropdownItem[] = [];
-  instructors: IDropdownItem[] = [];
-
   isCourseFocused = false;
   isTermFocused = false;
   isInstructorFocused = false;
@@ -33,30 +29,48 @@ export class CourseOfferingCreateOrEditComponent implements OnInit {
   constructor(
     private courseOfferingService: CourseOfferingService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const id = params['id'];
-      if (!id) return;
+    // this.loadDropdowns();
+    this.loadCourseOffering();
+  }
 
-      this.courseOfferingService.getCourseById(id).subscribe(data => {
-        this.courseOffering = data;
-        this.courses = data.courses ?? [];
-        this.terms = data.terms ?? [];
-        this.instructors = data.instructors ?? [];
-        this
-      });
+  // private loadDropdowns(): void {
+  //   this.courseOfferingService.getCourses().subscribe(data => {
+  //     this.courseOffering.courses = data.courses ?? [];
+  //     this.courseOffering.terms = data.terms ?? [];
+  //     this.courseOffering.instructors = data.instructors ?? [];
+  //   });
+  // }
+
+  private loadCourseOffering(): void {
+    const id = this.route.snapshot.queryParamMap.get('id');
+    if (!id) return;
+
+    this.courseOfferingService.getCourseOfferingById(id).subscribe(data => {
+      this.courseOffering = {
+        ...this.courseOffering,
+        detailDto: data.detailDto ?? {
+          id: EMPTY_ID,
+          courseId: '',
+          termId: '',
+          instructorId: null
+        },
+        terms: data.terms ?? [],
+        courses: data.courses ?? [],
+        instructors: data.instructors ?? []
+      };
     });
   }
 
   getEmptyCourseOffering(): ICourseOffering {
     return {
-      detail: {
+      detailDto: {
         id: EMPTY_ID,
-        courseId: "",
-        termId: "",
-        instructorId:"",
+        courseId: '',
+        termId: '',
+        instructorId: null
       },
       courses: [],
       terms: [],
@@ -67,15 +81,17 @@ export class CourseOfferingCreateOrEditComponent implements OnInit {
   onSubmit(form: NgForm): void {
     if (form.invalid) return;
 
-    const action =
-      this.courseOffering.detail.id === EMPTY_ID
-        ? this.courseOfferingService.createCourse(this.courseOffering)
-        : this.courseOfferingService.updateCourse(this.courseOffering);
+    const request$ =
+      this.courseOffering.detailDto?.id === EMPTY_ID
+        ? this.courseOfferingService.createCourseOffering(this.courseOffering)
+        : this.courseOfferingService.updateCourseOffering(this.courseOffering);
 
-    action.subscribe(() => this.saved.emit());
+    request$.subscribe(() => {
+      this.saved.emit();
+    });
   }
 
-  cancelForm(): void {
+  onCancel(): void {
     this.cancel.emit();
   }
 }

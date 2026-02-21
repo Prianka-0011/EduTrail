@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 import { IUser } from '../interfaces/iUser';
 import { IUserDetail } from '../interfaces/iUserDetail';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
+import { UserCreateOrEditComponent } from '../user-create-or-edit/user-create-or-edit.component';
 
 type SortableUserField =
   | 'firstName'
@@ -17,7 +18,7 @@ type SortableUserField =
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, SideDrawerComponent, FormsModule],
+  imports: [CommonModule, SideDrawerComponent, FormsModule, UserCreateOrEditComponent],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
 })
@@ -50,8 +51,9 @@ export class UserListComponent implements OnInit {
   }
 
   getUsers() {
-    this.userService.getAll().subscribe(users => {
-      this.users = users.flatMap(u => u.detailDtoList);
+    this.userService.getAll().subscribe(user => {
+    console.log('Fetched users:', user.detailDtoList);
+      this.users = user.detailDtoList;
       this.applyFilter();
     });
   }

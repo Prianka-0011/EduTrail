@@ -14,8 +14,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.baseUrl)
+  getAll(): Observable<IUser> {
+    return this.http.get<IUser>(this.baseUrl)
   }
 
   getById(id: string): Observable<IUser> {
@@ -31,7 +31,8 @@ export class UserService {
         lastName: user.lastName,
         email: user.email,
         password: user.password,
-        isActive: user.isActive
+        isActive: user.isActive,
+        selectedRoleList: user.selectedRoleList
       }
     })
   }
@@ -45,7 +46,8 @@ export class UserService {
         lastName: user.lastName,
         email: user.email,
         password: user.password,
-        isActive: user.isActive
+        isActive: user.isActive,
+        selectedRoleList: user.selectedRoleList
       }
     })
   }
