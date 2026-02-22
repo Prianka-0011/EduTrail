@@ -5,6 +5,7 @@ namespace EduTrail.Application.Enrolements
 {
     public class GetAllEnrolementsQuery : IRequest<List<EnrolementDto>>
     {
+        public Guid? CourseOfferingId { get; set; }
         public class Handler : IRequestHandler<GetAllEnrolementsQuery, List<EnrolementDto>>
         {
             private readonly IEnrolementRepository _repository;

@@ -305,3 +305,10 @@ UniversityLabQueue.sln
 └── UniversityLabQueue.Shared
 ├── Constants
 └── Utilities
+
+ INSERT INTO [EduTrailDb].[dbo].[Roles] 
+    ([Id], [Name], [Description], [CreatedDate], [CreatedById])
+VALUES 
+    (NEWID(), 'Instructor', 'Role for course instructors', GETDATE(), '00000000-0000-0000-0000-000000000000'),
+    (NEWID(), 'Student', 'Role for students', GETDATE(), '00000000-0000-0000-0000-000000000000'),
+    (NEWID(), 'TA', 'Role for teaching assistants', GETDATE(), '00000000-0000-0000-0000-000000000000');

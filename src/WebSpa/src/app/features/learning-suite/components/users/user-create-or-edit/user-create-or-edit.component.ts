@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { IDropdownItem } from '../../../../../shared/interface/iDropdownItem';
 import { Subject } from 'rxjs/internal/Subject';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
-import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { IUser } from '../interfaces/iUser';
 
 const EMPTY_ID = '00000000-0000-0000-0000-000000000000';

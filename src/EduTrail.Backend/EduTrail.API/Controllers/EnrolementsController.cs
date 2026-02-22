@@ -13,10 +13,10 @@ namespace EduTrail.API.Controllers
         {
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<EnrolementDto>>> GetAll()
+        [HttpGet("{courseOfferingId}")]
+        public async Task<ActionResult<List<EnrolementDto>>> GetAll(Guid? courseOfferingId)
         {
-            return Ok(await _mediator.Send(new GetAllEnrolementsQuery()));
+            return Ok(await _mediator.Send(new GetAllEnrolementsQuery { CourseOfferingId = courseOfferingId }));
         }
 
         [HttpGet("{id}")]
@@ -33,7 +33,7 @@ namespace EduTrail.API.Controllers
         public async Task<ActionResult<EnrolementDto>> Update(Guid id, UpdateEnrolementCommand command)
         {
 
-            if (id != command.enrolementDto.Id)
+            if (id != command.enrolementDetailDto.Id)
             {
                 return BadRequest("Enrolement ID mismatch");
             }

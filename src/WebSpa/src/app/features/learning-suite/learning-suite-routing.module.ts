@@ -9,6 +9,8 @@ import { AssessmentListComponent } from "./components/assesments/assessment-list
 import { QuestionTypeListComponent } from "./components/question-type/question-type-list/question-type-list.component";
 import { CourseOfferingListComponent } from "./components/course-offerings/course-offering-list/course-offering-list.component";
 import { UserListComponent } from "./components/users/user-list/user-list.component";
+import { EnrolementListComponent } from "./components/enrolements/enrolement-list/enrolement-list.component";
+// import { EnrolementListComponent } from "./components/enrolements/enrolement-list/enrolement-list.component";
 
 
 
@@ -26,12 +28,12 @@ export const learningSuiteRoutes: Routes = [
   {
     path: 'user-dashboard',
     component: UserDashboardComponent,
-    children: [
-      {
-        path: 'profile', // show user profile name and detail anong with role
-        // component: UserDashboardComponent
-      },
-    ]
+    // children: [
+    //   {
+    //     path: 'profile', // show user profile name and detail anong with role
+    //     // component: UserDashboardComponent
+    //   },
+    // ]
   },
 
   {
@@ -67,16 +69,21 @@ export const learningSuiteRoutes: Routes = [
   {
     path: 'course-offerings',
     component: CourseOfferingListComponent,
-    children: [
-      {
-        path: 'enrolement-list/:courseOfferingId' //Enrollment List component to be created
-      },
-      {
-        path: 'lab-schedule/:courseOfferingId',
-      }
-
-    ]
+    // children: [
+    //   {
+    //     path: 'enrolement-list/:courseOfferingId',
+    //     component: EnrolementListComponent
+    //   },
+    // ]
   },
+  {
+    path: 'course-offerings/enrolement-list/:courseOfferingId',
+    component: EnrolementListComponent
+  },
+  // {
+  //   path: 'course-offerings/enrolement-list/:courseOfferingId',
+  //   component: EnrolementListComponent
+  // },
   {
     path: 'terms',
     component: TermListComponent

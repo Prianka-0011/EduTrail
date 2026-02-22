@@ -7,7 +7,7 @@ namespace EduTrail.Application.Enrolements
 {
     public class CreateEnrolementCommand : IRequest<EnrolementDto>
     {
-        public EnrolementDto enrolementDto { get; set; }
+        public EnrolementDetailsDto enrolementDto { get; set; }
         public class Handler : IRequestHandler<CreateEnrolementCommand, EnrolementDto>
         {
             private readonly IEnrolementRepository _enrolementRepository;
@@ -21,8 +21,8 @@ namespace EduTrail.Application.Enrolements
             {
                 var enrolement = _mapper.Map<Enrollment>(request.enrolementDto);
                 var res = await _enrolementRepository.CreateAsync(enrolement);
-                var enrolementDto = _mapper.Map<EnrolementDto>(enrolement);
-                return enrolementDto;
+                var enrolementDto = _mapper.Map<EnrolementDetailsDto>(enrolement);
+                return new EnrolementDto { DetailsDto = enrolementDto }   ;
             }
         }
     }

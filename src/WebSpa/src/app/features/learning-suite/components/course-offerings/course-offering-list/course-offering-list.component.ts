@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-
 import { CourseOfferingService } from '../services/course-offering.service';
 import { ICourseOffering } from '../interfaces/iCourseOffering';
+import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { CourseOfferingCreateOrEditComponent } from '../course-offering-create-or-edit/course-offering-create-or-edit.component';
@@ -14,6 +13,7 @@ import { ICourseOfferingDetail } from '../interfaces/iCourseOfferignDetail';
   selector: 'app-course-offering-list',
   standalone: true,
   imports: [
+    RouterOutlet,
     CommonModule,
     FormsModule,
     SideDrawerComponent,
@@ -26,8 +26,9 @@ export class CourseOfferingListComponent implements OnInit {
 
   constructor(
     private courseOfferingService: CourseOfferingService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   courseOfferings: ICourseOfferingDetail[] = [];
   filteredCourseOfferings: ICourseOfferingDetail[] = [];
@@ -45,6 +46,33 @@ export class CourseOfferingListComponent implements OnInit {
 
   sortColumn: keyof ICourseOfferingDetail | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
+  expandedRows: { [id: string]: boolean } = {};
+
+  // Collapsible child rows
+  toggleRow(id: string) {
+    this.expandedRows[id] = !this.expandedRows[id];
+  }
+
+  isRowExpanded(id: string): boolean {
+    return !!this.expandedRows[id];
+  }
+
+  // goToEnrollment(courseOfferingId: string) {/
+  //   console.log('Navigating to enrollment list for course offering ID:', courseOfferingId);
+  //   const url = this.router.createUrlTree(['/course-offerings/enrolement-list', courseOfferingId]).toString();
+  //   console.log('Generated URL:', url);
+  //   this.router.navigate([
+  //     'course-offerings/enrolement-list',
+  //     courseOfferingId
+  //   ]);
+  // }
+
+  goToEnrollment(courseOfferingId: string) {
+    this.router.navigate([
+      '/learning-suite/course-offerings/enrolement-list',
+      courseOfferingId
+    ]);
+  }
 
   ngOnInit(): void {
     this.getCourseOfferings();

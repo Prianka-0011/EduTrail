@@ -14,28 +14,32 @@ namespace EduTrail.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<Enrollment> CreateAsync(Enrollment enrollment)
+        public async Task<IEnumerable<Enrollment>> GetAllAsync(Guid? courseOfferingId = null)
         {
-            await _context.Enrollments.AddAsync(enrollment);
-            await _context.SaveChangesAsync();
-            return enrollment;
+            var query = _context.Enrollments
+            .Include(c => c.CourseOffering)
+            .Include(c => c.Student).AsQueryable();
+            if (courseOfferingId.HasValue)
+            {
+                query = query.Where(e => e.CourseOfferingId == courseOfferingId.Value);
+            }
+            return await query.ToListAsync();
         }
-
+        public async Task<Enrollment> GetByIdAsync(Guid id)
+        {
+            return await _context.Enrollments.Where(c => c.Id == id).FirstOrDefaultAsync();
+        }
         public async Task<List<User>> GetAllUsersAsync()
         {
             return await _context.Users.
              Where(u => !u.Roles.Select(r => r.Name).Contains("Instructor"))
             .ToListAsync();
         }
-        public async Task<IEnumerable<Enrollment>> GetAllAsync()
+        public async Task<Enrollment> CreateAsync(Enrollment enrollment)
         {
-            return await _context.Enrollments
-            .Include(c => c.CourseOffering)
-            .Include(c => c.Student).ToListAsync();
-        }
-        public async Task<Enrollment> GetByIdAsync(Guid id)
-        {
-            return await _context.Enrollments.Where(c => c.Id == id).FirstOrDefaultAsync();
+            await _context.Enrollments.AddAsync(enrollment);
+            await _context.SaveChangesAsync();
+            return enrollment;
         }
         public async Task<Enrollment> UpdateAsync(Enrollment enrollment)
         {

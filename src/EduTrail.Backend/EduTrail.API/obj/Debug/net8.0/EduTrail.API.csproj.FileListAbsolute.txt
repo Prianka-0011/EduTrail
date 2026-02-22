@@ -155,10 +155,3 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\refint\EduTrail.A
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\EduTrail.API.pdb
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\EduTrail.API.genruntimeconfig.cache
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\ref\EduTrail.API.dll
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net8.0\3rdpartylicenses.txt
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net8.0\favicon.ico
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net8.0\index.html
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net8.0\polyfills.07750a28ba4a0ff0.js
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net8.0\runtime.37b037475bcadbb2.js
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net8.0\styles.efc0c4025955ab72.css
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net8.0\main.6717c4194dafbe3d.js
