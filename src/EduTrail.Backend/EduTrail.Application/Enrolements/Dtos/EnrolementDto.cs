@@ -14,7 +14,7 @@ namespace EduTrail.Application.Enrolements
         public Guid ?CourseOfferingId { get; set; }
         public Guid? StudentId { get; set; }
         public string? StudentName { get; set; }
-        public DateTimeOffset? EnrollmentDate { get; set; }
+        public DateTimeOffset? EnrolledDate  { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsTa { get; set; }
     }

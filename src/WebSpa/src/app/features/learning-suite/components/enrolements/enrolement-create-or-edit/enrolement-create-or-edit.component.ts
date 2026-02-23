@@ -38,11 +38,22 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     const id = this.route.snapshot.queryParamMap.get('id') ?? this.EMPTY_ID;
     if (!id) return;
     console.log('Enrolement ID from query params:', id);
+
     this.enrolementService.getCourseById(id).subscribe(data => {
       console.log('Enrolement data from service:', data);
+
+      let enrolledDate = '';
+      if (data.detailsDto?.enrolledDate) {
+        const localDate = new Date(data.detailsDto.enrolledDate);
+        enrolledDate = localDate.toISOString().split('T')[0];
+      }
+
       this.enrolement = {
         ...this.enrolement,
-        detailsDto: data.detailsDto ?? this.enrolement.detailsDto,
+        detailsDto: {
+          ...data.detailsDto,
+          enrolledDate
+        },
         users: data.users ?? []
       };
     });
@@ -55,7 +66,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
         courseOfferingId: '',
         studentId: '',
         studentName: '',
-        enrollmentDate: new Date().toISOString().split('T')[0],
+        enrolledDate: new Date().toISOString().split('T')[0],
         isTa: false
       },
       users: []

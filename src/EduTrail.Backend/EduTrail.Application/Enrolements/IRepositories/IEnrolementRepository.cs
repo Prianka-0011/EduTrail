@@ -11,5 +11,7 @@ namespace EduTrail.Application.Enrolements
         Task<bool> DeleteAsync(Guid id);
         Task<List<User>> GetAllUsersAsync();
         Task<Enrollment> GetByCourseOfferingIdAndStudentIdAsync(Guid courseOfferingId, Guid studentId);
+        Task<Role> GetRoleTaAsync();
+        Task<User> GetStudentByIdAsync(Guid studentId);
     }
 }

@@ -8,7 +8,7 @@ namespace EduTrail.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
-         private readonly AppDbContext _context;
+        private readonly AppDbContext _context;
 
         public UserRepository(AppDbContext context)
         {
@@ -49,15 +49,15 @@ namespace EduTrail.Infrastructure.Repositories
             return true;
         }
 
-        public Task<IEnumerable<Role>> GetAllRolesAsync()
+        public async Task<IEnumerable<Role>> GetAllRolesAsync()
         {
-            return Task.FromResult(_context.Roles.AsEnumerable());
+            return await _context.Roles.Where(c => c.Name != "TA").ToListAsync();
         }
 
-        public Task<IEnumerable<Role>> GetRolesByIdsAsync(IEnumerable<DropdownItemDto> roleIds)
+        public async Task<IEnumerable<Role>> GetRolesByIdsAsync(IEnumerable<DropdownItemDto> roleIds)
         {
             var roles = _context.Roles.Where(r => roleIds.Select(rId => rId.Id).Contains(r.Id)).AsEnumerable();
-            return Task.FromResult(roles);
+            return await Task.FromResult(roles);
         }
     }
 }

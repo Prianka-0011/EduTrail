@@ -6,26 +6,40 @@ namespace EduTrail.Application.Enrolements
 {
     public class UpdateEnrolementCommand : IRequest<EnrolementDto>
     {
-        public EnrolementDetailsDto enrolementDto {get; set;} 
+        public EnrolementDetailsDto enrolementDto { get; set; }
         public class Handler : IRequestHandler<UpdateEnrolementCommand, EnrolementDto>
         {
-            private readonly IEnrolementRepository _enrolementRepository;
+            private readonly IEnrolementRepository _repository;
             private readonly IMapper _mapper;
 
-            public Handler(IEnrolementRepository enrolementRepository, IMapper mapper)
+            public Handler(IEnrolementRepository repository, IMapper mapper)
             {
-                _enrolementRepository = enrolementRepository;
+                _repository = repository;
                 _mapper = mapper;
             }
 
-            public async Task<EnrolementDto> Handle (UpdateEnrolementCommand request, CancellationToken cancellationToken)
+            public async Task<EnrolementDto> Handle(UpdateEnrolementCommand request, CancellationToken cancellationToken)
             {
                 var enrolement = _mapper.Map<Enrollment>(request.enrolementDto);
-                var res = await _enrolementRepository.UpdateAsync(enrolement);
+                if (request.enrolementDto.IsTa == true)
+                {
+                    var role = await _repository.GetRoleTaAsync();
+                    var student = enrolement.Student ?? await _repository.GetStudentByIdAsync(enrolement.StudentId ?? Guid.Empty);
+                    if (student.Roles == null)
+                    {
+                        student.Roles = new List<Role> { role };
+                    }
+                    else
+                    {
+                        student.Roles.Add(role);
+                    }
+
+                }
+                var res = await _repository.UpdateAsync(enrolement);
                 var enrolementDto = _mapper.Map<EnrolementDetailsDto>(res);
                 return new EnrolementDto { DetailsDto = enrolementDto };
             }
-            
+
         }
     }
 }

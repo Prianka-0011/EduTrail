@@ -8,7 +8,7 @@ namespace EduTrail.Application.Enrolements
         public EnrolementMappingsProfile()
         {
             CreateMap<EnrolementDetailsDto, Enrollment>()
-            .ForMember(d=>d.Id, o=>o.Ignore())
+            // .ForMember(d=>d.Id, o=>o.Ignore())
             .ForMember(d=>d.CourseOffering, o=>o.Ignore())
             .ForMember(d=>d.Student, o=>o.Ignore());
 

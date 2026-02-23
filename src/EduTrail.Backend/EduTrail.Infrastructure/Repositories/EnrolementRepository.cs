@@ -65,5 +65,15 @@ namespace EduTrail.Infrastructure.Repositories
             return _context.Enrollments
                 .FirstOrDefaultAsync(e => e.CourseOfferingId == courseOfferingId && e.StudentId == studentId);
         }
+
+        public Task<Role> GetRoleTaAsync()
+        {
+            return _context.Roles.Where(r => r.Name == "TA").FirstOrDefaultAsync();
+        }
+
+        public Task<User> GetStudentByIdAsync(Guid studentId)
+        {
+            return _context.Users.Include(c=>c.Roles).Where(u => u.Id == studentId).FirstOrDefaultAsync();
+        }
     }
 }

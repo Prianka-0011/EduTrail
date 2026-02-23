@@ -32,18 +32,18 @@
             <div class="floating">
               <input
                 type="date"
-                name="enrollmentDate"
+                name="enrolledDate"
                 class="form-control"
-                [(ngModel)]="enrolement.detailsDto.enrollmentDate"
-                #enrollmentDate="ngModel"
+                [(ngModel)]="enrolement.detailsDto.enrolledDate"
+                #enrolledDate="ngModel"
                 (focus)="isDateFocused = true"
                 (blur)="isDateFocused = false"
-                [ngClass]="{ 'active': enrolement.detailsDto.enrollmentDate || isDateFocused }"
+                [ngClass]="{ 'active': enrolement.detailsDto.enrolledDate || isDateFocused }"
                 required
               />
               <label>Enrollment Date *</label>
             </div>
-            <div class="text-danger small" *ngIf="enrollmentDate.invalid && enrollmentDate.touched">
+            <div class="text-danger small" *ngIf="enrolledDate.invalid && enrolledDate.touched">
               Enrollment date is required
             </div>
           </div>

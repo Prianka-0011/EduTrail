@@ -25,7 +25,7 @@ export class EnrolementService {
       enrolementDto: {
         courseOfferingId: enrolement.detailsDto?.courseOfferingId,
         studentId: enrolement.detailsDto?.studentId,
-        enrollmentDate: enrolement.detailsDto?.enrollmentDate,
+        enrolledDate: enrolement.detailsDto?.enrolledDate,
         isTa: enrolement.detailsDto?.isTa ?? false
       }
     });
@@ -36,12 +36,13 @@ export class EnrolementService {
       throw new Error('Cannot update enrolement with invalid ID');
     }
     console.log("Updating enrolement:", enrolement);
+    // return null as any; // Placeholder for the actual HTTP call
     return this.http.put<IEnrolement>(`${this.baseUrl}${enrolement.detailsDto?.id}`, {
       enrolementDto: {
         id: enrolement.detailsDto?.id,
         courseOfferingId: enrolement.detailsDto?.courseOfferingId,
         studentId: enrolement.detailsDto?.studentId,
-        enrollmentDate: enrolement.detailsDto?.enrollmentDate,
+        enrolledDate: enrolement.detailsDto?.enrolledDate,
         isTa: enrolement.detailsDto?.isTa ?? false
       }
     });

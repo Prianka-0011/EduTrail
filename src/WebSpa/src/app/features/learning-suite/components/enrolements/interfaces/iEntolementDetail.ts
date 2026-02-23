@@ -3,6 +3,6 @@ export interface IEnrolementDetail {
   courseOfferingId: string;
   studentId: string;
   studentName?: string | null;
-  enrollmentDate: string;
+  enrolledDate : string;
   isTa: boolean;
 }

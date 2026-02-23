@@ -23,13 +23,19 @@ namespace EduTrail.Application.Enrolements
                 if (existing != null)
                 {
                     throw new InvalidOperationException(
-                        
+
                         "Student is already enrolled in this course offering."
                     );
                 }
                 var enrolement = _mapper.Map<Enrollment>(request.enrolementDto);
+                if (request.enrolementDto.IsTa == true)
+                {
+                    var role = await _repository.GetRoleTaAsync();
+                    enrolement.Student?.Roles.Add(role);
+                }
+                
                 var res = await _repository.CreateAsync(enrolement);
-                var enrolementDto = _mapper.Map<EnrolementDetailsDto>(enrolement);
+                var enrolementDto = _mapper.Map<EnrolementDetailsDto>(res);
                 return new EnrolementDto { DetailsDto = enrolementDto };
             }
         }

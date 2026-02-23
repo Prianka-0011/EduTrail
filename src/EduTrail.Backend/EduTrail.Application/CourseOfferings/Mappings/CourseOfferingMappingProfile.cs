@@ -10,7 +10,7 @@ namespace EduTrail.Application.CourseOfferings
         {
 
               CreateMap<CourseOfferingDetailDto, CourseOffering>()
-                .ForMember(d => d.Id, o => o.Ignore())
+                // .ForMember(d => d.Id, o => o.Ignore())
                 .ForMember(d => d.Course, o => o.Ignore())
                 .ForMember(d => d.Term, o => o.Ignore())
                 .ForMember(d => d.Instructor, o => o.Ignore())
