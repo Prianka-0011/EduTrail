@@ -3,10 +3,10 @@ using MediatR;
 
 namespace EduTrail.Application.Enrolements
 {
-    public class GetAllEnrolementsQuery : IRequest<List<EnrolementDto>>
+    public class GetAllEnrolementsQuery : IRequest<EnrolementDto>
     {
         public Guid? CourseOfferingId { get; set; }
-        public class Handler : IRequestHandler<GetAllEnrolementsQuery, List<EnrolementDto>>
+        public class Handler : IRequestHandler<GetAllEnrolementsQuery, EnrolementDto>
         {
             private readonly IEnrolementRepository _repository;
             private readonly IMapper _mapper;
@@ -15,11 +15,11 @@ namespace EduTrail.Application.Enrolements
                 _repository = repository;
                 _mapper = mapper;
             }
-            public async Task<List<EnrolementDto>> Handle(GetAllEnrolementsQuery request, CancellationToken cancellationToken)
+            public async Task<EnrolementDto> Handle(GetAllEnrolementsQuery request, CancellationToken cancellationToken)
             {
-                var enrolements = await _repository.GetAllAsync();
-                var enrolementDtos = _mapper.Map<List<EnrolementDto>>(enrolements);
-                return enrolementDtos;
+                var enrolements = await _repository.GetAllAsync(request.CourseOfferingId);
+                var enrolementDtos = _mapper.Map<List<EnrolementDetailsDto>>(enrolements);
+                return new EnrolementDto { DetailsDtoList = enrolementDtos };
             }
         }
     }

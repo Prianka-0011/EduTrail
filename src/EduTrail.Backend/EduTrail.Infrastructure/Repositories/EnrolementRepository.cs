@@ -59,5 +59,11 @@ namespace EduTrail.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public Task<Enrollment> GetByCourseOfferingIdAndStudentIdAsync(Guid courseOfferingId, Guid studentId)
+        {
+            return _context.Enrollments
+                .FirstOrDefaultAsync(e => e.CourseOfferingId == courseOfferingId && e.StudentId == studentId);
+        }
     }
 }

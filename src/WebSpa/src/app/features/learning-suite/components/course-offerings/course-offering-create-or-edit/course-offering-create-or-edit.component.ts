@@ -46,6 +46,7 @@ export class CourseOfferingCreateOrEditComponent implements OnInit {
 
   private loadCourseOffering(): void {
     const id = this.route.snapshot.queryParamMap.get('id');
+    console.log('Course Offering ID from query params:', id);
     if (!id) return;
 
     this.courseOfferingService.getCourseOfferingById(id).subscribe(data => {

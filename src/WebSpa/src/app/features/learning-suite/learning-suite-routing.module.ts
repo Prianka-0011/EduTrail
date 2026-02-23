@@ -77,7 +77,7 @@ export const learningSuiteRoutes: Routes = [
     // ]
   },
   {
-    path: 'course-offerings/enrolement-list/:courseOfferingId',
+    path: 'course-offerings/:courseOfferingId/enrolement-list',
     component: EnrolementListComponent
   },
   // {

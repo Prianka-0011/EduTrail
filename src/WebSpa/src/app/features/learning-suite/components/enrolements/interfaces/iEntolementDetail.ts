@@ -1,8 +1,8 @@
 export interface IEnrolementDetail {
-    id: string;
-    CourseOfferingId: string;
-    studentId: string;
-    studentName: string;
-    enrollmentDate: Date;
-
+  id: string;
+  courseOfferingId: string;
+  studentId: string;
+  studentName?: string | null;
+  enrollmentDate: string;
+  isTa: boolean;
 }

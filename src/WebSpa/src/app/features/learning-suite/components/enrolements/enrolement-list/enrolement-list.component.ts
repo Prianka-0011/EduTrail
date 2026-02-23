@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { IEnrolementDetail } from '../interfaces/iEntolementDetail';
 import { EnrolementService } from '../services/enrolement.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IEnrolement } from '../interfaces/iEnrolement';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
+import { EnrolementCreateOrEditComponent } from '../enrolement-create-or-edit/enrolement-create-or-edit.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-enrolement-list',
-  imports: [CommonModule, FormsModule, SideDrawerComponent],
+  imports: [CommonModule, FormsModule, SideDrawerComponent, EnrolementCreateOrEditComponent],
   templateUrl: './enrolement-list.component.html',
   styleUrl: './enrolement-list.component.scss'
 })
@@ -17,22 +19,20 @@ export class EnrolementListComponent implements OnInit {
   enrolements: IEnrolementDetail[] = [];
   filteredEnrolements: IEnrolementDetail[] = [];
   pagedEnrolements: IEnrolementDetail[] = [];
-
   searchText = '';
-
   pageSizeOptions = [5, 10, 20];
   pageSize = 10;
   currentPage = 1;
   totalItems = 0;
-
   drawerOpen = false;
   selectedEnrolementId: string | null = null;
-
   expandedRows = new Set<string>();
 
   constructor(
     private enrolementService: EnrolementService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +44,8 @@ export class EnrolementListComponent implements OnInit {
   getEnrolements(courseOfferingId: string) {
     this.enrolementService.getEnrolements(courseOfferingId).subscribe({
       next: (data: IEnrolement) => {
-        this.enrolements = data.detailDtoList ?? [];
+        console.log('Received enrolement data:', data);
+        this.enrolements = data.detailsDtoList ?? [];
         this.applyFilter();
       }
     });
@@ -53,7 +54,7 @@ export class EnrolementListComponent implements OnInit {
   applyFilter() {
     const value = this.searchText.toLowerCase().trim();
     this.filteredEnrolements = this.enrolements.filter(e =>
-      e.studentName.toLowerCase().includes(value)
+      e.studentName?.toLowerCase().includes(value)
     );
     this.totalItems = this.filteredEnrolements.length;
     this.currentPage = 1;
@@ -93,16 +94,28 @@ export class EnrolementListComponent implements OnInit {
   openCreateDrawer() {
     this.selectedEnrolementId = null;
     this.drawerOpen = true;
+    this.router.navigate([], {
+      queryParams: { id: "00000000-0000-0000-0000-000000000000" },
+      queryParamsHandling: 'merge'
+    })
   }
 
   openEditDrawer(id: string) {
     this.selectedEnrolementId = id;
     this.drawerOpen = true;
+    this.router.navigate([], {
+      queryParams: { id: id },
+      queryParamsHandling: 'merge'
+    })
   }
 
   closeDrawer() {
     this.drawerOpen = false;
     this.selectedEnrolementId = null;
+     this.router.navigate([], {
+      queryParams: { id: undefined },
+      queryParamsHandling: 'merge'
+    });
   }
 
   onEnrolementSaved() {

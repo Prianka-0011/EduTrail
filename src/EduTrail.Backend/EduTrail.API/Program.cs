@@ -35,13 +35,14 @@ static void UpdateDatabase(IApplicationBuilder app)
 }
 var app = builder.Build();
 UpdateDatabase(app);
+app.UseGlobalExceptionHandler();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseGlobalExceptionHandler();
+
 app.UseHttpsRedirection();
 app.UseCors("AllowWebSpa");
 app.UseAuthentication();

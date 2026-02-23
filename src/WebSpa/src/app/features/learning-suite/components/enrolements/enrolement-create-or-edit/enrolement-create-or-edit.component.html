@@ -1,1 +1,86 @@
-<p>enrolement-create-or-edit works!</p>
+<div class="container mt-5">
+  <div class="card border-1">
+    <div class="card-body">
+      <form #enrolementForm="ngForm" (ngSubmit)="onSubmit(enrolementForm)" novalidate>
+        <div class="row g-3">
+          <!-- Student Dropdown -->
+          <div class="col-md-12">
+            <div class="floating">
+              <select
+                name="studentId"
+                class="form-select"
+                [(ngModel)]="enrolement.detailsDto.studentId"
+                #studentId="ngModel"
+                (focus)="isStudentFocused = true"
+                (blur)="isStudentFocused = false"
+                [ngClass]="{ 'active': enrolement.detailsDto.studentId || isStudentFocused }"
+                required
+              >
+                <option *ngFor="let s of enrolement.users" [value]="s.id">
+                  {{ s.name }}
+                </option>
+              </select>
+              <label>Student *</label>
+            </div>
+            <div class="text-danger small" *ngIf="studentId.invalid && studentId.touched">
+              Student is required
+            </div>
+          </div>
+
+          <!-- Enrollment Date -->
+          <div class="col-md-12">
+            <div class="floating">
+              <input
+                type="date"
+                name="enrollmentDate"
+                class="form-control"
+                [(ngModel)]="enrolement.detailsDto.enrollmentDate"
+                #enrollmentDate="ngModel"
+                (focus)="isDateFocused = true"
+                (blur)="isDateFocused = false"
+                [ngClass]="{ 'active': enrolement.detailsDto.enrollmentDate || isDateFocused }"
+                required
+              />
+              <label>Enrollment Date *</label>
+            </div>
+            <div class="text-danger small" *ngIf="enrollmentDate.invalid && enrollmentDate.touched">
+              Enrollment date is required
+            </div>
+          </div>
+
+          <!-- Is TA -->
+          <div class="col-md-12">
+            <div class="form-check mt-2">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="isTa"
+                [(ngModel)]="enrolement.detailsDto.isTa"
+                id="isTa"
+              />
+              <label class="form-check-label" for="isTa">
+                Teaching Assistant
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="onCancel()">
+            Cancel
+          </button>
+
+          <button type="submit" class="btn btn-primary">
+            {{
+              enrolement.detailsDto.id !== EMPTY_ID
+                ? 'Update Enrolement'
+                : 'Create Enrolement'
+            }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

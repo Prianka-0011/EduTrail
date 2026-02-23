@@ -4,9 +4,9 @@ namespace EduTrail.Application.Enrolements
 {
     public class EnrolementDto
     {
-        public EnrolementDetailsDto DetailsDto { get; set; }
-        public List<EnrolementDetailsDto> DetailsDtoList { get; set; }
-        public List<DropdownItemDto> Students { get; set; }
+        public EnrolementDetailsDto DetailsDto { get; set; } = new EnrolementDetailsDto();
+        public List<EnrolementDetailsDto>? DetailsDtoList { get; set; } = new List<EnrolementDetailsDto>();
+        public List<DropdownItemDto>? Users { get; set; } = new List<DropdownItemDto>();
     }
     public class EnrolementDetailsDto
     {
@@ -14,8 +14,9 @@ namespace EduTrail.Application.Enrolements
         public Guid ?CourseOfferingId { get; set; }
         public Guid? StudentId { get; set; }
         public string? StudentName { get; set; }
-        public DateTimeOffset? EnrolementDate { get; set; }
+        public DateTimeOffset? EnrollmentDate { get; set; }
         public bool? IsActive { get; set; }
+        public bool? IsTa { get; set; }
     }
 
 }

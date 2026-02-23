@@ -1,9 +1,6 @@
-/* =========================
-   GLOBAL STYLES
-   ========================= */
-
-/* Global Poppins font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import 'ngx-toastr/toastr';
+
 
 html,
 body {
@@ -225,9 +222,13 @@ body {
   position: relative;
   width: 100%;
 }
-
-.floating .form-control,
 .floating .form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2.5rem;
+}
+.floating .form-control {
   width: 100%;
   padding: 0.5rem 0.75rem;
   font-size: 0.9rem;

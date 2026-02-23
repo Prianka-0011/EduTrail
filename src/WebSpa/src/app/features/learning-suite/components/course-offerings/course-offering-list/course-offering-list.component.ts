@@ -69,8 +69,7 @@ export class CourseOfferingListComponent implements OnInit {
 
   goToEnrollment(courseOfferingId: string) {
     this.router.navigate([
-      '/learning-suite/course-offerings/enrolement-list',
-      courseOfferingId
+      `/learning-suite/course-offerings/${courseOfferingId}/enrolement-list`
     ]);
   }
 
@@ -81,6 +80,7 @@ export class CourseOfferingListComponent implements OnInit {
   getCourseOfferings() {
     this.courseOfferingService.getCourseOfferings().subscribe({
       next: data => {
+        console.log('Received course offerings data:', data);
         this.courseOfferings = data.detailDtoList ?? [];
         this.applyFilter();
       }

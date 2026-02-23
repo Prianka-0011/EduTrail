@@ -1,13 +1,5 @@
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Data;
-using System.Data.Common;
 using System.Net;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace EduTrail.API.Middlewares
 {
@@ -15,28 +7,42 @@ namespace EduTrail.API.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ErrorHandlingMiddleware> _logger;
-        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
+
+        public ErrorHandlingMiddleware(
+            RequestDelegate next,
+            ILogger<ErrorHandlingMiddleware> logger)
         {
             _next = next;
             _logger = logger;
         }
+
         public async Task InvokeAsync(HttpContext context)
         {
             try
             {
                 await _next(context);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception has occurred while processing the request.");
+                _logger.LogError(ex, ex.Message);
+                
                 context.Response.ContentType = "application/json";
+                context.Response.StatusCode = ex switch
+                {
+                    InvalidOperationException => StatusCodes.Status400BadRequest,
+                    KeyNotFoundException => StatusCodes.Status404NotFound,
+                    _ => StatusCodes.Status500InternalServerError
+                };
+
                 var response = new
                 {
-                    StatusCode = context.Response.StatusCode,
-                    Message = ex.Message,
-                    details = ex.InnerException?.Message
+                    statusCode = context.Response.StatusCode,
+                    message = ex.Message
                 };
-               await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+
+                await context.Response.WriteAsync(
+                    JsonSerializer.Serialize(response)
+                );
             }
         }
     }

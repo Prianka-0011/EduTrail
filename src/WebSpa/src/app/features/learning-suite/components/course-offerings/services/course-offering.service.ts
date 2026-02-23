@@ -11,6 +11,7 @@ export class CourseOfferingService {
 
   baseUrl = enviroment.baseUrl + 'courseOfferings/';
   constructor(private http: HttpClient) { }
+  
   getCourseOfferings(): Observable<ICourseOffering> {
     return this.http.get<ICourseOffering>(this.baseUrl);
   }

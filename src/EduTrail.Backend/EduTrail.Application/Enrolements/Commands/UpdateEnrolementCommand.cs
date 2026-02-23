@@ -6,7 +6,7 @@ namespace EduTrail.Application.Enrolements
 {
     public class UpdateEnrolementCommand : IRequest<EnrolementDto>
     {
-        public EnrolementDetailsDto enrolementDetailDto {get; set;} 
+        public EnrolementDetailsDto enrolementDto {get; set;} 
         public class Handler : IRequestHandler<UpdateEnrolementCommand, EnrolementDto>
         {
             private readonly IEnrolementRepository _enrolementRepository;
@@ -20,7 +20,7 @@ namespace EduTrail.Application.Enrolements
 
             public async Task<EnrolementDto> Handle (UpdateEnrolementCommand request, CancellationToken cancellationToken)
             {
-                var enrolement = _mapper.Map<Enrollment>(request.enrolementDetailDto);
+                var enrolement = _mapper.Map<Enrollment>(request.enrolementDto);
                 var res = await _enrolementRepository.UpdateAsync(enrolement);
                 var enrolementDto = _mapper.Map<EnrolementDetailsDto>(res);
                 return new EnrolementDto { DetailsDto = enrolementDto };
