@@ -24,6 +24,10 @@ namespace EduTrail.Application.Enrolements
                 var enrolement = await _repository.GetByIdAsync(request.Id);
                 var users = await _repository.GetAllUsersAsync();
                 var enrolementDto = _mapper.Map<EnrolementDetailsDto>(enrolement);
+                if(enrolement.Student.Roles.Contains(await _repository.GetRoleTaAsync()))
+                {
+                    enrolementDto.IsTa = true;
+                }
                 var students = users.Select(u => new DropdownItemDto { Id = u.Id, Name = u.FirstName + " " + u.LastName }).ToList();
                 return new EnrolementDto { DetailsDto = enrolementDto, Users = students };
             }

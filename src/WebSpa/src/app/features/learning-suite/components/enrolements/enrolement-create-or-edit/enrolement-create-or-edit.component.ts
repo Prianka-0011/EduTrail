@@ -104,4 +104,50 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   onCancel(): void {
     this.cancel.emit();
   }
+  taLabHours = [
+    {
+      dayOfWeek: null,
+      startTime: '',
+      endTime: '',
+      mode: null,
+      labId: null,
+      remoteLink: ''
+    }
+  ];
+
+  maxWeeklyHours = 10;
+
+  getTotalWeeklyHours(): number {
+    return this.taLabHours.reduce((total, h) => {
+      if (!h.startTime || !h.endTime) return total;
+
+      const start = this.toMinutes(h.startTime);
+      const end = this.toMinutes(h.endTime);
+
+      if (end > start) {
+        total += (end - start) / 60;
+      }
+      return total;
+    }, 0);
+  }
+
+  toMinutes(time: string): number {
+    const [h, m] = time.split(':').map(Number);
+    return h * 60 + m;
+  }
+
+  addLabHour(): void {
+    this.taLabHours.push({
+      dayOfWeek: null,
+      startTime: '',
+      endTime: '',
+      mode: null,
+      labId: null,
+      remoteLink: ''
+    });
+  }
+
+  removeLabHour(index: number): void {
+    this.taLabHours.splice(index, 1);
+  }
 }

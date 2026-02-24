@@ -19,6 +19,8 @@ namespace EduTrail.Domain.Entities
         [Required]
         public Guid EnrollmentId { get; set; }
         public Enrollment Enrollment { get; set; }
+        [Required]
+        public DateOnly LabDate { get; set; }
 
         [Required]
         public DayOfWeek DayOfWeek { get; set; }  // Day of the week

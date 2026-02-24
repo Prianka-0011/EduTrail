@@ -5,4 +5,5 @@ export interface IEnrolement {
     detailsDto: IEnrolementDetail;
     detailsDtoList?: IEnrolementDetail[];
     users?: IDropdownItem[];
+    
 }

@@ -35,6 +35,15 @@ namespace EduTrail.Application.Enrolements
                     }
 
                 }
+                else if (request.enrolementDto.IsTa == false)
+                {
+                    var role = await _repository.GetRoleTaAsync();
+                    var student = enrolement.Student ?? await _repository.GetStudentByIdAsync(enrolement.StudentId ?? Guid.Empty);
+                    if (student.Roles != null)
+                    {
+                        student.Roles.Remove(role);
+                    }
+                }
                 var res = await _repository.UpdateAsync(enrolement);
                 var enrolementDto = _mapper.Map<EnrolementDetailsDto>(res);
                 return new EnrolementDto { DetailsDto = enrolementDto };

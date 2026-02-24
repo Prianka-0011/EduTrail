@@ -27,7 +27,7 @@ namespace EduTrail.Infrastructure.Repositories
         }
         public async Task<Enrollment> GetByIdAsync(Guid id)
         {
-            return await _context.Enrollments.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return await _context.Enrollments.Include(c=>c.Student).ThenInclude(c=>c.Roles).Where(c => c.Id == id).FirstOrDefaultAsync();
         }
         public async Task<List<User>> GetAllUsersAsync()
         {
