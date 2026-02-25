@@ -1,3 +1,5 @@
+import { ITALabDay } from "./iTALabDay";
+
 export interface IEnrolementDetail {
   id: string;
   courseOfferingId: string;
@@ -5,4 +7,5 @@ export interface IEnrolementDetail {
   studentName?: string | null;
   enrolledDate : string;
   isTa: boolean;
+  taLabDays?: ITALabDay[];
 }

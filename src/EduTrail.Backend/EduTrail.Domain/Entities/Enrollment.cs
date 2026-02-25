@@ -19,7 +19,7 @@ namespace EduTrail.Domain.Entities
         public DateTimeOffset EnrolledDate { get; set; }
 
         public bool IsActive { get; set; } = true;
-        public ICollection<TALabHour> TALabHours { get; set; }
+        public ICollection<TALabDay> TALabDays { get; set; } = new List<TALabDay>();
         // Audit fields
 
         public DateTimeOffset? CreatedDate { get; set; }

@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { EnrolementService } from '../services/enrolement.service';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { ITALabDay } from '../interfaces/iTALabDay';
+import { ITALabSlot, LabMode } from '../interfaces/iTALabSlot';
 
 @Component({
   selector: 'app-enrolement-create-or-edit',
@@ -15,11 +17,14 @@ import { ToastrService } from 'ngx-toastr';
 
 export class EnrolementCreateOrEditComponent implements OnInit {
   EMPTY_ID = '00000000-0000-0000-0000-000000000000';
+  maxWeeklyHours = 10;
+  LabMode = LabMode;
+
+  enrolement: IEnrolement = this.getEmptyEnrolement();
+  taLabDays: ITALabDay[] = [];
 
   @Output() saved = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
-
-  enrolement: IEnrolement = this.getEmptyEnrolement();
 
   isStudentFocused = false;
   isDateFocused = false;
@@ -37,15 +42,11 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   private loadEnrolement(): void {
     const id = this.route.snapshot.queryParamMap.get('id') ?? this.EMPTY_ID;
     if (!id) return;
-    console.log('Enrolement ID from query params:', id);
 
     this.enrolementService.getCourseById(id).subscribe(data => {
-      console.log('Enrolement data from service:', data);
-
       let enrolledDate = '';
       if (data.detailsDto?.enrolledDate) {
-        const localDate = new Date(data.detailsDto.enrolledDate);
-        enrolledDate = localDate.toISOString().split('T')[0];
+        enrolledDate = new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0];
       }
 
       this.enrolement = {
@@ -56,6 +57,11 @@ export class EnrolementCreateOrEditComponent implements OnInit {
         },
         users: data.users ?? []
       };
+
+      // Initialize first TA day if TA
+      if (this.enrolement.detailsDto.isTa && enrolledDate) {
+        this.addLabDay(enrolledDate);
+      }
     });
   }
 
@@ -85,10 +91,9 @@ export class EnrolementCreateOrEditComponent implements OnInit {
         : this.enrolementService.updateEnrolement(this.enrolement);
 
     request$.subscribe({
-      next: (data) => {
+      next: () => {
         this.toastr.success('Enrollment saved successfully!');
         this.saved.emit();
-        console.log("Enrollment saved successfully:", data);
       },
       error: (err) => {
         if (err?.error?.message?.includes('already enrolled')) {
@@ -96,7 +101,6 @@ export class EnrolementCreateOrEditComponent implements OnInit {
         } else {
           this.toastr.error('Something went wrong. Please try again.');
         }
-        console.error("Error saving enrollment:", err);
       }
     });
   }
@@ -104,31 +108,74 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   onCancel(): void {
     this.cancel.emit();
   }
-  taLabHours = [
-    {
-      dayOfWeek: null,
+
+  getDayNameFromDate(date: string): string {
+    return new Date(date).toLocaleDateString(undefined, { weekday: 'long' });
+  }
+
+  private generateGuid(): string {
+    // Simple GUID generator
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  addLabDay(date?: string) {
+    const labDate = date || new Date().toISOString().split('T')[0];
+    const newDayId = this.generateGuid();
+
+    this.taLabDays.push({
+      id: newDayId,
+      enrollmentId: this.enrolement.detailsDto.id,
+      labDate,
+      isActive: true,
+      slots: [
+        {
+          startTime: '',
+          endTime: '',
+          mode: LabMode.InPerson,
+          remoteLink: '',
+          isActive: true,
+          talabDayId: newDayId
+        }
+      ]
+    });
+  }
+
+  addLabSlot(day: ITALabDay) {
+    const newSlot: ITALabSlot = {
       startTime: '',
       endTime: '',
-      mode: null,
-      labId: null,
-      remoteLink: ''
-    }
-  ];
+      mode: LabMode.InPerson,
+      remoteLink: '',
+      isActive: true,
+      talabDayId: day.id ?? this.generateGuid()
+    };
+    day.slots?.push(newSlot);
+  }
 
-  maxWeeklyHours = 10;
+  removeLabDay(index: number) {
+    this.taLabDays.splice(index, 1);
+  }
+
+  removeLabSlot(day: ITALabDay, slotIndex: number) {
+    day.slots?.splice(slotIndex, 1);
+  }
 
   getTotalWeeklyHours(): number {
-    return this.taLabHours.reduce((total, h) => {
-      if (!h.startTime || !h.endTime) return total;
-
-      const start = this.toMinutes(h.startTime);
-      const end = this.toMinutes(h.endTime);
-
-      if (end > start) {
-        total += (end - start) / 60;
-      }
-      return total;
-    }, 0);
+    let total = 0;
+    this.taLabDays.forEach(day => {
+      day.slots?.forEach(slot => {
+        if (slot.startTime && slot.endTime) {
+          const start = this.toMinutes(slot.startTime);
+          const end = this.toMinutes(slot.endTime);
+          if (end > start) total += (end - start) / 60;
+        }
+      });
+    });
+    return total;
   }
 
   toMinutes(time: string): number {
@@ -136,18 +183,10 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     return h * 60 + m;
   }
 
-  addLabHour(): void {
-    this.taLabHours.push({
-      dayOfWeek: null,
-      startTime: '',
-      endTime: '',
-      mode: null,
-      labId: null,
-      remoteLink: ''
-    });
-  }
-
-  removeLabHour(index: number): void {
-    this.taLabHours.splice(index, 1);
+  // Whenever enrollment date changes, add a new day if it doesn’t exist
+  onEnrollmentDateChange(date: string) {
+    if (!this.taLabDays.find(d => d.labDate === date)) {
+      this.addLabDay(date);
+    }
   }
 }

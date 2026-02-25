@@ -3,6 +3,7 @@
     <div class="card-body">
       <form #enrolementForm="ngForm" (ngSubmit)="onSubmit(enrolementForm)" novalidate>
         <div class="row g-3">
+
           <!-- Student Dropdown -->
           <div class="col-md-12">
             <div class="floating">
@@ -26,7 +27,8 @@
               <input type="date" name="enrolledDate" class="form-control"
                 [(ngModel)]="enrolement.detailsDto.enrolledDate" #enrolledDate="ngModel" (focus)="isDateFocused = true"
                 (blur)="isDateFocused = false"
-                [ngClass]="{ 'active': enrolement.detailsDto.enrolledDate || isDateFocused }" required />
+                [ngClass]="{ 'active': enrolement.detailsDto.enrolledDate || isDateFocused }" required
+                (change)="onEnrollmentDateChange(enrolement.detailsDto.enrolledDate)" />
               <label>Enrollment Date *</label>
             </div>
             <div class="text-danger small" *ngIf="enrolledDate.invalid && enrolledDate.touched">
@@ -45,74 +47,77 @@
             </div>
           </div>
 
-          <div *ngIf="enrolement.detailsDto.isTa" class="mt-4 ta-lab-hours-section" >
+          <!-- TA Lab Days & Slots -->
+          <div *ngIf="enrolement.detailsDto.isTa" class="mt-4 ta-lab-hours-section">
 
-            <h5 class="mb-3">TA Lab Hours (Max 10 hours per week)</h5>
+            <h5 class="mb-3">TA Lab Hours</h5>
 
-            <div class="border rounded p-3 mb-3" *ngFor="let h of taLabHours; let i = index">
-              <div class="row g-2 align-items-end">
-
-                <div class="col-md-3">
-                  <label class="form-label">Day</label>
-                  <select class="form-select" [(ngModel)]="h.dayOfWeek" name="day{{i}}" required>
-                    <option [ngValue]="null">Select</option>
-                    <option *ngFor="let d of [0,1,2,3,4,5,6]" [ngValue]="d">
-                      {{ ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d] }}
-                    </option>
-                  </select>
+            <div *ngFor="let day of taLabDays; let dIndex = index" class="mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <input type="date" class="form-control form-control-sm" [(ngModel)]="day.labDate" />
+                  <span class="small text-muted">{{ getDayNameFromDate(day.labDate) }}</span>
                 </div>
-
-                <div class="col-md-2">
-                  <label class="form-label">Start</label>
-                  <input type="time" class="form-control" [(ngModel)]="h.startTime" name="start{{i}}" required />
-                </div>
-
-                <div class="col-md-2">
-                  <label class="form-label">End</label>
-                  <input type="time" class="form-control" [(ngModel)]="h.endTime" name="end{{i}}" required />
-                </div>
-
-                <div class="col-md-2">
-                  <label class="form-label">Mode</label>
-                  <select class="form-select" [(ngModel)]="h.mode" name="mode{{i}}" required>
-                    <option [ngValue]="null">Select</option>
-                    <option [ngValue]="1">In Person</option>
-                    <option [ngValue]="2">Remote</option>
-                    <option [ngValue]="3">Hybrid</option>
-                  </select>
-                </div>
-
-                <div class="col-md-2" *ngIf="h.mode === 2 || h.mode === 3">
-                  <label class="form-label">Remote Link</label>
-                  <input type="text" class="form-control" [(ngModel)]="h.remoteLink" name="link{{i}}" />
-                </div>
-
-                <div class="col-md-1 text-end">
-                  <button type="button" class="btn btn-outline-danger" (click)="removeLabHour(i)"
-                    *ngIf="taLabHours.length > 1">
-                    ×
-                  </button>
-                </div>
-
+                <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeLabDay(dIndex)">
+                  Remove Day
+                </button>
               </div>
-            </div>
 
-            <div class="d-flex justify-content-between align-items-center">
-              <button type="button" class="btn btn-outline-primary" (click)="addLabHour()">
-                Add Lab Hour
+              <div class="border rounded p-3 mb-3" *ngFor="let slot of day.slots; let sIndex = index">
+                <div class="row g-2 align-items-end">
+
+                  <div class="col-md-3">
+                    <label>Start Time</label>
+                    <input type="time" class="form-control" [(ngModel)]="slot.startTime"
+                      name="start{{day.id}}{{sIndex}}" required />
+                  </div>
+
+                  <div class="col-md-3">
+                    <label>End Time</label>
+                    <input type="time" class="form-control" [(ngModel)]="slot.endTime" name="end{{day.id}}{{sIndex}}"
+                      required />
+                  </div>
+
+                  <div class="col-md-3">
+                    <label>Mode</label>
+                    <select class="form-select" [(ngModel)]="slot.mode" name="mode{{day.id}}{{sIndex}}" required>
+                      <option [ngValue]="LabMode.InPerson">In Person</option>
+                      <option [ngValue]="LabMode.Remote">Remote</option>
+                      <option [ngValue]="LabMode.Hybrid">Hybrid</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-2" *ngIf="slot.mode === LabMode.Remote || slot.mode === LabMode.Hybrid">
+                    <label>Remote Link</label>
+                    <input type="text" class="form-control" [(ngModel)]="slot.remoteLink"
+                      name="link{{day.id}}{{sIndex}}" />
+                  </div>
+
+                  <div class="col-md-1 text-end">
+                    <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeLabSlot(day, sIndex)">×
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-outline-primary mb-3" (click)="addLabSlot(day)">
+                Add Slot
               </button>
-
-              <div class="fw-semibold" [class.text-danger]="getTotalWeeklyHours() > maxWeeklyHours">
-                Total Weekly Hours: {{ getTotalWeeklyHours() | number:'1.1-1' }} / 10
-              </div>
             </div>
 
+            <div class="fw-semibold" [class.text-danger]="getTotalWeeklyHours() > maxWeeklyHours">
+              Total Hours: {{ getTotalWeeklyHours() | number:'1.1-1' }} / {{ maxWeeklyHours }}
+            </div>
             <div class="text-danger mt-2" *ngIf="getTotalWeeklyHours() > maxWeeklyHours">
-              Total TA lab hours cannot exceed 10 hours per week.
+              Total TA lab hours cannot exceed {{ maxWeeklyHours }} hours.
             </div>
+
+            <button type="button" class="btn btn-outline-success mb-3" (click)="addLabDay()">
+              Add New Lab Day
+            </button>
 
           </div>
-
 
         </div>
 
@@ -124,8 +129,8 @@
           <button type="submit" class="btn btn-primary">
             {{
             enrolement.detailsDto.id !== EMPTY_ID
-            ? 'Update Enrolement'
-            : 'Create Enrolement'
+            ? 'Update Enrollment'
+            : 'Create Enrollment'
             }}
           </button>
         </div>
