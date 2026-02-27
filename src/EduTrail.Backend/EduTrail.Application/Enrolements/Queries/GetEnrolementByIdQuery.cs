@@ -23,18 +23,21 @@ namespace EduTrail.Application.Enrolements
             {
                 var enrolement = await _repository.GetByIdAsync(request.Id);
                 var users = await _repository.GetAllUsersAsync();
-                var students = users.Select(u => new DropdownItemDto { Id = u.Id, Name = u.FirstName + " " + u.LastName }).ToList();
+                var students = users.Select(u => new DropdownItemDto
+                {
+                    Id = u.Id,
+                    Name = $"{u.FirstName} {u.LastName}"
+                }).ToList();
+
                 var enrolementDto = _mapper.Map<EnrolementDetailsDto>(enrolement);
-                if(enrolement.Id == Guid.Empty)
-                {
-                    return new EnrolementDto { DetailsDto = enrolementDto, Users = students };;
-                }
-                
-                if(enrolement.Student.Roles.Contains(await _repository.GetRoleTaAsync()))
-                {
+
+                if (enrolement == null)
+                    return new EnrolementDto { DetailsDto = enrolementDto, Users = students };
+
+                var taRole = await _repository.GetRoleTaAsync();
+                if (enrolement.Student?.Roles?.Contains(taRole) == true)
                     enrolementDto.IsTa = true;
-                }
-                
+
                 return new EnrolementDto { DetailsDto = enrolementDto, Users = students };
             }
         }
