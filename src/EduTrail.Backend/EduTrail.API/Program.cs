@@ -3,10 +3,11 @@ using EduTrail.Application;
 using EduTrail.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using EduTrail.API.Middlewares;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -47,7 +48,18 @@ app.UseHttpsRedirection();
 app.UseCors("AllowWebSpa");
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
+try
+{
+    app.MapControllers();
+}
+catch (ReflectionTypeLoadException ex)
+{
+    foreach (var e in ex.LoaderExceptions)
+    {
+        Console.WriteLine(e.ToString());
+    }
+    throw;
+}
 app.UseSpaStaticFiles();
 app.UseSpa(spa =>
 {

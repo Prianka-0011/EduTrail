@@ -6,6 +6,6 @@ export interface ITALabDay {
   isActive?: boolean;
   slots?: ITALabSlot[];
   dayName?: string;
+  taLabWeekId?: string;
   isOverHours?: boolean;
-  // Array of slots for this day
 }

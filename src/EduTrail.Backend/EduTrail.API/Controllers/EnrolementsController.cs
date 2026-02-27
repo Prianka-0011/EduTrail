@@ -23,7 +23,7 @@ namespace EduTrail.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<EnrolementDto>> GetById(Guid id)
         {
-            return Ok(await _mediator.Send(new GetEnrolementByIdQuery { Id = id }));
+            return Ok(await _mediator.Send(new GetEnrolementByIdQuery { Id = id}));
         }
         [HttpPost]
         public async Task<ActionResult<EnrolementDto>> Create(CreateEnrolementCommand command)

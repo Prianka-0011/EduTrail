@@ -6,7 +6,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/EduTrail.Backend/EduTrail.API/bin/Debug/net8.0/EduTrail.API.dll",
+      "program": "${workspaceFolder}/src/EduTrail.Backend/EduTrail.API/bin/Debug/net10.0/EduTrail.API.dll",
       "args": [],
       "cwd": "${workspaceFolder}/src/EduTrail.Backend/EduTrail.API",
       "stopAtEntry": false,

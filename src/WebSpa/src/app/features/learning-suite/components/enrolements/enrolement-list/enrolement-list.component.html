@@ -125,7 +125,7 @@
 </div>
 
 <!-- Side drawer for create/edit -->
-<app-side-drawer [opened]="drawerOpen" width="800px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+<app-side-drawer [opened]="drawerOpen" width="1000px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
   <ng-container *ngIf="drawerOpen">
     <app-enrolement-create-or-edit (saved)="onEnrolementSaved()"
       (cancel)="closeDrawer()"></app-enrolement-create-or-edit>

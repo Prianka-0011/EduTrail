@@ -1,16 +1,19 @@
 <div class="container mt-5">
   <div class="card border-1">
     <div class="card-body">
+      {{enrolement.users | json}}
       <form #enrolementForm="ngForm" (ngSubmit)="onSubmit(enrolementForm)" novalidate>
+
         <div class="row g-3">
-          <!-- Student selection -->
           <div class="col-md-12">
             <div class="floating">
               <select class="form-select" name="studentId" [(ngModel)]="enrolement.detailsDto.studentId"
                 #studentId="ngModel" required (focus)="isStudentFocused = true" (blur)="isStudentFocused = false"
                 [ngClass]="{ active: enrolement.detailsDto.studentId || isStudentFocused }">
-                <option value="" disabled>Select Student</option>
-                <option *ngFor="let s of enrolement.users" [value]="s.id">{{ s.name }}</option>
+                <!-- <option value="" disabled>Select Student</option> -->
+                <option *ngFor="let s of enrolement.users" [value]="s.id">
+                  {{ s.name }} 
+                </option>
               </select>
               <label>Student *</label>
             </div>
@@ -19,7 +22,6 @@
             </div>
           </div>
 
-          <!-- Enrollment Date -->
           <div class="col-md-12">
             <div class="floating">
               <input type="date" class="form-control" name="enrolledDate"
@@ -33,70 +35,73 @@
             </div>
           </div>
 
-          <!-- Is TA -->
           <div class="col-md-12">
             <div class="form-check mt-2">
               <input class="form-check-input" type="checkbox" id="isTa" name="isTa"
                 [(ngModel)]="enrolement.detailsDto.isTa" />
-              <label class="form-check-label" for="isTa">Teaching Assistant</label>
+              <label class="form-check-label" for="isTa">
+                Teaching Assistant
+              </label>
             </div>
           </div>
 
           <div class="col-md-12" *ngIf="enrolement.detailsDto.isTa">
-              <div class="floating">
-                <input type="number" id="totalWorkHoursPerWeek" name="totalWorkHoursPerWeek" class="form-control"
-                  [(ngModel)]="enrolement.detailsDto.totalWorkHoursPerWeek" #totalWorkHoursPerWeek="ngModel"
-                  (focus)="totalHoursPerWeekFocused = true" (blur)="totalHoursPerWeekFocused = false"
-                  [ngClass]="{ 'active': enrolement.detailsDto.totalWorkHoursPerWeek || totalHoursPerWeekFocused }" required />
-                <label for="totalWorkHoursPerWeek">Total Weekly Hours *</label>
-              </div>
+            <div class="floating">
+              <input type="number" class="form-control" name="totalWorkHoursPerWeek"
+                [(ngModel)]="enrolement.detailsDto.totalWorkHoursPerWeek" required
+                (focus)="totalHoursPerWeekFocused = true" (blur)="totalHoursPerWeekFocused = false"
+                [ngClass]="{ active: enrolement.detailsDto.totalWorkHoursPerWeek || totalHoursPerWeekFocused }" />
+              <label>Total Weekly Hours *</label>
+            </div>
           </div>
         </div>
 
-        <!-- TA Lab Hours -->
         <div class="row mt-4" *ngIf="enrolement.detailsDto.isTa">
-          <h5 class="mb-3">TA Lab Hours</h5>
+          <div class="col-md-12 d-flex align-items-start gap-1 mb-3">
+            <h5>TA Lab Hours</h5>
+          </div>
+          <div class="col-md-12">
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <div class="floating">
+                  <select class="form-select" [(ngModel)]="selectedMonth" name="selectedMonth" required
+                    (focus)="isMonthFocused = true" (blur)="isMonthFocused = false"
+                    [ngClass]="{ active: selectedMonth || isMonthFocused }">
+                    <!-- <option value="" disabled>Select Month</option> -->
+                    <option *ngFor="let m of months" [value]="m.value">{{ m.name }}</option>
+                  </select>
+                  <label>Month *</label>
+                </div>
+              </div>
 
-          <!-- Month/Year Selection -->
-          <div class="row g-2 mb-3 align-items-end">
-            <div class="col-md-4">
-              <div class="floating">
-                <select class="form-select" [(ngModel)]="selectedMonth" name="selectedMonth" required
-                  (focus)="isMonthFocused = true" (blur)="isMonthFocused = false"
-                  [ngClass]="{ active: selectedMonth || isMonthFocused }">
-                  <option value="" disabled>Select Month</option>
-                  <option *ngFor="let m of months" [value]="m.value">{{ m.name }}</option>
-                </select>
-                <label>Month *</label>
+              <div class="col-md-4">
+                <div class="floating">
+                  <select class="form-select" [(ngModel)]="selectedYear" name="selectedYear" required
+                    (focus)="isYearFocused = true" (blur)="isYearFocused = false"
+                    [ngClass]="{ active: selectedYear || isYearFocused }">
+                    <!-- <option value="" disabled>Select Year</option> -->
+                    <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+                  </select>
+                  <label>Year *</label>
+                </div>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="floating">
-                <select class="form-select" [(ngModel)]="selectedYear" name="selectedYear" required
-                  (focus)="isYearFocused = true" (blur)="isYearFocused = false"
-                  [ngClass]="{ active: selectedYear || isYearFocused }">
-                  <option value="" disabled>Select Year</option>
-                  <option *ngFor="let y of years" [value]="y">{{ y }}</option>
-                </select>
-                <label>Year *</label>
+
+              <div class="col-md-4 d-flex align-items-center justify-content-start">
+                <button type="button" class="btn btn-outline-success btn-sm me-3"
+                  (click)="addMonth(selectedMonth!, selectedYear!)" [disabled]="!selectedMonth || !selectedYear">
+                  <i class="bi bi-calendar-plus"></i>
+                </button>
               </div>
-            </div>
-            <div class="col-md-4 d-flex">
-              <button type="button" class="btn btn-outline-success btn-sm"
-                (click)="selectedMonth && selectedYear ? addMonth(selectedMonth, selectedYear) : null">
-                Add Month
-              </button>
+
             </div>
           </div>
 
-          <!-- Months / Weeks / Days / Slots -->
-          <div *ngFor="let month of taLabMonths; let mIndex = index"
-            class="mb-4 border p-3 rounded ta-lab-hours-section">
+          <div *ngFor="let month of taLabMonths" class="mb-4  p-3 rounded ta-lab-hours-section">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <h6 class="mb-0">{{ getMonthName(month.month) }} {{ month.year }}</h6>
               <div class="d-flex align-items-center">
-                <button type="button" class="btn btn-sm btn-outline-danger me-2" (click)="taLabMonths.splice(mIndex,1)">
-                  <i class="bi bi-trash"></i>
+                <button type="button" class="btn btn-sm btn-outline-danger me-2" (click)="removeMonth(month.id!)">
+                  <i class="bi bi-calendar-x"></i>
                 </button>
                 <button type="button" class="btn btn-sm btn-outline-secondary"
                   (click)="month.isCollapsed = !month.isCollapsed">
@@ -105,63 +110,75 @@
               </div>
             </div>
 
-            <div *ngIf="!month.isCollapsed" class="ms-3">
+            <div *ngIf="!month.isCollapsed" class="ms-1">
               <div *ngFor="let week of month.weeks">
                 <div class="d-flex align-items-center gap-2 mb-2">
                   <h6 class="mb-0">Week {{ week.weekNumber }}</h6>
-
                   <button type="button" class="btn btn-outline-primary btn-sm"
                     (click)="addLabDayToWeek(month, week.weekNumber)">
-                    Add Lab Day
+                    <i class="bi bi-calendar-plus"></i>
                   </button>
                 </div>
 
-                <div *ngFor="let day of week.days; let dIndex = index" class="mb-3 p-2 border rounded">
+                <div *ngFor="let day of week.days" class="mb-3 p-2 border rounded">
                   <div class="row g-2 align-items-center">
                     <div class="col-md-6">
-                      <div class="floating">
-                        <input type="date" class="form-control" [(ngModel)]="day.labDate"
-                          name="labDate{{mIndex}}{{week.weekNumber}}{{dIndex}}" required
-                          (focus)="isLabDateFocused = true" (blur)="isLabDateFocused = false"
-                          [ngClass]="{ active: day.labDate || isLabDateFocused }"
-                          (change)="onLabDateChange(month, week.weekNumber, dIndex, day.labDate||'')"
-                          [min]="getWeekStartDate(month.year, month.month, week.weekNumber)"
-                          [max]="getWeekEndDate(month.year, month.month, week.weekNumber)" />
-                        <label>Lab Date *</label>
+                      <div class="row align-items-center g-2">
+                        <div class="col-md-8 mb-2">
+                          <div class="floating">
+                            <input type="date" class="form-control" [(ngModel)]="day.labDate"
+                              name="labDate_{{ day.id }}" required (focus)="isLabDateFocused = true"
+                              (blur)="isLabDateFocused = false" [ngClass]="{ active: day.labDate || isLabDateFocused }"
+                              (change)="onLabDateChange(month.id, week.id!, day.id!, day.labDate || '')"
+                              [min]="getWeekStartDate(month.year, month.month, week.weekNumber)"
+                              [max]="getWeekEndDate(month.year!, month.month, week.weekNumber)" />
+                            <label>Lab Date *</label>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <label class="fw-semibold mb-0">
+                            {{ getDayName(day.labDate) }}
+                          </label>
+                        </div>
                       </div>
                     </div>
+
                     <div class="col-md-6 text-end">
                       <button type="button" class="btn btn-outline-danger btn-sm"
-                        (click)="removeLabDayFromWeek(month, week.weekNumber, dIndex)">Remove Day
+                        (click)="removeLabDayFromWeek(month, week.id!, day.id!)">
+                        <i class="bi bi-calendar-x"></i>
                       </button>
                     </div>
                   </div>
 
-                  <div *ngFor="let slot of day.slots; let sIndex = index" class="border rounded p-2 mb-2">
-                    <div class="row g-2">
+                  <div *ngFor="let slot of day.slots" class=" p-2 mb-2">
+                    <div class="row g-1">
                       <div class="col-md-3">
                         <div class="floating">
                           <input type="time" class="form-control" [(ngModel)]="slot.startTime"
-                            name="startTime{{mIndex}}{{week.weekNumber}}{{dIndex}}{{sIndex}}"
-                            (focus)="isStartTimeFocused = true" (blur)="isStartTimeFocused = false"
+                            name="startTime_{{ slot.id }}" (focus)="isStartTimeFocused = true"
+                            (blur)="isStartTimeFocused = false"
                             [ngClass]="{ active: slot.startTime || isStartTimeFocused }" />
                           <label>Start Time</label>
                         </div>
                       </div>
+
                       <div class="col-md-3">
                         <div class="floating">
                           <input type="time" class="form-control" [(ngModel)]="slot.endTime"
-                            name="endTime{{mIndex}}{{week.weekNumber}}{{dIndex}}{{sIndex}}"
-                            (focus)="isEndTimeFocused = true" (blur)="isEndTimeFocused = false"
+                            name="endTime_{{ slot.id }}" (focus)="isEndTimeFocused = true"
+                            (blur)="isEndTimeFocused = false"
                             [ngClass]="{ active: slot.endTime || isEndTimeFocused }" />
                           <label>End Time</label>
                         </div>
                       </div>
+
                       <div class="col-md-3">
                         <div class="floating">
-                          <select class="form-select" [(ngModel)]="slot.mode"
-                            name="mode{{mIndex}}{{week.weekNumber}}{{dIndex}}{{sIndex}}" (focus)="isModeFocused = true"
-                            (blur)="isModeFocused = false" [ngClass]="{ active: slot.mode || isModeFocused }">
+                          <select class="form-select" [(ngModel)]="slot.mode" name="mode_{{ slot.id }}"
+                            (focus)="isModeFocused = true" (blur)="isModeFocused = false"
+                            [ngClass]="{ active: slot.mode || isModeFocused }">
                             <option [ngValue]="LabMode.InPerson">In Person</option>
                             <option [ngValue]="LabMode.Remote">Remote</option>
                             <option [ngValue]="LabMode.Hybrid">Hybrid</option>
@@ -169,46 +186,42 @@
                           <label>Mode</label>
                         </div>
                       </div>
-                      <div class="col-md-3" *ngIf="slot.mode === LabMode.Remote || slot.mode === LabMode.Hybrid">
-                        <div class="floating" *ngIf="slot.mode === LabMode.Remote || slot.mode === LabMode.Hybrid">
+
+                      <div class="col-md-2" *ngIf="slot.mode === LabMode.Remote || slot.mode === LabMode.Hybrid">
+                        <div class="floating">
                           <input type="text" class="form-control" [(ngModel)]="slot.remoteLink"
-                            name="remoteLink{{mIndex}}{{week.weekNumber}}{{dIndex}}{{sIndex}}"
-                            (focus)="isRemoteLinkFocused = true" (blur)="isRemoteLinkFocused = false"
+                            name="remoteLink_{{ slot.id }}" (focus)="isRemoteLinkFocused = true"
+                            (blur)="isRemoteLinkFocused = false"
                             [ngClass]="{ active: slot.remoteLink || isRemoteLinkFocused }" />
                           <label>Remote Link</label>
                         </div>
                       </div>
-                      <div class="col-md-12 text-end mt-1">
-                        <button type="button" class="btn btn-outline-danger btn-sm"
-                          (click)="removeLabSlot(day, sIndex)">Remove Slot</button>
+
+                      <div class="col-md-1 text-end d-flex align-items-center justify-content-end ml-auto">
+                        <button type="button" class="btn btn-danger btn-sm" (click)="removeLabSlot(day, slot.id!)">
+                          <i class="bi bi-calendar-x"></i>
+                        </button>
                       </div>
                     </div>
                   </div>
 
+
                   <button type="button" class="btn btn-outline-primary btn-sm" (click)="addLabSlot(day)">
                     Add Slot
                   </button>
-                  <!-- <div class="fw-semibold mt-2" [class.text-danger]="getTotalWeeklyHours(day.labDate) > maxWeeklyHours">
-                    Total Hours: {{ getTotalWeeklyHours(day.labDate) | number:'1.1-1' }} / {{ maxWeeklyHours }}
-                  </div>
-                  <div class="text-danger mt-1" *ngIf="getTotalWeeklyHours(day.labDate) > maxWeeklyHours">
-                    Total TA lab hours for this week cannot exceed {{ maxWeeklyHours }} hours.
-                  </div> -->
                 </div>
+
                 <div class="fw-semibold mt-2" [class.text-danger]="getTotalWeeklyHours(week) > maxWeeklyHours">
-                  Total Hours: {{ getTotalWeeklyHours(week) | number:'1.1-1' }} / {{ maxWeeklyHours }}
+                  Total Hours: {{ getTotalWeeklyHours(week) | number: '1.1-1' }} / {{ maxWeeklyHours }}
                 </div>
                 <div class="text-danger mt-1" *ngIf="getTotalWeeklyHours(week) > maxWeeklyHours">
                   Total TA lab hours for this week cannot exceed {{ maxWeeklyHours }} hours.
                 </div>
-
               </div>
             </div>
-
           </div>
         </div>
 
-        <!-- Actions -->
         <div class="mt-4 d-flex justify-content-end">
           <button type="button" class="btn btn-secondary me-2" (click)="onCancel()">Cancel</button>
           <button type="submit" class="btn btn-primary">

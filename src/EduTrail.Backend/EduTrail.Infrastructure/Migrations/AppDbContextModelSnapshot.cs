@@ -702,14 +702,11 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<DateOnly>("LabDate")
-                        .HasColumnType("date");
+                    b.Property<DateTimeOffset>("LabDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid>("TALabWeekId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("TALabWeekId1")
-                        .HasColumnType("int");
 
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
@@ -719,7 +716,7 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TALabWeekId1");
+                    b.HasIndex("TALabWeekId");
 
                     b.ToTable("TALabDays");
                 });
@@ -791,11 +788,9 @@ namespace EduTrail.Infrastructure.Migrations
 
             modelBuilder.Entity("EduTrail.Domain.Entities.TALabWeek", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TALabMonthId")
                         .HasColumnType("uniqueidentifier");
@@ -1147,7 +1142,7 @@ namespace EduTrail.Infrastructure.Migrations
                 {
                     b.HasOne("EduTrail.Domain.Entities.TALabWeek", "TALabWeek")
                         .WithMany("Days")
-                        .HasForeignKey("TALabWeekId1")
+                        .HasForeignKey("TALabWeekId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1157,7 +1152,7 @@ namespace EduTrail.Infrastructure.Migrations
             modelBuilder.Entity("EduTrail.Domain.Entities.TALabMonth", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
-                        .WithMany("TALabDays")
+                        .WithMany("TALabMonths")
                         .HasForeignKey("EnrollmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1221,7 +1216,7 @@ namespace EduTrail.Infrastructure.Migrations
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Enrollment", b =>
                 {
-                    b.Navigation("TALabDays");
+                    b.Navigation("TALabMonths");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>

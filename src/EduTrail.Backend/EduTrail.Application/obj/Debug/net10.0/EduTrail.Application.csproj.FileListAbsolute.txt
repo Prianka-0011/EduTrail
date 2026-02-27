@@ -1,0 +1,16 @@
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\bin\Debug\net10.0\EduTrail.Application.deps.json
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\bin\Debug\net10.0\EduTrail.Application.dll
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\bin\Debug\net10.0\EduTrail.Application.pdb
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\bin\Debug\net10.0\Edutrail.Domain.dll
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\bin\Debug\net10.0\Edutrail.Domain.pdb
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\EduTrail.Application.csproj.AssemblyReference.cache
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\EduTrail.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\EduTrail.Application.AssemblyInfoInputs.cache
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\EduTrail.Application.AssemblyInfo.cs
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\EduTrail.Application.csproj.CoreCompileInputs.cache
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\EduTrail.Application.sourcelink.json
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\EduTrail.D1CC7AB6.Up2Date
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\EduTrail.Application.dll
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\refint\EduTrail.Application.dll
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\EduTrail.Application.pdb
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Application\obj\Debug\net10.0\ref\EduTrail.Application.dll
