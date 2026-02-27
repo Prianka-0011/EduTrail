@@ -13,7 +13,7 @@ namespace EduTrail.Domain.Entities
         public TALabWeek TALabWeek { get; set; }
 
         [Required]
-        public DateOnly LabDate { get; set; }
+        public DateTimeOffset LabDate { get; set; }
 
         public bool IsActive { get; set; } = true;
 

@@ -1,6 +1,7 @@
 <div class="container mt-5">
   <div class="card border-1">
     <div class="card-body">
+      {{enrolement.users | json}}
       <form #enrolementForm="ngForm" (ngSubmit)="onSubmit(enrolementForm)" novalidate>
 
         <div class="row g-3">
@@ -9,9 +10,9 @@
               <select class="form-select" name="studentId" [(ngModel)]="enrolement.detailsDto.studentId"
                 #studentId="ngModel" required (focus)="isStudentFocused = true" (blur)="isStudentFocused = false"
                 [ngClass]="{ active: enrolement.detailsDto.studentId || isStudentFocused }">
-                <option value="" disabled>Select Student</option>
+                <!-- <option value="" disabled>Select Student</option> -->
                 <option *ngFor="let s of enrolement.users" [value]="s.id">
-                  {{ s.name }}
+                  {{ s.name }} 
                 </option>
               </select>
               <label>Student *</label>
@@ -56,47 +57,51 @@
         </div>
 
         <div class="row mt-4" *ngIf="enrolement.detailsDto.isTa">
-          <h5 class="mb-3">TA Lab Hours</h5>
-
-          <div class="row g-2 mb-3 align-items-end">
-            <div class="col-md-4">
-              <div class="floating">
-                <select class="form-select" [(ngModel)]="selectedMonth" name="selectedMonth" required
-                  (focus)="isMonthFocused = true" (blur)="isMonthFocused = false"
-                  [ngClass]="{ active: selectedMonth || isMonthFocused }">
-                  <option value="" disabled>Select Month</option>
-                  <option *ngFor="let m of months" [value]="m.value">{{ m.name }}</option>
-                </select>
-                <label>Month *</label>
+          <div class="col-md-12 d-flex align-items-start gap-1 mb-3">
+            <h5>TA Lab Hours</h5>
+          </div>
+          <div class="col-md-12">
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <div class="floating">
+                  <select class="form-select" [(ngModel)]="selectedMonth" name="selectedMonth" required
+                    (focus)="isMonthFocused = true" (blur)="isMonthFocused = false"
+                    [ngClass]="{ active: selectedMonth || isMonthFocused }">
+                    <!-- <option value="" disabled>Select Month</option> -->
+                    <option *ngFor="let m of months" [value]="m.value">{{ m.name }}</option>
+                  </select>
+                  <label>Month *</label>
+                </div>
               </div>
-            </div>
 
-            <div class="col-md-4">
-              <div class="floating">
-                <select class="form-select" [(ngModel)]="selectedYear" name="selectedYear" required
-                  (focus)="isYearFocused = true" (blur)="isYearFocused = false"
-                  [ngClass]="{ active: selectedYear || isYearFocused }">
-                  <option value="" disabled>Select Year</option>
-                  <option *ngFor="let y of years" [value]="y">{{ y }}</option>
-                </select>
-                <label>Year *</label>
+              <div class="col-md-4">
+                <div class="floating">
+                  <select class="form-select" [(ngModel)]="selectedYear" name="selectedYear" required
+                    (focus)="isYearFocused = true" (blur)="isYearFocused = false"
+                    [ngClass]="{ active: selectedYear || isYearFocused }">
+                    <!-- <option value="" disabled>Select Year</option> -->
+                    <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+                  </select>
+                  <label>Year *</label>
+                </div>
               </div>
-            </div>
 
-            <div class="col-md-4 d-flex">
-              <button type="button" class="btn btn-outline-success btn-sm"
-                (click)="addMonth(selectedMonth!, selectedYear!)" [disabled]="!selectedMonth || !selectedYear">
-                Add Month
-              </button>
+              <div class="col-md-4 d-flex align-items-center justify-content-start">
+                <button type="button" class="btn btn-outline-success btn-sm me-3"
+                  (click)="addMonth(selectedMonth!, selectedYear!)" [disabled]="!selectedMonth || !selectedYear">
+                  <i class="bi bi-calendar-plus"></i>
+                </button>
+              </div>
+
             </div>
           </div>
 
-          <div *ngFor="let month of taLabMonths" class="mb-4 border p-3 rounded ta-lab-hours-section">
+          <div *ngFor="let month of taLabMonths" class="mb-4  p-3 rounded ta-lab-hours-section">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <h6 class="mb-0">{{ getMonthName(month.month) }} {{ month.year }}</h6>
               <div class="d-flex align-items-center">
                 <button type="button" class="btn btn-sm btn-outline-danger me-2" (click)="removeMonth(month.id!)">
-                  <i class="bi bi-trash"></i>
+                  <i class="bi bi-calendar-x"></i>
                 </button>
                 <button type="button" class="btn btn-sm btn-outline-secondary"
                   (click)="month.isCollapsed = !month.isCollapsed">
@@ -105,13 +110,13 @@
               </div>
             </div>
 
-            <div *ngIf="!month.isCollapsed" class="ms-3">
+            <div *ngIf="!month.isCollapsed" class="ms-1">
               <div *ngFor="let week of month.weeks">
                 <div class="d-flex align-items-center gap-2 mb-2">
                   <h6 class="mb-0">Week {{ week.weekNumber }}</h6>
                   <button type="button" class="btn btn-outline-primary btn-sm"
                     (click)="addLabDayToWeek(month, week.weekNumber)">
-                    Add Lab Day
+                    <i class="bi bi-calendar-plus"></i>
                   </button>
                 </div>
 
@@ -119,7 +124,7 @@
                   <div class="row g-2 align-items-center">
                     <div class="col-md-6">
                       <div class="row align-items-center g-2">
-                        <div class="col-md-8">
+                        <div class="col-md-8 mb-2">
                           <div class="floating">
                             <input type="date" class="form-control" [(ngModel)]="day.labDate"
                               name="labDate_{{ day.id }}" required (focus)="isLabDateFocused = true"
@@ -142,13 +147,13 @@
                     <div class="col-md-6 text-end">
                       <button type="button" class="btn btn-outline-danger btn-sm"
                         (click)="removeLabDayFromWeek(month, week.id!, day.id!)">
-                        Remove Day
+                        <i class="bi bi-calendar-x"></i>
                       </button>
                     </div>
                   </div>
 
-                  <div *ngFor="let slot of day.slots" class="border rounded p-2 mb-2">
-                    <div class="row g-2">
+                  <div *ngFor="let slot of day.slots" class=" p-2 mb-2">
+                    <div class="row g-1">
                       <div class="col-md-3">
                         <div class="floating">
                           <input type="time" class="form-control" [(ngModel)]="slot.startTime"
@@ -182,7 +187,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-3" *ngIf="slot.mode === LabMode.Remote || slot.mode === LabMode.Hybrid">
+                      <div class="col-md-2" *ngIf="slot.mode === LabMode.Remote || slot.mode === LabMode.Hybrid">
                         <div class="floating">
                           <input type="text" class="form-control" [(ngModel)]="slot.remoteLink"
                             name="remoteLink_{{ slot.id }}" (focus)="isRemoteLinkFocused = true"
@@ -192,10 +197,9 @@
                         </div>
                       </div>
 
-                      <div class="col-md-12 text-end mt-1">
-                        <button type="button" class="btn btn-outline-danger btn-sm"
-                          (click)="removeLabSlot(day, slot.id!)">
-                          Remove Slot
+                      <div class="col-md-1 text-end d-flex align-items-center justify-content-end ml-auto">
+                        <button type="button" class="btn btn-danger btn-sm" (click)="removeLabSlot(day, slot.id!)">
+                          <i class="bi bi-calendar-x"></i>
                         </button>
                       </div>
                     </div>

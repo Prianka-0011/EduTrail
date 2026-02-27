@@ -1,7 +1,7 @@
 export interface ITALabSlot {
   id?: string;     // FK to TALabDay
-  startTime: string;       // "HH:mm"
-  endTime: string;         // "HH:mm"
+  startTime?: string | null;       // "HH:mm"
+  endTime?: string | null;         // "HH:mm"
   mode: LabMode;
   remoteLink?: string | null;
   isActive?: boolean;

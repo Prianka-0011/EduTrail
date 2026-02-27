@@ -8,6 +8,7 @@ export interface IEnrolementDetail {
   studentName?: string | null;
   enrolledDate: string;
   isTa: boolean;
+  isActive?: boolean;
   months?: ITALabMonth[];
   totalWorkHoursPerWeek?: number | 10;
   // taLabDays?: ITALabDay[];

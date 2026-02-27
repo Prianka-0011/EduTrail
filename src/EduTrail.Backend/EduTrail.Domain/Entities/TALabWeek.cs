@@ -5,7 +5,7 @@ namespace EduTrail.Domain.Entities
     public class TALabWeek
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public int WeekNumber { get; set; }
         [ForeignKey("TALabMonthId")]

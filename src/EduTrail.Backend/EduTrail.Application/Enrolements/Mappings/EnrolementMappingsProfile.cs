@@ -15,7 +15,11 @@ namespace EduTrail.Application.Enrolements
             CreateMap<Enrollment, EnrolementDetailsDto>()
             .ForMember(d=>d.CourseOfferingId, o=>o.MapFrom(s=>s.CourseOfferingId))
             .ForMember(d=>d.StudentId, o=>o.MapFrom(s=>s.StudentId))
-            .ForMember(d=>d.StudentName, o=>o.MapFrom(s=>s.Student != null ? s.Student.FirstName + " " + s.Student.LastName : null));
+            .ForMember(d=>d.StudentName, o=>o.MapFrom(s=>s.Student != null ? s.Student.FirstName + " " + s.Student.LastName : null))
+            .ForMember(d=>d.EnrolledDate, o=>o.MapFrom(s=>s.EnrolledDate))
+            .ForMember(d=>d.IsActive, o=>o.MapFrom(s=>s.IsActive))
+            .ForMember(d=>d.IsTa, o=>o.Ignore())
+            .ForMember(d=>d.Months, o=>o.MapFrom(s=>s.TALabMonths));
         }
     }
 }

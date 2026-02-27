@@ -19,7 +19,7 @@ namespace EduTrail.Application.Enrolements
             }
             public async Task<EnrolementDto> Handle(CreateEnrolementCommand request, CancellationToken cancellationToken)
             {
-                var existing = await _repository.GetByCourseOfferingIdAndStudentIdAsync(request.enrolementDto.CourseOfferingId ?? Guid.Empty, request.enrolementDto.StudentId ?? Guid.Empty);
+                var existing = await _repository.GetByCourseOfferingIdAndStudentIdAsync(request.enrolementDto.CourseOfferingId, request.enrolementDto.StudentId);
                 if (existing != null)
                 {
                     throw new InvalidOperationException(
