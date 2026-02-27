@@ -99,9 +99,11 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   }
 
   onSubmit(form: NgForm): void {
-    if (form.invalid) return;
-
     console.log('Enrollment data to save:', this.enrolement);
+    // if (form.invalid) return;
+    this.enrolement.detailsDto.months = this.taLabMonths;
+
+
     // const courseOfferingId = this.route.snapshot.paramMap.get('courseOfferingId')!;
     // this.enrolement.detailsDto.courseOfferingId = courseOfferingId;
 
@@ -152,7 +154,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
       isCollapsed: false
     };
 
-    for (let i = 1; i <= 5; i++) newMonth.weeks.push({ weekNumber: i, days: [] });
+    for (let i = 1; i <= 5; i++) newMonth.weeks.push({ id: this.generateGuid(), taLabMonthId: newMonth.id, weekNumber: i, days: [] });
 
     this.taLabMonths.push(newMonth);
   }
@@ -171,19 +173,23 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     const dayId = this.generateGuid();
     week.days.push({
       id: dayId,
-      // enrollmentId: this.enrolement.detailsDto.id,
+      taLabWeekId: week.id,
       labDate: date,
       isActive: true,
       slots: [
-        { startTime: '', endTime: '', mode: LabMode.InPerson, remoteLink: '', isActive: true, talabDayId: dayId }
+        { id: this.generateGuid(), startTime: '', endTime: '', mode: LabMode.InPerson, remoteLink: '', isActive: true, taLabDayId: dayId }
       ]
     });
+    month.weeks = [...month.weeks];
+    this.taLabMonths = [...this.taLabMonths];
+    console.log("taLabMonths after adding day:", this.taLabMonths);
   }
 
-  removeLabDayFromWeek(month: ITALabMonth, weekNumber: number, dayIndex: number): void {
-    const week = month.weeks.find(w => w.weekNumber === weekNumber);
+  removeLabDayFromWeek(month: ITALabMonth, weekId: string, dayId: string): void {
+    const week = month.weeks.find(w => w.id === weekId);
     if (!week) return;
-    week.days.splice(dayIndex, 1);
+
+    week.days = week.days.filter(d => d.id !== dayId);
   }
 
   addLabSlot(day: ITALabDay): void {
@@ -193,12 +199,12 @@ export class EnrolementCreateOrEditComponent implements OnInit {
       mode: LabMode.InPerson,
       remoteLink: '',
       isActive: true,
-      talabDayId: day.id!
+      taLabDayId: day.id!
     });
   }
 
-  removeLabSlot(day: ITALabDay, index: number): void {
-    day.slots?.splice(index, 1);
+  removeLabSlot(day: ITALabDay, slotId: string): void {
+    day.slots = day.slots?.filter(s => s.id !== slotId);
   }
 
   getDayName(date?: string): string {
@@ -249,12 +255,23 @@ export class EnrolementCreateOrEditComponent implements OnInit {
 
     return total;
   }
-
-  onLabDateChange(month: ITALabMonth, weekNumber: number, dayIndex: number, newDate?: string) {
+  onLabDateChange(
+    monthId: string,
+    weekId: string,
+    dayId: string,
+    newDate?: string
+  ) {
+    // onLabDateChange(month: ITALabMonth, weekNumber: number, dayIndex: number, newDate?: string) {
     if (!newDate) return;
 
-    const week = month.weeks.find(w => w.weekNumber === weekNumber);
+    const month = this.taLabMonths.find(m => m.id === monthId);
+    if (!month) return;
+
+    const week = month.weeks.find(w => w.id === weekId);
     if (!week) return;
+
+    const dayIndex = week.days.findIndex(d => d.id === dayId);
+    if (dayIndex === -1) return;
 
     const day = week.days[dayIndex];
     if (!day) return;
@@ -264,11 +281,11 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     const selectedMonth = month.month;
 
     // Ensure date is in the same month/year
-    if (parseInt(yearStr, 10) !== selectedYear || parseInt(monthStr, 10) !== selectedMonth) {
-      this.toastr.warning(`Please select a date within ${this.getMonthName(selectedMonth)} ${selectedYear}`);
-      day.labDate = '';
-      return;
-    }
+    // if (parseInt(yearStr, 10) !== selectedYear || parseInt(monthStr, 10) !== selectedMonth) {
+    //   this.toastr.warning(`Please select a date within ${this.getMonthName(selectedMonth)} ${selectedYear}`);
+    //   day.labDate = '';
+    //   return;
+    // }
 
     // Check for duplicate date within the same month
     const isDuplicate = month.weeks.some(w =>
@@ -287,11 +304,11 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekEnd.getDate() + 6);
 
-    if (dateObj < weekStart || dateObj > weekEnd) {
-      this.toastr.warning(`The date ${newDate} does not belong to Week ${weekNumber}.`);
-      day.labDate = '';
-      return;
-    }
+    // if (dateObj < weekStart || dateObj > weekEnd) {
+    //   this.toastr.warning(`The date ${newDate} does not belong to Week ${weekNumber}.`);
+    //   day.labDate = '';
+    //   return;
+    // }
 
     day.labDate = newDate;
     day.dayName = this.getDayName(newDate);
@@ -299,6 +316,8 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     // Calculate total hours for the week and flag if over limit
     const totalHours = this.getTotalWeeklyHours(week);
     day.isOverHours = totalHours > this.maxWeeklyHours;
+    this.taLabMonths = [...this.taLabMonths];
+    console.log("taLabMonths after date change:", this.taLabMonths);
   }
 
   getMonthStart(year: number, month: number): Date {
@@ -347,6 +366,8 @@ export class EnrolementCreateOrEditComponent implements OnInit {
       .split('T')[0];
   }
 
-
+  removeMonth(monthId: string): void {
+  this.taLabMonths = this.taLabMonths.filter(m => m.id !== monthId);
+}
 
 }
