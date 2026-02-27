@@ -12,13 +12,8 @@
   <div class="row justify-content-end">
     <div class="col-md-4 col-10 mb-4">
       <div class="search-input-wrapper">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search enrollments..."
-          [(ngModel)]="searchText"
-          (input)="applyFilter()"
-        />
+        <input type="text" class="form-control" placeholder="Search enrollments..." [(ngModel)]="searchText"
+          (input)="applyFilter()" />
         <i class="bi bi-search search-icon"></i>
       </div>
     </div>
@@ -40,12 +35,9 @@
           <!-- Parent row -->
           <tr>
             <td>{{ enrolement.studentName }}</td>
-            <td>{{ enrolement.enrolledDate  }}</td>
+            <td>{{ enrolement.enrolledDate }}</td>
             <td>
-              <button
-                class="edit-icon-btn"
-                (click)="openEditDrawer(enrolement.id); $event.stopPropagation()"
-              >
+              <button class="edit-icon-btn" (click)="openEditDrawer(enrolement.id); $event.stopPropagation()">
                 <i class="bi bi-pencil-square"></i>
               </button>
             </td>
@@ -104,11 +96,8 @@
 
     <div class="d-flex align-items-center gap-2">
       <span>Items per page:</span>
-      <select
-        class="form-select page-size-select"
-        [value]="pageSize"
-        (change)="changePageSize($any($event.target).value)"
-      >
+      <select class="form-select page-size-select" [value]="pageSize"
+        (change)="changePageSize($any($event.target).value)">
         <option *ngFor="let size of pageSizeOptions" [value]="size">
           {{ size }}
         </option>
@@ -136,17 +125,10 @@
 </div>
 
 <!-- Side drawer for create/edit -->
-<app-side-drawer
-  [opened]="drawerOpen"
-  width="800px"
-  (closed)="closeDrawer()"
-  [headerTemplate]="drawerHeader"
->
+<app-side-drawer [opened]="drawerOpen" width="800px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
   <ng-container *ngIf="drawerOpen">
-    <app-enrolement-create-or-edit
-      (saved)="onEnrolementSaved()"
-      (cancel)="closeDrawer()"
-    ></app-enrolement-create-or-edit>
+    <app-enrolement-create-or-edit (saved)="onEnrolementSaved()"
+      (cancel)="closeDrawer()"></app-enrolement-create-or-edit>
   </ng-container>
 </app-side-drawer>
 

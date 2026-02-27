@@ -1,9 +1,11 @@
 import { ITALabSlot } from "./iTALabSlot";
 
 export interface ITALabDay {
-  id?: string;
-  enrollmentId: string;    // FK to Enrollment
-  labDate: string;         // "YYYY-MM-DD"
+  id?: string;   // FK to Enrollment
+  labDate?: string;         // "YYYY-MM-DD"
   isActive?: boolean;
-  slots?: ITALabSlot[];    // Array of slots for this day
+  slots?: ITALabSlot[];
+  dayName?: string;
+  isOverHours?: boolean;
+  // Array of slots for this day
 }

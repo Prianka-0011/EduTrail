@@ -312,3 +312,27 @@ VALUES
     (NEWID(), 'Instructor', 'Role for course instructors', GETDATE(), '00000000-0000-0000-0000-000000000000'),
     (NEWID(), 'Student', 'Role for students', GETDATE(), '00000000-0000-0000-0000-000000000000'),
     (NEWID(), 'TA', 'Role for teaching assistants', GETDATE(), '00000000-0000-0000-0000-000000000000');
+
+
+Consider TA Lab hours as well as Tutor hours, while following these rules
+Wednesdays and Thursdays
+No more than one tutor at any given time
+No hours earlier than 9 AM
+No hours later than 5 PM
+Fridays
+No more than two tutors at any given time
+No hours earlier than 8 AM
+No hours later than 8 PM
+Saturdays and Sundays
+No more than three tutors at any given time
+No hours earlier than 8 AM
+No hours later than 9:30 PM
+Mondays and Tuesdays
+No more than four tutors at any given time
+No hours earlier than 8 AM
+No hours later than 9:30 PM
+Try to have coverage at all times throughout the day
+General
+No lab hours during scheduled Problem-Solving Sessions or Discussion Section
+No more than 4 Lab Hours in a row
+First day of Lab Hours is Wednesday of Week 1 (the oﬃcial release date of PA1)

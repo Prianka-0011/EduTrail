@@ -15,6 +15,7 @@ namespace EduTrail.Application.Enrolements
         public Guid? StudentId { get; set; }
         public string? StudentName { get; set; }
         public DateTimeOffset? EnrolledDate  { get; set; }
+        public decimal? TotalWorkHoursPerWeek { get; set; }=10;
         public bool? IsActive { get; set; }
         public bool? IsTa { get; set; }
     }

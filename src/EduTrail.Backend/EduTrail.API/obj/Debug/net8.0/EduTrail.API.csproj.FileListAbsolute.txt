@@ -143,11 +143,6 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net8.0\EduTrail.Infrastr
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net8.0\Edutrail.Domain.pdb
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\staticwebassets.build.json
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\staticwebassets.development.json
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\staticwebassets\msbuild.EduTrail.API.Microsoft.AspNetCore.StaticWebAssets.props
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\staticwebassets\msbuild.build.EduTrail.API.props
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.EduTrail.API.props
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.EduTrail.API.props
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\staticwebassets.pack.json
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\scopedcss\bundle\EduTrail.API.styles.css
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\EduTrail.1A323A12.Up2Date
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\EduTrail.API.dll
@@ -155,3 +150,11 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\refint\EduTrail.A
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\EduTrail.API.pdb
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\EduTrail.API.genruntimeconfig.cache
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\ref\EduTrail.API.dll
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net8.0\EduTrail.API.staticwebassets.endpoints.json
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\rjimswa.dswa.cache.json
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\staticwebassets.build.json.cache
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net8.0\swae.build.ex.cache

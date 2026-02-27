@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EduTrail.Domain.Entities
 {
@@ -7,9 +8,9 @@ namespace EduTrail.Domain.Entities
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
-        public Guid EnrollmentId { get; set; }
-        public Enrollment Enrollment { get; set; }
+        [ForeignKey("TALabWeekId")]
+        public Guid TALabWeekId { get; set; }
+        public TALabWeek TALabWeek { get; set; }
 
         [Required]
         public DateOnly LabDate { get; set; }
