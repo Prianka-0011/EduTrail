@@ -1,0 +1,22 @@
+.ta-lab-hours-section {
+    // border: thin dashed red;
+    max-height: 590px;
+    overflow-y: scroll;
+    width: 100%;
+}
+.ta-month-body {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.ta-month-body.collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 !important;
+}
+
+.ta-month-body.expanded {
+  max-height: 2000px; /* large enough to fit content */
+  opacity: 1;
+  padding: 10px;
+}

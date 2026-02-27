@@ -18,6 +18,7 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<AuditEntry> AuditEntries { get; set; } = null!;
         public DbSet<Test> Tests { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Role> Roles { get; set; } = null!;
         public DbSet<Question> Questions { get; set; } = null!;
         public DbSet<QuestionType> QuestionTypes { get; set; } = null!;
         public DbSet<QuestionVariantTemplate> QuestionVariantTemplates { get; set; } = null!;
@@ -34,8 +35,9 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<StatusType> StatusTypes { get; set; }
         public DbSet<Lab> Labs { get; set; }
         public DbSet<LabRequest> LabRequests { get; set; }
-        public DbSet<TALabHour> TALabHours { get; set; }
-
-
+        public DbSet<TALabMonth> TALabMonths { get; set; }
+        public DbSet<TALabWeek> TALabWeeks { get; set; }
+        public DbSet<TALabDay> TALabDays { get; set; }
+        public DbSet<TALabSlot> TALabSlots { get; set; }
     }
 }

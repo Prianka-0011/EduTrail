@@ -13,13 +13,8 @@
   <div class="row justify-content-end">
     <div class="col-md-4 col-10 mb-4">
       <div class="search-input-wrapper">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search course offerings..."
-          [(ngModel)]="searchText"
-          (input)="applyFilter()"
-        />
+        <input type="text" class="form-control" placeholder="Search course offerings..." [(ngModel)]="searchText"
+          (input)="applyFilter()" />
         <i class="bi bi-search search-icon"></i>
       </div>
     </div>
@@ -37,19 +32,49 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let offering of pagedCourseOfferings">
-          <td>{{ offering.detail.courseName }}</td>
-          <td>{{ offering.detail.instructorName }}</td>
-          <td>{{ offering.detail.termName }}</td>
-          <td>
-            <button
-              class="edit-icon-btn"
-              (click)="openEditDrawer(offering.detail.id)"
-            >
-              <i class="bi bi-pencil-square"></i>
-            </button>
-          </td>
-        </tr>
+        <ng-container *ngFor="let offering of pagedCourseOfferings">
+
+          <!-- Parent row -->
+          <tr role="button" (click)="toggleRow(offering.id)" class="parent-row">
+            <td>
+              <i class="bi me-2" [ngClass]="isRowExpanded(offering.id) ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
+              {{ offering.courseName }}
+            </td>
+            <td>{{ offering.instructorName }}</td>
+            <td>{{ offering.termName }}</td>
+            <td>
+              <button class="edit-icon-btn" (click)="openEditDrawer(offering.id); $event.stopPropagation()">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+            </td>
+          </tr>
+
+          <!-- Collapsible child row with smooth transition -->
+          <tr class="child-row">
+            <td colspan="4" class="p-0">
+              <div class="child-content-wrapper" [class.expanded]="isRowExpanded(offering.id)"
+                (click)="goToEnrollment(offering.id)">
+                <div class="child-content ">
+                  <i class="bi bi-box-arrow-up-right me-2"></i>
+                  <strong>Enrollment</strong>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+           <tr class="child-row">
+            <td colspan="4" class="p-0">
+              <div class="child-content-wrapper" [class.expanded]="isRowExpanded(offering.id)"
+                (click)="goToEnrollment(offering.id)">
+                <div class="child-content">
+                  <i class="bi bi-box-arrow-up-right me-2"></i>
+                  <strong>Assessment</strong>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+
 
         <tr *ngIf="pagedCourseOfferings.length === 0">
           <td colspan="4" class="text-center py-4 text-muted">
@@ -64,11 +89,8 @@
 
     <div class="d-flex align-items-center gap-2">
       <span>Items per page:</span>
-      <select
-        class="form-select page-size-select"
-        [value]="pageSize"
-        (change)="changePageSize($any($event.target).value)"
-      >
+      <select class="form-select page-size-select" [value]="pageSize"
+        (change)="changePageSize($any($event.target).value)">
         <option *ngFor="let size of pageSizeOptions" [value]="size">
           {{ size }}
         </option>
@@ -95,17 +117,9 @@
   </div>
 </div>
 
-<app-side-drawer
-  [opened]="drawerOpen"
-  width="600px"
-  (closed)="closeDrawer()"
-  [headerTemplate]="drawerHeader"
->
+<app-side-drawer [opened]="drawerOpen" width="600px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
   <ng-container *ngIf="drawerOpen">
-    <app-course-offering-create-or-edit
-      (saved)="onCourseOfferingSaved()"
-      (cancel)="closeDrawer()"
-    >
+    <app-course-offering-create-or-edit (saved)="onCourseOfferingSaved()" (cancel)="closeDrawer()">
     </app-course-offering-create-or-edit>
   </ng-container>
 </app-side-drawer>
@@ -118,3 +132,4 @@
     </span>
   </div>
 </ng-template>
+<!-- <router-outlet></router-outlet> -->

@@ -15,11 +15,12 @@ namespace EduTrail.Domain.Entities
 
         public Guid? StudentId { get; set; }
         public User? Student { get; set; }
+        public decimal? TotalWorkHoursPerWeek { get; set; }
 
         public DateTimeOffset EnrolledDate { get; set; }
 
         public bool IsActive { get; set; } = true;
-        public ICollection<TALabHour> TALabHours { get; set; }
+        public ICollection<TALabMonth> TALabDays { get; set; } = new List<TALabMonth>();
         // Audit fields
 
         public DateTimeOffset? CreatedDate { get; set; }

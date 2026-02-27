@@ -1,23 +1,23 @@
-<p>course-offering-create-or-edit works!</p>
 <div class="container mt-5">
   <div class="card border-1">
     <div class="card-body">
       <form #courseForm="ngForm" (ngSubmit)="onSubmit(courseForm)" novalidate>
         <div class="row g-3">
 
+          <!-- Course Dropdown -->
           <div class="col-md-12">
             <div class="floating">
               <select
                 name="courseId"
                 class="form-select"
-                [(ngModel)]="courseOffering.detail.courseId"
+                [(ngModel)]="courseOffering.detailDto!.courseId"
                 #courseId="ngModel"
                 (focus)="isCourseFocused = true"
                 (blur)="isCourseFocused = false"
-                [ngClass]="{ 'active': courseOffering.detail.courseId || isCourseFocused }"
+                [ngClass]="{ 'active': courseOffering.detailDto!.courseId || isCourseFocused }"
                 required
               >
-                <option *ngFor="let c of courses" [value]="c.id">
+                <option *ngFor="let c of courseOffering.courses" [value]="c.id">
                   {{ c.name }}
                 </option>
               </select>
@@ -28,19 +28,20 @@
             </div>
           </div>
 
+          <!-- Term Dropdown -->
           <div class="col-md-12">
             <div class="floating">
               <select
                 name="termId"
                 class="form-select"
-                [(ngModel)]="courseOffering.detail.termId"
+                [(ngModel)]="courseOffering.detailDto!.termId"
                 #termId="ngModel"
                 (focus)="isTermFocused = true"
                 (blur)="isTermFocused = false"
-                [ngClass]="{ 'active': courseOffering.detail.termId || isTermFocused }"
+                [ngClass]="{ 'active': courseOffering.detailDto!.termId || isTermFocused }"
                 required
               >
-                <option *ngFor="let t of terms" [value]="t.id">
+                <option *ngFor="let t of courseOffering.terms" [value]="t.id">
                   {{ t.name }}
                 </option>
               </select>
@@ -51,19 +52,20 @@
             </div>
           </div>
 
+          <!-- Instructor Dropdown -->
           <div class="col-md-12">
             <div class="floating">
               <select
                 name="instructorId"
                 class="form-select"
-                [(ngModel)]="courseOffering.detail.instructorId"
+                [(ngModel)]="courseOffering.detailDto!.instructorId"
                 #instructorId="ngModel"
                 (focus)="isInstructorFocused = true"
                 (blur)="isInstructorFocused = false"
-                [ngClass]="{ 'active': courseOffering.detail.instructorId || isInstructorFocused }"
+                [ngClass]="{ 'active': courseOffering.detailDto!.instructorId || isInstructorFocused }"
                 required
               >
-                <option *ngFor="let i of instructors" [value]="i.id">
+                <option *ngFor="let i of courseOffering.instructors" [value]="i.id">
                   {{ i.name }}
                 </option>
               </select>
@@ -76,18 +78,15 @@
 
         </div>
 
+        <!-- Action Buttons -->
         <div class="mt-4 d-flex justify-content-end">
-          <button
-            type="button"
-            class="btn btn-secondary me-2"
-            (click)="cancelForm()"
-          >
+          <button type="button" class="btn btn-secondary me-2" (click)="onCancel()">
             Cancel
           </button>
 
           <button type="submit" class="btn btn-primary">
             {{
-              courseOffering.detail.id !== '00000000-0000-0000-0000-000000000000'
+              courseOffering.detailDto!.id !== '00000000-0000-0000-0000-000000000000'
                 ? 'Update Course Offering'
                 : 'Create Course Offering'
             }}

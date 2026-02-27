@@ -10,7 +10,7 @@ import { ICourse } from '../../courses/interfaces/iCourse';
 })
 export class TermService {
 
-  baseUrl = enviroment.baseUrl + 'term/';
+  baseUrl = enviroment.baseUrl + 'terms/';
 
   constructor(private http: HttpClient) { }
 

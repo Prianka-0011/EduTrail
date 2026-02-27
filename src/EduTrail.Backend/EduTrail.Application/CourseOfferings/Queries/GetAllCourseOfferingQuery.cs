@@ -19,7 +19,7 @@ namespace EduTrail.Application.CourseOfferings
             {
                 var courseOfferings = await _courseOfferingRepository.GetAllAsync();
                 var courseOfferingDtos = _mapper.Map<List<CourseOfferingDetailDto>>(courseOfferings);
-                return new CourseOfferingDto { DetailDto = courseOfferingDtos.FirstOrDefault() };
+                return new CourseOfferingDto { DetailDtoList = courseOfferingDtos };
             }
         }
         

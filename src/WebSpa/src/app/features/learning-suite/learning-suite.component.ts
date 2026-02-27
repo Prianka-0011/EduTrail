@@ -22,21 +22,32 @@ export class LearningSuiteComponent {
   menu: MenuItem[] = [
     { label: 'Dashboard', icon: 'speedometer2', route: 'dashboard' },
     { label: 'User Dashboard', icon: 'bi bi-person-vcard', route: 'user-dashboard' },
-    { label: 'Terms', icon: 'bi bi-person-vcard', route: 'terms' },
     { label: 'Questions', icon: 'bi bi-person-vcard', route: 'questions' },
 
+    // {
+    //   label: 'Courses',
+    //   icon: 'book',
+    //   isOpen: false,
+    //   children: [
+    //     { label: 'Course List', icon: 'list', route: 'courses' },
+    //     { label: 'Create Course', icon: 'plus-circle', route: 'courses/create' }
+    //   ]
+    // },
     {
-      label: 'Courses',
-      icon: 'book',
+      label: 'Admin',
+      icon: 'bi bi-gear',
       isOpen: false,
       children: [
+        { label: 'User List', icon: 'list', route: 'users' },
+        { label: 'Terms', icon: 'bi bi-person-vcard', route: 'terms' },
         { label: 'Course List', icon: 'list', route: 'courses' },
-        { label: 'Create Course', icon: 'plus-circle', route: 'courses/create' }
+        { label: 'Course Offerings', icon: 'clipboard-check', route: 'course-offerings' },
       ]
     },
+
     { label: 'Assesment', icon: 'clipboard-check', route: 'assesments' },
     { label: 'Question Types', icon: 'clipboard-check', route: 'question-types' },
-    { label: 'Course Offerings', icon: 'clipboard-check', route: 'course-offerings' },
+
     { label: 'Settings', icon: 'gear', route: 'settings' }
   ];
 

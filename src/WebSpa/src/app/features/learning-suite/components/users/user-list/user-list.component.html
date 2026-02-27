@@ -1,0 +1,108 @@
+<div class="table-container">
+
+  <div class="row justify-content-start">
+    <div class="col-md-6 col-12 d-flex align-items-center gap-1">
+      <h2 class="mb-0">Users</h2>
+
+      <button class="icon-btn" (click)="openCreateDrawer()">
+        <i class="bi bi-plus-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-md-4 col-10 mb-4">
+      <div class="search-input-wrapper">
+        <input type="text" class="form-control" placeholder="Search users..." [(ngModel)]="searchText"
+          (input)="applyFilter()" />
+        <i class="bi bi-search search-icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table custom-table">
+      <thead>
+        <tr>
+          <th role="button" (click)="applySort('firstName')">First Name</th>
+          <th role="button" (click)="applySort('lastName')">Last Name</th>
+          <th role="button" (click)="applySort('email')">Email</th>
+          <th role="button" (click)="applySort('isActive')">Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let user of pagedUsers">
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <span [class.text-success]="user.isActive" [class.text-danger]="!user.isActive">
+              {{ user.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td>
+            <button class="edit-icon-btn" (click)="openEditDrawer(user.id)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="pagedUsers.length === 0">
+          <td colspan="5" class="text-center py-4 text-muted">
+            No records found
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="custom-paginator d-flex align-items-center mt-4">
+
+    <div class="d-flex align-items-center gap-2">
+      <span>Items per page:</span>
+      <select class="form-select page-size-select" [value]="pageSize"
+        (change)="changePageSize($any($event.target).value)">
+        <option *ngFor="let size of pageSizeOptions" [value]="size">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+
+    <span class="ms-auto">{{ rangeLabel }}</span>
+
+    <div class="d-flex gap-2 ms-3">
+      <button class="btn icon-btn" (click)="goToPage(1)">
+        <i class="bi bi-chevron-double-left"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(currentPage - 1)">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(currentPage + 1)">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(totalPages)">
+        <i class="bi bi-chevron-double-right"></i>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- SIDE DRAWER -->
+<app-side-drawer [opened]="drawerOpen" width="600px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+  <ng-container *ngIf="drawerOpen">
+    <app-user-create-or-edit (saved)="onUserSaved()" (cancel)="closeDrawer()">
+    </app-user-create-or-edit>
+  </ng-container>
+
+</app-side-drawer>
+
+<!-- Custom header template -->
+<ng-template #drawerHeader>
+  <div class="d-flex align-items-center gap-2">
+    <i class="bi" [ngClass]="selectedUserId   ? 'bi bi-person' : 'bi bi-person-plus'"></i>
+    <span>{{ selectedUserId ? 'Edit User Details' : 'Create New User' }}</span>
+  </div>
+</ng-template>

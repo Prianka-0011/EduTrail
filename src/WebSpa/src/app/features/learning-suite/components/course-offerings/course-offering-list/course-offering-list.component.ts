@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-
 import { CourseOfferingService } from '../services/course-offering.service';
 import { ICourseOffering } from '../interfaces/iCourseOffering';
+import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { CourseOfferingCreateOrEditComponent } from '../course-offering-create-or-edit/course-offering-create-or-edit.component';
@@ -14,6 +13,7 @@ import { ICourseOfferingDetail } from '../interfaces/iCourseOfferignDetail';
   selector: 'app-course-offering-list',
   standalone: true,
   imports: [
+    RouterOutlet,
     CommonModule,
     FormsModule,
     SideDrawerComponent,
@@ -26,12 +26,13 @@ export class CourseOfferingListComponent implements OnInit {
 
   constructor(
     private courseOfferingService: CourseOfferingService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
-  courseOfferings: ICourseOffering[] = [];
-  filteredCourseOfferings: ICourseOffering[] = [];
-  pagedCourseOfferings: ICourseOffering[] = [];
+  courseOfferings: ICourseOfferingDetail[] = [];
+  filteredCourseOfferings: ICourseOfferingDetail[] = [];
+  pagedCourseOfferings: ICourseOfferingDetail[] = [];
 
   selectedCourseOfferingId: string | null = null;
   drawerOpen = false;
@@ -45,15 +46,42 @@ export class CourseOfferingListComponent implements OnInit {
 
   sortColumn: keyof ICourseOfferingDetail | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
+  expandedRows: { [id: string]: boolean } = {};
+
+  // Collapsible child rows
+  toggleRow(id: string) {
+    this.expandedRows[id] = !this.expandedRows[id];
+  }
+
+  isRowExpanded(id: string): boolean {
+    return !!this.expandedRows[id];
+  }
+
+  // goToEnrollment(courseOfferingId: string) {/
+  //   console.log('Navigating to enrollment list for course offering ID:', courseOfferingId);
+  //   const url = this.router.createUrlTree(['/course-offerings/enrolement-list', courseOfferingId]).toString();
+  //   console.log('Generated URL:', url);
+  //   this.router.navigate([
+  //     'course-offerings/enrolement-list',
+  //     courseOfferingId
+  //   ]);
+  // }
+
+  goToEnrollment(courseOfferingId: string) {
+    this.router.navigate([
+      `/learning-suite/course-offerings/${courseOfferingId}/enrolement-list`
+    ]);
+  }
 
   ngOnInit(): void {
     this.getCourseOfferings();
   }
 
   getCourseOfferings() {
-    this.courseOfferingService.getCourses().subscribe({
+    this.courseOfferingService.getCourseOfferings().subscribe({
       next: data => {
-        this.courseOfferings = data;
+        console.log('Received course offerings data:', data);
+        this.courseOfferings = data.detailDtoList ?? [];
         this.applyFilter();
       }
     });
@@ -98,9 +126,9 @@ export class CourseOfferingListComponent implements OnInit {
     const value = this.searchText.toLowerCase().trim();
 
     this.filteredCourseOfferings = this.courseOfferings.filter(o =>
-      o.detail.courseName?.toLowerCase().includes(value) ||
-      o.detail.instructorName?.toLowerCase().includes(value) ||
-      o.detail.termName?.toLowerCase().includes(value)
+      o.courseName?.toLowerCase().includes(value) ||
+      o.instructorName?.toLowerCase().includes(value) ||
+      o.termName?.toLowerCase().includes(value)
     );
 
     this.totalItems = this.filteredCourseOfferings.length;
@@ -123,8 +151,8 @@ export class CourseOfferingListComponent implements OnInit {
       const key = this.sortColumn;
 
       this.filteredCourseOfferings.sort((a, b) => {
-        const valueA = String(a.detail[key] ?? '').toLowerCase();
-        const valueB = String(b.detail[key] ?? '').toLowerCase();
+        const valueA = String(a[key] ?? '').toLowerCase();
+        const valueB = String(b[key] ?? '').toLowerCase();
 
         return this.sortDirection === 'asc'
           ? valueA.localeCompare(valueB)

@@ -1,0 +1,142 @@
+<div class="table-container">
+
+  <div class="row justify-content-start">
+    <div class="col-md-6 col-12 d-flex align-items-center gap-1">
+      <h2 class="mb-0">Enrollments</h2>
+      <button class="icon-btn" (click)="openCreateDrawer()">
+        <i class="bi bi-plus-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-md-4 col-10 mb-4">
+      <div class="search-input-wrapper">
+        <input type="text" class="form-control" placeholder="Search enrollments..." [(ngModel)]="searchText"
+          (input)="applyFilter()" />
+        <i class="bi bi-search search-icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table custom-table">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Enrollment Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <ng-container *ngFor="let enrolement of pagedEnrolements">
+
+          <!-- Parent row -->
+          <tr>
+            <td>{{ enrolement.studentName }}</td>
+            <td>{{ enrolement.enrolledDate }}</td>
+            <td>
+              <button class="edit-icon-btn" (click)="openEditDrawer(enrolement.id); $event.stopPropagation()">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+            </td>
+          </tr>
+
+          <!-- Enrollment link -->
+          <!-- <tr
+            class="child-link-row"
+            role="button"
+            (click)="goToAssessment(enrolement.id)"
+          >
+            <td colspan="4">
+              <i class="bi bi-box-arrow-up-right me-2"></i>
+              <strong>TA Hours</strong>
+            </td>
+          </tr> -->
+
+          <!-- Expandable assessment section -->
+          <!-- <tr
+            class="child-toggle-row"
+            role="button"
+            (click)="toggleRow(offering.id)"
+          >
+            <td colspan="4">
+              <i
+                class="bi me-2"
+                [ngClass]="isRowExpanded(offering.id) ? 'bi-chevron-down' : 'bi-chevron-right'"
+              ></i>
+              <strong>Assessment</strong>
+            </td>
+          </tr> -->
+
+          <!-- <tr *ngIf="isRowExpanded(offering.id)" class="child-row">
+            <td colspan="4">
+              <div class="p-3 bg-light rounded">
+                <div><strong>Total Assessments:</strong> {{ offering.assessmentCount }}</div>
+                <div><strong>Graded:</strong> {{ offering.gradedCount }}</div>
+                <div><strong>Last Updated:</strong> {{ offering.lastAssessmentDate | date }}</div>
+              </div>
+            </td>
+          </tr> -->
+
+        </ng-container>
+
+        <tr *ngIf="pagedEnrolements.length === 0">
+          <td colspan="4" class="text-center py-4 text-muted">
+            No records found
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination controls -->
+  <div class="custom-paginator d-flex align-items-center mt-4">
+
+    <div class="d-flex align-items-center gap-2">
+      <span>Items per page:</span>
+      <select class="form-select page-size-select" [value]="pageSize"
+        (change)="changePageSize($any($event.target).value)">
+        <option *ngFor="let size of pageSizeOptions" [value]="size">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+
+    <span class="ms-auto">{{ rangeLabel }}</span>
+
+    <div class="d-flex gap-2 ms-3">
+      <button class="btn icon-btn" (click)="goToPage(1)">
+        <i class="bi bi-chevron-double-left"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(currentPage - 1)">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(currentPage + 1)">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+      <button class="btn icon-btn" (click)="goToPage(totalPages)">
+        <i class="bi bi-chevron-double-right"></i>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Side drawer for create/edit -->
+<app-side-drawer [opened]="drawerOpen" width="800px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+  <ng-container *ngIf="drawerOpen">
+    <app-enrolement-create-or-edit (saved)="onEnrolementSaved()"
+      (cancel)="closeDrawer()"></app-enrolement-create-or-edit>
+  </ng-container>
+</app-side-drawer>
+
+<ng-template #drawerHeader>
+  <div class="d-flex align-items-center gap-2">
+    <i class="bi bi-journal-bookmark"></i>
+    <span>
+      {{ selectedEnrolementId ? 'Edit Enrollment' : 'Create Enrollment' }}
+    </span>
+  </div>
+</ng-template>

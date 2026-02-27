@@ -178,6 +178,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal?>("TotalWorkHoursPerWeek")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
@@ -244,8 +247,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("CreatedById")
                         .HasColumnType("uniqueidentifier");
@@ -575,7 +578,7 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Status", b =>
@@ -684,7 +687,7 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("Submissions");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.TALabHour", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabDay", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -696,20 +699,70 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("CreatedDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("DayOfWeek")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateOnly>("LabDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("TALabWeekId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("TALabWeekId1")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("time");
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TALabWeekId1");
+
+                    b.ToTable("TALabDays");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabMonth", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("EnrollmentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.ToTable("TALabMonths");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabSlot", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<Guid?>("LabId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Mode")
                         .HasColumnType("int");
@@ -720,6 +773,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("time");
 
+                    b.Property<Guid>("TALabDayId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
@@ -728,11 +784,30 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EnrollmentId");
+                    b.HasIndex("TALabDayId");
 
-                    b.HasIndex("LabId");
+                    b.ToTable("TALabSlots");
+                });
 
-                    b.ToTable("TALabHours");
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabWeek", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("TALabMonthId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("WeekNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TALabMonthId");
+
+                    b.ToTable("TALabWeeks");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Term", b =>
@@ -834,16 +909,13 @@ namespace EduTrail.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordSalt")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UpdatedById")
@@ -851,9 +923,6 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset?>("UpdatedDate")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<Guid>("UserTypeId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1074,21 +1143,48 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("QuestionAttempt");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.TALabHour", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabDay", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.TALabWeek", "TALabWeek")
+                        .WithMany("Days")
+                        .HasForeignKey("TALabWeekId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TALabWeek");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabMonth", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
-                        .WithMany("TALabHours")
+                        .WithMany("TALabDays")
                         .HasForeignKey("EnrollmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EduTrail.Domain.Entities.Lab", "Lab")
-                        .WithMany()
-                        .HasForeignKey("LabId");
-
                     b.Navigation("Enrollment");
+                });
 
-                    b.Navigation("Lab");
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabSlot", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.TALabDay", "TALabDay")
+                        .WithMany("Slots")
+                        .HasForeignKey("TALabDayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TALabDay");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabWeek", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.TALabMonth", "TALabMonth")
+                        .WithMany("Weeks")
+                        .HasForeignKey("TALabMonthId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TALabMonth");
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -1125,7 +1221,7 @@ namespace EduTrail.Infrastructure.Migrations
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Enrollment", b =>
                 {
-                    b.Navigation("TALabHours");
+                    b.Navigation("TALabDays");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
@@ -1138,6 +1234,21 @@ namespace EduTrail.Infrastructure.Migrations
             modelBuilder.Entity("EduTrail.Domain.Entities.QuestionType", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabDay", b =>
+                {
+                    b.Navigation("Slots");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabMonth", b =>
+                {
+                    b.Navigation("Weeks");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.TALabWeek", b =>
+                {
+                    b.Navigation("Days");
                 });
 #pragma warning restore 612, 618
         }

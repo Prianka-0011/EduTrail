@@ -35,6 +35,7 @@ static void UpdateDatabase(IApplicationBuilder app)
 }
 var app = builder.Build();
 UpdateDatabase(app);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

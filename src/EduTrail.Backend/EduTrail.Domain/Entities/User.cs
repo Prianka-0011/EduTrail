@@ -12,7 +12,7 @@ namespace EduTrail.Domain.Entities
         public string FirstName { get; set; }
 
         [MaxLength(100)]
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -22,12 +22,12 @@ namespace EduTrail.Domain.Entities
         [MaxLength(150)]
         public string Email { get; set; }
 
-        [Required]
-        public string PasswordHash { get; set; }
-        [Required]
-        public string PasswordSalt { get; set; }
+    
+        public string? PasswordHash { get; set; }
+ 
+        public string? PasswordSalt { get; set; }
         public bool IsActive { get; set; }
-        public Guid UserTypeId { get; set; }
+      
         // Audit fields
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }
