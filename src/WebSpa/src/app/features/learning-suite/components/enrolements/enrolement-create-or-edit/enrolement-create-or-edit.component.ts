@@ -64,14 +64,47 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     this.loadEnrolement();
   }
 
+  // private loadEnrolement(): void {
+  //   const id = this.route.snapshot.queryParamMap.get('id');
+  //   // if (!id || id === this.EMPTY_ID) return;
+
+  //   this.enrolementService.getCourseById(id ?? this.EMPTY_ID).subscribe(data => {
+  //     const enrolledDate = data.detailsDto?.enrolledDate
+  //       ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
+  //       : '';
+  //     this.enrolement = {
+  //       ...this.enrolement,
+  //       detailsDto: {
+  //         ...data.detailsDto,
+  //         enrolledDate
+  //       },
+  //       users: data.users ?? [],
+  //     };
+  //     this.maxWeeklyHours = data.detailsDto?.totalWorkHoursPerWeek ?? this.maxWeeklyHours;
+  //     this.taLabMonths = data.detailsDto?.months ?? [];
+  //     console.log("this.taLabMonths:", this.taLabMonths);
+  //   });
+  // }
   private loadEnrolement(): void {
     const id = this.route.snapshot.queryParamMap.get('id');
-    // if (!id || id === this.EMPTY_ID) return;
 
     this.enrolementService.getCourseById(id ?? this.EMPTY_ID).subscribe(data => {
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
         : '';
+
+      // Normalize all lab dates in months/weeks/days
+      const months: ITALabMonth[] = (data.detailsDto?.months ?? []).map(month => ({
+        ...month,
+        weeks: month.weeks?.map(week => ({
+          ...week,
+          days: week.days?.map(day => ({
+            ...day,
+            labDate: day.labDate ? new Date(day.labDate).toISOString().split('T')[0] : ''
+          })) ?? []
+        })) ?? []
+      }));
+
       this.enrolement = {
         ...this.enrolement,
         detailsDto: {
@@ -80,7 +113,17 @@ export class EnrolementCreateOrEditComponent implements OnInit {
         },
         users: data.users ?? []
       };
+
+      this.maxWeeklyHours = data.detailsDto?.totalWorkHoursPerWeek ?? this.maxWeeklyHours;
+      this.taLabMonths = months;
+
+      console.log("taLabMonths after normalization:", this.taLabMonths);
     });
+  }
+
+  private formatDateForInput(date?: string): string {
+    if (!date) return '';
+    return new Date(date).toISOString().split('T')[0];
   }
 
   getEmptyEnrolement(): IEnrolement {
@@ -99,12 +142,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   }
 
   onSubmit(form: NgForm): void {
-    console.log('Enrollment data to save:', this.enrolement, form.invalid);
-    // if (form.invalid) return;
     this.enrolement.detailsDto.months = this.taLabMonths;
-    console.log('Enrollment data to save:', this.enrolement, form.invalid);
-
-
     const courseOfferingId = this.route.snapshot.paramMap.get('courseOfferingId')!;
     this.enrolement.detailsDto.courseOfferingId = courseOfferingId;
 

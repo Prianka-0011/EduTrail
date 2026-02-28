@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "dgSpecHash": "yCHC7Z6Okww=",
+  "success": true,
+  "projectFilePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pmondal\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\pmondal\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "C:\\Users\\pmondal\\.nuget\\packages\\mediatr\\12.0.1\\mediatr.12.0.1.nupkg.sha512",
+    "C:\\Users\\pmondal\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\pmondal\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\11.1.0\\mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512",
+    "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.0.1 was resolved.",
+      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+      "libraryId": "MediatR",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}

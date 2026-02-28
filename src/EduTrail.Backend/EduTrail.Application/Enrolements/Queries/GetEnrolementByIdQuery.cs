@@ -29,15 +29,20 @@ namespace EduTrail.Application.Enrolements
                     Name = $"{u.FirstName} {u.LastName}"
                 }).ToList();
 
-                var enrolementDto = _mapper.Map<EnrolementDetailsDto>(enrolement);
+                var enrolementDto = _mapper.Map<EnrolementDetailsDto>(enrolement) ?? new EnrolementDetailsDto
+                {
+                    Id = request.Id,
+                    EnrolledDate = DateTime.UtcNow
+                };
 
                 if (enrolement == null)
                     return new EnrolementDto { DetailsDto = enrolementDto, Users = students };
 
                 var taRole = await _repository.GetRoleTaAsync();
-                if (enrolement.Student?.Roles?.Contains(taRole) == true)
+                if (enrolement.Student?.Roles?.Any(r => r.Id == taRole.Id) == true)
+                {
                     enrolementDto.IsTa = true;
-
+                }
                 return new EnrolementDto { DetailsDto = enrolementDto, Users = students };
             }
         }
