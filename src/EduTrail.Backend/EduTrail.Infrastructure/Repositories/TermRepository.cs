@@ -47,5 +47,10 @@ namespace EduTrail.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<TermType>> GetTermTypesAsync()
+        {
+            return await _context.TermTypes.ToListAsync();
+        }
     }
 }

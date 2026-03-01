@@ -9,6 +9,7 @@ import { ITALabDay } from '../interfaces/iTALabDay';
 import { ITALabSlot, LabMode } from '../interfaces/iTALabSlot';
 import { ITALabMonth } from '../interfaces/iTALabMonth';
 import { ITALabWeek } from '../interfaces/iTALabWeek';
+import { IDropdownItem, IDropdownItemInt } from '../../../../../shared/interface/iDropdownItem';
 
 @Component({
   selector: 'app-enrolement-create-or-edit',
@@ -21,17 +22,10 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   EMPTY_ID = '00000000-0000-0000-0000-000000000000';
   maxWeeklyHours = 10;
   LabMode = LabMode;
-
+  // enrollmentId: string | null = null;
   selectedMonth: number | null = 1;
   selectedYear: number | null = new Date().getFullYear();
-  months = [
-    { value: 1, name: 'January' }, { value: 2, name: 'February' },
-    { value: 3, name: 'March' }, { value: 4, name: 'April' },
-    { value: 5, name: 'May' }, { value: 6, name: 'June' },
-    { value: 7, name: 'July' }, { value: 8, name: 'August' },
-    { value: 9, name: 'September' }, { value: 10, name: 'October' },
-    { value: 11, name: 'November' }, { value: 12, name: 'December' }
-  ];
+  months:IDropdownItemInt[] = [];
   years: number[] = [];
 
   enrolement: IEnrolement = this.getEmptyEnrolement();
@@ -64,14 +58,46 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     this.loadEnrolement();
   }
 
+  // private loadEnrolement(): void {
+  //   const id = this.route.snapshot.queryParamMap.get('id');
+  //   // if (!id || id === this.EMPTY_ID) return;
+
+  //   this.enrolementService.getCourseById(id ?? this.EMPTY_ID).subscribe(data => {
+  //     const enrolledDate = data.detailsDto?.enrolledDate
+  //       ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
+  //       : '';
+  //     this.enrolement = {
+  //       ...this.enrolement,
+  //       detailsDto: {
+  //         ...data.detailsDto,
+  //         enrolledDate
+  //       },
+  //       users: data.users ?? [],
+  //     };
+  //     this.maxWeeklyHours = data.detailsDto?.totalWorkHoursPerWeek ?? this.maxWeeklyHours;
+  //     this.taLabMonths = data.detailsDto?.months ?? [];
+  //     console.log("this.taLabMonths:", this.taLabMonths);
+  //   });
+  // }
   private loadEnrolement(): void {
     const id = this.route.snapshot.queryParamMap.get('id');
-    // if (!id || id === this.EMPTY_ID) return;
-
     this.enrolementService.getCourseById(id ?? this.EMPTY_ID).subscribe(data => {
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
         : '';
+
+      // Normalize all lab dates in months/weeks/days
+      const months: ITALabMonth[] = (data.detailsDto?.months ?? []).map(month => ({
+        ...month,
+        weeks: month.weeks?.map(week => ({
+          ...week,
+          days: week.days?.map(day => ({
+            ...day,
+            labDate: day.labDate ? new Date(day.labDate).toISOString().split('T')[0] : ''
+          })) ?? []
+        })) ?? []
+      }));
+
       this.enrolement = {
         ...this.enrolement,
         detailsDto: {
@@ -80,7 +106,17 @@ export class EnrolementCreateOrEditComponent implements OnInit {
         },
         users: data.users ?? []
       };
+
+      this.maxWeeklyHours = data.detailsDto?.totalWorkHoursPerWeek ?? this.maxWeeklyHours;
+      this.taLabMonths = months;
+      this.months = data.dropdownMonths ?? [];
+      console.log("taLabMonths after normalization:", this.taLabMonths);
     });
+  }
+
+  private formatDateForInput(date?: string): string {
+    if (!date) return '';
+    return new Date(date).toISOString().split('T')[0];
   }
 
   getEmptyEnrolement(): IEnrolement {
@@ -99,12 +135,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   }
 
   onSubmit(form: NgForm): void {
-    console.log('Enrollment data to save:', this.enrolement, form.invalid);
-    // if (form.invalid) return;
     this.enrolement.detailsDto.months = this.taLabMonths;
-    console.log('Enrollment data to save:', this.enrolement, form.invalid);
-
-
     const courseOfferingId = this.route.snapshot.paramMap.get('courseOfferingId')!;
     this.enrolement.detailsDto.courseOfferingId = courseOfferingId;
 
@@ -135,11 +166,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   }
 
   public getMonthName(monthNumber: number): string {
-    const monthNames = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    return monthNames[monthNumber - 1] || '';
+    return this.months.find(c=>c.id = monthNumber)?.name ?? "";
   }
 
   addMonth(month: number, year: number): void {

@@ -7,11 +7,13 @@ namespace EduTrail.Application.Enrolements
         public EnrolementDetailsDto DetailsDto { get; set; } = new EnrolementDetailsDto();
         public List<EnrolementDetailsDto>? DetailsDtoList { get; set; } = new List<EnrolementDetailsDto>();
         public List<DropdownItemDto>? Users { get; set; } = new List<DropdownItemDto>();
+        public List<DropdownItemDtoInt>? DropdownMonths { get; set; } = new List<DropdownItemDtoInt>();
     }
     public class EnrolementDetailsDto
     {
         public Guid Id { get; set; }
         public Guid CourseOfferingId { get; set; }
+        public Guid TermTypeId { get; set; }
         public Guid StudentId { get; set; }
         public string? StudentName { get; set; }
         public DateTimeOffset EnrolledDate { get; set; }

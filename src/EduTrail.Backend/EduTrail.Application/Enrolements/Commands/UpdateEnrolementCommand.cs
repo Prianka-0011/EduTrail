@@ -56,106 +56,125 @@ namespace EduTrail.Application.Enrolements
                 if (enrolement == null)
                     throw new Exception("Enrollment not found");
 
-                // Update basic properties
                 enrolement.CourseOfferingId = request.enrolementDto.CourseOfferingId;
                 enrolement.StudentId = request.enrolementDto.StudentId;
                 enrolement.EnrolledDate = request.enrolementDto.EnrolledDate;
                 enrolement.TotalWorkHoursPerWeek = request.enrolementDto.TotalWorkHoursPerWeek;
                 enrolement.IsActive = request.enrolementDto.IsActive ?? true;
 
-
-                // Update TA roles
-                var student = enrolement.Student ?? await _repository.GetStudentByIdAsync(enrolement.StudentId ?? Guid.Empty);
+                var student = enrolement.Student!;
                 var taRole = await _repository.GetRoleTaAsync();
 
                 if (request.enrolementDto.IsTa == true)
                 {
-                    if (student.Roles == null)
-                        student.Roles = new List<Role> { taRole };
-                    else if (!student.Roles.Any(r => r.Id == taRole.Id))
+                    if (!student.Roles.Any(r => r.Id == taRole.Id))
                         student.Roles.Add(taRole);
                 }
                 else
                 {
-                    if (student.Roles != null)
-                        student.Roles.Remove(taRole);
+                    var roleToRemove = student.Roles.FirstOrDefault(r => r.Id == taRole.Id);
+                    if (roleToRemove != null)
+                        student.Roles.Remove(roleToRemove);
                 }
 
-                // Update months, weeks, days, slots
-                enrolement.TALabMonths.Clear();
-                if (request.enrolementDto.Months != null)
+                var existingMonths = enrolement.TALabMonths.ToList();
+
+                foreach (var month in existingMonths)
                 {
-                    foreach (var monthDto in request.enrolementDto.Months)
+                    if (!request.enrolementDto.Months.Any(m => m.Id == month.Id))
+                        enrolement.TALabMonths.Remove(month);
+                }
+
+                foreach (var monthDto in request.enrolementDto.Months)
+                {
+                    var month = enrolement.TALabMonths
+                        .FirstOrDefault(m => m.Id == monthDto.Id);
+
+                    if (month == null)
                     {
-                        var month = new TALabMonth
+                        month = new TALabMonth
                         {
-                            Id = monthDto.Id,
                             Month = monthDto.Month,
                             Year = monthDto.Year,
-                            EnrollmentId = enrolement.Id,
                             Weeks = new List<TALabWeek>()
                         };
-
-                        if (monthDto.Weeks != null)
-                        {
-                            foreach (var weekDto in monthDto.Weeks)
-                            {
-                                var week = new TALabWeek
-                                {
-                                    Id = weekDto.Id,
-                                    WeekNumber = weekDto.WeekNumber,
-                                    TALabMonthId = month.Id,
-                                    Days = new List<TALabDay>()
-                                };
-
-                                if (weekDto.Days != null)
-                                {
-                                    foreach (var dayDto in weekDto.Days)
-                                    {
-                                        var day = new TALabDay
-                                        {
-                                            Id = dayDto.Id,
-                                            LabDate = dayDto.LabDate,
-                                            TALabWeekId = week.Id,
-                                            IsActive = dayDto.IsActive ?? false,
-                                            Slots = new List<TALabSlot>()
-                                        };
-
-                                        if (dayDto.Slots != null)
-                                        {
-                                            foreach (var slotDto in dayDto.Slots)
-                                            {
-                                                day.Slots.Add(new TALabSlot
-                                                {
-                                                    Id = slotDto.Id,
-                                                    StartTime = slotDto.StartTime,
-                                                    EndTime = slotDto.EndTime,
-                                                    TALabDayId = day.Id,
-                                                    Mode = slotDto.Mode.HasValue ? (LabMode)slotDto.Mode.Value : LabMode.InPerson,
-                                                    RemoteLink = slotDto.RemoteLink
-                                                });
-                                            }
-                                        }
-
-                                        week.Days.Add(day);
-                                    }
-                                }
-
-                                month.Weeks.Add(week);
-                            }
-                        }
-
                         enrolement.TALabMonths.Add(month);
                     }
+
+                    var existingWeeks = month.Weeks.ToList();
+                    foreach (var week in existingWeeks)
+                    {
+                        if (!monthDto.Weeks.Any(w => w.Id == week.Id))
+                            month.Weeks.Remove(week);
+                    }
+
+                    foreach (var weekDto in monthDto.Weeks)
+                    {
+                        var week = month.Weeks.FirstOrDefault(w => w.Id == weekDto.Id);
+
+                        if (week == null)
+                        {
+                            week = new TALabWeek
+                            {
+                                WeekNumber = weekDto.WeekNumber,
+                                Days = new List<TALabDay>()
+                            };
+                            month.Weeks.Add(week);
+                        }
+
+                        var existingDays = week.Days.ToList();
+                        foreach (var day in existingDays)
+                        {
+                            if (!weekDto.Days.Any(d => d.Id == day.Id))
+                                week.Days.Remove(day);
+                        }
+
+                        foreach (var dayDto in weekDto.Days)
+                        {
+                            var day = week.Days.FirstOrDefault(d => d.Id == dayDto.Id);
+
+                            if (day == null)
+                            {
+                                day = new TALabDay
+                                {
+                                    LabDate = dayDto.LabDate,
+                                    IsActive = dayDto.IsActive ?? false,
+                                    Slots = new List<TALabSlot>()
+                                };
+                                week.Days.Add(day);
+                            }
+
+                            var existingSlots = day.Slots.ToList();
+                            foreach (var slot in existingSlots)
+                            {
+                                if (!dayDto.Slots.Any(s => s.Id == slot.Id))
+                                    day.Slots.Remove(slot);
+                            }
+
+                            foreach (var slotDto in dayDto.Slots)
+                            {
+                                var slot = day.Slots.FirstOrDefault(s => s.Id == slotDto.Id);
+
+                                if (slot == null)
+                                {
+                                    slot = new TALabSlot();
+                                    day.Slots.Add(slot);
+                                }
+
+                                slot.StartTime = slotDto.StartTime;
+                                slot.EndTime = slotDto.EndTime;
+                                slot.Mode = slotDto.Mode.HasValue
+                                    ? (LabMode)slotDto.Mode.Value
+                                    : LabMode.InPerson;
+                                slot.RemoteLink = slotDto.RemoteLink;
+                            }
+                        }
+                    }
                 }
-
-                var updated = await _repository.UpdateAsync(enrolement);
-                var enrolementDetails = _mapper.Map<EnrolementDetailsDto>(updated);
-
-                return new EnrolementDto { DetailsDto = enrolementDetails };
+                await _repository.UpdateAsync(enrolement);
+                var result = _mapper.Map<EnrolementDetailsDto>(enrolement);
+                return new EnrolementDto { DetailsDto = result };
             }
-
-
         }
     }
 }

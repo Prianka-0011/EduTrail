@@ -1,4 +1,5 @@
 using AutoMapper;
+using EduTrail.Application.Shared.Dtos;
 using EduTrail.Domain.Entities;
 using MediatR;
 
@@ -20,7 +21,13 @@ namespace EduTrail.Application.Terms
             public async Task<TermDto> Handle(GetTermByIdQuery request, CancellationToken cancellationToken)
             {
                 var term = await _repository.GetByIdAsync(request.Id);
-                var termDto = _mapper.Map<TermDto>(term);
+                var termDetailDto = _mapper.Map<TermDetailDto>(term);
+                var types = await _repository.GetTermTypesAsync();
+                var termDto = new TermDto
+                {
+                    DetailDto = termDetailDto ?? new TermDetailDto { Id = request.Id, StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow.AddMonths(4) },
+                    Types = types.Select(t => new DropdownItemDto { Id = t.Id, Name = t.Name }).ToList()
+                };
                 return termDto;
             }
         }

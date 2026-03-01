@@ -4,9 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { TermService } from '../services/term.service';
-import { ITerm } from '../interfaces/iTerm';
+
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { TermCreateOrUppdateComponent } from '../term-create-or-uppdate/term-create-or-uppdate.component';
+import { ITermDetails } from '../interfaces/iTerm';
+
 
 @Component({
   selector: 'app-term-list',
@@ -18,9 +20,9 @@ import { TermCreateOrUppdateComponent } from '../term-create-or-uppdate/term-cre
 export class TermListComponent implements OnInit {
   constructor(private termService: TermService, private router: Router) {}
 
-  terms: ITerm[] = [];
-  filtered: ITerm[] = [];
-  paged: ITerm[] = [];
+  terms: ITermDetails[] = [];
+  filtered: ITermDetails[] = [];
+  paged: ITermDetails[] = [];
 
   selectedTermId: string | null = null;
   drawerOpen = false;
@@ -30,7 +32,7 @@ export class TermListComponent implements OnInit {
   currentPage = 1;
   totalItems = 0;
 
-  sortColumn: keyof ITerm | '' = '';
+  sortColumn: keyof ITermDetails | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   searchText = '';
@@ -42,7 +44,7 @@ export class TermListComponent implements OnInit {
   getAllTerms() {
     this.termService.getAll().subscribe({
       next: data => {
-        this.terms = data;
+        this.terms = data.detailDtoList || [];
         this.applyFilter();
       },
       error: err => console.error(err)
@@ -94,7 +96,7 @@ export class TermListComponent implements OnInit {
     this.applySort();
   }
 
-  applySort(column?: keyof ITerm) {
+  applySort(column?: keyof ITermDetails) {
     if (column) {
       if (this.sortColumn === column) {
         this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';

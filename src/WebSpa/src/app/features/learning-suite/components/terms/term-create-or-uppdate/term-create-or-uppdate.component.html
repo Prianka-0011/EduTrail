@@ -3,20 +3,23 @@
     <div class="card-body">
       <form #termForm="ngForm" (ngSubmit)="onSubmit(termForm)" novalidate>
         <div class="row g-3">
-
           <div class="col-md-12">
             <div class="floating">
-              <input
-                type="text"
-                name="name"
-                class="form-control"
-                [(ngModel)]="term.name"
-                #name="ngModel"
-                (focus)="isNameFocused = true"
-                (blur)="isNameFocused = false"
+              <select class="form-select" [(ngModel)]="term.termTypeId" name="mode_{{ term.termTypeId }}"
+                (focus)="isTypeFocused = true" (blur)="isTypeFocused = false"
+                [ngClass]="{ active: term.termTypeId || isTypeFocused }"
+                (change)="onChange('termTypeId')">
+                <option *ngFor="let type of types" [value]="type.id">{{ type.name }}</option>
+              </select>
+              <label>Term Type</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="floating">
+              <input type="text" name="name" class="form-control" [(ngModel)]="term.name" #name="ngModel"
+                (focus)="isNameFocused = true" (blur)="isNameFocused = false"
                 [ngClass]="{ 'active': term.name || isNameFocused }"
-                required
-              />
+                readonly required />
               <label>Term Name *</label>
             </div>
             <div class="text-danger small" *ngIf="name.invalid && name.touched">
@@ -26,36 +29,20 @@
 
           <div class="col-md-12">
             <div class="floating">
-              <input
-                type="number"
-                name="year"
-                class="form-control"
-                [(ngModel)]="term.year"
-                #year="ngModel"
-                (focus)="isYearFocused = true"
-                (blur)="isYearFocused = false"
-                [ngClass]="{ 'active': term.year || isYearFocused }"
-                required
-                readonly
-              />
+              <input type="number" name="year" class="form-control" [(ngModel)]="term.year" #year="ngModel"
+                (focus)="isYearFocused = true" (blur)="isYearFocused = false"
+                [ngClass]="{ 'active': term.year || isYearFocused }" required readonly 
+                (change)="onChange('year')"/>
               <label>Year *</label>
             </div>
           </div>
 
           <div class="col-md-12">
             <div class="floating">
-              <input
-                type="date"
-                name="startDate"
-                class="form-control"
-                [(ngModel)]="term.startDate"
-                #startDate="ngModel"
-                (change)="onStartDateChange()"
-                (focus)="isStartDateFocused = true"
-                (blur)="isStartDateFocused = false"
-                [ngClass]="{ 'active': term.startDate || isStartDateFocused }"
-                required
-              />
+              <input type="date" name="startDate" class="form-control" [(ngModel)]="term.startDate" #startDate="ngModel"
+                (change)="onStartDateChange()" (focus)="isStartDateFocused = true" (blur)="isStartDateFocused = false"
+                [ngClass]="{ 'active': term.startDate || isStartDateFocused }" required 
+                (change)="onChange('startDate')"/>
               <label>Start Date *</label>
             </div>
             <div class="text-danger small" *ngIf="startDate.invalid && startDate.touched">
@@ -65,18 +52,10 @@
 
           <div class="col-md-12">
             <div class="floating">
-              <input
-                type="date"
-                name="endDate"
-                class="form-control"
-                [(ngModel)]="term.endDate"
-                #endDate="ngModel"
-                [min]="minEndDate"
-                (focus)="isEndDateFocused = true"
-                (blur)="isEndDateFocused = false"
-                [ngClass]="{ 'active': term.endDate || isEndDateFocused }"
-                required
-              />
+              <input type="date" name="endDate" class="form-control" [(ngModel)]="term.endDate" #endDate="ngModel"
+                [min]="minEndDate" (focus)="isEndDateFocused = true" (blur)="isEndDateFocused = false"
+                [ngClass]="{ 'active': term.endDate || isEndDateFocused }" required 
+                (change)="onChange('endDate')"/>
               <label>End Date *</label>
             </div>
             <div class="text-danger small" *ngIf="!isDateRangeValid() && endDate.touched">
@@ -90,11 +69,7 @@
           <button type="button" class="btn btn-secondary me-2" (click)="cancelForm()">
             Cancel
           </button>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="termForm.invalid || !isDateRangeValid()"
-          >
+          <button type="submit" class="btn btn-primary" [disabled]="termForm.invalid || !isDateRangeValid()">
             {{ term.id !== '00000000-0000-0000-0000-000000000000' ? 'Update Term' : 'Create Term' }}
           </button>
         </div>

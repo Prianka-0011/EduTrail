@@ -306,13 +306,33 @@ UniversityLabQueue.sln
 ├── Constants
 └── Utilities
 
- INSERT INTO [EduTrailDb].[dbo].[Roles] 
-    ([Id], [Name], [Description], [CreatedDate], [CreatedById])
-VALUES 
-    (NEWID(), 'Instructor', 'Role for course instructors', GETDATE(), '00000000-0000-0000-0000-000000000000'),
-    (NEWID(), 'Student', 'Role for students', GETDATE(), '00000000-0000-0000-0000-000000000000'),
-    (NEWID(), 'TA', 'Role for teaching assistants', GETDATE(), '00000000-0000-0000-0000-000000000000');
+INSERT INTO [EduTrailDb].[dbo].[Roles]
+(
+    [Id],
+    [Name],
+    [Description],
+    [CreatedDate],
+    [CreatedById]
+)
+VALUES
+('8F3B2A91-6E5C-4C7B-9E91-1A2D4F8C3B10', 'Instructor', 'Role for course instructors', GETDATE(), '00000000-0000-0000-0000-000000000000'),
+('2C9D7F41-8A3E-4F2B-B6A5-9E1C3D4A7F82', 'Student',    'Role for students',         GETDATE(), '00000000-0000-0000-0000-000000000000'),
+('5A1E4C7D-9B82-4F36-A3C1-6D9E2F8B0A55', 'TA',         'Role for teaching assistants', GETDATE(), '00000000-0000-0000-0000-000000000000');
 
+
+INSERT INTO [EduTrailDb].[dbo].[TermTypes]
+(
+    [Id],
+    [Name],
+    [CreatedDate],
+    [CreatedById],
+    [UpdatedDate],
+    [UpdatedById]
+)
+VALUES
+('7E8F9F7E-75B3-4866-94A3-464F8711C544', 'Spring', GETDATE(), NULL, GETDATE(), NULL),
+('F262DE21-7519-4468-B63A-653DAFC6B8F9', 'Fall',   GETDATE(), NULL, GETDATE(), NULL),
+('855021E3-8D31-47B2-B787-65E1DDBB4FE0', 'Winter', GETDATE(), NULL, GETDATE(), NULL);
 
 Consider TA Lab hours as well as Tutor hours, while following these rules
 Wednesdays and Thursdays

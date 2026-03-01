@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { enviroment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { ITerm } from '../interfaces/iTerm';
-import { ICourse } from '../../courses/interfaces/iCourse';
+import { ITerm, ITermDetails } from '../interfaces/iTerm';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,8 @@ export class TermService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<ITerm[]> {
-    return this.http.get<ITerm[]>(this.baseUrl)
+  getAll(): Observable<ITerm> {
+    return this.http.get<ITerm>(this.baseUrl)
   }
 
   getById(id: string): Observable<ITerm> {
@@ -24,24 +24,27 @@ export class TermService {
 
   create(term: ITerm): Observable<ITerm> {
     return this.http.post<ITerm>(this.baseUrl, {
-      termDto: {
-        id: term.id,
-        name: term.name,
-        year: term.year,
-        startDate: term.startDate,
-        endDate: term.endDate
+      termDetailDto: {
+        id: term.detailDto.id,
+        name: term.detailDto.name,
+        year: term.detailDto.year,
+        startDate: term.detailDto.startDate,
+        endDate: term.detailDto.endDate,
+        termTypeId: term.detailDto.termTypeId
+      
       }
     })
   }
 
   update(term: ITerm): Observable<ITerm> {
-    return this.http.put<ITerm>(this.baseUrl + term.id, {
-      termDto: {
-        id: term.id,
-        name: term.name,
-        year: term.year,
-        startDate: term.startDate,
-        endDate: term.endDate
+    return this.http.put<ITerm>(this.baseUrl + term.detailDto.id, {
+      termDetailDto: {
+        id: term.detailDto.id,
+        name: term.detailDto.name,
+        year: term.detailDto.year,
+        startDate: term.detailDto.startDate,
+        endDate: term.detailDto.endDate,
+        termTypeId: term.detailDto.termTypeId
       }
     })
   }

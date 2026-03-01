@@ -26,8 +26,8 @@ export class EnrolementService {
         courseOfferingId: enrolement.detailsDto?.courseOfferingId,
         studentId: enrolement.detailsDto?.studentId,
         enrolledDate: enrolement.detailsDto?.enrolledDate,
-        isTa: enrolement.detailsDto?.isTa ?? false,
-
+        isTa: enrolement.detailsDto.isTa ?? false,
+        totalWorkHoursPerWeek: enrolement.detailsDto.totalWorkHoursPerWeek,
       }
     });
   }
