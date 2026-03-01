@@ -3,6 +3,7 @@ using EduTrail.Application.Users;
 using EduTrail.Domain.Entities;
 using EduTrail.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using EduTrail.Shared;
 
 namespace EduTrail.Infrastructure.Repositories
 {
@@ -51,7 +52,7 @@ namespace EduTrail.Infrastructure.Repositories
 
         public async Task<IEnumerable<Role>> GetAllRolesAsync()
         {
-            return await _context.Roles.Where(c => c.Name != "TA").ToListAsync();
+            return await _context.Roles.Where(c => c.Id != CustomCategory.RoleType.TA).ToListAsync();
         }
 
         public async Task<IEnumerable<Role>> GetRolesByIdsAsync(IEnumerable<DropdownItemDto> roleIds)

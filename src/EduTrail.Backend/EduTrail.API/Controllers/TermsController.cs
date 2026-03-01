@@ -33,9 +33,9 @@ namespace EduTrail.API.Controllers
         public async Task<ActionResult<TermDto>> Update(Guid id, UpdateTermCommand command)
         {
 
-            if (id != command.termDto.Id)
+            if (id != command.TermDetailDto.Id)
             {
-                return BadRequest("Course ID mismatch");
+                return BadRequest("Term ID mismatch");
             }
             return Ok(await _mediator.Send(command));
         }

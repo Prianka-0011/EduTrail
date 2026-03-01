@@ -7,8 +7,10 @@ namespace EduTrail.Application.Terms
     {
         public TermMappingsProfile()
         {
-            CreateMap<TermDto, Term>();
-            CreateMap<Term, TermDto>();
+            CreateMap<TermDetailDto, Term>()
+                .ForMember(dest => dest.TermTypeId, opt => opt.MapFrom(src => src.TermTypeId));
+            CreateMap<Term, TermDetailDto>()
+                .ForMember(dest => dest.TermTypeId, opt => opt.MapFrom(src => src.TermTypeId));
         }
     }
 }

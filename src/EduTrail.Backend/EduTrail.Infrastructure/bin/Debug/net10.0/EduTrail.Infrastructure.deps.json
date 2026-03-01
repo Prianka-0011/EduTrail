@@ -10,6 +10,7 @@
         "dependencies": {
           "EduTrail.Application": "1.0.0",
           "Edutrail.Domain": "1.0.0",
+          "Edutrail.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore": "10.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "10.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "10.0.0",
@@ -1125,6 +1126,7 @@
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "Edutrail.Domain": "1.0.0",
+          "Edutrail.Shared": "1.0.0",
           "MediatR": "12.0.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0"
         },
@@ -1138,6 +1140,14 @@
       "Edutrail.Domain/1.0.0": {
         "runtime": {
           "Edutrail.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Edutrail.Shared/1.0.0": {
+        "runtime": {
+          "Edutrail.Shared.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -1654,6 +1664,11 @@
       "sha512": ""
     },
     "Edutrail.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Edutrail.Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -9,6 +9,7 @@ import { ITALabDay } from '../interfaces/iTALabDay';
 import { ITALabSlot, LabMode } from '../interfaces/iTALabSlot';
 import { ITALabMonth } from '../interfaces/iTALabMonth';
 import { ITALabWeek } from '../interfaces/iTALabWeek';
+import { IDropdownItem, IDropdownItemInt } from '../../../../../shared/interface/iDropdownItem';
 
 @Component({
   selector: 'app-enrolement-create-or-edit',
@@ -21,17 +22,10 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   EMPTY_ID = '00000000-0000-0000-0000-000000000000';
   maxWeeklyHours = 10;
   LabMode = LabMode;
-
+  // enrollmentId: string | null = null;
   selectedMonth: number | null = 1;
   selectedYear: number | null = new Date().getFullYear();
-  months = [
-    { value: 1, name: 'January' }, { value: 2, name: 'February' },
-    { value: 3, name: 'March' }, { value: 4, name: 'April' },
-    { value: 5, name: 'May' }, { value: 6, name: 'June' },
-    { value: 7, name: 'July' }, { value: 8, name: 'August' },
-    { value: 9, name: 'September' }, { value: 10, name: 'October' },
-    { value: 11, name: 'November' }, { value: 12, name: 'December' }
-  ];
+  months:IDropdownItemInt[] = [];
   years: number[] = [];
 
   enrolement: IEnrolement = this.getEmptyEnrolement();
@@ -87,7 +81,6 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   // }
   private loadEnrolement(): void {
     const id = this.route.snapshot.queryParamMap.get('id');
-
     this.enrolementService.getCourseById(id ?? this.EMPTY_ID).subscribe(data => {
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
@@ -116,7 +109,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
 
       this.maxWeeklyHours = data.detailsDto?.totalWorkHoursPerWeek ?? this.maxWeeklyHours;
       this.taLabMonths = months;
-
+      this.months = data.dropdownMonths ?? [];
       console.log("taLabMonths after normalization:", this.taLabMonths);
     });
   }
@@ -173,11 +166,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   }
 
   public getMonthName(monthNumber: number): string {
-    const monthNames = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    return monthNames[monthNumber - 1] || '';
+    return this.months.find(c=>c.id = monthNumber)?.name ?? "";
   }
 
   addMonth(month: number, year: number): void {

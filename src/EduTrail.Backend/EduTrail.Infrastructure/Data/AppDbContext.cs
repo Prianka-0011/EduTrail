@@ -31,6 +31,7 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<Enrollment> Enrollments { get; set; } = null!;
         public DbSet<CourseOffering> CourseOfferings { get; set; } = null!;
         public DbSet<Term> Terms { get; set; }
+        public DbSet<TermType> TermTypes { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<StatusType> StatusTypes { get; set; }
         public DbSet<Lab> Labs { get; set; }

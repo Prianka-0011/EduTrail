@@ -234,3 +234,5 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net10.0\refint\EduTrail.
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net10.0\EduTrail.API.pdb
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net10.0\EduTrail.API.genruntimeconfig.cache
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net10.0\ref\EduTrail.API.dll
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\EduTrail.Shared.dll
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\EduTrail.Shared.pdb

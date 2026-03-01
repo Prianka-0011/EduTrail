@@ -9,5 +9,6 @@ namespace EduTrail.Application.Terms
         Task<Term> GetByIdAsync(Guid id);
         Task<Term> UpdateAsync(Term term);
         Task<bool> DeleteAsync(Guid id);
+        Task<IEnumerable<TermType>> GetTermTypesAsync();
     }
 }

@@ -1,11 +1,12 @@
 using AutoMapper;
+using EduTrail.Application.Shared.Dtos;
 using MediatR;
 
 namespace EduTrail.Application.Terms
 {
-    public class GetAllTermsQuery : IRequest<List<TermDto>>
+    public class GetAllTermsQuery : IRequest<TermDto>
     {
-        public class Handler : IRequestHandler<GetAllTermsQuery, List<TermDto>>
+        public class Handler : IRequestHandler<GetAllTermsQuery, TermDto>
         {
             private readonly ITermRepository _repository;
             private readonly IMapper _mapper;
@@ -14,11 +15,11 @@ namespace EduTrail.Application.Terms
                 _repository = repository;
                 _mapper = mapper;
             }
-            public async Task<List<TermDto>> Handle(GetAllTermsQuery request, CancellationToken cancellationToken)
+            public async Task<TermDto> Handle(GetAllTermsQuery request, CancellationToken cancellationToken)
             {
                 var terms = await _repository.GetAllAsync();
-                var termDtos = _mapper.Map<List<TermDto>>(terms);
-                return termDtos;
+                var termDtos = _mapper.Map<List<TermDetailDto>>(terms);
+                return new TermDto { DetailDtoList = termDtos };
             }
         }
     }

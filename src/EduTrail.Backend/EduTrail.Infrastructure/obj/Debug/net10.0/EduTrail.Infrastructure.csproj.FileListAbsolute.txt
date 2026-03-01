@@ -18,3 +18,5 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.Infrastructure\obj\Debug\net10.0\refin
 D:\EduTrail\src\EduTrail.Backend\EduTrail.Infrastructure\obj\Debug\net10.0\EduTrail.Infrastructure.pdb
 D:\EduTrail\src\EduTrail.Backend\EduTrail.Infrastructure\obj\Debug\net10.0\EduTrail.Infrastructure.genruntimeconfig.cache
 D:\EduTrail\src\EduTrail.Backend\EduTrail.Infrastructure\obj\Debug\net10.0\ref\EduTrail.Infrastructure.dll
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Infrastructure\bin\Debug\net10.0\EduTrail.Shared.dll
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Infrastructure\bin\Debug\net10.0\EduTrail.Shared.pdb

@@ -9,10 +9,11 @@ import {
   ViewChild
 } from '@angular/core';
 import { TermService } from '../services/term.service';
-import { ITerm } from '../interfaces/iTerm';
+import { ITerm, ITermDetails } from '../interfaces/iTerm';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { IDropdownItem } from '../../../../../shared/interface/iDropdownItem';
 
 const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 
@@ -30,12 +31,13 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
   @Output() cancel = new EventEmitter<void>();
   @ViewChild('termForm') termForm!: NgForm;
 
-  term: ITerm = this.getEmptyTerm();
-
+  term: ITermDetails = this.getEmptyTerm();
+  types: IDropdownItem[] = [];
   isNameFocused = false;
   isYearFocused = false;
   isStartDateFocused = false;
   isEndDateFocused = false;
+  isTypeFocused = false;
 
   minEndDate = '';
 
@@ -47,20 +49,49 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const termId = params['id'];
-      if (termId && termId !== EMPTY_ID) {
-        this.service.getById(termId).subscribe(data => {
-          this.term = {
-            ...data,
-            startDate: data.startDate ? data.startDate.split('T')[0] : '',
-            endDate: data.endDate ? data.endDate.split('T')[0] : ''
-          };
-          console.log("Edit form", this.term)
-          this.syncDerivedFields();
-        });
-      }
+      // if (termId && termId !== EMPTY_ID) {
+      this.service.getById(termId).subscribe(data => {
+        this.term = {
+          ...data.detailDto,
+          startDate: data.detailDto.startDate ? data.detailDto.startDate.split('T')[0] : '',
+          endDate: data.detailDto.endDate ? data.detailDto.endDate.split('T')[0] : '',
+        };
+        this.types = data.types || [];
+        console.log("Edit form", this.term)
+        this.syncDerivedFields();
+      });
+      // }
     });
   }
 
+  onChange(fieldNaame: string): void {
+    if (fieldNaame === 'termTypeId') {
+      const selectedType = this.types.find(t => t.id === this.term.termTypeId);
+      if (selectedType) {
+        this.term.name = selectedType.name + ' ' + this.term.year;
+      }
+    }
+    if (fieldNaame === 'year') {
+      const selectedType = this.types.find(t => t.id === this.term.termTypeId);
+      if (selectedType) {
+        this.term.name = selectedType.name + ' ' + this.term.year;
+      }
+    }
+    if (fieldNaame === 'startDate') {
+      if (this.term.startDate) {
+        this.term.year = new Date(this.term.startDate).getFullYear();
+        const selectedType = this.types.find(t => t.id === this.term.termTypeId);
+        if (selectedType) {
+          this.term.name = selectedType.name + ' ' + this.term.year;
+        }
+      }
+    }
+    if (fieldNaame === 'endDate') {
+      if (this.term.endDate && this.term.startDate && !this.isDateRangeValid()) {
+        this.term.endDate = '';
+      }
+    }
+  }
   ngOnChanges(changes: SimpleChanges): void {
 
     if (changes['resetTrigger']?.currentValue && this.termForm) {
@@ -73,9 +104,7 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
     if (form.invalid || !this.isDateRangeValid()) return;
 
     const payload: ITerm = {
-      ...this.term,
-      startDate: new Date(this.term.startDate).toISOString(),
-      endDate: new Date(this.term.endDate).toISOString()
+      detailDto: this.term,
     };
 
     const request$ =
@@ -121,7 +150,7 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
     this.termForm.resetForm(this.term);
   }
 
-  getEmptyTerm(): ITerm {
+  getEmptyTerm(): ITermDetails {
     return {
       id: EMPTY_ID,
       name: '',

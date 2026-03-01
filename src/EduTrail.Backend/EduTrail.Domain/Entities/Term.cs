@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using EduTrail.Domain.Interfaces;
 namespace EduTrail.Domain.Entities
 {
@@ -17,6 +18,10 @@ namespace EduTrail.Domain.Entities
 
         [Required]
         public DateTimeOffset EndDate { get; set; }
+        
+        [ForeignKey("TermTypeId")]
+        public Guid TermTypeId { get; set; }
+        public TermType TermType { get; set; }
 
         // Audit fields
         public DateTimeOffset? CreatedDate { get; set; }

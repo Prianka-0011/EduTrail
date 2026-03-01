@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using AutoMapper;
 using EduTrail.Domain.Entities;
+using EduTrail.Shared;
 using MediatR;
 
 namespace EduTrail.Application.Enrolements
@@ -27,16 +28,36 @@ namespace EduTrail.Application.Enrolements
                         "Student is already enrolled in this course offering."
                     );
                 }
-                var enrolement = _mapper.Map<Enrollment>(request.enrolementDto);
+                var student = await _repository.GetStudentByIdAsync(request.enrolementDto.StudentId);
+                if (student == null)
+                {
+                    throw new InvalidOperationException("Student not found.");
+                }
+
                 if (request.enrolementDto.IsTa == true)
                 {
-                    var role = await _repository.GetRoleTaAsync();
-                    enrolement.Student?.Roles.Add(role);
+                    student.Roles = student.Roles ?? new List<Role>();
+                    if (!student.Roles.Any(r => r.Id == CustomCategory.RoleType.TA))
+                    {
+                        await EnsureTaRoleAsync(student);
+                    }
+
                 }
-                
+                var enrolement = _mapper.Map<Enrollment>(request.enrolementDto);
+                enrolement.Student = student;
                 var res = await _repository.CreateAsync(enrolement);
                 var enrolementDto = _mapper.Map<EnrolementDetailsDto>(res);
                 return new EnrolementDto { DetailsDto = enrolementDto };
+            }
+            private async Task EnsureTaRoleAsync(User student)
+            {
+                student.Roles ??= new List<Role>();
+
+                if (student.Roles.Any(r => r.Id == CustomCategory.RoleType.TA))
+                    return;
+
+                var taRole = await _repository.GetRoleTaAsync();
+                student.Roles.Add(taRole);
             }
         }
     }

@@ -36,7 +36,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Edutrail.Domain\Edutrail.Domain.csproj" />
+    <ProjectReference Include="..\Edutrail.Shared\Edutrail.Shared.csproj" />
   </ItemGroup>
 
 </Project>
-

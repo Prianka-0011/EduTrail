@@ -1,0 +1,12 @@
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Shared\obj\Debug\net10.0\EduTrail.Shared.GeneratedMSBuildEditorConfig.editorconfig
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Shared\obj\Debug\net10.0\EduTrail.Shared.AssemblyInfoInputs.cache
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Shared\obj\Debug\net10.0\EduTrail.Shared.AssemblyInfo.cs
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Shared\obj\Debug\net10.0\EduTrail.Shared.csproj.CoreCompileInputs.cache
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Shared\obj\Debug\net10.0\EduTrail.Shared.sourcelink.json
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Shared\bin\Debug\net10.0\EduTrail.Shared.deps.json
+D:\EduTrail\src\EduTrail.Backend\Edutrail.Shared\bin\Debug\net10.0\EduTrail.Shared.dll
+D:\EduTrail\src\EduTrail.Backend\Edutrail.Shared\bin\Debug\net10.0\EduTrail.Shared.pdb
+D:\EduTrail\src\EduTrail.Backend\Edutrail.Shared\obj\Debug\net10.0\EduTrail.Shared.dll
+D:\EduTrail\src\EduTrail.Backend\Edutrail.Shared\obj\Debug\net10.0\refint\EduTrail.Shared.dll
+D:\EduTrail\src\EduTrail.Backend\Edutrail.Shared\obj\Debug\net10.0\EduTrail.Shared.pdb
+D:\EduTrail\src\EduTrail.Backend\EduTrail.Shared\obj\Debug\net10.0\ref\EduTrail.Shared.dll

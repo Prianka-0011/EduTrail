@@ -6,7 +6,7 @@ namespace EduTrail.Application.Terms
 {
     public class UpdateTermCommand : IRequest<TermDto>
     {
-        public TermDto termDto {get; set;} 
+        public TermDetailDto TermDetailDto { get; set; }
         public class Handler : IRequestHandler<UpdateTermCommand, TermDto>
         {
             private readonly ITermRepository _termRepository;
@@ -20,10 +20,10 @@ namespace EduTrail.Application.Terms
 
             public async Task<TermDto> Handle (UpdateTermCommand request, CancellationToken cancellationToken)
             {
-                var term = _mapper.Map<Term>(request.termDto);
+                var term = _mapper.Map<Term>(request.TermDetailDto);
                 var res = await _termRepository.UpdateAsync(term);
-                var termDto = _mapper.Map<TermDto>(res);
-                return termDto;
+                var termDto = _mapper.Map<TermDetailDto>(res);
+                return new TermDto { DetailDto = termDto };
             }
             
         }
