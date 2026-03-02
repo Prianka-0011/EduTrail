@@ -22,10 +22,24 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   EMPTY_ID = '00000000-0000-0000-0000-000000000000';
   maxWeeklyHours = 10;
   LabMode = LabMode;
+  months: IDropdownItemInt[] = [
+    { id: 1, name: 'January' },
+    { id: 2, name: 'February' },
+    { id: 3, name: 'March' },
+    { id: 4, name: 'April' },
+    { id: 5, name: 'May' },
+    { id: 6, name: 'June' },
+    { id: 7, name: 'July' },
+    { id: 8, name: 'August' },
+    { id: 9, name: 'September' },
+    { id: 10, name: 'October' },
+    { id: 11, name: 'November' },
+    { id: 12, name: 'December' }
+  ];
   // enrollmentId: string | null = null;
-  selectedMonth: number | null = 1;
+  selectedMonth: number = 0
   selectedYear: number | null = new Date().getFullYear();
-  months:IDropdownItemInt[] = [];
+
   years: number[] = [];
 
   enrolement: IEnrolement = this.getEmptyEnrolement();
@@ -55,6 +69,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     const currentYear = new Date().getFullYear();
     for (let i = currentYear - 5; i <= currentYear + 5; i++) this.years.push(i);
     this.selectedYear = currentYear;
+    this.selectedMonth = this.months[0].id;
     this.loadEnrolement();
   }
 
@@ -161,15 +176,14 @@ export class EnrolementCreateOrEditComponent implements OnInit {
 
   onCancel(): void { this.cancel.emit(); }
 
-  onMonthChange(): void {
-    if (!this.selectedYear) this.selectedYear = new Date().getFullYear();
-  }
-
   public getMonthName(monthNumber: number): string {
-    return this.months.find(c=>c.id = monthNumber)?.name ?? "";
+    var monthname = this.months.find(c => c.id == monthNumber)?.name ?? "";
+    console.log("monthNumber to get name", this.months, monthname, monthNumber)
+    return monthname;
   }
 
   addMonth(month: number, year: number): void {
+    console.log(month, "selected month ")
     if (!month || !year) return;
     if (this.taLabMonths.some(m => m.month === month && m.year === year)) return;
 
@@ -182,9 +196,12 @@ export class EnrolementCreateOrEditComponent implements OnInit {
       isCollapsed: false
     };
 
-    for (let i = 1; i <= 5; i++) newMonth.weeks.push({ id: this.generateGuid(), taLabMonthId: newMonth.id, weekNumber: i, days: [] });
+    for (let i = 1; i <= 5; i++) {
+      newMonth.weeks.push({ id: this.generateGuid(), taLabMonthId: newMonth.id, weekNumber: i, days: [] });
+    }
 
     this.taLabMonths.push(newMonth);
+    this.taLabMonths = [...this.taLabMonths];
   }
 
   addLabDayToWeek(month: ITALabMonth, weekNumber: number, date?: string): void {

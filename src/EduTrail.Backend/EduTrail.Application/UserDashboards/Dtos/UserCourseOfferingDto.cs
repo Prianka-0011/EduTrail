@@ -1,15 +1,16 @@
 using EduTrail.Application.Shared.Dtos;
 
-namespace EduTrail.Application.UserDashboard
+namespace EduTrail.Application.UserDashboards
 {
 
     public class UserCourseOfferingDto
     {
 
-        public UserCourseOfferingDetail CourseOfferingDetail { get; set; }
-        public List<DropdownItemDto> Courses { get; set; }
-        public List<DropdownItemDto> Instructors { get; set; }
-        public List<DropdownItemDto> Terms { get; set; }
+        public UserCourseOfferingDetail DetailDto { get; set; }
+        public List<UserCourseOfferingDetail> DetailsDtoList { get; set; }
+        public List<DropdownItemDto>? Courses { get; set; }
+        public List<DropdownItemDto>? Instructors { get; set; }
+        public List<DropdownItemDto>? Terms { get; set; }
     }
     public class UserCourseOfferingDetail
     {
