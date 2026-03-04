@@ -1,0 +1,123 @@
+<!-- <div>{{pagedCourseOfferings | json}}</div> -->
+<div class="table-container">
+
+    <div class="row justify-content-start">
+        <div class="col-md-6 col-12 d-flex align-items-center gap-1">
+            <h2 class="mb-0">Courses</h2>
+
+            <!-- <button class="icon-btn" (click)="openCreateDrawer()">
+        <i class="bi bi-plus-lg"></i>
+      </button> -->
+        </div>
+    </div>
+
+    <div class="row justify-content-end">
+        <div class="col-md-4 col-10 mb-4">
+            <div class="search-input-wrapper">
+                <input type="text" class="form-control" placeholder="Search course offerings..."
+                    [(ngModel)]="searchText" (input)="applyFilter()" />
+                <i class="bi bi-search search-icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table custom-table">
+            <thead>
+                <tr>
+                    <th role="button" (click)="applySort('courseName')">Course</th>
+                    <th role="button" (click)="applySort('instructorName')">Instructor</th>
+                    <th role="button" (click)="applySort('termName')">Term</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <ng-container *ngFor="let offering of pagedCourseOfferings">
+
+                    <!-- Parent row -->
+                    <tr role="button" (click)="toggleRow(offering.id)" class="parent-row">
+                        <td>
+                            <a class="nav-link nav-item-link"
+                                (click)="gotoEnrollementDashboard(offering.id)">
+                                {{ offering.courseName }}
+                            </a>
+                        </td>
+
+                        <td>{{ offering.instructorName }}</td>
+                        <td>{{ offering.termName }}</td>
+                        <td>
+                            <button class="edit-icon-btn"
+                                (click)="openEditDrawer(offering.id); $event.stopPropagation()">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <!-- Collapsible child row with smooth transition -->
+                    <!-- <tr class="child-row">
+            <td colspan="4" class="p-0">
+              <div class="child-content-wrapper" [class.expanded]="isRowExpanded(offering.id)"
+                (click)="goToEnrollment(offering.id)">
+                <div class="child-content ">
+                  <i class="bi bi-box-arrow-up-right me-2"></i>
+                  <strong>Enrollment</strong>
+                </div>
+              </div>
+            </td>
+          </tr> -->
+
+                    <!-- <tr class="child-row">
+            <td colspan="4" class="p-0">
+              <div class="child-content-wrapper" [class.expanded]="isRowExpanded(offering.id)"
+                (click)="goToEnrollment(offering.id)">
+                <div class="child-content">
+                  <i class="bi bi-box-arrow-up-right me-2"></i>
+                  <strong>Assessment</strong>
+                </div>
+              </div>
+            </td>
+          </tr> -->
+                </ng-container>
+
+
+                <tr *ngIf="pagedCourseOfferings.length === 0">
+                    <td colspan="4" class="text-center py-4 text-muted">
+                        No records found
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="custom-paginator d-flex align-items-center mt-4">
+
+        <div class="d-flex align-items-center gap-2">
+            <span>Items per page:</span>
+            <select class="form-select page-size-select" [value]="pageSize"
+                (change)="changePageSize($any($event.target).value)">
+                <option *ngFor="let size of pageSizeOptions" [value]="size">
+                    {{ size }}
+                </option>
+            </select>
+        </div>
+
+        <span class="ms-auto">{{ rangeLabel }}</span>
+
+        <div class="d-flex gap-2 ms-3">
+            <button class="btn icon-btn" (click)="goToPage(1)">
+                <i class="bi bi-chevron-double-left"></i>
+            </button>
+            <button class="btn icon-btn" (click)="goToPage(currentPage - 1)">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="btn icon-btn" (click)="goToPage(currentPage + 1)">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+            <button class="btn icon-btn" (click)="goToPage(totalPages)">
+                <i class="bi bi-chevron-double-right"></i>
+            </button>
+        </div>
+
+    </div>
+</div>

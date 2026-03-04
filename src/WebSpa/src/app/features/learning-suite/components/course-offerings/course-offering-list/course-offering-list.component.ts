@@ -57,16 +57,7 @@ export class CourseOfferingListComponent implements OnInit {
     return !!this.expandedRows[id];
   }
 
-  // goToEnrollment(courseOfferingId: string) {/
-  //   console.log('Navigating to enrollment list for course offering ID:', courseOfferingId);
-  //   const url = this.router.createUrlTree(['/course-offerings/enrolement-list', courseOfferingId]).toString();
-  //   console.log('Generated URL:', url);
-  //   this.router.navigate([
-  //     'course-offerings/enrolement-list',
-  //     courseOfferingId
-  //   ]);
-  // }
-
+ 
   goToEnrollment(courseOfferingId: string) {
     this.router.navigate([
       `/learning-suite/course-offerings/${courseOfferingId}/enrolement-list`
