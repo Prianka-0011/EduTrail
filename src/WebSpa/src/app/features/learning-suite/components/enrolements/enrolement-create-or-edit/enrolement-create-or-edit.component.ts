@@ -96,7 +96,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   // }
   private loadEnrolement(): void {
     const id = this.route.snapshot.queryParamMap.get('id');
-    this.enrolementService.getCourseById(id ?? this.EMPTY_ID).subscribe(data => {
+    this.enrolementService.getEnrollmentById(id ?? this.EMPTY_ID).subscribe(data => {
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
         : '';

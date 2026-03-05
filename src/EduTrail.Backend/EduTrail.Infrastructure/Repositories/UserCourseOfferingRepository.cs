@@ -62,9 +62,9 @@ namespace EduTrail.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Enrollment> GetEnrollmentByUserIdAsync(Guid userId)
+        public async Task<Enrollment> GetEnrollmentByUserIdAsync(Guid userId, Guid courseOfferingId)
         {
-            return await _context.Enrollments.Include(c=>c.TALabMonths).Where(c=>c.StudentId == userId).FirstOrDefaultAsync();
+            return await _context.Enrollments.Include(c=>c.TALabMonths).Where(c=>c.StudentId == userId && c.CourseOfferingId == courseOfferingId).FirstOrDefaultAsync();
         }
 
     }

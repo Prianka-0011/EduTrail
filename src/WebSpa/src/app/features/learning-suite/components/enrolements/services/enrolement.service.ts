@@ -15,7 +15,7 @@ export class EnrolementService {
     return this.http.get<IEnrolement>(this.baseUrl + "course-offerings/" + courseOfferingId);
   }
 
-  getCourseById(id: string): Observable<IEnrolement> {
+  getEnrollmentById(id: string): Observable<IEnrolement> {
     return this.http.get<IEnrolement>(this.baseUrl + id);
   }
 

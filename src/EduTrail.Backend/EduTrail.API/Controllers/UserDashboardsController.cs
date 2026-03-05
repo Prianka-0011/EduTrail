@@ -17,10 +17,11 @@ namespace EduTrail.API.Controllers
             var result = await _mediator.Send(new GetAllCourseOfferingByUserQuery());
             return Ok(result);
         }
-        [HttpGet("{id}")]
+        [HttpGet("{courseOfferingId}")]
         public async Task<ActionResult> GetEnrollementById(Guid courseOfferingId)
         {
-            var result = await _mediator.Send(new GetEnrollmentByUserId {})
+            var result = await _mediator.Send(new GetEnrollmentByUserId {CourseOfferingId = courseOfferingId});
+            return Ok(result);
         }
     }
 }
