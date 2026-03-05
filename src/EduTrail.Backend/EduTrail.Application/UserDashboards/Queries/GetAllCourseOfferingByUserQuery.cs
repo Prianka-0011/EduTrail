@@ -5,7 +5,6 @@ namespace EduTrail.Application.UserDashboards
 {
     public class GetAllCourseOfferingByUserQuery : IRequest<UserCourseOfferingDto>
     {
-        public Guid UserId { get; set; }
         public class Handler : IRequestHandler<GetAllCourseOfferingByUserQuery, UserCourseOfferingDto>
         {
             private readonly IMapper _mapper;
@@ -17,7 +16,8 @@ namespace EduTrail.Application.UserDashboards
             }
             public async Task<UserCourseOfferingDto> Handle(GetAllCourseOfferingByUserQuery request, CancellationToken cancellationToken)
             {
-                var res = await _repository.GetAllByUserIdAsync(request.UserId);
+                var currentLoginUserId = Guid.Parse("8D1B9DFD-511C-42ED-3F21-08DE77033B15");
+                var res = await _repository.GetAllByUserIdAsync(currentLoginUserId);
                 var dtos = _mapper.Map<List<UserCourseOfferingDetail>>(res);
                 return new UserCourseOfferingDto { DetailsDtoList = dtos };
             }

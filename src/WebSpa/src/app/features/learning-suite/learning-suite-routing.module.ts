@@ -2,7 +2,7 @@ import { Routes } from "@angular/router";
 import { CourseListComponent } from "./components/courses/course-list/course-list.component";
 import { DashboardComponent } from "./components/dashboard/dashboard/dashboard.component";
 import { CourseCreateOrUpdateComponent } from "./components/courses/course-create-or-update/course-create-or-update.component";
-import { UserDashboardComponent } from "./components/dashboard/user-dashboard/user-dashboard.component";
+
 import { TermListComponent } from "./components/terms/term-list/term-list.component";
 import { QuestionListComponent } from "./components/questions/question-list/question-list.component";
 import { AssessmentListComponent } from "./components/assesments/assessment-list/assessment-list.component";
@@ -10,6 +10,8 @@ import { QuestionTypeListComponent } from "./components/question-type/question-t
 import { CourseOfferingListComponent } from "./components/course-offerings/course-offering-list/course-offering-list.component";
 import { UserListComponent } from "./components/users/user-list/user-list.component";
 import { EnrolementListComponent } from "./components/enrolements/enrolement-list/enrolement-list.component";
+import { UserDashboardsComponent } from "./components/dashboard/user-dashboards/user-dashboards.component";
+import { CourseOfferingByUserComponent } from "./components/dashboard/course-offering-by-user/course-offering-by-user.component";
 // import { EnrolementListComponent } from "./components/enrolements/enrolement-list/enrolement-list.component";
 
 
@@ -26,8 +28,8 @@ export const learningSuiteRoutes: Routes = [
     component: DashboardComponent
   },
   {
-    path: 'user-dashboard',
-    component: UserDashboardComponent,
+    path: 'course-offering-by-user',
+    component: CourseOfferingByUserComponent,
     // children: [
     //   {
     //     path: 'profile', // show user profile name and detail anong with role
@@ -35,7 +37,10 @@ export const learningSuiteRoutes: Routes = [
     //   },
     // ]
   },
-
+  {
+    path: 'course-offering-by-user/:courseOfferingId/enrollement-user-dashboard',
+    component: UserDashboardsComponent
+  },
   {
     path: 'questions',
     component: QuestionListComponent
