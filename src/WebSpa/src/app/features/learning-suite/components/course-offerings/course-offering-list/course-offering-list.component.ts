@@ -57,7 +57,7 @@ export class CourseOfferingListComponent implements OnInit {
     return !!this.expandedRows[id];
   }
 
- 
+
   goToEnrollment(courseOfferingId: string) {
     this.router.navigate([
       `/learning-suite/course-offerings/${courseOfferingId}/enrolement-list`
