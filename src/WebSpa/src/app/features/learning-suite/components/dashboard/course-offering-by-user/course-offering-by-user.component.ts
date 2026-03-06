@@ -58,7 +58,7 @@ export class CourseOfferingByUserComponent implements OnInit {
       'learning-suite',
       'course-offering-by-user',
       courseOfferingId,
-      'enrollement-user-dashboard'
+      'enrollement-dashboard'
     ]);
   }
 

@@ -2,6 +2,7 @@ import { ICourseOfferingDetail } from "../../course-offerings/interfaces/iCourse
 
 export interface ICourseOfferingByUser {
     detailsDtoList?: ICourseOfferingDetail[];
+    detailsDto: 
 }
 export interface ICourseOfferingByUserDetail {
     id: string;
