@@ -10,8 +10,8 @@ import { QuestionTypeListComponent } from "./components/question-type/question-t
 import { CourseOfferingListComponent } from "./components/course-offerings/course-offering-list/course-offering-list.component";
 import { UserListComponent } from "./components/users/user-list/user-list.component";
 import { EnrolementListComponent } from "./components/enrolements/enrolement-list/enrolement-list.component";
-import { UserDashboardsComponent } from "./components/dashboard/user-dashboards/user-dashboards.component";
 import { CourseOfferingByUserComponent } from "./components/dashboard/course-offering-by-user/course-offering-by-user.component";
+import { EnrollmentDashboardComponent } from "./components/dashboard/enrollment-dashboard/enrollment-dashboard.component";
 // import { EnrolementListComponent } from "./components/enrolements/enrolement-list/enrolement-list.component";
 
 
@@ -38,8 +38,8 @@ export const learningSuiteRoutes: Routes = [
     // ]
   },
   {
-    path: 'course-offering-by-user/:courseOfferingId/enrollement-user-dashboard',
-    component: UserDashboardsComponent
+    path: 'course-offering-by-user/:courseOfferingId/enrollement-dashboard',
+    component: EnrollmentDashboardComponent
   },
   {
     path: 'questions',
