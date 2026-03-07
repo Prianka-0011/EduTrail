@@ -1,0 +1,27 @@
+.avatar-large {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #dfdfe2;
+    color: white;
+    font-weight: 600;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-label {
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.field-value {
+    font-size: 15px;
+    font-weight: 500;
+}

@@ -213,7 +213,8 @@
                     </button>
                   </div>
 
-                  <div class="fw-semibold mt-2 pt-2 border-bottom mb-3" [class.text-danger]="getTotalWeeklyHours(week) > maxWeeklyHours">
+                  <div class="fw-semibold mt-2 pt-2 border-bottom mb-3"
+                    [class.text-danger]="getTotalWeeklyHours(week) > maxWeeklyHours">
                     Total Hours: {{ getTotalWeeklyHours(week) | number: '1.1-1' }} / {{ maxWeeklyHours }}
                   </div>
                   <div class="text-danger mt-1" *ngIf="getTotalWeeklyHours(week) > maxWeeklyHours">

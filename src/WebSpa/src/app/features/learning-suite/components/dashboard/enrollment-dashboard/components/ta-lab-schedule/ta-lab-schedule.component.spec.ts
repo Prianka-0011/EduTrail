@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserDashboardsComponent } from './user-dashboards.component';
+import { TaLabScheduleComponent } from './ta-lab-schedule.component';
 
-describe('UserDashboardsComponent', () => {
-  let component: UserDashboardsComponent;
-  let fixture: ComponentFixture<UserDashboardsComponent>;
+describe('TaLabScheduleComponent', () => {
+  let component: TaLabScheduleComponent;
+  let fixture: ComponentFixture<TaLabScheduleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserDashboardsComponent]
+      imports: [TaLabScheduleComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UserDashboardsComponent);
+    fixture = TestBed.createComponent(TaLabScheduleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

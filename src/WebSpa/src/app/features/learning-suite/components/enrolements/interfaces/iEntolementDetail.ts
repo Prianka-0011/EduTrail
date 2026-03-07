@@ -11,5 +11,4 @@ export interface IEnrolementDetail {
   isActive?: boolean;
   months?: ITALabMonth[];
   totalWorkHoursPerWeek?: number | 10;
-  // taLabDays?: ITALabDay[];
 }

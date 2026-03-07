@@ -10,14 +10,17 @@ import { QuestionTypeListComponent } from "./components/question-type/question-t
 import { CourseOfferingListComponent } from "./components/course-offerings/course-offering-list/course-offering-list.component";
 import { UserListComponent } from "./components/users/user-list/user-list.component";
 import { EnrolementListComponent } from "./components/enrolements/enrolement-list/enrolement-list.component";
-import { UserDashboardsComponent } from "./components/dashboard/user-dashboards/user-dashboards.component";
 import { CourseOfferingByUserComponent } from "./components/dashboard/course-offering-by-user/course-offering-by-user.component";
+import { EnrollmentDashboardComponent } from "./components/dashboard/enrollment-dashboard/enrollment-dashboard.component";
+import { enrollmentRoutes } from "./components/dashboard/enrollment-dashboard/enrollment-dashboard-routing.module";
+import { LearningSuiteComponent } from "./learning-suite.component";
 // import { EnrolementListComponent } from "./components/enrolements/enrolement-list/enrolement-list.component";
 
 
 
 
 export const learningSuiteRoutes: Routes = [
+ 
   {
     path: '',
     redirectTo: 'dashboard',
@@ -30,16 +33,11 @@ export const learningSuiteRoutes: Routes = [
   {
     path: 'course-offering-by-user',
     component: CourseOfferingByUserComponent,
-    // children: [
-    //   {
-    //     path: 'profile', // show user profile name and detail anong with role
-    //     // component: UserDashboardComponent
-    //   },
-    // ]
   },
   {
-    path: 'course-offering-by-user/:courseOfferingId/enrollement-user-dashboard',
-    component: UserDashboardsComponent
+    path: 'course-offering-by-user/:courseOfferingId/enrollement-dashboard',
+    component: EnrollmentDashboardComponent,
+    children: enrollmentRoutes
   },
   {
     path: 'questions',
@@ -74,21 +72,11 @@ export const learningSuiteRoutes: Routes = [
   {
     path: 'course-offerings',
     component: CourseOfferingListComponent,
-    // children: [
-    //   {
-    //     path: 'enrolement-list/:courseOfferingId',
-    //     component: EnrolementListComponent
-    //   },
-    // ]
   },
   {
     path: 'course-offerings/:courseOfferingId/enrolement-list',
     component: EnrolementListComponent
   },
-  // {
-  //   path: 'course-offerings/enrolement-list/:courseOfferingId',
-  //   component: EnrolementListComponent
-  // },
   {
     path: 'terms',
     component: TermListComponent
