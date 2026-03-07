@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yZiRf6bAQvk=",
+  "dgSpecHash": "SayGN/5vpcg=",
   "success": true,
-  "projectFilePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj",
+  "projectFilePath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

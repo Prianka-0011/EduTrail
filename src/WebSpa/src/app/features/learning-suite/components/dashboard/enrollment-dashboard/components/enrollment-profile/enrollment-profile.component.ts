@@ -96,14 +96,16 @@ export class EnrollmentProfileComponent implements OnInit {
   //   });
   // }
   private loadEnrolement(): void {
-    const courseOfferingId = this.route.snapshot.queryParamMap.get('courseOfferingId');
-    this.enrolementService.getCourseOfferingByUser(courseOfferingId ?? this.EMPTY_ID).subscribe(data => {
-      const enrolledDate = data.detailsDtoList?.enrolledDate
-        ? new Date(data.detailsDtoList.enrolledDate).toISOString().split('T')[0]
+    const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId'); //Because I am getting it from parent this route defined in parent
+    console.log(courseOfferingId, "courseOfferingId");
+
+    this.enrolementService.getEnrolementByCourseOfferingAndLogingUser(courseOfferingId ?? this.EMPTY_ID).subscribe(data => {
+      const enrolledDate = data.detailsDto?.enrolledDate
+        ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
         : '';
 
       // Normalize all lab dates in months/weeks/days
-      const months: ITALabMonth[] = (data.detailsDtoList?.months ?? []).map(month => ({
+      const months: ITALabMonth[] = (data.detailsDto?.months ?? []).map(month => ({
         ...month,
         weeks: month.weeks?.map(week => ({
           ...week,
@@ -120,7 +122,7 @@ export class EnrollmentProfileComponent implements OnInit {
           ...data.detailsDto,
           enrolledDate
         },
-        users: data.users ?? []
+        // users: data.users ?? []
       };
 
       this.maxWeeklyHours = data.detailsDto?.totalWorkHoursPerWeek ?? this.maxWeeklyHours;

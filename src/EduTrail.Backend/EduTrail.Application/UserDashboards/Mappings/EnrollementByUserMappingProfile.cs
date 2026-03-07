@@ -14,6 +14,7 @@ namespace EduTrail.Application.UserDashboards
                         s.Student != null
                             ? s.Student.FirstName + " " + s.Student.LastName
                             : null))
+                .ForMember(d => d.TermTypeId, o => o.MapFrom(s => s.CourseOffering.Term.TermTypeId))
                 .ForMember(d => d.IsTa, o => o.Ignore())
                 .ForMember(d => d.Months, o => o.MapFrom(s => s.TALabMonths));
 
@@ -21,7 +22,7 @@ namespace EduTrail.Application.UserDashboards
                 .ForMember(d => d.CourseOffering, o => o.Ignore())
                 .ForMember(d => d.Student, o => o.Ignore())
                 .ForMember(d => d.TALabMonths, o => o.Ignore());
-
+            
             CreateMap<TALabMonth, TALabMonthDto>()
                 .ForMember(d => d.Weeks, o => o.MapFrom(s => s.Weeks));
 
