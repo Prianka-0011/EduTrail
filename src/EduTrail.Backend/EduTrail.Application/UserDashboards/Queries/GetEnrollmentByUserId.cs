@@ -27,7 +27,7 @@ namespace EduTrail.Application.UserDashboards
                 dto.IsTa = enrolement.Student.Roles.Any(c => c.Id == CustomCategory.RoleType.TA) ? true : false;
                 return new UserEnrollementDto
                 {
-                    detailsDto = dto,
+                    DetailsDto = dto,
                     DropdownMonths = GetMonthsByTerm(enrolement.CourseOffering.Term.TermTypeId),
                     Year = enrolement.CourseOffering.Term.Year,
                 };

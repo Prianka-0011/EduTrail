@@ -1,49 +1,29 @@
 using AutoMapper;
+using EduTrail.Application.UserDashboards;
 using EduTrail.Domain.Entities;
 using MediatR;
 
-namespace EduTrail.Application.Enrolements
+namespace EduTrail.Application.UserDashboards
 {
-    public class UpdateEnrolementCommand : IRequest<EnrolementDto>
+    public class UpdateTAHourForEnrolementCommand : IRequest<UserEnrollementDto>
     {
-        public EnrolementDetailsDto enrolementDto { get; set; }
-        public class Handler : IRequestHandler<UpdateEnrolementCommand, EnrolementDto>
+        public UserEnrollementDetailsDto enrolementDto { get; set; }
+        public class Handler : IRequestHandler<UpdateTAHourForEnrolementCommand, UserEnrollementDto>
         {
-            private readonly IEnrolementRepository _repository;
+            private readonly IUserCourseOfferingRepository _repository;
             private readonly IMapper _mapper;
 
-            public Handler(IEnrolementRepository repository, IMapper mapper)
+            public Handler(IUserCourseOfferingRepository repository, IMapper mapper)
             {
                 _repository = repository;
                 _mapper = mapper;
             }
-            public async Task<EnrolementDto> Handle(UpdateEnrolementCommand request, CancellationToken cancellationToken)
+            public async Task<UserEnrollementDto> Handle(UpdateTAHourForEnrolementCommand request, CancellationToken cancellationToken)
             {
                 var enrolement = await _repository.GetByIdAsync(request.enrolementDto.Id);
 
                 if (enrolement == null)
                     throw new Exception("Enrollment not found");
-
-                enrolement.CourseOfferingId = request.enrolementDto.CourseOfferingId;
-                enrolement.StudentId = request.enrolementDto.StudentId;
-                enrolement.EnrolledDate = request.enrolementDto.EnrolledDate;
-                enrolement.TotalWorkHoursPerWeek = request.enrolementDto.TotalWorkHoursPerWeek;
-                enrolement.IsActive = request.enrolementDto.IsActive ?? true;
-
-                var student = enrolement.Student!;
-                var taRole = await _repository.GetRoleTaAsync();
-
-                if (request.enrolementDto.IsTa == true)
-                {
-                    if (!student.Roles.Any(r => r.Id == taRole.Id))
-                        student.Roles.Add(taRole);
-                }
-                else
-                {
-                    var roleToRemove = student.Roles.FirstOrDefault(r => r.Id == taRole.Id);
-                    if (roleToRemove != null)
-                        student.Roles.Remove(roleToRemove);
-                }
 
                 var existingMonths = enrolement.TALabMonths.ToList();
 
@@ -140,8 +120,8 @@ namespace EduTrail.Application.Enrolements
                     }
                 }
                 await _repository.UpdateAsync(enrolement);
-                var result = _mapper.Map<EnrolementDetailsDto>(enrolement);
-                return new EnrolementDto { DetailsDto = result };
+                var result = _mapper.Map<UserEnrollementDetailsDto>(enrolement);
+                return new UserEnrollementDto { DetailsDto = result };
             }
         }
     }

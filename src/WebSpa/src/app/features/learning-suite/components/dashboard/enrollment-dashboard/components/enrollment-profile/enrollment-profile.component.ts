@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ITALabDay } from '../../../../enrolements/interfaces/iTALabDay';
 import { ITALabWeek } from '../../../../enrolements/interfaces/iTALabWeek';
 import { UserDashboardService } from '../../../services/user-dashboard.service';
+import { IUserEnrolementByCourseOffering } from '../../../interfaces/iUserEnrolementByCourseOffering';
 
 @Component({
   selector: 'app-enrollment-profile',
@@ -42,7 +43,7 @@ export class EnrollmentProfileComponent implements OnInit {
 
   years: number[] = [];
 
-  enrolement: IEnrolement = this.getEmptyEnrolement();
+  enrolement: IUserEnrolementByCourseOffering = this.getEmptyEnrolement();
   taLabMonths: ITALabMonth[] = [];
 
   isStudentFocused = false;
@@ -137,7 +138,7 @@ export class EnrollmentProfileComponent implements OnInit {
     return new Date(date).toISOString().split('T')[0];
   }
 
-  getEmptyEnrolement(): IEnrolement {
+  getEmptyEnrolement(): IUserEnrolementByCourseOffering {
     return {
       detailsDto: {
         id: this.EMPTY_ID,
@@ -148,33 +149,33 @@ export class EnrollmentProfileComponent implements OnInit {
         isTa: false,
         totalWorkHoursPerWeek: this.maxWeeklyHours
       },
-      users: []
+      // users: []
     };
   }
 
   onSubmit(form: NgForm): void {
-    // this.enrolement.detailsDto.months = this.taLabMonths;
-    // const courseOfferingId = this.route.snapshot.paramMap.get('courseOfferingId')!;
-    // this.enrolement.detailsDto.courseOfferingId = courseOfferingId;
+    this.enrolement.detailsDto.months = this.taLabMonths;
+    const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId')!;
+    this.enrolement.detailsDto.courseOfferingId = courseOfferingId;
 
-    // const request$ =
-    //   this.enrolement.detailsDto.id === this.EMPTY_ID
-    //     ? this.enrolementService.createEnrolement(this.enrolement)
-    //     : this.enrolementService.updateEnrolement(this.enrolement);
+    const request$ = this.enrolementService.updateEnrolement(this.enrolement);
+      // this.enrolement.detailsDto.id === this.EMPTY_ID
+      //   ? this.enrolementService.createEnrolement(this.enrolement)
+      //   : this.enrolementService.updateEnrolement(this.enrolement);
 
-    // request$.subscribe({
-    //   next: () => {
-    //     this.toastr.success('Enrollment saved successfully');
-    //     this.saved.emit();
-    //   },
-    //   error: err => {
-    //     if (err?.error?.message?.includes('already enrolled')) {
-    //       this.toastr.warning('This student is already enrolled');
-    //     } else {
-    //       this.toastr.error('Something went wrong');
-    //     }
-    //   }
-    // });
+    request$.subscribe({
+      next: () => {
+        this.toastr.success('Enrollment saved successfully');
+        this.saved.emit();
+      },
+      error: err => {
+        if (err?.error?.message?.includes('already enrolled')) {
+          this.toastr.warning('This student is already enrolled');
+        } else {
+          this.toastr.error('Something went wrong');
+        }
+      }
+    });
   }
 
   onCancel(): void { this.cancel.emit(); }
