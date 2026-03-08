@@ -10,11 +10,16 @@
       </div>
 
     </div>
-
     <nav class="menu">
       <div class="menu-title">Personal</div>
-      <a class="active">My Profile</a>
-      <a>Schadule</a>
+
+      <a routerLink="enrollment-profile" routerLinkActive="active">
+        My Profile
+      </a>
+
+      <a [routerLink]="['ta-lab-schedule']" routerLinkActive="active">
+        Schedule
+      </a>
 
       <div class="menu-title">Help</div>
       <a>Help Desk</a>
@@ -22,6 +27,6 @@
   </aside>
 
   <main class="content">
-      <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
   </main>
 </div>
