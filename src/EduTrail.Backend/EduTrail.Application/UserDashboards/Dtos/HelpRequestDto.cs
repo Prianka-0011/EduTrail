@@ -11,7 +11,7 @@ namespace EduTrail.Application.UserDashboards
 
     public class HelpRequestDetailDto
     {
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
         public string? RequestNumber { get; set; } = "";
         public string? ZoomLink { get; set; }
         public string? IssueTitle { get; set; }

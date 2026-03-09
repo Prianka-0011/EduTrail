@@ -40,7 +40,7 @@ namespace EduTrail.API.Controllers
             }
             return Ok(await _mediator.Send(command));
         }
-        [HttpPost]
+        [HttpPost("help-request")]
         public async Task<ActionResult>SubmitHelpRequest( SubmitHelpRequestCommand command)
         {
             return Ok(await _mediator.Send(command));

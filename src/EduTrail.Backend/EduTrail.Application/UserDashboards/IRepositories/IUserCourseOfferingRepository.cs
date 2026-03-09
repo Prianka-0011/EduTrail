@@ -10,6 +10,6 @@ namespace EduTrail.Application.UserDashboards
         Task<Enrollment> UpdateAsync(Enrollment course);
         Task<Enrollment> GetByIdAsync(Guid id);
         Task<LabRequest> CreateHelpRequestAsync(LabRequest course);
-        Task<IEnumerable<CourseOffering>> GetAllLabRequestByCourseOfferingAsync(Guid userId);
+        Task<IEnumerable<LabRequest>> GetAllLabRequestByCourseOfferingAsync(Guid courseOfferingId);
     }
 }

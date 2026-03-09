@@ -57,12 +57,24 @@ namespace EduTrail.Infrastructure.Repositories
             .Include(c => c.TALabMonths).ThenInclude(c => c.Weeks).ThenInclude(c => c.Days).ThenInclude(c => c.Slots).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Enrollment>> GetTAByCourseOfferingAsync( Guid courseOfferingId)
+        public async Task<IEnumerable<Enrollment>> GetTAByCourseOfferingAsync(Guid courseOfferingId)
         {
-             return await _context.Enrollments.Include(c => c.Student).ThenInclude(c => c.Roles).Include(c => c.TALabMonths).ThenInclude(c => c.Weeks)
-             .ThenInclude(c => c.Days)
-             .ThenInclude(c => c.Slots).Include(c => c.CourseOffering)
-             .ThenInclude(c => c.Term).Where(c => c.CourseOfferingId == courseOfferingId && c.Student.Roles.Any(c=>c.Id == CustomCategory.RoleType.TA)).ToListAsync();
+            return await _context.Enrollments.Include(c => c.Student).ThenInclude(c => c.Roles).Include(c => c.TALabMonths).ThenInclude(c => c.Weeks)
+            .ThenInclude(c => c.Days)
+            .ThenInclude(c => c.Slots).Include(c => c.CourseOffering)
+            .ThenInclude(c => c.Term).Where(c => c.CourseOfferingId == courseOfferingId && c.Student.Roles.Any(c => c.Id == CustomCategory.RoleType.TA)).ToListAsync();
+        }
+
+        public async Task<LabRequest> CreateHelpRequestAsync(LabRequest course)
+        {
+            await _context.LabRequests.AddAsync(course);
+            await _context.SaveChangesAsync();
+            return course;
+        }
+
+        public async Task<IEnumerable<LabRequest>> GetAllLabRequestByCourseOfferingAsync(Guid courseOfferingId)
+        {
+            return await _context.LabRequests.Where(c=>c.CourseOfferingId == courseOfferingId).Include(c=>c.CourseOffering).Include(c=>c.Student).Include(c=>c.AssignedTeacher).ToListAsync();
         }
     }
 }
