@@ -34,16 +34,16 @@ namespace EduTrail.API.Controllers
         public async Task<ActionResult<UserEnrollementDto>> Update(Guid id, UpdateTAHourForEnrolementCommand command)
         {
 
-            if (id != command.enrolementDto.Id)
+            if (id != command.EnrolementDto.Id)
             {
                 return BadRequest("Enrolement ID mismatch");
             }
             return Ok(await _mediator.Send(command));
         }
-        // [HttpPut]
-        // public async Task<ActionResult>SubmitHelpRequest()
-        // {
-            
-        // }
+        [HttpPost]
+        public async Task<ActionResult>SubmitHelpRequest( SubmitHelpRequestCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
     }
 }

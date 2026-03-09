@@ -17,12 +17,12 @@ namespace EduTrail.Domain.Entities
         public string? TrySofar { get; set; }
         [ForeignKey("StudentId")]
         public Guid StudentId { get; set; }
-        public User Student { get; set; } = null!;
+        public Enrollment Student { get; set; } = null!;
         [ForeignKey("CourseOfferingId")]
         public Guid CourseOfferingId { get; set; }
         public CourseOffering CourseOffering { get; set; } = null!;
 
-        public DateOnly RequestedDate { get; set; }
+        public DateTimeOffset RequestedDate { get; set; }
         [ForeignKey("AssignedTeacherId")]
         public Guid? AssignedTeacherId { get; set; }
         public Enrollment? AssignedTeacher { get; set; }

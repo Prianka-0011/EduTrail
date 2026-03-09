@@ -7,7 +7,7 @@ namespace EduTrail.Application.UserDashboards
 {
     public class UpdateTAHourForEnrolementCommand : IRequest<UserEnrollementDto>
     {
-        public UserEnrollementDetailsDto enrolementDto { get; set; }
+        public UserEnrollementDetailsDto EnrolementDto { get; set; }
         public class Handler : IRequestHandler<UpdateTAHourForEnrolementCommand, UserEnrollementDto>
         {
             private readonly IUserCourseOfferingRepository _repository;
@@ -20,7 +20,7 @@ namespace EduTrail.Application.UserDashboards
             }
             public async Task<UserEnrollementDto> Handle(UpdateTAHourForEnrolementCommand request, CancellationToken cancellationToken)
             {
-                var enrolement = await _repository.GetByIdAsync(request.enrolementDto.Id);
+                var enrolement = await _repository.GetByIdAsync(request.EnrolementDto.Id);
 
                 if (enrolement == null)
                     throw new Exception("Enrollment not found");
@@ -29,11 +29,11 @@ namespace EduTrail.Application.UserDashboards
 
                 foreach (var month in existingMonths)
                 {
-                    if (!request.enrolementDto.Months.Any(m => m.Id == month.Id))
+                    if (!request.EnrolementDto.Months.Any(m => m.Id == month.Id))
                         enrolement.TALabMonths.Remove(month);
                 }
 
-                foreach (var monthDto in request.enrolementDto.Months)
+                foreach (var monthDto in request.EnrolementDto.Months)
                 {
                     var month = enrolement.TALabMonths
                         .FirstOrDefault(m => m.Id == monthDto.Id);
