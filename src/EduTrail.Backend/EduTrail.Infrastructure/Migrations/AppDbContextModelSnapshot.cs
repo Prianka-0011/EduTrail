@@ -244,7 +244,7 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid?>("AssignedTeacherId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CourseId")
+                    b.Property<Guid>("CourseOfferingId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -292,7 +292,7 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasIndex("AssignedTeacherId");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("CourseOfferingId");
 
                     b.HasIndex("StatusId");
 
@@ -1077,13 +1077,13 @@ namespace EduTrail.Infrastructure.Migrations
 
             modelBuilder.Entity("EduTrail.Domain.Entities.LabRequest", b =>
                 {
-                    b.HasOne("EduTrail.Domain.Entities.User", "AssignedTeacher")
+                    b.HasOne("EduTrail.Domain.Entities.Enrollment", "AssignedTeacher")
                         .WithMany()
                         .HasForeignKey("AssignedTeacherId");
 
-                    b.HasOne("EduTrail.Domain.Entities.Course", "Course")
+                    b.HasOne("EduTrail.Domain.Entities.CourseOffering", "CourseOffering")
                         .WithMany()
-                        .HasForeignKey("CourseId")
+                        .HasForeignKey("CourseOfferingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1101,7 +1101,7 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.Navigation("AssignedTeacher");
 
-                    b.Navigation("Course");
+                    b.Navigation("CourseOffering");
 
                     b.Navigation("Status");
 

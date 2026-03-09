@@ -333,7 +333,15 @@ VALUES
 ('7E8F9F7E-75B3-4866-94A3-464F8711C544', 'Spring', GETDATE(), NULL, GETDATE(), NULL),
 ('F262DE21-7519-4468-B63A-653DAFC6B8F9', 'Fall',   GETDATE(), NULL, GETDATE(), NULL),
 ('855021E3-8D31-47B2-B787-65E1DDBB4FE0', 'Winter', GETDATE(), NULL, GETDATE(), NULL);
+('f2231caa-ad7f-42f6-8283-043d54af790c', 'Summer', GETDATE(), NULL, GETDATE(), NULL);
 
+------------------------------
+Winter January to March
+Spring April to June
+Summer July to September
+Fall October to December
+
+-------------------------------------
 Consider TA Lab hours as well as Tutor hours, while following these rules
 Wednesdays and Thursdays
 No more than one tutor at any given time

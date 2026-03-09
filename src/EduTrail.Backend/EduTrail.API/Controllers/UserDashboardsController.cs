@@ -40,5 +40,10 @@ namespace EduTrail.API.Controllers
             }
             return Ok(await _mediator.Send(command));
         }
+        // [HttpPut]
+        // public async Task<ActionResult>SubmitHelpRequest()
+        // {
+            
+        // }
     }
 }

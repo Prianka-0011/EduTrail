@@ -22,6 +22,11 @@ export class UserDashboardService {
     return this.http.get<IUserEnrolementByCourseOffering>(this.baseUrl+"/" + courseOfferingId)
   }
 
+   getTAAndLabHoursByCourseOffering(courseOfferingId: string): Observable<IUserEnrolementByCourseOffering> {
+    console.log("courseOfferingId", this.baseUrl+"/ta-hours/" + courseOfferingId)
+    return this.http.get<IUserEnrolementByCourseOffering>(this.baseUrl+"/ta-hours/" + courseOfferingId)
+  }
+
    updateEnrolement(enrolement: IUserEnrolementByCourseOffering): Observable<IUserEnrolementByCourseOffering> {
     if (!enrolement.detailsDto?.id || enrolement.detailsDto?.id === '00000000-0000-0000-0000-000000000000') {
       throw new Error('Cannot update enrolement with invalid ID');
