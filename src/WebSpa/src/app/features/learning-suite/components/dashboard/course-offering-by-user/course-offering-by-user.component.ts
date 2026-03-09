@@ -62,7 +62,6 @@ export class CourseOfferingByUserComponent implements OnInit {
     ]);
   }
 
-
   ngOnInit(): void {
     this.getCourseOfferings();
   }

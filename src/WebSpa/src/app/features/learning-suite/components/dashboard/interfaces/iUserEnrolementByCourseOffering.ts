@@ -4,6 +4,7 @@ import { ITALabMonth } from "../../enrolements/interfaces/iTALabMonth";
 export interface IUserEnrolementByCourseOffering {
     dropdownMonths?: IDropdownItemInt[];
     detailsDto: IUserEnrolementByCourseOfferingDetail;
+    detailsListDto?: IUserEnrolementByCourseOfferingDetail[];
     year?: Number;
 }
 

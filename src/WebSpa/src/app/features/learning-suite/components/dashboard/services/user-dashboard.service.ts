@@ -18,6 +18,7 @@ export class UserDashboardService {
   }
 
   getEnrolementByCourseOfferingAndLogingUser(courseOfferingId: string): Observable<IUserEnrolementByCourseOffering> {
+    console.log("courseOfferingId", this.baseUrl+"/" + courseOfferingId)
     return this.http.get<IUserEnrolementByCourseOffering>(this.baseUrl+"/" + courseOfferingId)
   }
 

@@ -7,6 +7,7 @@ namespace EduTrail.Application.UserDashboards
     {
         public List<DropdownItemDtoInt>? DropdownMonths { get; set; } = new List<DropdownItemDtoInt>();
         public UserEnrollementDetailsDto DetailsDto { get; set; }
+        public List<UserEnrollementDetailsDto>? DetailsListDto { get; set; }
         public int Year { get; set; }
     }
 

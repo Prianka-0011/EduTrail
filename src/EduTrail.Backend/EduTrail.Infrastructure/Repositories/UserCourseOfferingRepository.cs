@@ -4,6 +4,7 @@ using EduTrail.Application.Courses;
 using EduTrail.Application.UserDashboards;
 using EduTrail.Domain.Entities;
 using EduTrail.Infrastructure.Data;
+using EduTrail.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduTrail.Infrastructure.Repositories
@@ -54,6 +55,14 @@ namespace EduTrail.Infrastructure.Repositories
         {
             return await _context.Enrollments.Include(c => c.CourseOffering).ThenInclude(c => c.Term).Include(c => c.Student).ThenInclude(c => c.Roles).Where(c => c.Id == id)
             .Include(c => c.TALabMonths).ThenInclude(c => c.Weeks).ThenInclude(c => c.Days).ThenInclude(c => c.Slots).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Enrollment>> GetTAByCourseOfferingAsync( Guid courseOfferingId)
+        {
+             return await _context.Enrollments.Include(c => c.Student).ThenInclude(c => c.Roles).Include(c => c.TALabMonths).ThenInclude(c => c.Weeks)
+             .ThenInclude(c => c.Days)
+             .ThenInclude(c => c.Slots).Include(c => c.CourseOffering)
+             .ThenInclude(c => c.Term).Where(c => c.CourseOfferingId == courseOfferingId && c.Student.Roles.Any(c=>c.Id == CustomCategory.RoleType.TA)).ToListAsync();
         }
     }
 }

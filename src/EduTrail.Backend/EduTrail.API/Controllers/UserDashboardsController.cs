@@ -24,6 +24,12 @@ namespace EduTrail.API.Controllers
             var result = await _mediator.Send(new GetEnrollmentByUserId { CourseOfferingId = courseOfferingId });
             return Ok(result);
         }
+        [HttpGet("ta-hours/{courseOfferingId}")]
+        public async Task<ActionResult> GetTAAndLabHoursByCourseOffering(Guid courseOfferingId)
+        {
+            var result = await _mediator.Send(new GetTAAndLabHoursByCourseOfferingQuery { CourseOfferingId = courseOfferingId });
+            return Ok(result);
+        }
         [HttpPut("{id}")]
         public async Task<ActionResult<UserEnrollementDto>> Update(Guid id, UpdateTAHourForEnrolementCommand command)
         {

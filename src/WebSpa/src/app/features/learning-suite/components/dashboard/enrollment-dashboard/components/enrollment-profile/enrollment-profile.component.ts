@@ -98,8 +98,6 @@ export class EnrollmentProfileComponent implements OnInit {
   // }
   private loadEnrolement(): void {
     const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId'); //Because I am getting it from parent this route defined in parent
-    console.log(courseOfferingId, "courseOfferingId");
-
     this.enrolementService.getEnrolementByCourseOfferingAndLogingUser(courseOfferingId ?? this.EMPTY_ID).subscribe(data => {
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
