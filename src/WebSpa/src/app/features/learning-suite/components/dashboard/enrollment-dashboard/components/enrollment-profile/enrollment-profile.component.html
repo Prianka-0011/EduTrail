@@ -47,10 +47,10 @@
     <hr>
 
     <!-- TA LAB SECTION -->
-    <form #enrolementForm="ngForm" (ngSubmit)="onSubmit(enrolementForm)" novalidate
+    <form #enrolementForm="ngForm" (ngSubmit)="onSubmit(enrolementForm)" novalidate class="form-height"
           *ngIf="enrolement.detailsDto.isTa">
 
-        <div class="row mt-4" *ngIf="enrolement.detailsDto.isTa && enrolement.detailsDto.id !== EMPTY_ID">
+        <div class="row mt-4 scroll-ta" *ngIf="enrolement.detailsDto.isTa && enrolement.detailsDto.id !== EMPTY_ID">
           <div class="col-md-12 d-flex align-items-start gap-1 mb-3">
             <h5>TA Lab Hours</h5>
           </div>

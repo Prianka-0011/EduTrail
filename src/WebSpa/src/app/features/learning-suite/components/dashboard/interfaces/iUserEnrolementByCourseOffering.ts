@@ -2,9 +2,10 @@ import { IDropdownItemInt } from "../../../../../shared/interface/iDropdownItem"
 import { ITALabMonth } from "../../enrolements/interfaces/iTALabMonth";
 
 export interface IUserEnrolementByCourseOffering {
-    dropdownMonths: IDropdownItemInt[];
+    dropdownMonths?: IDropdownItemInt[];
     detailsDto: IUserEnrolementByCourseOfferingDetail;
-    year: Number;
+    detailsListDto?: IUserEnrolementByCourseOfferingDetail[];
+    year?: Number;
 }
 
 export interface IUserEnrolementByCourseOfferingDetail {

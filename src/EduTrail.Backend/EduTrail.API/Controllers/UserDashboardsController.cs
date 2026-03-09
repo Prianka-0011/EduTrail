@@ -1,3 +1,4 @@
+using EduTrail.Application.Enrolements;
 using EduTrail.Application.UserDashboards;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,29 @@ namespace EduTrail.API.Controllers
         [HttpGet("{courseOfferingId}")]
         public async Task<ActionResult> GetEnrollementById(Guid courseOfferingId)
         {
-            var result = await _mediator.Send(new GetEnrollmentByUserId {CourseOfferingId = courseOfferingId});
+            var result = await _mediator.Send(new GetEnrollmentByUserId { CourseOfferingId = courseOfferingId });
             return Ok(result);
+        }
+        [HttpGet("ta-hours/{courseOfferingId}")]
+        public async Task<ActionResult> GetTAAndLabHoursByCourseOffering(Guid courseOfferingId)
+        {
+            var result = await _mediator.Send(new GetTAAndLabHoursByCourseOfferingQuery { CourseOfferingId = courseOfferingId });
+            return Ok(result);
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UserEnrollementDto>> Update(Guid id, UpdateTAHourForEnrolementCommand command)
+        {
+
+            if (id != command.EnrolementDto.Id)
+            {
+                return BadRequest("Enrolement ID mismatch");
+            }
+            return Ok(await _mediator.Send(command));
+        }
+        [HttpPost]
+        public async Task<ActionResult>SubmitHelpRequest( SubmitHelpRequestCommand command)
+        {
+            return Ok(await _mediator.Send(command));
         }
     }
 }

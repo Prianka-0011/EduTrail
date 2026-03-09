@@ -4,6 +4,7 @@ using EduTrail.Application.Courses;
 using EduTrail.Application.UserDashboards;
 using EduTrail.Domain.Entities;
 using EduTrail.Infrastructure.Data;
+using EduTrail.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduTrail.Infrastructure.Repositories
@@ -15,31 +16,7 @@ namespace EduTrail.Infrastructure.Repositories
         {
             _context = context;
         }
-        // public async Task<CourseOffering> CreateAsync(CourseOffering courseOffering)
-        // {
-        //     await _context.CourseOfferings.AddAsync(courseOffering);
-        //     await _context.SaveChangesAsync();
-        //     return courseOffering;
-        // }
-        // public async Task<List<Course>> GetAllCourses()
-        // {
-        //     return await _context.Courses.ToListAsync();
-        // }
-        // public async Task<List<Term>> GetAllTerms()
-        // {
-        //     return await _context.Terms.ToListAsync();
-        // }
-        // public async Task<List<User>> GetAllInstructors()
-        // {
-        //     return await _context.Users.
-        //      Where(u => u.Roles.Select(r=>r.Name).Contains("Instructor"))
-        //     .ToListAsync();
-        // }
 
-        // public async List<CourseOffering> GetAllByUserIdAsync(Guid userId)
-        // {
-        //     return await _context.CourseOfferings.Where(c => c.InstructorId == userId).ToListAsync();
-        // }
         public async Task<CourseOffering> GetCourseOfferingById(Guid Id)
         {
             return await _context.CourseOfferings.Where(c => c.Id == Id).FirstOrDefaultAsync();
@@ -54,9 +31,9 @@ namespace EduTrail.Infrastructure.Repositories
         public async Task<IEnumerable<CourseOffering>> GetAllByUserIdAsync(Guid userId)
         {
             return await _context.CourseOfferings
-                .Include(c=>c.Course)
-                .Include(c=>c.Term)
-                .Include(c=>c.Instructor)
+                .Include(c => c.Course)
+                .Include(c => c.Term)
+                .Include(c => c.Instructor)
                 .Include(c => c.Enrollments)
                 .Where(c => c.Enrollments.Any(e => e.StudentId == userId))
                 .ToListAsync();
@@ -64,8 +41,28 @@ namespace EduTrail.Infrastructure.Repositories
 
         public async Task<Enrollment> GetEnrollmentByUserIdAsync(Guid userId, Guid courseOfferingId)
         {
-            return await _context.Enrollments.Include(c=>c.Student).ThenInclude(c=>c.Roles).Include(c=>c.TALabMonths).ThenInclude(c=>c.Weeks).ThenInclude(c=>c.Days).ThenInclude(c=>c.Slots).Include(c=>c.CourseOffering).ThenInclude(c=>c.Term).Where(c=>c.StudentId == userId && c.CourseOfferingId == courseOfferingId).FirstOrDefaultAsync();
+            return await _context.Enrollments.Include(c => c.Student).ThenInclude(c => c.Roles).Include(c => c.TALabMonths).ThenInclude(c => c.Weeks).ThenInclude(c => c.Days).ThenInclude(c => c.Slots).Include(c => c.CourseOffering).ThenInclude(c => c.Term).Where(c => c.StudentId == userId && c.CourseOfferingId == courseOfferingId).FirstOrDefaultAsync();
         }
 
+        public async Task<Enrollment> UpdateAsync(Enrollment enrollment)
+        {
+            _context.Enrollments.Update(enrollment);
+            await _context.SaveChangesAsync();
+            return enrollment;
+        }
+
+        public async Task<Enrollment> GetByIdAsync(Guid id)
+        {
+            return await _context.Enrollments.Include(c => c.CourseOffering).ThenInclude(c => c.Term).Include(c => c.Student).ThenInclude(c => c.Roles).Where(c => c.Id == id)
+            .Include(c => c.TALabMonths).ThenInclude(c => c.Weeks).ThenInclude(c => c.Days).ThenInclude(c => c.Slots).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Enrollment>> GetTAByCourseOfferingAsync( Guid courseOfferingId)
+        {
+             return await _context.Enrollments.Include(c => c.Student).ThenInclude(c => c.Roles).Include(c => c.TALabMonths).ThenInclude(c => c.Weeks)
+             .ThenInclude(c => c.Days)
+             .ThenInclude(c => c.Slots).Include(c => c.CourseOffering)
+             .ThenInclude(c => c.Term).Where(c => c.CourseOfferingId == courseOfferingId && c.Student.Roles.Any(c=>c.Id == CustomCategory.RoleType.TA)).ToListAsync();
+        }
     }
 }

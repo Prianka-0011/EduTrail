@@ -38,8 +38,7 @@
                     <!-- Parent row -->
                     <tr role="button" (click)="toggleRow(offering.id)" class="parent-row">
                         <td>
-                            <a class="nav-link nav-item-link"
-                                (click)="gotoEnrollementDashboard(offering.id)">
+                            <a class="course-link" (click)="gotoEnrollementDashboard(offering.id)">
                                 {{ offering.courseName }}
                             </a>
                         </td>

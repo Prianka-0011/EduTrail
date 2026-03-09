@@ -17,38 +17,6 @@ namespace EduTrail.Application.Enrolements
                 _repository = repository;
                 _mapper = mapper;
             }
-
-            // public async Task<EnrolementDto> Handle(UpdateEnrolementCommand request, CancellationToken cancellationToken)
-            // {
-            //     var enrolement = _mapper.Map<Enrollment>(request.enrolementDto);
-            //     if (request.enrolementDto.IsTa == true)
-            //     {
-            //         var role = await _repository.GetRoleTaAsync();
-            //         var student = enrolement.Student ?? await _repository.GetStudentByIdAsync(enrolement.StudentId ?? Guid.Empty);
-            //         if (student.Roles == null)
-            //         {
-            //             student.Roles = new List<Role> { role };
-            //         }
-            //         else
-            //         {
-            //             student.Roles.Add(role);
-            //         }
-
-            //     }
-            //     else if (request.enrolementDto.IsTa == false)
-            //     {
-            //         var role = await _repository.GetRoleTaAsync();
-            //         var student = enrolement.Student ?? await _repository.GetStudentByIdAsync(enrolement.StudentId ?? Guid.Empty);
-            //         if (student.Roles != null)
-            //         {
-            //             student.Roles.Remove(role);
-            //         }
-            //     }
-            //     var res = await _repository.UpdateAsync(enrolement);
-            //     var enrolementDto = _mapper.Map<EnrolementDetailsDto>(res);
-            //     return new EnrolementDto { DetailsDto = enrolementDto };
-            // }
-
             public async Task<EnrolementDto> Handle(UpdateEnrolementCommand request, CancellationToken cancellationToken)
             {
                 var enrolement = await _repository.GetByIdAsync(request.enrolementDto.Id);

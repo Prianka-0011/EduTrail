@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using EduTrail.Domain.Interfaces;
 
 namespace EduTrail.Domain.Entities
@@ -9,19 +10,23 @@ namespace EduTrail.Domain.Entities
         public Guid Id { get; set; }
         [Required, MaxLength(50)]
         public string RequestNumber { get; set; } = null!;
-        
+
         public string? ZoomLink { get; set; }
         public string? IssueTitle { get; set; }
         public string? IssueDescription { get; set; }
         public string? TrySofar { get; set; }
+        [ForeignKey("StudentId")]
         public Guid StudentId { get; set; }
-        public User Student { get; set; } = null!;
-        public Guid CourseId { get; set; }
-        public Course Course { get; set; } = null!;
+        public Enrollment Student { get; set; } = null!;
+        [ForeignKey("CourseOfferingId")]
+        public Guid CourseOfferingId { get; set; }
+        public CourseOffering CourseOffering { get; set; } = null!;
 
-        public DateOnly RequestedDate { get; set; }
+        public DateTimeOffset RequestedDate { get; set; }
+        [ForeignKey("AssignedTeacherId")]
         public Guid? AssignedTeacherId { get; set; }
-        public User? AssignedTeacher { get; set; }
+        public Enrollment? AssignedTeacher { get; set; }
+        [ForeignKey("StatusId")]
         public Guid StatusId { get; set; }
         public Status Status { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
