@@ -103,4 +103,9 @@ export class UserDashboardService {
     return this.http.post<IHelpRequest>(`${this.baseUrl}/help-request`, payload);
   }
 
+  getAllLabRequest(): Observable<IHelpRequest>
+  {
+    return this.http.get<IHelpRequest>(`${this.baseUrl}/help-request-list`)
+  }
+
 }
