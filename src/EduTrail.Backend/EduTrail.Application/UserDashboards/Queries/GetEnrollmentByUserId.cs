@@ -24,7 +24,7 @@ namespace EduTrail.Application.UserDashboards
 
                 var dto = _mapper.Map<UserEnrollementDetailsDto>(enrolement) ?? new UserEnrollementDetailsDto();
 
-                dto.IsTa = enrolement.Student.Roles.Any(c => c.Id == CustomCategory.RoleType.TA) ? true : false;
+                dto.IsTa = enrolement.User.Roles.Any(c => c.Id == CustomCategory.RoleType.TA) ? true : false;
                 return new UserEnrollementDto
                 {
                     DetailsDto = dto,

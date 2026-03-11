@@ -3,16 +3,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IHelpRequestDetail } from '../../../interfaces/iHelpRequest';
 import { UserDashboardService } from '../../../services/user-dashboard.service';
+import { stringify } from 'node:querystring';
+import { ActivatedRoute } from '@angular/router';
+import { LabRequestService } from '../../../services/lab-request.service';
 
 @Component({
   selector: 'app-help-request-list',
-   imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './help-request-list.component.html',
   styleUrl: './help-request-list.component.scss'
 })
 export class HelpRequestListComponent implements OnInit {
-
-  constructor(private labRequestService: UserDashboardService) {}
+  EMPTY_ID = '00000000-0000-0000-0000-000000000000';
+  constructor(private labRequestService: LabRequestService, private route: ActivatedRoute) { }
 
   requests: IHelpRequestDetail[] = [];
   filtered: IHelpRequestDetail[] = [];
@@ -33,13 +36,18 @@ export class HelpRequestListComponent implements OnInit {
   }
 
   getAllRequests() {
-    this.labRequestService.getAllLabRequest().subscribe({
+    const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId') ?? this.EMPTY_ID;
+    this.labRequestService.getAllLabRequest(courseOfferingId).subscribe({
       next: res => {
+        console.log("res.detailsListDto", res.detailsListDto)
         this.requests = res.detailsListDto || [];
         this.applyFilter();
       },
       error: err => console.error(err)
     });
+    // this.labRequestService.getAllLabRequest(courseOfferingId).subscribe({
+    //   next: res=> console.log(res)
+    // })
   }
 
   applyFilter() {

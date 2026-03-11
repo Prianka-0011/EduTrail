@@ -5,6 +5,7 @@ import { IHelpRequest, IHelpRequestDetail } from '../../../interfaces/iHelpReque
 import { UserDashboardService } from '../../../services/user-dashboard.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { LabRequestService } from '../../../services/lab-request.service';
 
 @Component({
   selector: 'app-submit-help-request',
@@ -34,7 +35,7 @@ export class SubmitHelpRequestComponent implements OnInit {
   isZoomFocused = false;
 
   constructor(
-    private helpRequestService: UserDashboardService,
+    private helpRequestService: LabRequestService,
     private route: ActivatedRoute,
     private toastr: ToastrService
   ) { }

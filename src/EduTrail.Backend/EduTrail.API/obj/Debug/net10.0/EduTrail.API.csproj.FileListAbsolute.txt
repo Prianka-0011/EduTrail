@@ -49,7 +49,6 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\appsettings.json
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\3rdpartylicenses.txt
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\favicon.ico
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\index.html
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\main.052da156f8ff3ccf.js
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\polyfills.07750a28ba4a0ff0.js
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\runtime.37b037475bcadbb2.js
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\styles.6677c8b38e86bdda.css
@@ -236,3 +235,4 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net10.0\EduTrail.API.gen
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net10.0\ref\EduTrail.API.dll
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\EduTrail.Shared.dll
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\EduTrail.Shared.pdb
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\main.c8de906d0f4b6ece.js

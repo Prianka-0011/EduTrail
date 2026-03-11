@@ -1,5 +1,5 @@
 export interface IHelpRequest {
-  detailsDto: IHelpRequestDetail;
+  detailsDto?: IHelpRequestDetail,  
   detailsListDto?: IHelpRequestDetail[];
 }
 
@@ -17,4 +17,6 @@ export interface IHelpRequestDetail {
   requestedDate?: string;
   assignedTeacherId?: string;
   assignedTeacherName?: string;
+  statusId?: string;
+  statusName?: string;
 }

@@ -1146,10 +1146,12 @@
         }
       },
       "Edutrail.Shared/1.0.0": {
+        "dependencies": {
+          "Edutrail.Domain": "1.0.0"
+        },
         "runtime": {
-          "Edutrail.Shared.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
+          "EduTrail.Shared.dll": {
+            "fileVersion": "0.0.0.0"
           }
         }
       }

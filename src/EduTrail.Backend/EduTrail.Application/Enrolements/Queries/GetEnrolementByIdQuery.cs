@@ -53,7 +53,7 @@ namespace EduTrail.Application.Enrolements
 
                 var taRole = await _repository.GetRoleTaAsync();
                 enrolementDto.IsTa =
-                    enrolement.Student?.Roles?.Any(r => r.Id == taRole.Id) == true;
+                    enrolement.User?.Roles?.Any(r => r.Id == taRole.Id) == true;
 
                 return new EnrolementDto
                 {

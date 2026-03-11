@@ -35,13 +35,13 @@ namespace EduTrail.Infrastructure.Repositories
                 .Include(c => c.Term)
                 .Include(c => c.Instructor)
                 .Include(c => c.Enrollments)
-                .Where(c => c.Enrollments.Any(e => e.StudentId == userId))
+                .Where(c => c.Enrollments.Any(e => e.UserId == userId))
                 .ToListAsync();
         }
 
         public async Task<Enrollment> GetEnrollmentByUserIdAsync(Guid userId, Guid courseOfferingId)
         {
-            return await _context.Enrollments.Include(c => c.Student).ThenInclude(c => c.Roles).Include(c => c.TALabMonths).ThenInclude(c => c.Weeks).ThenInclude(c => c.Days).ThenInclude(c => c.Slots).Include(c => c.CourseOffering).ThenInclude(c => c.Term).Where(c => c.StudentId == userId && c.CourseOfferingId == courseOfferingId).FirstOrDefaultAsync();
+            return await _context.Enrollments.Include(c => c.User).ThenInclude(c => c.Roles).Include(c => c.TALabMonths).ThenInclude(c => c.Weeks).ThenInclude(c => c.Days).ThenInclude(c => c.Slots).Include(c => c.CourseOffering).ThenInclude(c => c.Term).Where(c => c.UserId == userId && c.CourseOfferingId == courseOfferingId).FirstOrDefaultAsync();
         }
 
         public async Task<Enrollment> UpdateAsync(Enrollment enrollment)
@@ -53,16 +53,16 @@ namespace EduTrail.Infrastructure.Repositories
 
         public async Task<Enrollment> GetByIdAsync(Guid id)
         {
-            return await _context.Enrollments.Include(c => c.CourseOffering).ThenInclude(c => c.Term).Include(c => c.Student).ThenInclude(c => c.Roles).Where(c => c.Id == id)
+            return await _context.Enrollments.Include(c => c.CourseOffering).ThenInclude(c => c.Term).Include(c => c.User).ThenInclude(c => c.Roles).Where(c => c.Id == id)
             .Include(c => c.TALabMonths).ThenInclude(c => c.Weeks).ThenInclude(c => c.Days).ThenInclude(c => c.Slots).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Enrollment>> GetTAByCourseOfferingAsync(Guid courseOfferingId)
         {
-            return await _context.Enrollments.Include(c => c.Student).ThenInclude(c => c.Roles).Include(c => c.TALabMonths).ThenInclude(c => c.Weeks)
+            return await _context.Enrollments.Include(c => c.User).ThenInclude(c => c.Roles).Include(c => c.TALabMonths).ThenInclude(c => c.Weeks)
             .ThenInclude(c => c.Days)
             .ThenInclude(c => c.Slots).Include(c => c.CourseOffering)
-            .ThenInclude(c => c.Term).Where(c => c.CourseOfferingId == courseOfferingId && c.Student.Roles.Any(c => c.Id == CustomCategory.RoleType.TA)).ToListAsync();
+            .ThenInclude(c => c.Term).Where(c => c.CourseOfferingId == courseOfferingId && c.User.Roles.Any(c => c.Id == CustomCategory.RoleType.TA)).ToListAsync();
         }
 
         public async Task<LabRequest> CreateHelpRequestAsync(LabRequest course)
@@ -74,7 +74,7 @@ namespace EduTrail.Infrastructure.Repositories
 
         public async Task<IEnumerable<LabRequest>> GetAllLabRequestByCourseOfferingAsync(Guid courseOfferingId)
         {
-            return await _context.LabRequests.Where(c=>c.CourseOfferingId == courseOfferingId).Include(c=>c.CourseOffering).Include(c=>c.Student).Include(c=>c.AssignedTeacher).ToListAsync();
+            return await _context.LabRequests.Where(c=>c.CourseOfferingId == courseOfferingId).Include(c=>c.CourseOffering).Include(c=>c.Student).Include(c=>c.Status).Include(c=>c.AssignedTeacher).ToListAsync();
         }
     }
 }

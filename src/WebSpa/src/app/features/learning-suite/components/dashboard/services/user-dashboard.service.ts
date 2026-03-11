@@ -84,28 +84,4 @@ export class UserDashboardService {
     return this.http.put<IUserEnrolementByCourseOffering>(`${this.baseUrl}/${enrolement.detailsDto.id}`, payload);
   }
 
-  createHelpRequest(request: IHelpRequest): Observable<IHelpRequest> {
-    const payload =
-    {
-      helpRequest:
-      {
-        id: request.detailsDto?.id,
-        requestNumber: request.detailsDto?.requestNumber,
-        zoomLink: request.detailsDto?.zoomLink,
-        issueTitle: request.detailsDto?.issueTitle,
-        issueDescription: request.detailsDto?.issueDescription,
-        trySofar: request.detailsDto?.trySofar,
-        studentId: request.detailsDto?.studentId,
-        courseOfferingId: request.detailsDto?.courseOfferingId,
-        requestedDate: request.detailsDto?.requestedDate,
-      }
-    }
-    return this.http.post<IHelpRequest>(`${this.baseUrl}/help-request`, payload);
-  }
-
-  getAllLabRequest(): Observable<IHelpRequest>
-  {
-    return this.http.get<IHelpRequest>(`${this.baseUrl}/help-request-list`)
-  }
-
 }
