@@ -6,6 +6,6 @@ namespace EduTrail.Application.LabRequests
     public interface IAuthRepository
     {
         Task<User>GetUserByEmail(string email);
-        Task<SignDto> SignIn();
+        // Task<SignDto> SignIn();
     }
 }

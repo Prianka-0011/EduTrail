@@ -97,9 +97,7 @@ namespace EduTrail.Infrastructure
             services.AddScoped<IUserCourseOfferingRepository, UserCourseOfferingRepository>();
             services.AddScoped<ILabRequestRepository, LabRequestRepository>();
             services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
-            
-
-
+            services.AddScoped<IAuthRepository, AuthRepository>();
             return services;
         }
     }

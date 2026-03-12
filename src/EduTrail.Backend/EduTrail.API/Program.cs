@@ -4,6 +4,9 @@ using EduTrail.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using EduTrail.API.Middlewares;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
@@ -22,6 +25,25 @@ builder.Services.AddSpaStaticFiles(configuration =>
 {
     configuration.RootPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "..", "..", "WebSpa", "dist", "web-spa");
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
+        )
+    };
+});
+
+builder.Services.AddAuthorization();
 
 static void UpdateDatabase(IApplicationBuilder app)
 {

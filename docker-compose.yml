@@ -12,5 +12,34 @@ services:
       - "1433:1433"
     volumes:
       - sql_data:/var/opt/mssql
+  edu-trail-service:
+    container_name: edu-trail-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "2029:2029"
+    depends_on:
+      - database-edu-trail
+    volumes:
+      - .:/edu-trail
+      - ./src/WebSpa:/edu-trail/src/WebSpa:cached
+      - ./src/WebSpa/node_modules:/edu-trail/src/WebSpa/node_modules
+      - ./.devcontainer/local_cert.pfx:/root/.aspnet/https/EduTrail.API.pfx:ro
+    environment:
+      DB_HOST: edu-trail-sql   # 👈 connect to SQL container by name
+      DB_PORT: 1433
+      DB_NAME: EduTrailDb
+      DB_USER: sa
+      DB_PASS: EduTrail123!
+      ASPNETCORE_URLS: https://+:2029
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /root/.aspnet/https/EmotiaMart.API.pfx
+      ASPNETCORE_Kestrel__Certificates__Default__Password: EmotiaMart123
+    networks:
+      - edutrail-network
 volumes:
   sql_data:
+
+networks:
+  edutrail-network:
+    driver: bridge
