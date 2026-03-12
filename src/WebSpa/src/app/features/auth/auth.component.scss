@@ -1,0 +1,55 @@
+.login-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.brand-section {
+  flex: 1;
+  background: linear-gradient(135deg, #0b2239, #071520);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 150px;
+}
+
+.brand-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  color: thin dashed white;
+}
+
+.brand-content h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.brand-content h2 {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+.brand-content h3 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.brand-content p {
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.child-section {
+  flex: 1;
+  background: #e9ebee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: thin dashed red;
+}

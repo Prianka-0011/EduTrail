@@ -19,6 +19,8 @@ namespace EduTrail.Application
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<LabRequestHelper>();
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
             return services;
         }
     }

@@ -1,0 +1,53 @@
+<div class="auth-container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-12">
+      <h2 class="text-left mb-4">Sign In</h2>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        
+        <div class="floating mb-3">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            [(ngModel)]="user.email"
+            #email="ngModel"
+            (focus)="isEmailFocused = true"
+            (blur)="isEmailFocused = false"
+            [ngClass]="{'active': user.email || isEmailFocused}"
+            required
+            email
+          />
+          <label for="email">Email *</label>
+        </div>
+        <div class="text-danger small mb-2" *ngIf="email.invalid && email.touched">
+          *Valid email is required
+        </div>
+
+        <div class="floating mb-3">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            [(ngModel)]="user.password"
+            #password="ngModel"
+            (focus)="isPasswordFocused = true"
+            (blur)="isPasswordFocused = false"
+            [ngClass]="{'active': user.password || isPasswordFocused}"
+            required
+          />
+          <label for="password">Password *</label>
+        </div>
+        <div class="text-danger small mb-2" *ngIf="password.invalid && password.touched">
+          *Password is required
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">
+          Sign In
+        </button>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -1018,8 +1018,9 @@
           "Edutrail.Domain": "1.0.0"
         },
         "runtime": {
-          "EduTrail.Shared.dll": {
-            "fileVersion": "0.0.0.0"
+          "Edutrail.Shared.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       }

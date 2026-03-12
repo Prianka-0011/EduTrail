@@ -7,7 +7,7 @@ import { learningSuiteRoutes } from './features/learning-suite/learning-suite-ro
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'learning-suite',
+        redirectTo: 'auth',
         pathMatch: 'full'
     },
     {
@@ -22,6 +22,6 @@ export const routes: Routes = [
     }, 
     {
         path: '**',
-        redirectTo: 'learning-suite'
+        redirectTo: 'auth'
     }
 ];
