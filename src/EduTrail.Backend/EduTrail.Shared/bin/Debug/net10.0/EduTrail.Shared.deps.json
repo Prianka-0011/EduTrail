@@ -6,12 +6,12 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v10.0": {
-      "Edutrail.Shared/1.0.0": {
+      "EduTrail.Shared/1.0.0": {
         "dependencies": {
           "Edutrail.Domain": "1.0.0"
         },
         "runtime": {
-          "Edutrail.Shared.dll": {}
+          "EduTrail.Shared.dll": {}
         }
       },
       "Edutrail.Domain/1.0.0": {
@@ -25,7 +25,7 @@
     }
   },
   "libraries": {
-    "Edutrail.Shared/1.0.0": {
+    "EduTrail.Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
