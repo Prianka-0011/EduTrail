@@ -790,29 +790,6 @@
         "build": {
           "buildTransitive/net6.0/_._": {}
         }
-      },
-      "Edutrail.Domain/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "compile": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
-        }
-      },
-      "Edutrail.Shared/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "dependencies": {
-          "Edutrail.Domain": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
-        }
       }
     }
   },
@@ -1871,24 +1848,12 @@
         "system.security.cryptography.xml.nuspec",
         "useSharedDesignerContext.txt"
       ]
-    },
-    "Edutrail.Domain/1.0.0": {
-      "type": "project",
-      "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
-      "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
-    },
-    "Edutrail.Shared/1.0.0": {
-      "type": "project",
-      "path": "../Edutrail.Shared/Edutrail.Shared.csproj",
-      "msbuildProject": "../Edutrail.Shared/Edutrail.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
       "AutoMapper >= 12.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
-      "Edutrail.Domain >= 1.0.0",
-      "Edutrail.Shared >= 1.0.0",
       "MediatR >= 12.0.1",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 11.1.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 10.0.4",
@@ -1920,14 +1885,7 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {
-            "/edu-trail/src/EduTrail.Backend/Edutrail.Domain/Edutrail.Domain.csproj": {
-              "projectPath": "/edu-trail/src/EduTrail.Backend/Edutrail.Domain/Edutrail.Domain.csproj"
-            },
-            "/edu-trail/src/EduTrail.Backend/Edutrail.Shared/Edutrail.Shared.csproj": {
-              "projectPath": "/edu-trail/src/EduTrail.Backend/Edutrail.Shared/Edutrail.Shared.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

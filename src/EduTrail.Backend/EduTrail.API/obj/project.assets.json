@@ -1720,8 +1720,6 @@
         "dependencies": {
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
-          "Edutrail.Domain": "1.0.0",
-          "Edutrail.Shared": "1.0.0",
           "MediatR": "12.0.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.4",
@@ -1734,22 +1732,10 @@
           "bin/placeholder/EduTrail.Application.dll": {}
         }
       },
-      "Edutrail.Domain/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "compile": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
-        }
-      },
       "EduTrail.Infrastructure/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "Edutrail.Domain": "1.0.0",
-          "Edutrail.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore": "10.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "10.0.0"
         },
@@ -1758,19 +1744,6 @@
         },
         "runtime": {
           "bin/placeholder/EduTrail.Infrastructure.dll": {}
-        }
-      },
-      "Edutrail.Shared/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "dependencies": {
-          "Edutrail.Domain": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
         }
       }
     }
@@ -4613,20 +4586,10 @@
       "path": "../EduTrail.Application/EduTrail.Application.csproj",
       "msbuildProject": "../EduTrail.Application/EduTrail.Application.csproj"
     },
-    "Edutrail.Domain/1.0.0": {
-      "type": "project",
-      "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
-      "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
-    },
     "EduTrail.Infrastructure/1.0.0": {
       "type": "project",
       "path": "../EduTrail.Infrastructure/EduTrail.Infrastructure.csproj",
       "msbuildProject": "../EduTrail.Infrastructure/EduTrail.Infrastructure.csproj"
-    },
-    "Edutrail.Shared/1.0.0": {
-      "type": "project",
-      "path": "../Edutrail.Shared/Edutrail.Shared.csproj",
-      "msbuildProject": "../Edutrail.Shared/Edutrail.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
