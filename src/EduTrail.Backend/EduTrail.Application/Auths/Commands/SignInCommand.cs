@@ -4,7 +4,6 @@ using EduTrail.Application.Auths;
 using EduTrail.Application.LabRequests;
 using EduTrail.Application.Shared;
 using EduTrail.Domain.Entities;
-using EduTrail.Shared;
 using MediatR;
 
 namespace EduTrail.Application.Auths

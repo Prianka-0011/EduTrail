@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/edu-trail/src/EduTrail.Backend/EduTrail.Domain/EduTrail.Domain.csproj": {}
+    "/edu-trail/src/EduTrail.Backend/Edutrail.Domain/Edutrail.Domain.csproj": {}
   },
   "projects": {
-    "/edu-trail/src/EduTrail.Backend/EduTrail.Domain/EduTrail.Domain.csproj": {
+    "/edu-trail/src/EduTrail.Backend/Edutrail.Domain/Edutrail.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/edu-trail/src/EduTrail.Backend/EduTrail.Domain/EduTrail.Domain.csproj",
-        "projectName": "EduTrail.Domain",
-        "projectPath": "/edu-trail/src/EduTrail.Backend/EduTrail.Domain/EduTrail.Domain.csproj",
+        "projectUniqueName": "/edu-trail/src/EduTrail.Backend/Edutrail.Domain/Edutrail.Domain.csproj",
+        "projectName": "Edutrail.Domain",
+        "projectPath": "/edu-trail/src/EduTrail.Backend/Edutrail.Domain/Edutrail.Domain.csproj",
         "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/edu-trail/src/EduTrail.Backend/EduTrail.Domain/obj/",
+        "outputPath": "/edu-trail/src/EduTrail.Backend/Edutrail.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/root/.nuget/NuGet/NuGet.Config"

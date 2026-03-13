@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net10.0": {}
+    "net10.0": {
+      "Edutrail.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/Edutrail.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Edutrail.Domain.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Edutrail.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
+      "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net10.0": []
+    "net10.0": [
+      "Edutrail.Domain >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "/root/.nuget/packages/": {}
@@ -13,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/edu-trail/src/EduTrail.Backend/EduTrail.Shared/EduTrail.Shared.csproj",
-      "projectName": "EduTrail.Shared",
-      "projectPath": "/edu-trail/src/EduTrail.Backend/EduTrail.Shared/EduTrail.Shared.csproj",
+      "projectUniqueName": "/edu-trail/src/EduTrail.Backend/Edutrail.Shared/Edutrail.Shared.csproj",
+      "projectName": "Edutrail.Shared",
+      "projectPath": "/edu-trail/src/EduTrail.Backend/Edutrail.Shared/Edutrail.Shared.csproj",
       "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/edu-trail/src/EduTrail.Backend/EduTrail.Shared/obj/",
+      "outputPath": "/edu-trail/src/EduTrail.Backend/Edutrail.Shared/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/root/.nuget/NuGet/NuGet.Config"
@@ -31,7 +50,11 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/edu-trail/src/EduTrail.Backend/Edutrail.Domain/Edutrail.Domain.csproj": {
+              "projectPath": "/edu-trail/src/EduTrail.Backend/Edutrail.Domain/Edutrail.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
