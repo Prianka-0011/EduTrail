@@ -9,9 +9,9 @@ namespace EduTrail.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : BaseController
+    public class AuthsController : BaseController
     {
-        public AuthController(IMediator mediator) : base(mediator)
+        public AuthsController(IMediator mediator) : base(mediator)
         {
         }
         [HttpPost("sign-in")]
