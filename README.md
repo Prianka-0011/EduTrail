@@ -334,6 +334,50 @@ VALUES
 ('F262DE21-7519-4468-B63A-653DAFC6B8F9', 'Fall',   GETDATE(), NULL, GETDATE(), NULL),
 ('855021E3-8D31-47B2-B787-65E1DDBB4FE0', 'Winter', GETDATE(), NULL, GETDATE(), NULL);
 ('f2231caa-ad7f-42f6-8283-043d54af790c', 'Summer', GETDATE(), NULL, GETDATE(), NULL);
+INSERT INTO [EduTrailDb].[dbo].[StatusTypes]
+(
+    Id,
+    Name,
+    Description,
+    CreatedDate,
+    CreatedById,
+    UpdatedDate,
+    UpdatedById
+)
+VALUES
+(
+    'ce5e6303-3ac6-4af1-92b4-f708da026d20',
+    'Help Request',
+    'Status type for help request workflow',
+    GETDATE(),
+    NULL,
+    NULL,
+    NULL
+);
+INSERT INTO [EduTrailDb].[dbo].[Statuses]
+(
+    Id,
+    Name,
+    Description,
+    StatusTypeId,
+    CreatedDate,
+    CreatedById,
+    UpdatedDate,
+    UpdatedById
+)
+VALUES
+(
+    '627407c8-700d-46fc-a3e5-02dc368fb75e',
+    'Pending',
+    'Help request is pending',
+    'ce5e6303-3ac6-4af1-92b4-f708da026d20',
+    GETDATE(),
+    NULL,
+    NULL,
+    NULL
+);
+
+
 
 ------------------------------
 Winter January to March

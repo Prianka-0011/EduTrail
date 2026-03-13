@@ -13,6 +13,8 @@ using EduTrail.Application.CourseOfferings;
 using EduTrail.Application.Users;
 using EduTrail.Application.Enrolements;
 using EduTrail.Application.UserDashboards;
+using EduTrail.Application.LabRequests;
+using EduTrail.Application.Shared;
 
 
 namespace EduTrail.Infrastructure
@@ -93,7 +95,9 @@ namespace EduTrail.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEnrolementRepository, EnrolementRepository>();
             services.AddScoped<IUserCourseOfferingRepository, UserCourseOfferingRepository>();
-
+            services.AddScoped<ILabRequestRepository, LabRequestRepository>();
+            services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
             return services;
         }
     }

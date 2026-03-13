@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   imports: [RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    CommonModule,],
+    CommonModule],
   templateUrl: './learning-suite.component.html',
   styleUrl: './learning-suite.component.scss'
 })

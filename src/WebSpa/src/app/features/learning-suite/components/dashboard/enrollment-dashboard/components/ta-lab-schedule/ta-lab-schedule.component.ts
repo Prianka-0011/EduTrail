@@ -45,8 +45,7 @@ export class TaLabScheduleComponent implements OnInit {
 
   loadTaschedule() {
 
-    const courseOfferingId =
-      this.route.parent?.snapshot.paramMap.get('courseOfferingId');
+    const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId');
 
     this.enrolementService
       .getTAAndLabHoursByCourseOffering(courseOfferingId ?? this.EMPTY_ID)

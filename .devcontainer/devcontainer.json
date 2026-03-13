@@ -1,0 +1,28 @@
+{
+  "name": "Edu Trail Dev Container",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "edu-trail-service",
+  "workspaceFolder": "/edu-trail",
+  // "initializeCommand": "mkdir -p .devcontainer; dotnet dev-certs https --trust --export-path=.devcontainer/local_cert.key --no-password --format PEM; dotnet dev-certs https --trust --export-path=.devcontainer/local_cert.pfx -p password", frist install locally 
+  "postStartCommand": "dotnet restore; dotnet tool restore; dotnet dev-certs https --clean --import=.devcontainer/local_cert.pfx -p password",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "editor.formatOnSave": true
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // "continue.continue", // causing performance issues
+        "ms-mssql.mssql",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "eamodio.gitlens",
+        "apollographql.vscode-apollo",
+        "devexpress.devexpress-report-designer-ex"
+      ]
+    }
+  },
+  "remoteUser": "root"
+}

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ICourseOfferingByUser } from '../interfaces/iCourseOfferingByUser';
 import { IEnrolement } from '../../enrolements/interfaces/iEnrolement';
 import { IUserEnrolementByCourseOffering } from '../interfaces/iUserEnrolementByCourseOffering';
+import { IHelpRequest } from '../interfaces/iHelpRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +19,16 @@ export class UserDashboardService {
   }
 
   getEnrolementByCourseOfferingAndLogingUser(courseOfferingId: string): Observable<IUserEnrolementByCourseOffering> {
-    console.log("courseOfferingId", this.baseUrl+"/" + courseOfferingId)
-    return this.http.get<IUserEnrolementByCourseOffering>(this.baseUrl+"/" + courseOfferingId)
+    console.log("courseOfferingId", this.baseUrl + "/" + courseOfferingId)
+    return this.http.get<IUserEnrolementByCourseOffering>(this.baseUrl + "/" + courseOfferingId)
   }
 
-   getTAAndLabHoursByCourseOffering(courseOfferingId: string): Observable<IUserEnrolementByCourseOffering> {
-    console.log("courseOfferingId", this.baseUrl+"/ta-hours/" + courseOfferingId)
-    return this.http.get<IUserEnrolementByCourseOffering>(this.baseUrl+"/ta-hours/" + courseOfferingId)
+  getTAAndLabHoursByCourseOffering(courseOfferingId: string): Observable<IUserEnrolementByCourseOffering> {
+    console.log("courseOfferingId", this.baseUrl + "/ta-hours/" + courseOfferingId)
+    return this.http.get<IUserEnrolementByCourseOffering>(this.baseUrl + "/ta-hours/" + courseOfferingId)
   }
 
-   updateEnrolement(enrolement: IUserEnrolementByCourseOffering): Observable<IUserEnrolementByCourseOffering> {
+  updateEnrolement(enrolement: IUserEnrolementByCourseOffering): Observable<IUserEnrolementByCourseOffering> {
     if (!enrolement.detailsDto?.id || enrolement.detailsDto?.id === '00000000-0000-0000-0000-000000000000') {
       throw new Error('Cannot update enrolement with invalid ID');
     }

@@ -1,1 +1,85 @@
-<p>submit-help-request works!</p>
+<div class="container mt-5">
+    <h4>Help Request</h4>
+    <div class="card border-1">
+        <div class="card-body">
+            <form #helpRequestForm="ngForm" (ngSubmit)="onSubmit(helpRequestForm)" novalidate>
+
+                <div class="row g-3">
+
+                    <!-- Issue Title -->
+                    <div class="col-md-12">
+                        <div class="floating">
+                            <input type="text" id="issueTitle" name="issueTitle" class="form-control"
+                                [(ngModel)]="helpRequest.issueTitle" #issueTitle="ngModel"
+                                (focus)="isIssueTitleFocused = true" (blur)="isIssueTitleFocused = false"
+                                [ngClass]="{ 'active': helpRequest.issueTitle || isIssueTitleFocused }" required>
+
+                            <label for="issueTitle">Issue Title *</label>
+                        </div>
+
+                        <div class="text-danger small mt-1" *ngIf="issueTitle.invalid && issueTitle.touched">
+                            *Issue title is required
+                        </div>
+                    </div>
+
+                    <!-- Issue Description -->
+                    <div class="col-md-12">
+                        <div class="floating">
+                            <textarea id="issueDescription" name="issueDescription" class="form-control" rows="3"
+                                [(ngModel)]="helpRequest.issueDescription" #issueDescription="ngModel"
+                                (focus)="isIssueDescriptionFocused = true" (blur)="isIssueDescriptionFocused = false"
+                                [ngClass]="{ 'active': helpRequest.issueDescription || isIssueDescriptionFocused }"
+                                required>
+              </textarea>
+
+                            <label for="issueDescription">Issue Description *</label>
+                        </div>
+
+                        <div class="text-danger small mt-1"
+                            *ngIf="issueDescription.invalid && issueDescription.touched">
+                            *Description is required
+                        </div>
+                    </div>
+
+                    <!-- What you tried so far -->
+                    <div class="col-md-12">
+                        <div class="floating">
+                            <textarea id="trySofar" name="trySofar" class="form-control" rows="3"
+                                [(ngModel)]="helpRequest.trySofar" #trySofar="ngModel" (focus)="isTryFocused = true"
+                                (blur)="isTryFocused = false"
+                                [ngClass]="{ 'active': helpRequest.trySofar || isTryFocused }">
+              </textarea>
+
+                            <label for="trySofar">What have you tried so far?</label>
+                        </div>
+                    </div>
+
+                    <!-- Zoom Link -->
+                    <div class="col-md-12">
+                        <div class="floating">
+                            <input type="text" id="zoomLink" name="zoomLink" class="form-control"
+                                [(ngModel)]="helpRequest.zoomLink" #zoomLink="ngModel" (focus)="isZoomFocused = true"
+                                (blur)="isZoomFocused = false"
+                                [ngClass]="{ 'active': helpRequest.zoomLink || isZoomFocused }">
+
+                            <label for="zoomLink">Zoom Link</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-4 d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary me-2" (click)="cancelForm()">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn-primary" [disabled]="helpRequestForm.invalid">
+                        Submit Help Request
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

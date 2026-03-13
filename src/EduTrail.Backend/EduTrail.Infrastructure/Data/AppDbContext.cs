@@ -15,6 +15,7 @@ namespace EduTrail.Infrastructure.Data
         {
             optionsBuilder.AddInterceptors(new AuditInterceptor(currentUserId));
         }
+        public DbSet<AutoGenerateNumber> AutoGenerateNumbers { get; set; } = null!;
         public DbSet<AuditEntry> AuditEntries { get; set; } = null!;
         public DbSet<Test> Tests { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;

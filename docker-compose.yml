@@ -6,11 +6,41 @@ services:
     container_name: edu-trail-sql
     environment:
       SA_PASSWORD: "EduTrail123!"
-      MSSQL_DB: "EduTrailDb"  
+      MSSQL_DB: "EduTrailDb"
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
     volumes:
       - sql_data:/var/opt/mssql
+    networks:
+      - edutrail-network
+
+  edu-trail-service:
+    container_name: edu-trail-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "2029:2029"
+    depends_on:
+      - database-edu-trail
+    volumes:
+      - .:/edu-trail
+      - ./src/WebSpa:/edu-trail/src/WebSpa:cached
+      - ./src/WebSpa/node_modules:/edu-trail/src/WebSpa/node_modules
+    environment:
+      DB_HOST: edu-trail-sql
+      DB_PORT: 1433
+      DB_NAME: EduTrailDb
+      DB_USER: sa
+      DB_PASS: EduTrail123!
+      ASPNETCORE_URLS: https://+:2029
+    networks:
+      - edutrail-network
+
 volumes:
   sql_data:
+
+networks:
+  edutrail-network:
+    driver: bridge

@@ -18,7 +18,7 @@ namespace EduTrail.Infrastructure.Repositories
         {
             var query = _context.Enrollments
             .Include(c => c.CourseOffering)
-            .Include(c => c.Student).AsQueryable();
+            .Include(c => c.User).AsQueryable();
             if (courseOfferingId.HasValue)
             {
                 query = query.Where(e => e.CourseOfferingId == courseOfferingId.Value);
@@ -27,7 +27,7 @@ namespace EduTrail.Infrastructure.Repositories
         }
         public async Task<Enrollment> GetByIdAsync(Guid id)
         {
-            return await _context.Enrollments.Include(c=>c.CourseOffering).ThenInclude(c=>c.Term).Include(c=>c.Student).ThenInclude(c=>c.Roles).Where(c => c.Id == id)
+            return await _context.Enrollments.Include(c=>c.CourseOffering).ThenInclude(c=>c.Term).Include(c=>c.User).ThenInclude(c=>c.Roles).Where(c => c.Id == id)
             .Include(c=>c.TALabMonths).ThenInclude(c=>c.Weeks).ThenInclude(c=>c.Days).ThenInclude(c=>c.Slots).FirstOrDefaultAsync();
         }
         public async Task<List<User>> GetAllUsersAsync()
@@ -64,7 +64,7 @@ namespace EduTrail.Infrastructure.Repositories
         public Task<Enrollment> GetByCourseOfferingIdAndStudentIdAsync(Guid courseOfferingId, Guid studentId)
         {
             return _context.Enrollments
-                .FirstOrDefaultAsync(e => e.CourseOfferingId == courseOfferingId && e.StudentId == studentId);
+                .FirstOrDefaultAsync(e => e.CourseOfferingId == courseOfferingId && e.UserId == studentId);
         }
 
         public Task<Role> GetRoleTaAsync()

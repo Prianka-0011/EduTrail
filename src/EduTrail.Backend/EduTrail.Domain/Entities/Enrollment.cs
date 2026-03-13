@@ -13,8 +13,8 @@ namespace EduTrail.Domain.Entities
         public CourseOffering CourseOffering { get; set; }
 
 
-        public Guid? StudentId { get; set; }
-        public User? Student { get; set; }
+        public Guid? UserId { get; set; }
+        public User? User { get; set; }
         public decimal? TotalWorkHoursPerWeek { get; set; }
 
         public DateTimeOffset EnrolledDate { get; set; }

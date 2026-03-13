@@ -3,6 +3,7 @@ using MediatR;
 using System.Reflection;
 using AutoMapper;
 using EduTrail.Application.Tests;
+using EduTrail.Application.Shared;
 
 
 namespace EduTrail.Application
@@ -17,9 +18,9 @@ namespace EduTrail.Application
             });
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-    
-            // services.AddScoped<IApplicationSettings, ApplicationSettings>();
-            
+            services.AddScoped<LabRequestHelper>();
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
             return services;
         }
     }

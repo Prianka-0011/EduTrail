@@ -25,12 +25,12 @@ namespace EduTrail.Application.Enrolements
                     throw new Exception("Enrollment not found");
 
                 enrolement.CourseOfferingId = request.enrolementDto.CourseOfferingId;
-                enrolement.StudentId = request.enrolementDto.StudentId;
+                enrolement.UserId = request.enrolementDto.StudentId;
                 enrolement.EnrolledDate = request.enrolementDto.EnrolledDate;
                 enrolement.TotalWorkHoursPerWeek = request.enrolementDto.TotalWorkHoursPerWeek;
                 enrolement.IsActive = request.enrolementDto.IsActive ?? true;
 
-                var student = enrolement.Student!;
+                var student = enrolement.User!;
                 var taRole = await _repository.GetRoleTaAsync();
 
                 if (request.enrolementDto.IsTa == true)

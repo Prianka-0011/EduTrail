@@ -44,7 +44,7 @@ namespace EduTrail.Application.Enrolements
 
                 }
                 var enrolement = _mapper.Map<Enrollment>(request.enrolementDto);
-                enrolement.Student = student;
+                enrolement.User = student;
                 var res = await _repository.CreateAsync(enrolement);
                 var enrolementDto = _mapper.Map<EnrolementDetailsDto>(res);
                 return new EnrolementDto { DetailsDto = enrolementDto };
