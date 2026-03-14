@@ -7,17 +7,22 @@ using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using static EduTrail.Shared.CustomCategory;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
- builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddCors(option=> option.AddPolicy("AllowWebSpa", policy =>
+builder.Services
+.AddHttpContextAccessor()
+.AddAuthorization()
+.AddCors(option => option.AddPolicy("AllowWebSpa", policy =>
 {
     policy.WithOrigins("http://localhost:4200")
           .AllowAnyHeader()
+          .AllowCredentials()
           .AllowAnyMethod();
 }));
 
@@ -41,9 +46,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
         )
     };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var token = context.Request.Cookies[AuthsVariable.AuthTokenName];
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                context.Token = token;
+            }
+
+            return Task.CompletedTask;
+        }
+    };
 });
 
-builder.Services.AddAuthorization();
+
 
 static void UpdateDatabase(IApplicationBuilder app)
 {
@@ -56,6 +76,7 @@ static void UpdateDatabase(IApplicationBuilder app)
         ?? throw new Exception("AppDbContext service not found");
     context.Database.Migrate();
 }
+
 var app = builder.Build();
 UpdateDatabase(app);
 

@@ -1,8 +1,10 @@
 
+using System.Security.Claims;
 using EduTrail.Application.Assessments;
 using EduTrail.Application.Auths;
 using EduTrail.Application.Courses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduTrail.API.Controllers
@@ -19,12 +21,19 @@ namespace EduTrail.API.Controllers
         {
             var res = await _mediator.Send(command);
 
-            if (string.IsNullOrEmpty(res))
+            if (!res)
                 return Unauthorized();
 
-            return Ok(new { token = res });
+            return Ok(res);
         }
-
+        
+        [HttpGet("is-login")]
+        [Authorize]
+        public async Task<ActionResult> IsLogin()
+        {
+            var isLoggedIn = await _mediator.Send(new IsLoginQuery());
+            return Ok(new { IsAuthenticated = isLoggedIn });
+        }
         // public async Task<ActionResult>ResetPassword()
         // {
 

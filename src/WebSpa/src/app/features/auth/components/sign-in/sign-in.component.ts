@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,7 +14,10 @@ import { AuthService } from '../../services/auth.service';
 
 export class SignInComponent {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router) { }
 
   user = { email: '', password: '' };
   isEmailFocused = false;
@@ -30,15 +35,17 @@ export class SignInComponent {
     this.errorMessage = '';
 
     this.authService.signIn(this.user).subscribe({
-      next: (token) => {
-        localStorage.setItem('token', token);
+      next: () => {
         this.isLoading = false;
+        this.toastr.success('Login successful', 'Success');
+
+        this.router.navigate(['/learning-suite']);
       },
-      error: (err) => {
-        this.errorMessage = 'Invalid email or password';
+      error: () => {
         this.isLoading = false;
-        console.error(err);
+        this.toastr.error('Invalid email or password', 'Login Failed');
       }
     });
+
   }
 }

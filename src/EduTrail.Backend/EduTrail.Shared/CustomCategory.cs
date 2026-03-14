@@ -2,6 +2,11 @@ namespace EduTrail.Shared
 {
     public static class CustomCategory
     {
+        public static class AuthsVariable
+        {
+            public static string AuthTokenName = "Authorization";
+        }
+        
         public static class TermType
         {
             public static Guid Spring { get; set; } = Guid.Parse("7E8F9F7E-75B3-4866-94A3-464F8711C544");

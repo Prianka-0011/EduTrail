@@ -3,21 +3,11 @@
     <div class="col-md-12">
       <h2 class="text-left mb-4">Sign In</h2>
       <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
-        
+
         <div class="floating mb-3">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            class="form-control"
-            [(ngModel)]="user.email"
-            #email="ngModel"
-            (focus)="isEmailFocused = true"
-            (blur)="isEmailFocused = false"
-            [ngClass]="{'active': user.email || isEmailFocused}"
-            required
-            email
-          />
+          <input type="email" id="email" name="email" class="form-control" [(ngModel)]="user.email" #email="ngModel"
+            (focus)="isEmailFocused = true" (blur)="isEmailFocused = false"
+            [ngClass]="{'active': user.email || isEmailFocused}" required email />
           <label for="email">Email *</label>
         </div>
         <div class="text-danger small mb-2" *ngIf="email.invalid && email.touched">
@@ -25,27 +15,26 @@
         </div>
 
         <div class="floating mb-3">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="form-control"
-            [(ngModel)]="user.password"
-            #password="ngModel"
-            (focus)="isPasswordFocused = true"
-            (blur)="isPasswordFocused = false"
-            [ngClass]="{'active': user.password || isPasswordFocused}"
-            required
-          />
+          <input type="password" id="password" name="password" class="form-control" [(ngModel)]="user.password"
+            #password="ngModel" (focus)="isPasswordFocused = true" (blur)="isPasswordFocused = false"
+            [ngClass]="{'active': user.password || isPasswordFocused}" required />
           <label for="password">Password *</label>
         </div>
         <div class="text-danger small mb-2" *ngIf="password.invalid && password.touched">
           *Password is required
         </div>
 
-        <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">
-          Sign In
+        <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid || isLoading">
+
+          <span *ngIf="!isLoading">Sign In</span>
+
+          <span *ngIf="isLoading">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Signing in...
+          </span>
+
         </button>
+
 
       </form>
     </div>
