@@ -30,7 +30,11 @@ builder.Services.AddSpaStaticFiles(configuration =>
 {
     configuration.RootPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "..", "..", "WebSpa", "dist", "web-spa");
 });
-
+// builder.Services.Configure<CookiePolicyOptions>(options =>
+// {
+//     options.CheckConsentNeeded = context => true;
+//     options.MinimumSameSitePolicy = SameSiteMode.None;
+// });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
 {

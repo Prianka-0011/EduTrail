@@ -26,9 +26,9 @@ namespace EduTrail.API.Controllers
 
             return Ok(res);
         }
-        
+
         [HttpGet("is-login")]
-        [Authorize]
+        // [Authorize]
         public async Task<ActionResult> IsLogin()
         {
             var isLoggedIn = await _mediator.Send(new IsLoginQuery());
