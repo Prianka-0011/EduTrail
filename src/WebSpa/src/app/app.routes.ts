@@ -3,6 +3,7 @@ import { authRoutes } from './features/auth/auth-routing.module';
 import { AuthComponent } from './features/auth/auth.component';
 import { LearningSuiteComponent } from './features/learning-suite/learning-suite.component';
 import { learningSuiteRoutes } from './features/learning-suite/learning-suite-routing.module';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,7 @@ export const routes: Routes = [
     {
         path: 'learning-suite',
         component: LearningSuiteComponent,
+        canActivate: [AuthGuard],
         children: learningSuiteRoutes
     }, 
     {

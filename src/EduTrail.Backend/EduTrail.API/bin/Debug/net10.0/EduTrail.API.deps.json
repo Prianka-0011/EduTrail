@@ -561,17 +561,17 @@
           "runtimes/win-arm64/native/Microsoft.Data.SqlClient.SNI.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "6.2.0.0"
           },
           "runtimes/win-x64/native/Microsoft.Data.SqlClient.SNI.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "6.2.0.0"
           },
           "runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "6.2.0.0"
           }
         }
       },
@@ -997,9 +997,8 @@
           "System.IdentityModel.Tokens.Jwt": "8.16.0"
         },
         "runtime": {
-          "EduTrail.Application.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
+          "Edutrail.Application.dll": {
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -1013,6 +1012,7 @@
       },
       "EduTrail.Infrastructure/1.0.0": {
         "dependencies": {
+          "EduTrail.Application": "1.0.0",
           "Edutrail.Domain": "1.0.0",
           "Edutrail.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore": "10.0.0",

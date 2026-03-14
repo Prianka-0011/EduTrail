@@ -1,6 +1,7 @@
 using AutoMapper;
 using EduTrail.Domain.Entities;
 using MediatR;
+using EduTrail.Application.Shared;
 
 namespace EduTrail.Application.Users
 {
@@ -25,6 +26,11 @@ namespace EduTrail.Application.Users
                     var roles = await _repository.GetRolesByIdsAsync(request.UserDetailDto.SelectedRoleList);
                     user.Roles = roles.ToList();
                 }
+                string password = "admin";
+                PasswordHasher.CreatePasswordHash(password, out string hash, out string salt);
+                user.PasswordHash = hash;
+                user.PasswordSalt = salt;
+                
                 var createdUser = await _repository.CreateAsync(user);
                 var userDetailDto = _mapper.Map<UserDetailDto>(createdUser);
                 return new UserDto { DetailDto = userDetailDto };

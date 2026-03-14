@@ -25,9 +25,8 @@ services:
     depends_on:
       - database-edu-trail
     volumes:
-      - .:/edu-trail
-      - ./src/WebSpa:/edu-trail/src/WebSpa:cached
-      - ./src/WebSpa/node_modules:/edu-trail/src/WebSpa/node_modules
+      - .:/edu-trail:cached
+      - /edu-trail/src/WebSpa/node_modules
     environment:
       DB_HOST: edu-trail-sql
       DB_PORT: 1433

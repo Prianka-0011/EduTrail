@@ -1748,6 +1748,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "EduTrail.Application": "1.0.0",
           "Edutrail.Domain": "1.0.0",
           "Edutrail.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore": "10.0.0",
@@ -4643,35 +4644,43 @@
     ]
   },
   "packageFolders": {
-    "/root/.nuget/packages/": {}
+    "C:\\Users\\pmondal\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/edu-trail/src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj",
+      "projectUniqueName": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "projectName": "EduTrail.API",
-      "projectPath": "/edu-trail/src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj",
-      "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/edu-trail/src/EduTrail.Backend/EduTrail.API/obj/",
+      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "packagesPath": "C:\\Users\\pmondal\\.nuget\\packages\\",
+      "outputPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/root/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\pmondal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "/edu-trail/src/EduTrail.Backend/EduTrail.Application/EduTrail.Application.csproj": {
-              "projectPath": "/edu-trail/src/EduTrail.Backend/EduTrail.Application/EduTrail.Application.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj"
             },
-            "/edu-trail/src/EduTrail.Backend/EduTrail.Infrastructure/EduTrail.Infrastructure.csproj": {
-              "projectPath": "/edu-trail/src/EduTrail.Backend/EduTrail.Infrastructure/EduTrail.Infrastructure.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj"
             }
           }
         }
@@ -4686,7 +4695,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.200"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net10.0": {
@@ -4742,7 +4751,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

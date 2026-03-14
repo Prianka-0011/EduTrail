@@ -11,8 +11,9 @@ RUN dotnet build ./EduTrail.sln -c Debug
 
 
 WORKDIR ./src/WebSpa
-RUN npm install
-RUN npm run build
+RUN npm install -g yarn
+RUN  yarn install
+RUN yarn build
 
 WORKDIR /edu-trail 
 EXPOSE 2029
