@@ -322,6 +322,408 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("LabRequests");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_BLOB_TRIGGER", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("TRIGGER_NAME")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("TRIGGER_GROUP")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<byte[]>("BLOB_DATA")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP");
+
+                    b.ToTable("PMTS_QURTZ_BLOB_TRIGGERS");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_CALENDAR", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("CALENDAR_NAME")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte[]>("CALENDAR")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("SCHED_NAME", "CALENDAR_NAME");
+
+                    b.ToTable("PMTS_QURTZ_CALENDARS");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_CRON_TRIGGER", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("TRIGGER_NAME")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("TRIGGER_GROUP")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("CRON_EXPRESSION")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("TIME_ZONE_ID")
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.HasKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP");
+
+                    b.ToTable("PMTS_QURTZ_CRON_TRIGGERS");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_FIRED_TRIGGER", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("ENTRY_ID")
+                        .HasMaxLength(140)
+                        .HasColumnType("nvarchar(140)");
+
+                    b.Property<long>("FIRED_TIME")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("INSTANCE_NAME")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool?>("IS_NONCONCURRENT")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JOB_GROUP")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("JOB_NAME")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("PRIORITY")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("REQUESTS_RECOVERY")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("SCHED_TIME")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("STATE")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("TRIGGER_GROUP")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("TRIGGER_NAME")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("SCHED_NAME", "ENTRY_ID");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "JOB_GROUP", "JOB_NAME" }, "IDX_QRTZ_FT_G_J");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "TRIGGER_GROUP", "TRIGGER_NAME" }, "IDX_QRTZ_FT_G_T");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "INSTANCE_NAME", "REQUESTS_RECOVERY" }, "IDX_QRTZ_FT_INST_JOB_REQ_RCVRY");
+
+                    b.ToTable("PMTS_QURTZ_FIRED_TRIGGERS");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_JOB_DETAIL", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("JOB_NAME")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("JOB_GROUP")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("DESCRIPTION")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("IS_DURABLE")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IS_NONCONCURRENT")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IS_UPDATE_DATA")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JOB_CLASS_NAME")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<byte[]>("JOB_DATA")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<bool>("REQUESTS_RECOVERY")
+                        .HasColumnType("bit");
+
+                    b.HasKey("SCHED_NAME", "JOB_NAME", "JOB_GROUP");
+
+                    b.ToTable("PMTS_QURTZ_JOB_DETAILS");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_LOCK", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("LOCK_NAME")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.HasKey("SCHED_NAME", "LOCK_NAME");
+
+                    b.ToTable("PMTS_QURTZ_LOCKS");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_PAUSED_TRIGGER_GRP", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("TRIGGER_GROUP")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("SCHED_NAME", "TRIGGER_GROUP");
+
+                    b.ToTable("PMTS_QURTZ_PAUSED_TRIGGER_GRPS");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SCHEDULER_STATE", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("INSTANCE_NAME")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<long>("CHECKIN_INTERVAL")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("LAST_CHECKIN_TIME")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("SCHED_NAME", "INSTANCE_NAME");
+
+                    b.ToTable("PMTS_QURTZ_SCHEDULER_STATE");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPLE_TRIGGER", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("TRIGGER_NAME")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("TRIGGER_GROUP")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("REPEAT_COUNT")
+                        .HasColumnType("int");
+
+                    b.Property<long>("REPEAT_INTERVAL")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("TIMES_TRIGGERED")
+                        .HasColumnType("int");
+
+                    b.HasKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP");
+
+                    b.ToTable("PMTS_QURTZ_SIMPLE_TRIGGERS");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPROP_TRIGGER", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("TRIGGER_NAME")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("TRIGGER_GROUP")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool?>("BOOL_PROP_1")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("BOOL_PROP_2")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal?>("DEC_PROP_1")
+                        .HasColumnType("numeric(13, 4)");
+
+                    b.Property<decimal?>("DEC_PROP_2")
+                        .HasColumnType("numeric(13, 4)");
+
+                    b.Property<int?>("INT_PROP_1")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("INT_PROP_2")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("LONG_PROP_1")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("LONG_PROP_2")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("STR_PROP_1")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("STR_PROP_2")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("STR_PROP_3")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("TIME_ZONE_ID")
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.HasKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP");
+
+                    b.ToTable("PMTS_QURTZ_SIMPROP_TRIGGERS");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", b =>
+                {
+                    b.Property<string>("SCHED_NAME")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("TRIGGER_NAME")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("TRIGGER_GROUP")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("CALENDAR_NAME")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("DESCRIPTION")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<long?>("END_TIME")
+                        .HasColumnType("bigint");
+
+                    b.Property<byte[]>("JOB_DATA")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("JOB_GROUP")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("JOB_NAME")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int?>("MISFIRE_INSTR")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("NEXT_FIRE_TIME")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PREV_FIRE_TIME")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("PRIORITY")
+                        .HasColumnType("int");
+
+                    b.Property<long>("START_TIME")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TRIGGER_STATE")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("TRIGGER_TYPE")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
+                    b.HasKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP");
+
+                    b.HasIndex("SCHED_NAME", "JOB_NAME", "JOB_GROUP");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "CALENDAR_NAME" }, "IDX_QRTZ_T_C");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "JOB_GROUP", "JOB_NAME" }, "IDX_QRTZ_T_G_J");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "NEXT_FIRE_TIME" }, "IDX_QRTZ_T_NEXT_FIRE_TIME");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "TRIGGER_STATE", "NEXT_FIRE_TIME" }, "IDX_QRTZ_T_NFT_ST");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "MISFIRE_INSTR", "NEXT_FIRE_TIME", "TRIGGER_STATE" }, "IDX_QRTZ_T_NFT_ST_MISFIRE");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "MISFIRE_INSTR", "NEXT_FIRE_TIME", "TRIGGER_GROUP", "TRIGGER_STATE" }, "IDX_QRTZ_T_NFT_ST_MISFIRE_GRP");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "TRIGGER_GROUP", "TRIGGER_STATE" }, "IDX_QRTZ_T_N_G_STATE");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP", "TRIGGER_STATE" }, "IDX_QRTZ_T_N_STATE");
+
+                    b.HasIndex(new[] { "SCHED_NAME", "TRIGGER_STATE" }, "IDX_QRTZ_T_STATE");
+
+                    b.ToTable("PMTS_QURTZ_TRIGGERS");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1129,6 +1531,50 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_CRON_TRIGGER", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", "PMTS_QURTZ_TRIGGER")
+                        .WithOne("PMTS_QURTZ_CRON_TRIGGER")
+                        .HasForeignKey("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_CRON_TRIGGER", "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PMTS_QURTZ_TRIGGER");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPLE_TRIGGER", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", "PMTS_QURTZ_TRIGGER")
+                        .WithOne("PMTS_QURTZ_SIMPLE_TRIGGER")
+                        .HasForeignKey("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPLE_TRIGGER", "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PMTS_QURTZ_TRIGGER");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPROP_TRIGGER", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", "PMTS_QURTZ_TRIGGER")
+                        .WithOne("PMTS_QURTZ_SIMPROP_TRIGGER")
+                        .HasForeignKey("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPROP_TRIGGER", "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PMTS_QURTZ_TRIGGER");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_JOB_DETAIL", "PMTS_QURTZ_JOB_DETAIL")
+                        .WithMany("PMTS_QURTZ_TRIGGERs")
+                        .HasForeignKey("SCHED_NAME", "JOB_NAME", "JOB_GROUP")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PMTS_QURTZ_JOB_DETAIL");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Assessment", "Assessment")
@@ -1282,6 +1728,20 @@ namespace EduTrail.Infrastructure.Migrations
             modelBuilder.Entity("EduTrail.Domain.Entities.Enrollment", b =>
                 {
                     b.Navigation("TALabMonths");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_JOB_DETAIL", b =>
+                {
+                    b.Navigation("PMTS_QURTZ_TRIGGERs");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", b =>
+                {
+                    b.Navigation("PMTS_QURTZ_CRON_TRIGGER");
+
+                    b.Navigation("PMTS_QURTZ_SIMPLE_TRIGGER");
+
+                    b.Navigation("PMTS_QURTZ_SIMPROP_TRIGGER");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
