@@ -7,14 +7,11 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace EduTrail.Application.Shared
 {
-
-
-
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
         private readonly IConfiguration _configuration;
 
-         public JwtTokenGenerator(IConfiguration configuration)
+        public JwtTokenGenerator(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -25,15 +22,15 @@ namespace EduTrail.Application.Shared
                 Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])
             );
 
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var credentials = new SigningCredentials(
+                key,
+                SecurityAlgorithms.HmacSha256
+            );
 
             var claims = new[]
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            new Claim("firstName", user.FirstName),
-            new Claim("lastName", user.LastName)
-        };
+                new Claim(ClaimTypes.Email, user.Email)
+            };
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
@@ -46,5 +43,4 @@ namespace EduTrail.Application.Shared
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
-
 }

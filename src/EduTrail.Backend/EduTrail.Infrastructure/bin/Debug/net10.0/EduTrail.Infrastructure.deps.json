@@ -938,8 +938,9 @@
           "System.IdentityModel.Tokens.Jwt": "8.16.0"
         },
         "runtime": {
-          "Edutrail.Application.dll": {
-            "fileVersion": "0.0.0.0"
+          "EduTrail.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -956,9 +957,8 @@
           "Edutrail.Domain": "1.0.0"
         },
         "runtime": {
-          "Edutrail.Shared.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
+          "EduTrail.Shared.dll": {
+            "fileVersion": "0.0.0.0"
           }
         }
       }

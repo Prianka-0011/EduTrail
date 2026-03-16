@@ -58,7 +58,7 @@ namespace EduTrail.Application.Auths
                     {
                         HttpOnly = true,
                         Secure = !_environment.IsDevelopment(),
-                        SameSite = _environment.IsDevelopment() ? SameSiteMode.None : SameSiteMode.Strict,
+                        SameSite = SameSiteMode.Lax,
                         Expires = DateTimeOffset.UtcNow.AddMinutes(60)
                     };
 

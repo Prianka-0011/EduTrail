@@ -1327,13 +1327,13 @@
           }
         }
       },
-      "Swashbuckle.AspNetCore/10.1.4": {
+      "Swashbuckle.AspNetCore/10.1.5": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "10.0.0",
-          "Swashbuckle.AspNetCore.Swagger": "10.1.4",
-          "Swashbuckle.AspNetCore.SwaggerGen": "10.1.4",
-          "Swashbuckle.AspNetCore.SwaggerUI": "10.1.4"
+          "Swashbuckle.AspNetCore.Swagger": "10.1.5",
+          "Swashbuckle.AspNetCore.SwaggerGen": "10.1.5",
+          "Swashbuckle.AspNetCore.SwaggerUI": "10.1.5"
         },
         "build": {
           "build/Swashbuckle.AspNetCore.props": {}
@@ -1342,7 +1342,7 @@
           "buildMultiTargeting/Swashbuckle.AspNetCore.props": {}
         }
       },
-      "Swashbuckle.AspNetCore.Swagger/10.1.4": {
+      "Swashbuckle.AspNetCore.Swagger/10.1.5": {
         "type": "package",
         "dependencies": {
           "Microsoft.OpenApi": "2.4.1"
@@ -1361,10 +1361,10 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Swashbuckle.AspNetCore.SwaggerGen/10.1.4": {
+      "Swashbuckle.AspNetCore.SwaggerGen/10.1.5": {
         "type": "package",
         "dependencies": {
-          "Swashbuckle.AspNetCore.Swagger": "10.1.4"
+          "Swashbuckle.AspNetCore.Swagger": "10.1.5"
         },
         "compile": {
           "lib/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
@@ -1377,7 +1377,7 @@
           }
         }
       },
-      "Swashbuckle.AspNetCore.SwaggerUI/10.1.4": {
+      "Swashbuckle.AspNetCore.SwaggerUI/10.1.5": {
         "type": "package",
         "compile": {
           "lib/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
@@ -1720,8 +1720,8 @@
         "dependencies": {
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
-          "EduTrail.Domain": "1.0.0",
-          "EduTrail.Shared": "1.0.0",
+          "Edutrail.Domain": "1.0.0",
+          "Edutrail.Shared": "1.0.0",
           "MediatR": "12.0.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.4",
@@ -1734,23 +1734,22 @@
           "bin/placeholder/EduTrail.Application.dll": {}
         }
       },
-      "EduTrail.Domain/1.0.0": {
+      "Edutrail.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "compile": {
-          "bin/placeholder/EduTrail.Domain.dll": {}
+          "bin/placeholder/Edutrail.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/EduTrail.Domain.dll": {}
+          "bin/placeholder/Edutrail.Domain.dll": {}
         }
       },
       "EduTrail.Infrastructure/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "EduTrail.Application": "1.0.0",
-          "EduTrail.Domain": "1.0.0",
-          "EduTrail.Shared": "1.0.0",
+          "Edutrail.Domain": "1.0.0",
+          "Edutrail.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore": "10.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "10.0.0"
         },
@@ -1761,17 +1760,17 @@
           "bin/placeholder/EduTrail.Infrastructure.dll": {}
         }
       },
-      "EduTrail.Shared/1.0.0": {
+      "Edutrail.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "EduTrail.Domain": "1.0.0"
+          "Edutrail.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/EduTrail.Shared.dll": {}
+          "bin/placeholder/Edutrail.Shared.dll": {}
         },
         "runtime": {
-          "bin/placeholder/EduTrail.Shared.dll": {}
+          "bin/placeholder/Edutrail.Shared.dll": {}
         }
       }
     }
@@ -4037,24 +4036,24 @@
         "packageIcon.png"
       ]
     },
-    "Swashbuckle.AspNetCore/10.1.4": {
-      "sha512": "3y9YcUdzND3E21NiGvhxEVw2/rdQSbSLDOxrAMP96ZCaDVeB8b30L8QeWA9cfkxfyeXt+F2t1umKE0kaPxm4FA==",
+    "Swashbuckle.AspNetCore/10.1.5": {
+      "sha512": "/eNk9z/8quXhDX14o3XLbwAX/84uIWSbiUD7cI/UrQnoBMOiyAtzKxNEJUtf/TyxjFpcXxE9FAfLvtbNpxHBSg==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore/10.1.4",
+      "path": "swashbuckle.aspnetcore/10.1.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "build/Swashbuckle.AspNetCore.props",
         "buildMultiTargeting/Swashbuckle.AspNetCore.props",
         "docs/package-readme.md",
-        "swashbuckle.aspnetcore.10.1.4.nupkg.sha512",
+        "swashbuckle.aspnetcore.10.1.5.nupkg.sha512",
         "swashbuckle.aspnetcore.nuspec"
       ]
     },
-    "Swashbuckle.AspNetCore.Swagger/10.1.4": {
-      "sha512": "4ac45rVXsgustOXx6abChvIXtWjc1gUgwEpExz8pkQTTXjVTuRtfyMCN0srgxwpIAw/UoH/LYcbgqrjRcYwhfg==",
+    "Swashbuckle.AspNetCore.Swagger/10.1.5": {
+      "sha512": "s4Mct6+Ob0LK9vYVaZcYi/RFFCOEJNjf6nJ5ZPoxtpdFSlzR6i9AHI7Vl44obX8cynRxJW7prA1IUabkiXolFg==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore.swagger/10.1.4",
+      "path": "swashbuckle.aspnetcore.swagger/10.1.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4068,14 +4067,14 @@
         "lib/net9.0/Swashbuckle.AspNetCore.Swagger.pdb",
         "lib/net9.0/Swashbuckle.AspNetCore.Swagger.xml",
         "package-readme.md",
-        "swashbuckle.aspnetcore.swagger.10.1.4.nupkg.sha512",
+        "swashbuckle.aspnetcore.swagger.10.1.5.nupkg.sha512",
         "swashbuckle.aspnetcore.swagger.nuspec"
       ]
     },
-    "Swashbuckle.AspNetCore.SwaggerGen/10.1.4": {
-      "sha512": "gbh8gJ97lMw0ScCdbEhAzwlHSWKiTzYtHfS6/e7u4e4c0ms6mOccLFgRsWF0ekgpDh+AlA0yWc5X5ec+6cxCXQ==",
+    "Swashbuckle.AspNetCore.SwaggerGen/10.1.5": {
+      "sha512": "ysQIRgqnx4Vb/9+r3xnEAiaxYmiBHO8jTg7ACaCh+R3Sn+ZKCWKD6nyu0ph3okP91wFSh/6LgccjeLUaQHV+ZA==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore.swaggergen/10.1.4",
+      "path": "swashbuckle.aspnetcore.swaggergen/10.1.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4089,14 +4088,14 @@
         "lib/net9.0/Swashbuckle.AspNetCore.SwaggerGen.pdb",
         "lib/net9.0/Swashbuckle.AspNetCore.SwaggerGen.xml",
         "package-readme.md",
-        "swashbuckle.aspnetcore.swaggergen.10.1.4.nupkg.sha512",
+        "swashbuckle.aspnetcore.swaggergen.10.1.5.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggergen.nuspec"
       ]
     },
-    "Swashbuckle.AspNetCore.SwaggerUI/10.1.4": {
-      "sha512": "A1ewmv/Xq5YkjQoSW29Kc9IoIC6pu210F1Fmzmj1EO7QJLTs6w3tOJatST6s41+Y8eUr5A1JLiXZ14U5EgN6ow==",
+    "Swashbuckle.AspNetCore.SwaggerUI/10.1.5": {
+      "sha512": "tQWVKNJWW7lf6S0bv22+7yfxK5IKzvsMeueF4XHSziBfREhLKt42OKzi6/1nINmyGlM4hGbR8aSMg72dLLVBLw==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore.swaggerui/10.1.4",
+      "path": "swashbuckle.aspnetcore.swaggerui/10.1.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4110,7 +4109,7 @@
         "lib/net9.0/Swashbuckle.AspNetCore.SwaggerUI.pdb",
         "lib/net9.0/Swashbuckle.AspNetCore.SwaggerUI.xml",
         "package-readme.md",
-        "swashbuckle.aspnetcore.swaggerui.10.1.4.nupkg.sha512",
+        "swashbuckle.aspnetcore.swaggerui.10.1.5.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
     },
@@ -4614,20 +4613,20 @@
       "path": "../EduTrail.Application/EduTrail.Application.csproj",
       "msbuildProject": "../EduTrail.Application/EduTrail.Application.csproj"
     },
-    "EduTrail.Domain/1.0.0": {
+    "Edutrail.Domain/1.0.0": {
       "type": "project",
-      "path": "../EduTrail.Domain/EduTrail.Domain.csproj",
-      "msbuildProject": "../EduTrail.Domain/EduTrail.Domain.csproj"
+      "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
+      "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
     },
     "EduTrail.Infrastructure/1.0.0": {
       "type": "project",
       "path": "../EduTrail.Infrastructure/EduTrail.Infrastructure.csproj",
       "msbuildProject": "../EduTrail.Infrastructure/EduTrail.Infrastructure.csproj"
     },
-    "EduTrail.Shared/1.0.0": {
+    "Edutrail.Shared/1.0.0": {
       "type": "project",
-      "path": "../EduTrail.Shared/EduTrail.Shared.csproj",
-      "msbuildProject": "../EduTrail.Shared/EduTrail.Shared.csproj"
+      "path": "../Edutrail.Shared/Edutrail.Shared.csproj",
+      "msbuildProject": "../Edutrail.Shared/Edutrail.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4640,47 +4639,39 @@
       "Microsoft.Extensions.Configuration >= 10.0.0",
       "Microsoft.Extensions.Configuration.Binder >= 10.0.0",
       "Microsoft.Extensions.DependencyInjection >= 10.0.0",
-      "Swashbuckle.AspNetCore >= 10.1.4"
+      "Swashbuckle.AspNetCore >= 10.1.5"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pmondal\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/root/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "projectUniqueName": "/edu-trail/src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj",
       "projectName": "EduTrail.API",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
-      "packagesPath": "C:\\Users\\pmondal\\.nuget\\packages\\",
-      "outputPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\obj\\",
+      "projectPath": "/edu-trail/src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj",
+      "packagesPath": "/root/.nuget/packages/",
+      "outputPath": "/edu-trail/src/EduTrail.Backend/EduTrail.API/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\pmondal\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/root/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj"
+            "/edu-trail/src/EduTrail.Backend/EduTrail.Application/EduTrail.Application.csproj": {
+              "projectPath": "/edu-trail/src/EduTrail.Backend/EduTrail.Application/EduTrail.Application.csproj"
             },
-            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj"
+            "/edu-trail/src/EduTrail.Backend/EduTrail.Infrastructure/EduTrail.Infrastructure.csproj": {
+              "projectPath": "/edu-trail/src/EduTrail.Backend/EduTrail.Infrastructure/EduTrail.Infrastructure.csproj"
             }
           }
         }
@@ -4695,7 +4686,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
       "net10.0": {
@@ -4729,7 +4720,7 @@
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
-            "version": "[10.1.4, )"
+            "version": "[10.1.5, )"
           }
         },
         "imports": [
@@ -4751,7 +4742,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
@@ -5206,6 +5197,16 @@
       "warningLevel": 1,
       "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.0.1 was resolved.",
       "libraryId": "MediatR",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
+      "libraryId": "AutoMapper",
       "targetGraphs": [
         "net10.0"
       ]

@@ -19,11 +19,11 @@ export class AuthService {
       }
     };
 
-    return this.http.post<boolean>(this.baseUrl + "sign-in", payload, { withCredentials: true });
+    return this.http.post<boolean>(this.baseUrl + "sign-in", payload);
   }
 
   isLoggedIn(): Observable<boolean> {
-    return this.http.get<{ isAuthenticated: boolean }>(this.baseUrl+'is-login', { withCredentials: true }).pipe(
+    return this.http.get<{ isAuthenticated: boolean }>(this.baseUrl+'is-login').pipe(
       map(res => res.isAuthenticated),
       catchError(() => of(false))
     );

@@ -14,6 +14,7 @@ export const routes: Routes = [
     {
         path: 'auth',
         component: AuthComponent,
+        // canActivate: [AuthGuard],
         children: authRoutes
     },
     {
@@ -21,7 +22,7 @@ export const routes: Routes = [
         component: LearningSuiteComponent,
         canActivate: [AuthGuard],
         children: learningSuiteRoutes
-    }, 
+    },
     {
         path: '**',
         redirectTo: 'auth'
