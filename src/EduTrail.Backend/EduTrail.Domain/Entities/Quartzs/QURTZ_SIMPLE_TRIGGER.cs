@@ -6,8 +6,8 @@ namespace EduTrail.Domain.Entities.Quartzs
 {
 
     [PrimaryKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")]
-    [Table("PMTS_QURTZ_SIMPLE_TRIGGERS")]
-    public partial class PMTS_QURTZ_SIMPLE_TRIGGER
+    [Table("QURTZ_SIMPLE_TRIGGERS")]
+    public partial class QURTZ_SIMPLE_TRIGGER
     {
         [Key]
         [StringLength(120)]
@@ -28,7 +28,7 @@ namespace EduTrail.Domain.Entities.Quartzs
         public int TIMES_TRIGGERED { get; set; }
 
         [ForeignKey("SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP")]
-        [InverseProperty("PMTS_QURTZ_SIMPLE_TRIGGER")]
-        public virtual PMTS_QURTZ_TRIGGER PMTS_QURTZ_TRIGGER { get; set; } = null!;
+        [InverseProperty("QURTZ_SIMPLE_TRIGGER")]
+        public virtual QURTZ_TRIGGER QURTZ_TRIGGER { get; set; } = null!;
     }
 }

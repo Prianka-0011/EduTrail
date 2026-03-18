@@ -6,8 +6,8 @@ namespace EduTrail.Domain.Entities.Quartzs
 {
 
     [PrimaryKey("SCHED_NAME", "JOB_NAME", "JOB_GROUP")]
-    [Table("PMTS_QURTZ_JOB_DETAILS")]
-    public partial class PMTS_QURTZ_JOB_DETAIL
+    [Table("QURTZ_JOB_DETAILS")]
+    public partial class QURTZ_JOB_DETAIL
     {
         [Key]
         [StringLength(120)]
@@ -37,7 +37,7 @@ namespace EduTrail.Domain.Entities.Quartzs
 
         public byte[]? JOB_DATA { get; set; }
 
-        [InverseProperty("PMTS_QURTZ_JOB_DETAIL")]
-        public virtual ICollection<PMTS_QURTZ_TRIGGER> PMTS_QURTZ_TRIGGERs { get; set; } = new List<PMTS_QURTZ_TRIGGER>();
+        [InverseProperty("QURTZ_JOB_DETAIL")]
+        public virtual ICollection<QURTZ_TRIGGER> QURTZ_TRIGGERs { get; set; } = new List<QURTZ_TRIGGER>();
     }
 }

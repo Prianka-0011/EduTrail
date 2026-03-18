@@ -33,7 +33,22 @@ services:
       DB_NAME: EduTrailDb
       DB_USER: sa
       DB_PASS: EduTrail123!
-      ASPNETCORE_URLS: https://+:2029
+      APPLICATION_URL: https://localhost:7238
+
+      # SMTP CONFIG
+      SMTP_ENABLED: "true"
+      SMTP_SERVER: smtp.gmail.com
+      SMTP_PORT: "587"
+      SMTP_USERNAME: priankanew0011@gmail.com
+      SMTP_PASSWORD: gdaz jwfh iwvb waqa
+      SMTP_ENABLE_SSL: "true"
+      SMTP_NO_REPLY_EMAIL: priankanew0011@gmail.com
+      SMTP_NO_REPLY_NAME: NoReplay
+
+      TIME_ZONE_ID: Central Standard Time
+      FILES_DIRECTORY: /app/_files
+      TEMP_FILES_DIRECTORY: /app/_temp-files
+
     networks:
       - edutrail-network
 

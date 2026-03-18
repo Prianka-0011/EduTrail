@@ -34,6 +34,17 @@ namespace EduTrail.API.Controllers
             var isLoggedIn = await _mediator.Send(new IsLoginQuery());
             return Ok(new { IsAuthenticated = isLoggedIn });
         }
+
+        [HttpPost("reset-email-sent")]
+        public async Task<ActionResult> ResetEmail(ResetEmailCommand command)
+        {
+            var res = await _mediator.Send(command);
+
+            if (!res)
+                return Unauthorized();
+
+             return Ok(new { IsEmailSent = res });
+        }
         // public async Task<ActionResult>ResetPassword()
         // {
 

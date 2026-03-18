@@ -19,7 +19,7 @@ namespace EduTrail.Application.UserDashboards
             }
             public async Task<UserEnrollementDto> Handle(GetEnrollmentByUserId request, CancellationToken cancellationToken)
             {
-                var currentLoginUserId = Guid.Parse("8D1B9DFD-511C-42ED-3F21-08DE77033B15");
+                var currentLoginUserId = Guid.Parse("C77A7ABF-BF2C-4DFF-51BD-08DE83B7A5E7");
                 var enrolement = await _repository.GetEnrollmentByUserIdAsync(currentLoginUserId, request.CourseOfferingId);
 
                 var dto = _mapper.Map<UserEnrollementDetailsDto>(enrolement) ?? new UserEnrollementDetailsDto();

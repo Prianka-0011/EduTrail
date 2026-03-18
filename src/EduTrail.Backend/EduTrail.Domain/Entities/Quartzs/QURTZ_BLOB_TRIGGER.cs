@@ -6,8 +6,8 @@ namespace EduTrail.Domain.Entities.Quartzs
 {
 
     [PrimaryKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")]
-    [Table("PMTS_QURTZ_BLOB_TRIGGERS")]
-    public partial class PMTS_QURTZ_BLOB_TRIGGER
+    [Table("QURTZ_BLOB_TRIGGERS")]
+    public partial class QURTZ_BLOB_TRIGGER
     {
         [Key]
         [StringLength(120)]

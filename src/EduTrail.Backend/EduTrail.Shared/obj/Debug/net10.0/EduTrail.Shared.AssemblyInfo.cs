@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Edutrail.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e67d651193147ae26bed350d25d0df0dcfb43123")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+742c2da759d05cf01ec962c7b7067999be6a15c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("Edutrail.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Edutrail.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

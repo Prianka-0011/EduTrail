@@ -6,11 +6,11 @@ namespace EduTrail.Domain.Entities.Quartzs
 {
 
     [PrimaryKey("SCHED_NAME", "ENTRY_ID")]
-    [Table("PMTS_QURTZ_FIRED_TRIGGERS")]
+    [Table("QURTZ_FIRED_TRIGGERS")]
     [Index("SCHED_NAME", "JOB_GROUP", "JOB_NAME", Name = "IDX_QRTZ_FT_G_J")]
     [Index("SCHED_NAME", "TRIGGER_GROUP", "TRIGGER_NAME", Name = "IDX_QRTZ_FT_G_T")]
     [Index("SCHED_NAME", "INSTANCE_NAME", "REQUESTS_RECOVERY", Name = "IDX_QRTZ_FT_INST_JOB_REQ_RCVRY")]
-    public partial class PMTS_QURTZ_FIRED_TRIGGER
+    public partial class QURTZ_FIRED_TRIGGER
     {
         [Key]
         [StringLength(120)]

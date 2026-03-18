@@ -474,12 +474,12 @@
         },
         "compile": {
           "lib/net9.0/Microsoft.CodeAnalysis.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "resource": {
@@ -532,12 +532,12 @@
         },
         "compile": {
           "lib/net9.0/Microsoft.CodeAnalysis.CSharp.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.CSharp.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "resource": {
@@ -594,12 +594,12 @@
         },
         "compile": {
           "lib/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "resource": {
@@ -654,12 +654,12 @@
         },
         "compile": {
           "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "resource": {
@@ -734,13 +734,13 @@
         "compile": {
           "lib/net9.0/Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll": {},
           "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll": {},
           "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "resource": {
@@ -1332,6 +1332,23 @@
           }
         }
       },
+      "Quartz/3.10.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "2.1.1",
+          "System.Configuration.ConfigurationManager": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Quartz.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Quartz.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.CodeDom/9.0.0": {
         "type": "package",
         "compile": {
@@ -1748,11 +1765,8 @@
         "humanizer.core.2.14.1.nupkg.sha512",
         "humanizer.core.nuspec",
         "lib/net6.0/Humanizer.dll",
-        "lib/net6.0/Humanizer.xml",
         "lib/netstandard1.0/Humanizer.dll",
-        "lib/netstandard1.0/Humanizer.xml",
         "lib/netstandard2.0/Humanizer.dll",
-        "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
       ]
     },
@@ -2034,17 +2048,13 @@
         "README.md",
         "lib/net472/Microsoft.Build.dll",
         "lib/net472/Microsoft.Build.pdb",
-        "lib/net472/Microsoft.Build.xml",
         "lib/net7.0/Microsoft.Build.dll",
         "lib/net7.0/Microsoft.Build.pdb",
-        "lib/net7.0/Microsoft.Build.xml",
         "microsoft.build.17.7.2.nupkg.sha512",
         "microsoft.build.nuspec",
         "notices/THIRDPARTYNOTICES.txt",
         "ref/net472/Microsoft.Build.dll",
-        "ref/net472/Microsoft.Build.xml",
-        "ref/net7.0/Microsoft.Build.dll",
-        "ref/net7.0/Microsoft.Build.xml"
+        "ref/net7.0/Microsoft.Build.dll"
       ]
     },
     "Microsoft.Build.Framework/17.14.28": {
@@ -2058,19 +2068,14 @@
         "README.md",
         "lib/net472/Microsoft.Build.Framework.dll",
         "lib/net472/Microsoft.Build.Framework.pdb",
-        "lib/net472/Microsoft.Build.Framework.xml",
         "lib/net9.0/Microsoft.Build.Framework.dll",
         "lib/net9.0/Microsoft.Build.Framework.pdb",
-        "lib/net9.0/Microsoft.Build.Framework.xml",
         "microsoft.build.framework.17.14.28.nupkg.sha512",
         "microsoft.build.framework.nuspec",
         "notices/THIRDPARTYNOTICES.txt",
         "ref/net472/Microsoft.Build.Framework.dll",
-        "ref/net472/Microsoft.Build.Framework.xml",
         "ref/net9.0/Microsoft.Build.Framework.dll",
-        "ref/net9.0/Microsoft.Build.Framework.xml",
-        "ref/netstandard2.0/Microsoft.Build.Framework.dll",
-        "ref/netstandard2.0/Microsoft.Build.Framework.xml"
+        "ref/netstandard2.0/Microsoft.Build.Framework.dll"
       ]
     },
     "Microsoft.Build.Tasks.Core/17.14.28": {
@@ -2084,19 +2089,14 @@
         "README.md",
         "lib/net472/Microsoft.Build.Tasks.Core.dll",
         "lib/net472/Microsoft.Build.Tasks.Core.pdb",
-        "lib/net472/Microsoft.Build.Tasks.Core.xml",
         "lib/net9.0/Microsoft.Build.Tasks.Core.dll",
         "lib/net9.0/Microsoft.Build.Tasks.Core.pdb",
-        "lib/net9.0/Microsoft.Build.Tasks.Core.xml",
         "microsoft.build.tasks.core.17.14.28.nupkg.sha512",
         "microsoft.build.tasks.core.nuspec",
         "notices/THIRDPARTYNOTICES.txt",
         "ref/net472/Microsoft.Build.Tasks.Core.dll",
-        "ref/net472/Microsoft.Build.Tasks.Core.xml",
         "ref/net9.0/Microsoft.Build.Tasks.Core.dll",
-        "ref/net9.0/Microsoft.Build.Tasks.Core.xml",
-        "ref/netstandard2.0/Microsoft.Build.Tasks.Core.dll",
-        "ref/netstandard2.0/Microsoft.Build.Tasks.Core.xml"
+        "ref/netstandard2.0/Microsoft.Build.Tasks.Core.dll"
       ]
     },
     "Microsoft.Build.Utilities.Core/17.14.28": {
@@ -2110,19 +2110,14 @@
         "README.md",
         "lib/net472/Microsoft.Build.Utilities.Core.dll",
         "lib/net472/Microsoft.Build.Utilities.Core.pdb",
-        "lib/net472/Microsoft.Build.Utilities.Core.xml",
         "lib/net9.0/Microsoft.Build.Utilities.Core.dll",
         "lib/net9.0/Microsoft.Build.Utilities.Core.pdb",
-        "lib/net9.0/Microsoft.Build.Utilities.Core.xml",
         "microsoft.build.utilities.core.17.14.28.nupkg.sha512",
         "microsoft.build.utilities.core.nuspec",
         "notices/THIRDPARTYNOTICES.txt",
         "ref/net472/Microsoft.Build.Utilities.Core.dll",
-        "ref/net472/Microsoft.Build.Utilities.Core.xml",
         "ref/net9.0/Microsoft.Build.Utilities.Core.dll",
-        "ref/net9.0/Microsoft.Build.Utilities.Core.xml",
-        "ref/netstandard2.0/Microsoft.Build.Utilities.Core.dll",
-        "ref/netstandard2.0/Microsoft.Build.Utilities.Core.xml"
+        "ref/netstandard2.0/Microsoft.Build.Utilities.Core.dll"
       ]
     },
     "Microsoft.CodeAnalysis.Analyzers/3.11.0": {
@@ -2838,7 +2833,6 @@
         "ThirdPartyNotices.rtf",
         "lib/net8.0/Microsoft.CodeAnalysis.dll",
         "lib/net8.0/Microsoft.CodeAnalysis.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.xml",
         "lib/net8.0/cs/Microsoft.CodeAnalysis.resources.dll",
         "lib/net8.0/de/Microsoft.CodeAnalysis.resources.dll",
         "lib/net8.0/es/Microsoft.CodeAnalysis.resources.dll",
@@ -2854,7 +2848,6 @@
         "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
         "lib/net9.0/Microsoft.CodeAnalysis.dll",
         "lib/net9.0/Microsoft.CodeAnalysis.pdb",
-        "lib/net9.0/Microsoft.CodeAnalysis.xml",
         "lib/net9.0/cs/Microsoft.CodeAnalysis.resources.dll",
         "lib/net9.0/de/Microsoft.CodeAnalysis.resources.dll",
         "lib/net9.0/es/Microsoft.CodeAnalysis.resources.dll",
@@ -2870,7 +2863,6 @@
         "lib/net9.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.pdb",
-        "lib/netstandard2.0/Microsoft.CodeAnalysis.xml",
         "lib/netstandard2.0/cs/Microsoft.CodeAnalysis.resources.dll",
         "lib/netstandard2.0/de/Microsoft.CodeAnalysis.resources.dll",
         "lib/netstandard2.0/es/Microsoft.CodeAnalysis.resources.dll",
@@ -2899,7 +2891,6 @@
         "ThirdPartyNotices.rtf",
         "lib/net8.0/Microsoft.CodeAnalysis.CSharp.dll",
         "lib/net8.0/Microsoft.CodeAnalysis.CSharp.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.xml",
         "lib/net8.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/net8.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/net8.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll",
@@ -2915,7 +2906,6 @@
         "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/net9.0/Microsoft.CodeAnalysis.CSharp.dll",
         "lib/net9.0/Microsoft.CodeAnalysis.CSharp.pdb",
-        "lib/net9.0/Microsoft.CodeAnalysis.CSharp.xml",
         "lib/net9.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/net9.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/net9.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll",
@@ -2931,7 +2921,6 @@
         "lib/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.pdb",
-        "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.xml",
         "lib/netstandard2.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/netstandard2.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/netstandard2.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll",
@@ -2960,7 +2949,6 @@
         "ThirdPartyNotices.rtf",
         "lib/net8.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll",
         "lib/net8.0/Microsoft.CodeAnalysis.CSharp.Workspaces.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.Workspaces.xml",
         "lib/net8.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/net8.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/net8.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
@@ -2976,7 +2964,6 @@
         "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll",
         "lib/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.pdb",
-        "lib/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.xml",
         "lib/net9.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/net9.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/net9.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
@@ -2992,7 +2979,6 @@
         "lib/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.Workspaces.pdb",
-        "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.Workspaces.xml",
         "lib/netstandard2.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/netstandard2.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/netstandard2.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
@@ -3021,7 +3007,6 @@
         "ThirdPartyNotices.rtf",
         "lib/net8.0/Microsoft.CodeAnalysis.Workspaces.dll",
         "lib/net8.0/Microsoft.CodeAnalysis.Workspaces.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.Workspaces.xml",
         "lib/net8.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/net8.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/net8.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll",
@@ -3037,7 +3022,6 @@
         "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.dll",
         "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.pdb",
-        "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.xml",
         "lib/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/net9.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/net9.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll",
@@ -3053,7 +3037,6 @@
         "lib/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.Workspaces.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.Workspaces.pdb",
-        "lib/netstandard2.0/Microsoft.CodeAnalysis.Workspaces.xml",
         "lib/netstandard2.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/netstandard2.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/netstandard2.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll",
@@ -3129,7 +3112,6 @@
         "lib/net472/Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll",
         "lib/net472/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll",
         "lib/net472/Microsoft.CodeAnalysis.Workspaces.MSBuild.pdb",
-        "lib/net472/Microsoft.CodeAnalysis.Workspaces.MSBuild.xml",
         "lib/net472/cs/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll",
         "lib/net472/de/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll",
         "lib/net472/es/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll",
@@ -3146,7 +3128,6 @@
         "lib/net8.0/Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll",
         "lib/net8.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll",
         "lib/net8.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.xml",
         "lib/net8.0/cs/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll",
         "lib/net8.0/de/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll",
         "lib/net8.0/es/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll",
@@ -3163,7 +3144,6 @@
         "lib/net9.0/Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll",
         "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll",
         "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.pdb",
-        "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.xml",
         "lib/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll",
         "lib/net9.0/de/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll",
         "lib/net9.0/es/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll",
@@ -3192,7 +3172,6 @@
         "PACKAGE.md",
         "buildTransitive/net10.0/Microsoft.EntityFrameworkCore.props",
         "lib/net10.0/Microsoft.EntityFrameworkCore.dll",
-        "lib/net10.0/Microsoft.EntityFrameworkCore.xml",
         "microsoft.entityframeworkcore.10.0.0.nupkg.sha512",
         "microsoft.entityframeworkcore.nuspec"
       ]
@@ -3207,7 +3186,6 @@
         "Icon.png",
         "PACKAGE.md",
         "lib/net10.0/Microsoft.EntityFrameworkCore.Abstractions.dll",
-        "lib/net10.0/Microsoft.EntityFrameworkCore.Abstractions.xml",
         "microsoft.entityframeworkcore.abstractions.10.0.0.nupkg.sha512",
         "microsoft.entityframeworkcore.abstractions.nuspec"
       ]
@@ -3237,7 +3215,6 @@
         "PACKAGE.md",
         "build/net10.0/Microsoft.EntityFrameworkCore.Design.props",
         "lib/net10.0/Microsoft.EntityFrameworkCore.Design.dll",
-        "lib/net10.0/Microsoft.EntityFrameworkCore.Design.xml",
         "microsoft.entityframeworkcore.design.10.0.0.nupkg.sha512",
         "microsoft.entityframeworkcore.design.nuspec"
       ]
@@ -3252,7 +3229,6 @@
         "Icon.png",
         "PACKAGE.md",
         "lib/net10.0/Microsoft.EntityFrameworkCore.Relational.dll",
-        "lib/net10.0/Microsoft.EntityFrameworkCore.Relational.xml",
         "microsoft.entityframeworkcore.relational.10.0.0.nupkg.sha512",
         "microsoft.entityframeworkcore.relational.nuspec"
       ]
@@ -3272,15 +3248,10 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Caching.Abstractions.targets",
         "lib/net10.0/Microsoft.Extensions.Caching.Abstractions.dll",
-        "lib/net10.0/Microsoft.Extensions.Caching.Abstractions.xml",
         "lib/net462/Microsoft.Extensions.Caching.Abstractions.dll",
-        "lib/net462/Microsoft.Extensions.Caching.Abstractions.xml",
         "lib/net8.0/Microsoft.Extensions.Caching.Abstractions.dll",
-        "lib/net8.0/Microsoft.Extensions.Caching.Abstractions.xml",
         "lib/net9.0/Microsoft.Extensions.Caching.Abstractions.dll",
-        "lib/net9.0/Microsoft.Extensions.Caching.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Caching.Abstractions.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.Caching.Abstractions.xml",
         "microsoft.extensions.caching.abstractions.10.0.0.nupkg.sha512",
         "microsoft.extensions.caching.abstractions.nuspec",
         "useSharedDesignerContext.txt"
@@ -3301,15 +3272,10 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Caching.Memory.targets",
         "lib/net10.0/Microsoft.Extensions.Caching.Memory.dll",
-        "lib/net10.0/Microsoft.Extensions.Caching.Memory.xml",
         "lib/net462/Microsoft.Extensions.Caching.Memory.dll",
-        "lib/net462/Microsoft.Extensions.Caching.Memory.xml",
         "lib/net8.0/Microsoft.Extensions.Caching.Memory.dll",
-        "lib/net8.0/Microsoft.Extensions.Caching.Memory.xml",
         "lib/net9.0/Microsoft.Extensions.Caching.Memory.dll",
-        "lib/net9.0/Microsoft.Extensions.Caching.Memory.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Caching.Memory.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.Caching.Memory.xml",
         "microsoft.extensions.caching.memory.10.0.0.nupkg.sha512",
         "microsoft.extensions.caching.memory.nuspec",
         "useSharedDesignerContext.txt"
@@ -3330,15 +3296,10 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Configuration.Abstractions.targets",
         "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll",
-        "lib/net10.0/Microsoft.Extensions.Configuration.Abstractions.xml",
         "lib/net462/Microsoft.Extensions.Configuration.Abstractions.dll",
-        "lib/net462/Microsoft.Extensions.Configuration.Abstractions.xml",
         "lib/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll",
-        "lib/net8.0/Microsoft.Extensions.Configuration.Abstractions.xml",
         "lib/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll",
-        "lib/net9.0/Microsoft.Extensions.Configuration.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.xml",
         "microsoft.extensions.configuration.abstractions.10.0.0.nupkg.sha512",
         "microsoft.extensions.configuration.abstractions.nuspec",
         "useSharedDesignerContext.txt"
@@ -3359,17 +3320,11 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/Microsoft.Extensions.DependencyInjection.targets",
         "lib/net10.0/Microsoft.Extensions.DependencyInjection.dll",
-        "lib/net10.0/Microsoft.Extensions.DependencyInjection.xml",
         "lib/net462/Microsoft.Extensions.DependencyInjection.dll",
-        "lib/net462/Microsoft.Extensions.DependencyInjection.xml",
         "lib/net8.0/Microsoft.Extensions.DependencyInjection.dll",
-        "lib/net8.0/Microsoft.Extensions.DependencyInjection.xml",
         "lib/net9.0/Microsoft.Extensions.DependencyInjection.dll",
-        "lib/net9.0/Microsoft.Extensions.DependencyInjection.xml",
         "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.xml",
         "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.dll",
-        "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.xml",
         "microsoft.extensions.dependencyinjection.10.0.0.nupkg.sha512",
         "microsoft.extensions.dependencyinjection.nuspec",
         "useSharedDesignerContext.txt"
@@ -3421,15 +3376,10 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/Microsoft.Extensions.DependencyModel.targets",
         "lib/net10.0/Microsoft.Extensions.DependencyModel.dll",
-        "lib/net10.0/Microsoft.Extensions.DependencyModel.xml",
         "lib/net462/Microsoft.Extensions.DependencyModel.dll",
-        "lib/net462/Microsoft.Extensions.DependencyModel.xml",
         "lib/net8.0/Microsoft.Extensions.DependencyModel.dll",
-        "lib/net8.0/Microsoft.Extensions.DependencyModel.xml",
         "lib/net9.0/Microsoft.Extensions.DependencyModel.dll",
-        "lib/net9.0/Microsoft.Extensions.DependencyModel.xml",
         "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.xml",
         "microsoft.extensions.dependencymodel.10.0.0.nupkg.sha512",
         "microsoft.extensions.dependencymodel.nuspec",
         "useSharedDesignerContext.txt"
@@ -3552,17 +3502,11 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Logging.targets",
         "lib/net10.0/Microsoft.Extensions.Logging.dll",
-        "lib/net10.0/Microsoft.Extensions.Logging.xml",
         "lib/net462/Microsoft.Extensions.Logging.dll",
-        "lib/net462/Microsoft.Extensions.Logging.xml",
         "lib/net8.0/Microsoft.Extensions.Logging.dll",
-        "lib/net8.0/Microsoft.Extensions.Logging.xml",
         "lib/net9.0/Microsoft.Extensions.Logging.dll",
-        "lib/net9.0/Microsoft.Extensions.Logging.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Logging.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.Logging.xml",
         "lib/netstandard2.1/Microsoft.Extensions.Logging.dll",
-        "lib/netstandard2.1/Microsoft.Extensions.Logging.xml",
         "microsoft.extensions.logging.10.0.0.nupkg.sha512",
         "microsoft.extensions.logging.nuspec",
         "useSharedDesignerContext.txt"
@@ -3689,17 +3633,11 @@
         "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Options.targets",
         "buildTransitive/netstandard2.0/Microsoft.Extensions.Options.targets",
         "lib/net10.0/Microsoft.Extensions.Options.dll",
-        "lib/net10.0/Microsoft.Extensions.Options.xml",
         "lib/net462/Microsoft.Extensions.Options.dll",
-        "lib/net462/Microsoft.Extensions.Options.xml",
         "lib/net8.0/Microsoft.Extensions.Options.dll",
-        "lib/net8.0/Microsoft.Extensions.Options.xml",
         "lib/net9.0/Microsoft.Extensions.Options.dll",
-        "lib/net9.0/Microsoft.Extensions.Options.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Options.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.Options.xml",
         "lib/netstandard2.1/Microsoft.Extensions.Options.dll",
-        "lib/netstandard2.1/Microsoft.Extensions.Options.xml",
         "microsoft.extensions.options.10.0.0.nupkg.sha512",
         "microsoft.extensions.options.nuspec",
         "useSharedDesignerContext.txt"
@@ -3720,15 +3658,10 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Primitives.targets",
         "lib/net10.0/Microsoft.Extensions.Primitives.dll",
-        "lib/net10.0/Microsoft.Extensions.Primitives.xml",
         "lib/net462/Microsoft.Extensions.Primitives.dll",
-        "lib/net462/Microsoft.Extensions.Primitives.xml",
         "lib/net8.0/Microsoft.Extensions.Primitives.dll",
-        "lib/net8.0/Microsoft.Extensions.Primitives.xml",
         "lib/net9.0/Microsoft.Extensions.Primitives.dll",
-        "lib/net9.0/Microsoft.Extensions.Primitives.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.Primitives.xml",
         "microsoft.extensions.primitives.10.0.0.nupkg.sha512",
         "microsoft.extensions.primitives.nuspec",
         "useSharedDesignerContext.txt"
@@ -3927,22 +3860,16 @@
         "README.md",
         "lib/net472/Microsoft.NET.StringTools.dll",
         "lib/net472/Microsoft.NET.StringTools.pdb",
-        "lib/net472/Microsoft.NET.StringTools.xml",
         "lib/net9.0/Microsoft.NET.StringTools.dll",
         "lib/net9.0/Microsoft.NET.StringTools.pdb",
-        "lib/net9.0/Microsoft.NET.StringTools.xml",
         "lib/netstandard2.0/Microsoft.NET.StringTools.dll",
         "lib/netstandard2.0/Microsoft.NET.StringTools.pdb",
-        "lib/netstandard2.0/Microsoft.NET.StringTools.xml",
         "microsoft.net.stringtools.17.14.28.nupkg.sha512",
         "microsoft.net.stringtools.nuspec",
         "notices/THIRDPARTYNOTICES.txt",
         "ref/net472/Microsoft.NET.StringTools.dll",
-        "ref/net472/Microsoft.NET.StringTools.xml",
         "ref/net9.0/Microsoft.NET.StringTools.dll",
-        "ref/net9.0/Microsoft.NET.StringTools.xml",
-        "ref/netstandard2.0/Microsoft.NET.StringTools.dll",
-        "ref/netstandard2.0/Microsoft.NET.StringTools.xml"
+        "ref/netstandard2.0/Microsoft.NET.StringTools.dll"
       ]
     },
     "Mono.TextTemplating/3.0.0": {
@@ -3972,24 +3899,37 @@
         "LICENSE.md",
         "README.md",
         "lib/net20/Newtonsoft.Json.dll",
-        "lib/net20/Newtonsoft.Json.xml",
         "lib/net35/Newtonsoft.Json.dll",
-        "lib/net35/Newtonsoft.Json.xml",
         "lib/net40/Newtonsoft.Json.dll",
-        "lib/net40/Newtonsoft.Json.xml",
         "lib/net45/Newtonsoft.Json.dll",
-        "lib/net45/Newtonsoft.Json.xml",
         "lib/net6.0/Newtonsoft.Json.dll",
-        "lib/net6.0/Newtonsoft.Json.xml",
         "lib/netstandard1.0/Newtonsoft.Json.dll",
-        "lib/netstandard1.0/Newtonsoft.Json.xml",
         "lib/netstandard1.3/Newtonsoft.Json.dll",
-        "lib/netstandard1.3/Newtonsoft.Json.xml",
         "lib/netstandard2.0/Newtonsoft.Json.dll",
-        "lib/netstandard2.0/Newtonsoft.Json.xml",
         "newtonsoft.json.13.0.3.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "packageIcon.png"
+      ]
+    },
+    "Quartz/3.10.0": {
+      "sha512": "9LqcKWFtn5nrj7KX8VASOK8FMgrgMCT9NlHzDtYtVQlKMnOaf45329KnA4dNSmpQqJofZqEJPnsIlnQP4xNbyA==",
+      "type": "package",
+      "path": "quartz/3.10.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net462/Quartz.dll",
+        "lib/net462/Quartz.xml",
+        "lib/net472/Quartz.dll",
+        "lib/net472/Quartz.xml",
+        "lib/net6.0/Quartz.dll",
+        "lib/net6.0/Quartz.xml",
+        "lib/netstandard2.0/Quartz.dll",
+        "lib/netstandard2.0/Quartz.xml",
+        "quartz-logo-small.png",
+        "quartz.3.10.0.nupkg.sha512",
+        "quartz.nuspec",
+        "quick-start.md"
       ]
     },
     "System.CodeDom/9.0.0": {
@@ -4008,13 +3948,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.CodeDom.targets",
         "lib/net462/System.CodeDom.dll",
-        "lib/net462/System.CodeDom.xml",
         "lib/net8.0/System.CodeDom.dll",
-        "lib/net8.0/System.CodeDom.xml",
         "lib/net9.0/System.CodeDom.dll",
-        "lib/net9.0/System.CodeDom.xml",
         "lib/netstandard2.0/System.CodeDom.dll",
-        "lib/netstandard2.0/System.CodeDom.xml",
         "system.codedom.9.0.0.nupkg.sha512",
         "system.codedom.nuspec",
         "useSharedDesignerContext.txt"
@@ -4149,13 +4085,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Composition.AttributedModel.targets",
         "lib/net462/System.Composition.AttributedModel.dll",
-        "lib/net462/System.Composition.AttributedModel.xml",
         "lib/net8.0/System.Composition.AttributedModel.dll",
-        "lib/net8.0/System.Composition.AttributedModel.xml",
         "lib/net9.0/System.Composition.AttributedModel.dll",
-        "lib/net9.0/System.Composition.AttributedModel.xml",
         "lib/netstandard2.0/System.Composition.AttributedModel.dll",
-        "lib/netstandard2.0/System.Composition.AttributedModel.xml",
         "system.composition.attributedmodel.9.0.0.nupkg.sha512",
         "system.composition.attributedmodel.nuspec",
         "useSharedDesignerContext.txt"
@@ -4177,13 +4109,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Composition.Convention.targets",
         "lib/net462/System.Composition.Convention.dll",
-        "lib/net462/System.Composition.Convention.xml",
         "lib/net8.0/System.Composition.Convention.dll",
-        "lib/net8.0/System.Composition.Convention.xml",
         "lib/net9.0/System.Composition.Convention.dll",
-        "lib/net9.0/System.Composition.Convention.xml",
         "lib/netstandard2.0/System.Composition.Convention.dll",
-        "lib/netstandard2.0/System.Composition.Convention.xml",
         "system.composition.convention.9.0.0.nupkg.sha512",
         "system.composition.convention.nuspec",
         "useSharedDesignerContext.txt"
@@ -4205,13 +4133,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Composition.Hosting.targets",
         "lib/net462/System.Composition.Hosting.dll",
-        "lib/net462/System.Composition.Hosting.xml",
         "lib/net8.0/System.Composition.Hosting.dll",
-        "lib/net8.0/System.Composition.Hosting.xml",
         "lib/net9.0/System.Composition.Hosting.dll",
-        "lib/net9.0/System.Composition.Hosting.xml",
         "lib/netstandard2.0/System.Composition.Hosting.dll",
-        "lib/netstandard2.0/System.Composition.Hosting.xml",
         "system.composition.hosting.9.0.0.nupkg.sha512",
         "system.composition.hosting.nuspec",
         "useSharedDesignerContext.txt"
@@ -4233,13 +4157,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Composition.Runtime.targets",
         "lib/net462/System.Composition.Runtime.dll",
-        "lib/net462/System.Composition.Runtime.xml",
         "lib/net8.0/System.Composition.Runtime.dll",
-        "lib/net8.0/System.Composition.Runtime.xml",
         "lib/net9.0/System.Composition.Runtime.dll",
-        "lib/net9.0/System.Composition.Runtime.xml",
         "lib/netstandard2.0/System.Composition.Runtime.dll",
-        "lib/netstandard2.0/System.Composition.Runtime.xml",
         "system.composition.runtime.9.0.0.nupkg.sha512",
         "system.composition.runtime.nuspec",
         "useSharedDesignerContext.txt"
@@ -4261,13 +4181,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Composition.TypedParts.targets",
         "lib/net462/System.Composition.TypedParts.dll",
-        "lib/net462/System.Composition.TypedParts.xml",
         "lib/net8.0/System.Composition.TypedParts.dll",
-        "lib/net8.0/System.Composition.TypedParts.xml",
         "lib/net9.0/System.Composition.TypedParts.dll",
-        "lib/net9.0/System.Composition.TypedParts.xml",
         "lib/netstandard2.0/System.Composition.TypedParts.dll",
-        "lib/netstandard2.0/System.Composition.TypedParts.xml",
         "system.composition.typedparts.9.0.0.nupkg.sha512",
         "system.composition.typedparts.nuspec",
         "useSharedDesignerContext.txt"
@@ -4289,13 +4205,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Configuration.ConfigurationManager.targets",
         "lib/net462/System.Configuration.ConfigurationManager.dll",
-        "lib/net462/System.Configuration.ConfigurationManager.xml",
         "lib/net8.0/System.Configuration.ConfigurationManager.dll",
-        "lib/net8.0/System.Configuration.ConfigurationManager.xml",
         "lib/net9.0/System.Configuration.ConfigurationManager.dll",
-        "lib/net9.0/System.Configuration.ConfigurationManager.xml",
         "lib/netstandard2.0/System.Configuration.ConfigurationManager.dll",
-        "lib/netstandard2.0/System.Configuration.ConfigurationManager.xml",
         "system.configuration.configurationmanager.9.0.0.nupkg.sha512",
         "system.configuration.configurationmanager.nuspec",
         "useSharedDesignerContext.txt"
@@ -4317,13 +4229,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Diagnostics.EventLog.targets",
         "lib/net462/System.Diagnostics.EventLog.dll",
-        "lib/net462/System.Diagnostics.EventLog.xml",
         "lib/net8.0/System.Diagnostics.EventLog.dll",
-        "lib/net8.0/System.Diagnostics.EventLog.xml",
         "lib/net9.0/System.Diagnostics.EventLog.dll",
-        "lib/net9.0/System.Diagnostics.EventLog.xml",
         "lib/netstandard2.0/System.Diagnostics.EventLog.dll",
-        "lib/netstandard2.0/System.Diagnostics.EventLog.xml",
         "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll",
         "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll",
         "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.xml",
@@ -4351,13 +4259,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Formats.Nrbf.targets",
         "lib/net462/System.Formats.Nrbf.dll",
-        "lib/net462/System.Formats.Nrbf.xml",
         "lib/net8.0/System.Formats.Nrbf.dll",
-        "lib/net8.0/System.Formats.Nrbf.xml",
         "lib/net9.0/System.Formats.Nrbf.dll",
-        "lib/net9.0/System.Formats.Nrbf.xml",
         "lib/netstandard2.0/System.Formats.Nrbf.dll",
-        "lib/netstandard2.0/System.Formats.Nrbf.xml",
         "system.formats.nrbf.9.0.0.nupkg.sha512",
         "system.formats.nrbf.nuspec",
         "useSharedDesignerContext.txt"
@@ -4405,13 +4309,9 @@
         "buildTransitive/net6.0/_._",
         "buildTransitive/netcoreapp2.0/System.Reflection.MetadataLoadContext.targets",
         "lib/net462/System.Reflection.MetadataLoadContext.dll",
-        "lib/net462/System.Reflection.MetadataLoadContext.xml",
         "lib/net6.0/System.Reflection.MetadataLoadContext.dll",
-        "lib/net6.0/System.Reflection.MetadataLoadContext.xml",
         "lib/net7.0/System.Reflection.MetadataLoadContext.dll",
-        "lib/net7.0/System.Reflection.MetadataLoadContext.xml",
         "lib/netstandard2.0/System.Reflection.MetadataLoadContext.dll",
-        "lib/netstandard2.0/System.Reflection.MetadataLoadContext.xml",
         "system.reflection.metadataloadcontext.7.0.0.nupkg.sha512",
         "system.reflection.metadataloadcontext.nuspec",
         "useSharedDesignerContext.txt"
@@ -4432,13 +4332,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Resources.Extensions.targets",
         "lib/net462/System.Resources.Extensions.dll",
-        "lib/net462/System.Resources.Extensions.xml",
         "lib/net8.0/System.Resources.Extensions.dll",
-        "lib/net8.0/System.Resources.Extensions.xml",
         "lib/net9.0/System.Resources.Extensions.dll",
-        "lib/net9.0/System.Resources.Extensions.xml",
         "lib/netstandard2.0/System.Resources.Extensions.dll",
-        "lib/netstandard2.0/System.Resources.Extensions.xml",
         "system.resources.extensions.9.0.0.nupkg.sha512",
         "system.resources.extensions.nuspec",
         "useSharedDesignerContext.txt"
@@ -4459,15 +4355,10 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Security.Cryptography.Pkcs.targets",
         "lib/net462/System.Security.Cryptography.Pkcs.dll",
-        "lib/net462/System.Security.Cryptography.Pkcs.xml",
         "lib/net8.0/System.Security.Cryptography.Pkcs.dll",
-        "lib/net8.0/System.Security.Cryptography.Pkcs.xml",
         "lib/net9.0/System.Security.Cryptography.Pkcs.dll",
-        "lib/net9.0/System.Security.Cryptography.Pkcs.xml",
         "lib/netstandard2.0/System.Security.Cryptography.Pkcs.dll",
-        "lib/netstandard2.0/System.Security.Cryptography.Pkcs.xml",
         "lib/netstandard2.1/System.Security.Cryptography.Pkcs.dll",
-        "lib/netstandard2.1/System.Security.Cryptography.Pkcs.xml",
         "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll",
         "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.xml",
         "runtimes/win/lib/net9.0/System.Security.Cryptography.Pkcs.dll",
@@ -4495,13 +4386,9 @@
         "lib/MonoAndroid10/_._",
         "lib/MonoTouch10/_._",
         "lib/net462/System.Security.Cryptography.ProtectedData.dll",
-        "lib/net462/System.Security.Cryptography.ProtectedData.xml",
         "lib/net8.0/System.Security.Cryptography.ProtectedData.dll",
-        "lib/net8.0/System.Security.Cryptography.ProtectedData.xml",
         "lib/net9.0/System.Security.Cryptography.ProtectedData.dll",
-        "lib/net9.0/System.Security.Cryptography.ProtectedData.xml",
         "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll",
-        "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.xml",
         "lib/xamarinios10/_._",
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
@@ -4526,13 +4413,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Security.Cryptography.Xml.targets",
         "lib/net462/System.Security.Cryptography.Xml.dll",
-        "lib/net462/System.Security.Cryptography.Xml.xml",
         "lib/net8.0/System.Security.Cryptography.Xml.dll",
-        "lib/net8.0/System.Security.Cryptography.Xml.xml",
         "lib/net9.0/System.Security.Cryptography.Xml.dll",
-        "lib/net9.0/System.Security.Cryptography.Xml.xml",
         "lib/netstandard2.0/System.Security.Cryptography.Xml.dll",
-        "lib/netstandard2.0/System.Security.Cryptography.Xml.xml",
         "system.security.cryptography.xml.9.0.0.nupkg.sha512",
         "system.security.cryptography.xml.nuspec",
         "useSharedDesignerContext.txt"
@@ -4553,13 +4436,9 @@
         "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Security.Permissions.targets",
         "lib/net462/System.Security.Permissions.dll",
-        "lib/net462/System.Security.Permissions.xml",
         "lib/net8.0/System.Security.Permissions.dll",
-        "lib/net8.0/System.Security.Permissions.xml",
         "lib/net9.0/System.Security.Permissions.dll",
-        "lib/net9.0/System.Security.Permissions.xml",
         "lib/netstandard2.0/System.Security.Permissions.dll",
-        "lib/netstandard2.0/System.Security.Permissions.xml",
         "system.security.permissions.9.0.0.nupkg.sha512",
         "system.security.permissions.nuspec",
         "useSharedDesignerContext.txt"
@@ -4577,9 +4456,7 @@
         "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net8.0/System.Windows.Extensions.dll",
-        "lib/net8.0/System.Windows.Extensions.xml",
         "lib/net9.0/System.Windows.Extensions.dll",
-        "lib/net9.0/System.Windows.Extensions.xml",
         "runtimes/win/lib/net8.0/System.Windows.Extensions.dll",
         "runtimes/win/lib/net8.0/System.Windows.Extensions.xml",
         "runtimes/win/lib/net9.0/System.Windows.Extensions.dll",
@@ -4610,6 +4487,7 @@
       "MediatR.Extensions.Microsoft.DependencyInjection >= 11.1.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 10.0.4",
       "Microsoft.AspNetCore.Identity >= 2.3.9",
+      "Quartz >= 3.10.0",
       "System.IdentityModel.Tokens.Jwt >= 8.16.0"
     ]
   },
@@ -4694,6 +4572,10 @@
           "Microsoft.AspNetCore.Identity": {
             "target": "Package",
             "version": "[2.3.9, )"
+          },
+          "Quartz": {
+            "target": "Package",
+            "version": "[3.10.0, )"
           },
           "System.IdentityModel.Tokens.Jwt": {
             "target": "Package",

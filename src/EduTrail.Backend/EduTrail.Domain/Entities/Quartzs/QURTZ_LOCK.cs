@@ -4,17 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EduTrail.Domain.Entities.Quartzs
 {
-
-    [PrimaryKey("SCHED_NAME", "TRIGGER_GROUP")]
-    [Table("PMTS_QURTZ_PAUSED_TRIGGER_GRPS")]
-    public partial class PMTS_QURTZ_PAUSED_TRIGGER_GRP
+    [PrimaryKey("SCHED_NAME", "LOCK_NAME")]
+    [Table("QURTZ_LOCKS")]
+    public partial class QURTZ_LOCK
     {
         [Key]
         [StringLength(120)]
         public string SCHED_NAME { get; set; } = null!;
 
         [Key]
-        [StringLength(150)]
-        public string TRIGGER_GROUP { get; set; } = null!;
+        [StringLength(40)]
+        public string LOCK_NAME { get; set; } = null!;
     }
 }

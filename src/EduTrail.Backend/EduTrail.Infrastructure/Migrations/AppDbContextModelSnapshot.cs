@@ -322,7 +322,7 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("LabRequests");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_BLOB_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_BLOB_TRIGGER", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -341,10 +341,10 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP");
 
-                    b.ToTable("PMTS_QURTZ_BLOB_TRIGGERS");
+                    b.ToTable("QURTZ_BLOB_TRIGGERS");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_CALENDAR", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_CALENDAR", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -360,10 +360,10 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("SCHED_NAME", "CALENDAR_NAME");
 
-                    b.ToTable("PMTS_QURTZ_CALENDARS");
+                    b.ToTable("QURTZ_CALENDARS");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_CRON_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_CRON_TRIGGER", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -388,10 +388,10 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP");
 
-                    b.ToTable("PMTS_QURTZ_CRON_TRIGGERS");
+                    b.ToTable("QURTZ_CRON_TRIGGERS");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_FIRED_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_FIRED_TRIGGER", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -452,10 +452,10 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasIndex(new[] { "SCHED_NAME", "INSTANCE_NAME", "REQUESTS_RECOVERY" }, "IDX_QRTZ_FT_INST_JOB_REQ_RCVRY");
 
-                    b.ToTable("PMTS_QURTZ_FIRED_TRIGGERS");
+                    b.ToTable("QURTZ_FIRED_TRIGGERS");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_JOB_DETAIL", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_JOB_DETAIL", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -495,10 +495,10 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("SCHED_NAME", "JOB_NAME", "JOB_GROUP");
 
-                    b.ToTable("PMTS_QURTZ_JOB_DETAILS");
+                    b.ToTable("QURTZ_JOB_DETAILS");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_LOCK", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_LOCK", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -510,10 +510,10 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("SCHED_NAME", "LOCK_NAME");
 
-                    b.ToTable("PMTS_QURTZ_LOCKS");
+                    b.ToTable("QURTZ_LOCKS");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_PAUSED_TRIGGER_GRP", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_PAUSED_TRIGGER_GRP", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -525,10 +525,10 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("SCHED_NAME", "TRIGGER_GROUP");
 
-                    b.ToTable("PMTS_QURTZ_PAUSED_TRIGGER_GRPS");
+                    b.ToTable("QURTZ_PAUSED_TRIGGER_GRPS");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SCHEDULER_STATE", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_SCHEDULER_STATE", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -546,10 +546,10 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("SCHED_NAME", "INSTANCE_NAME");
 
-                    b.ToTable("PMTS_QURTZ_SCHEDULER_STATE");
+                    b.ToTable("QURTZ_SCHEDULER_STATE");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPLE_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_SIMPLE_TRIGGER", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -574,10 +574,10 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP");
 
-                    b.ToTable("PMTS_QURTZ_SIMPLE_TRIGGERS");
+                    b.ToTable("QURTZ_SIMPLE_TRIGGERS");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPROP_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_SIMPROP_TRIGGER", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -633,10 +633,10 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP");
 
-                    b.ToTable("PMTS_QURTZ_SIMPROP_TRIGGERS");
+                    b.ToTable("QURTZ_SIMPROP_TRIGGERS");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_TRIGGER", b =>
                 {
                     b.Property<string>("SCHED_NAME")
                         .HasMaxLength(120)
@@ -721,7 +721,7 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasIndex(new[] { "SCHED_NAME", "TRIGGER_STATE" }, "IDX_QRTZ_T_STATE");
 
-                    b.ToTable("PMTS_QURTZ_TRIGGERS");
+                    b.ToTable("QURTZ_TRIGGERS");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
@@ -1531,48 +1531,48 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_CRON_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_CRON_TRIGGER", b =>
                 {
-                    b.HasOne("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", "PMTS_QURTZ_TRIGGER")
-                        .WithOne("PMTS_QURTZ_CRON_TRIGGER")
-                        .HasForeignKey("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_CRON_TRIGGER", "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")
+                    b.HasOne("EduTrail.Domain.Entities.Quartzs.QURTZ_TRIGGER", "QURTZ_TRIGGER")
+                        .WithOne("QURTZ_CRON_TRIGGER")
+                        .HasForeignKey("EduTrail.Domain.Entities.Quartzs.QURTZ_CRON_TRIGGER", "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PMTS_QURTZ_TRIGGER");
+                    b.Navigation("QURTZ_TRIGGER");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPLE_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_SIMPLE_TRIGGER", b =>
                 {
-                    b.HasOne("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", "PMTS_QURTZ_TRIGGER")
-                        .WithOne("PMTS_QURTZ_SIMPLE_TRIGGER")
-                        .HasForeignKey("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPLE_TRIGGER", "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")
+                    b.HasOne("EduTrail.Domain.Entities.Quartzs.QURTZ_TRIGGER", "QURTZ_TRIGGER")
+                        .WithOne("QURTZ_SIMPLE_TRIGGER")
+                        .HasForeignKey("EduTrail.Domain.Entities.Quartzs.QURTZ_SIMPLE_TRIGGER", "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PMTS_QURTZ_TRIGGER");
+                    b.Navigation("QURTZ_TRIGGER");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPROP_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_SIMPROP_TRIGGER", b =>
                 {
-                    b.HasOne("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", "PMTS_QURTZ_TRIGGER")
-                        .WithOne("PMTS_QURTZ_SIMPROP_TRIGGER")
-                        .HasForeignKey("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_SIMPROP_TRIGGER", "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")
+                    b.HasOne("EduTrail.Domain.Entities.Quartzs.QURTZ_TRIGGER", "QURTZ_TRIGGER")
+                        .WithOne("QURTZ_SIMPROP_TRIGGER")
+                        .HasForeignKey("EduTrail.Domain.Entities.Quartzs.QURTZ_SIMPROP_TRIGGER", "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PMTS_QURTZ_TRIGGER");
+                    b.Navigation("QURTZ_TRIGGER");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_TRIGGER", b =>
                 {
-                    b.HasOne("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_JOB_DETAIL", "PMTS_QURTZ_JOB_DETAIL")
-                        .WithMany("PMTS_QURTZ_TRIGGERs")
+                    b.HasOne("EduTrail.Domain.Entities.Quartzs.QURTZ_JOB_DETAIL", "QURTZ_JOB_DETAIL")
+                        .WithMany("QURTZ_TRIGGERs")
                         .HasForeignKey("SCHED_NAME", "JOB_NAME", "JOB_GROUP")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PMTS_QURTZ_JOB_DETAIL");
+                    b.Navigation("QURTZ_JOB_DETAIL");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
@@ -1730,18 +1730,18 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("TALabMonths");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_JOB_DETAIL", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_JOB_DETAIL", b =>
                 {
-                    b.Navigation("PMTS_QURTZ_TRIGGERs");
+                    b.Navigation("QURTZ_TRIGGERs");
                 });
 
-            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.PMTS_QURTZ_TRIGGER", b =>
+            modelBuilder.Entity("EduTrail.Domain.Entities.Quartzs.QURTZ_TRIGGER", b =>
                 {
-                    b.Navigation("PMTS_QURTZ_CRON_TRIGGER");
+                    b.Navigation("QURTZ_CRON_TRIGGER");
 
-                    b.Navigation("PMTS_QURTZ_SIMPLE_TRIGGER");
+                    b.Navigation("QURTZ_SIMPLE_TRIGGER");
 
-                    b.Navigation("PMTS_QURTZ_SIMPROP_TRIGGER");
+                    b.Navigation("QURTZ_SIMPROP_TRIGGER");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>

@@ -45,27 +45,27 @@ namespace EduTrail.Infrastructure.Data
         
         #region QUARTZ
 
-        public virtual DbSet<PMTS_QURTZ_BLOB_TRIGGER> PMTS_QURTZ_BLOB_TRIGGERs { get; set; }
+        public virtual DbSet<QURTZ_BLOB_TRIGGER> QURTZ_BLOB_TRIGGERS { get; set; }
 
-        public virtual DbSet<PMTS_QURTZ_CALENDAR> PMTS_QURTZ_CALENDARs { get; set; }
+        public virtual DbSet<QURTZ_CALENDAR> QURTZ_CALENDARS { get; set; }
 
-        public virtual DbSet<PMTS_QURTZ_CRON_TRIGGER> PMTS_QURTZ_CRON_TRIGGERs { get; set; }
+        public virtual DbSet<QURTZ_CRON_TRIGGER> QURTZ_CRON_TRIGGERS { get; set; }
 
-        public virtual DbSet<PMTS_QURTZ_FIRED_TRIGGER> PMTS_QURTZ_FIRED_TRIGGERs { get; set; }
+        public virtual DbSet<QURTZ_FIRED_TRIGGER> QURTZ_FIRED_TRIGGERS { get; set; }
 
-        public virtual DbSet<PMTS_QURTZ_JOB_DETAIL> PMTS_QURTZ_JOB_DETAILs { get; set; }
+        public virtual DbSet<QURTZ_JOB_DETAIL> QURTZ_JOB_DETAILS { get; set; }
 
-        public virtual DbSet<PMTS_QURTZ_LOCK> PMTS_QURTZ_LOCKs { get; set; }
+        public virtual DbSet<QURTZ_LOCK> QURTZ_LOCKS { get; set; }
 
-        public virtual DbSet<PMTS_QURTZ_PAUSED_TRIGGER_GRP> PMTS_QURTZ_PAUSED_TRIGGER_GRPs { get; set; }
+        public virtual DbSet<QURTZ_PAUSED_TRIGGER_GRP> QURTZ_PAUSED_TRIGGER_GRPS { get; set; }
 
-        public virtual DbSet<PMTS_QURTZ_SCHEDULER_STATE> PMTS_QURTZ_SCHEDULER_STATEs { get; set; }
+        public virtual DbSet<QURTZ_SCHEDULER_STATE> QURTZ_SCHEDULER_STATES { get; set; }
 
-        public virtual DbSet<PMTS_QURTZ_SIMPLE_TRIGGER> PMTS_QURTZ_SIMPLE_TRIGGERs { get; set; }
+        public virtual DbSet<QURTZ_SIMPLE_TRIGGER> QURTZ_SIMPLE_TRIGGERS { get; set; }
 
-        public virtual DbSet<PMTS_QURTZ_SIMPROP_TRIGGER> PMTS_QURTZ_SIMPROP_TRIGGERs { get; set; }
+        public virtual DbSet<QURTZ_SIMPROP_TRIGGER> QURTZ_SIMPROP_TRIGGERS { get; set; }
 
-        public virtual DbSet<PMTS_QURTZ_TRIGGER> PMTS_QURTZ_TRIGGERs { get; set; }
+        public virtual DbSet<QURTZ_TRIGGER> QURTZ_TRIGGERS { get; set; }
 
         #endregion
     }

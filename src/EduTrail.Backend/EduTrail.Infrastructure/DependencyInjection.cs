@@ -68,7 +68,7 @@ namespace EduTrail.Infrastructure
                     s.UseSqlServer(c =>
                     {
                         c.ConnectionString = GetConnectionString(dbName);
-                        c.TablePrefix = "EMOTIA_QRTZ_";
+                        c.TablePrefix = "QURTZ_";
                     });
                     s.UseJsonSerializer();
                 });

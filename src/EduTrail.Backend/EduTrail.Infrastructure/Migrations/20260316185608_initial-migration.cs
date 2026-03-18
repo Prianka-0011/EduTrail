@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EduTrail.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class updatesomefieldinenrolement_page : Migration
+    public partial class initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,6 +28,20 @@ namespace EduTrail.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AuditEntries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AutoGenerateNumbers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Number = table.Column<int>(type: "int", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    Prefix = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AutoGenerateNumbers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,6 +122,114 @@ namespace EduTrail.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QuestionTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QURTZ_BLOB_TRIGGERS",
+                columns: table => new
+                {
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    BLOB_DATA = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QURTZ_BLOB_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QURTZ_CALENDARS",
+                columns: table => new
+                {
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    CALENDAR_NAME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    CALENDAR = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QURTZ_CALENDARS", x => new { x.SCHED_NAME, x.CALENDAR_NAME });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QURTZ_FIRED_TRIGGERS",
+                columns: table => new
+                {
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    ENTRY_ID = table.Column<string>(type: "nvarchar(140)", maxLength: 140, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    INSTANCE_NAME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    FIRED_TIME = table.Column<long>(type: "bigint", nullable: false),
+                    SCHED_TIME = table.Column<long>(type: "bigint", nullable: false),
+                    PRIORITY = table.Column<int>(type: "int", nullable: false),
+                    STATE = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
+                    JOB_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    JOB_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    IS_NONCONCURRENT = table.Column<bool>(type: "bit", nullable: true),
+                    REQUESTS_RECOVERY = table.Column<bool>(type: "bit", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QURTZ_FIRED_TRIGGERS", x => new { x.SCHED_NAME, x.ENTRY_ID });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QURTZ_JOB_DETAILS",
+                columns: table => new
+                {
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    JOB_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    JOB_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    DESCRIPTION = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    JOB_CLASS_NAME = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    IS_DURABLE = table.Column<bool>(type: "bit", nullable: false),
+                    IS_NONCONCURRENT = table.Column<bool>(type: "bit", nullable: false),
+                    IS_UPDATE_DATA = table.Column<bool>(type: "bit", nullable: false),
+                    REQUESTS_RECOVERY = table.Column<bool>(type: "bit", nullable: false),
+                    JOB_DATA = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QURTZ_JOB_DETAILS", x => new { x.SCHED_NAME, x.JOB_NAME, x.JOB_GROUP });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QURTZ_LOCKS",
+                columns: table => new
+                {
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    LOCK_NAME = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QURTZ_LOCKS", x => new { x.SCHED_NAME, x.LOCK_NAME });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QURTZ_PAUSED_TRIGGER_GRPS",
+                columns: table => new
+                {
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QURTZ_PAUSED_TRIGGER_GRPS", x => new { x.SCHED_NAME, x.TRIGGER_GROUP });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QURTZ_SCHEDULER_STATE",
+                columns: table => new
+                {
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    INSTANCE_NAME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    LAST_CHECKIN_TIME = table.Column<long>(type: "bigint", nullable: false),
+                    CHECKIN_INTERVAL = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QURTZ_SCHEDULER_STATE", x => new { x.SCHED_NAME, x.INSTANCE_NAME });
                 });
 
             migrationBuilder.CreateTable(
@@ -225,6 +347,38 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "QURTZ_TRIGGERS",
+                columns: table => new
+                {
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    JOB_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    JOB_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    DESCRIPTION = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    NEXT_FIRE_TIME = table.Column<long>(type: "bigint", nullable: true),
+                    PREV_FIRE_TIME = table.Column<long>(type: "bigint", nullable: true),
+                    PRIORITY = table.Column<int>(type: "int", nullable: true),
+                    TRIGGER_STATE = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
+                    TRIGGER_TYPE = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    START_TIME = table.Column<long>(type: "bigint", nullable: false),
+                    END_TIME = table.Column<long>(type: "bigint", nullable: true),
+                    CALENDAR_NAME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    MISFIRE_INSTR = table.Column<int>(type: "int", nullable: true),
+                    JOB_DATA = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QURTZ_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
+                    table.ForeignKey(
+                        name: "FK_QURTZ_TRIGGERS_QURTZ_JOB_DETAILS_SCHED_NAME_JOB_NAME_JOB_GROUP",
+                        columns: x => new { x.SCHED_NAME, x.JOB_NAME, x.JOB_GROUP },
+                        principalTable: "QURTZ_JOB_DETAILS",
+                        principalColumns: new[] { "SCHED_NAME", "JOB_NAME", "JOB_GROUP" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Statuses",
                 columns: table => new
                 {
@@ -299,51 +453,76 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LabRequests",
+                name: "QURTZ_CRON_TRIGGERS",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ZoomLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IssueTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IssueDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TrySofar = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestedDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    AssignedTeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    CRON_EXPRESSION = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    TIME_ZONE_ID = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LabRequests", x => x.Id);
+                    table.PrimaryKey("PK_QURTZ_CRON_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
                     table.ForeignKey(
-                        name: "FK_LabRequests_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
+                        name: "FK_QURTZ_CRON_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NAME_TRIGGER_GROUP",
+                        columns: x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP },
+                        principalTable: "QURTZ_TRIGGERS",
+                        principalColumns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP" },
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QURTZ_SIMPLE_TRIGGERS",
+                columns: table => new
+                {
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    REPEAT_COUNT = table.Column<int>(type: "int", nullable: false),
+                    REPEAT_INTERVAL = table.Column<long>(type: "bigint", nullable: false),
+                    TIMES_TRIGGERED = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QURTZ_SIMPLE_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
                     table.ForeignKey(
-                        name: "FK_LabRequests_Statuses_StatusId",
-                        column: x => x.StatusId,
-                        principalTable: "Statuses",
-                        principalColumn: "Id",
+                        name: "FK_QURTZ_SIMPLE_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NAME_TRIGGER_GROUP",
+                        columns: x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP },
+                        principalTable: "QURTZ_TRIGGERS",
+                        principalColumns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP" },
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QURTZ_SIMPROP_TRIGGERS",
+                columns: table => new
+                {
+                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    STR_PROP_1 = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
+                    STR_PROP_2 = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
+                    STR_PROP_3 = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
+                    INT_PROP_1 = table.Column<int>(type: "int", nullable: true),
+                    INT_PROP_2 = table.Column<int>(type: "int", nullable: true),
+                    LONG_PROP_1 = table.Column<long>(type: "bigint", nullable: true),
+                    LONG_PROP_2 = table.Column<long>(type: "bigint", nullable: true),
+                    DEC_PROP_1 = table.Column<decimal>(type: "numeric(13,4)", nullable: true),
+                    DEC_PROP_2 = table.Column<decimal>(type: "numeric(13,4)", nullable: true),
+                    BOOL_PROP_1 = table.Column<bool>(type: "bit", nullable: true),
+                    BOOL_PROP_2 = table.Column<bool>(type: "bit", nullable: true),
+                    TIME_ZONE_ID = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QURTZ_SIMPROP_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
                     table.ForeignKey(
-                        name: "FK_LabRequests_Users_AssignedTeacherId",
-                        column: x => x.AssignedTeacherId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_LabRequests_Users_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
+                        name: "FK_QURTZ_SIMPROP_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NAME_TRIGGER_GROUP",
+                        columns: x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP },
+                        principalTable: "QURTZ_TRIGGERS",
+                        principalColumns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -422,7 +601,7 @@ namespace EduTrail.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CourseOfferingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TotalWorkHoursPerWeek = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     EnrolledDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
@@ -441,8 +620,8 @@ namespace EduTrail.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Enrollments_Users_StudentId",
-                        column: x => x.StudentId,
+                        name: "FK_Enrollments_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
@@ -500,6 +679,55 @@ namespace EduTrail.Infrastructure.Migrations
                         name: "FK_Questions_QuestionTypes_QuestionTypeId",
                         column: x => x.QuestionTypeId,
                         principalTable: "QuestionTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LabRequests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RequestNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ZoomLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IssueTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IssueDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrySofar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CourseOfferingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RequestedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    AssignedTeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LabRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LabRequests_CourseOfferings_CourseOfferingId",
+                        column: x => x.CourseOfferingId,
+                        principalTable: "CourseOfferings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LabRequests_Enrollments_AssignedTeacherId",
+                        column: x => x.AssignedTeacherId,
+                        principalTable: "Enrollments",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_LabRequests_Enrollments_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Enrollments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_LabRequests_Statuses_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Statuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -674,9 +902,9 @@ namespace EduTrail.Infrastructure.Migrations
                 column: "CourseOfferingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_StudentId",
+                name: "IX_Enrollments_UserId",
                 table: "Enrollments",
-                column: "StudentId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LabRequests_AssignedTeacherId",
@@ -684,9 +912,9 @@ namespace EduTrail.Infrastructure.Migrations
                 column: "AssignedTeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LabRequests_CourseId",
+                name: "IX_LabRequests_CourseOfferingId",
                 table: "LabRequests",
-                column: "CourseId");
+                column: "CourseOfferingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LabRequests_StatusId",
@@ -722,6 +950,71 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "IX_QuestionVariationRules_QuestionId",
                 table: "QuestionVariationRules",
                 column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_FT_G_J",
+                table: "QURTZ_FIRED_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "JOB_GROUP", "JOB_NAME" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_FT_G_T",
+                table: "QURTZ_FIRED_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "TRIGGER_GROUP", "TRIGGER_NAME" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_FT_INST_JOB_REQ_RCVRY",
+                table: "QURTZ_FIRED_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "INSTANCE_NAME", "REQUESTS_RECOVERY" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_T_C",
+                table: "QURTZ_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "CALENDAR_NAME" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_T_G_J",
+                table: "QURTZ_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "JOB_GROUP", "JOB_NAME" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_T_N_G_STATE",
+                table: "QURTZ_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "TRIGGER_GROUP", "TRIGGER_STATE" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_T_N_STATE",
+                table: "QURTZ_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP", "TRIGGER_STATE" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_T_NEXT_FIRE_TIME",
+                table: "QURTZ_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "NEXT_FIRE_TIME" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_T_NFT_ST",
+                table: "QURTZ_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "TRIGGER_STATE", "NEXT_FIRE_TIME" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_T_NFT_ST_MISFIRE",
+                table: "QURTZ_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "MISFIRE_INSTR", "NEXT_FIRE_TIME", "TRIGGER_STATE" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_T_NFT_ST_MISFIRE_GRP",
+                table: "QURTZ_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "MISFIRE_INSTR", "NEXT_FIRE_TIME", "TRIGGER_GROUP", "TRIGGER_STATE" });
+
+            migrationBuilder.CreateIndex(
+                name: "IDX_QRTZ_T_STATE",
+                table: "QURTZ_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "TRIGGER_STATE" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QURTZ_TRIGGERS_SCHED_NAME_JOB_NAME_JOB_GROUP",
+                table: "QURTZ_TRIGGERS",
+                columns: new[] { "SCHED_NAME", "JOB_NAME", "JOB_GROUP" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleUser_UsersId",
@@ -771,6 +1064,9 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "AuditEntries");
 
             migrationBuilder.DropTable(
+                name: "AutoGenerateNumbers");
+
+            migrationBuilder.DropTable(
                 name: "LabRequests");
 
             migrationBuilder.DropTable(
@@ -784,6 +1080,33 @@ namespace EduTrail.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "QuestionVariationRules");
+
+            migrationBuilder.DropTable(
+                name: "QURTZ_BLOB_TRIGGERS");
+
+            migrationBuilder.DropTable(
+                name: "QURTZ_CALENDARS");
+
+            migrationBuilder.DropTable(
+                name: "QURTZ_CRON_TRIGGERS");
+
+            migrationBuilder.DropTable(
+                name: "QURTZ_FIRED_TRIGGERS");
+
+            migrationBuilder.DropTable(
+                name: "QURTZ_LOCKS");
+
+            migrationBuilder.DropTable(
+                name: "QURTZ_PAUSED_TRIGGER_GRPS");
+
+            migrationBuilder.DropTable(
+                name: "QURTZ_SCHEDULER_STATE");
+
+            migrationBuilder.DropTable(
+                name: "QURTZ_SIMPLE_TRIGGERS");
+
+            migrationBuilder.DropTable(
+                name: "QURTZ_SIMPROP_TRIGGERS");
 
             migrationBuilder.DropTable(
                 name: "RoleUser");
@@ -804,6 +1127,9 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
+                name: "QURTZ_TRIGGERS");
+
+            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
@@ -820,6 +1146,9 @@ namespace EduTrail.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "QuestionTypes");
+
+            migrationBuilder.DropTable(
+                name: "QURTZ_JOB_DETAILS");
 
             migrationBuilder.DropTable(
                 name: "TALabWeeks");

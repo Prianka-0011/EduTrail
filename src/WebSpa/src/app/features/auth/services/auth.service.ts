@@ -28,4 +28,14 @@ export class AuthService {
       catchError(() => of(false))
     );
   }
+  
+  resetEmailSend(email: string): Observable<boolean> {
+    const payload = {
+      email: email
+    }
+    return this.http.post<{ isEmailSent: boolean }>(this.baseUrl+'reset-email-sent', payload).pipe(
+      map(res => res.isEmailSent),
+      catchError(() => of(false))
+    );
+  }
 }

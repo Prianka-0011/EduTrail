@@ -6,8 +6,8 @@ namespace EduTrail.Domain.Entities.Quartzs
 {
 
     [PrimaryKey("SCHED_NAME", "INSTANCE_NAME")]
-    [Table("PMTS_QURTZ_SCHEDULER_STATE")]
-    public partial class PMTS_QURTZ_SCHEDULER_STATE
+    [Table("QURTZ_SCHEDULER_STATE")]
+    public partial class QURTZ_SCHEDULER_STATE
     {
         [Key]
         [StringLength(120)]

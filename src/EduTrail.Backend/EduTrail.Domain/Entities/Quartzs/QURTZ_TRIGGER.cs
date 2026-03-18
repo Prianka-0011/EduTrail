@@ -6,7 +6,7 @@ namespace EduTrail.Domain.Entities.Quartzs
 {
 
     [PrimaryKey("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP")]
-    [Table("PMTS_QURTZ_TRIGGERS")]
+    [Table("QURTZ_TRIGGERS")]
     [Index("SCHED_NAME", "CALENDAR_NAME", Name = "IDX_QRTZ_T_C")]
     [Index("SCHED_NAME", "JOB_GROUP", "JOB_NAME", Name = "IDX_QRTZ_T_G_J")]
     [Index("SCHED_NAME", "NEXT_FIRE_TIME", Name = "IDX_QRTZ_T_NEXT_FIRE_TIME")]
@@ -16,7 +16,7 @@ namespace EduTrail.Domain.Entities.Quartzs
     [Index("SCHED_NAME", "TRIGGER_GROUP", "TRIGGER_STATE", Name = "IDX_QRTZ_T_N_G_STATE")]
     [Index("SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP", "TRIGGER_STATE", Name = "IDX_QRTZ_T_N_STATE")]
     [Index("SCHED_NAME", "TRIGGER_STATE", Name = "IDX_QRTZ_T_STATE")]
-    public partial class PMTS_QURTZ_TRIGGER
+    public partial class QURTZ_TRIGGER
     {
         [Key]
         [StringLength(120)]
@@ -62,17 +62,17 @@ namespace EduTrail.Domain.Entities.Quartzs
 
         public byte[]? JOB_DATA { get; set; }
 
-        [InverseProperty("PMTS_QURTZ_TRIGGER")]
-        public virtual PMTS_QURTZ_CRON_TRIGGER? PMTS_QURTZ_CRON_TRIGGER { get; set; }
+        [InverseProperty("QURTZ_TRIGGER")]
+        public virtual QURTZ_CRON_TRIGGER? QURTZ_CRON_TRIGGER { get; set; }
 
         [ForeignKey("SCHED_NAME, JOB_NAME, JOB_GROUP")]
-        [InverseProperty("PMTS_QURTZ_TRIGGERs")]
-        public virtual PMTS_QURTZ_JOB_DETAIL PMTS_QURTZ_JOB_DETAIL { get; set; } = null!;
+        [InverseProperty("QURTZ_TRIGGERs")]
+        public virtual QURTZ_JOB_DETAIL QURTZ_JOB_DETAIL { get; set; } = null!;
 
-        [InverseProperty("PMTS_QURTZ_TRIGGER")]
-        public virtual PMTS_QURTZ_SIMPLE_TRIGGER? PMTS_QURTZ_SIMPLE_TRIGGER { get; set; }
+        [InverseProperty("QURTZ_TRIGGER")]
+        public virtual QURTZ_SIMPLE_TRIGGER? QURTZ_SIMPLE_TRIGGER { get; set; }
 
-        [InverseProperty("PMTS_QURTZ_TRIGGER")]
-        public virtual PMTS_QURTZ_SIMPROP_TRIGGER? PMTS_QURTZ_SIMPROP_TRIGGER { get; set; }
+        [InverseProperty("QURTZ_TRIGGER")]
+        public virtual QURTZ_SIMPROP_TRIGGER? QURTZ_SIMPROP_TRIGGER { get; set; }
     }
 }

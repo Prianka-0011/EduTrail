@@ -332,8 +332,9 @@ INSERT INTO [EduTrailDb].[dbo].[TermTypes]
 VALUES
 ('7E8F9F7E-75B3-4866-94A3-464F8711C544', 'Spring', GETDATE(), NULL, GETDATE(), NULL),
 ('F262DE21-7519-4468-B63A-653DAFC6B8F9', 'Fall',   GETDATE(), NULL, GETDATE(), NULL),
-('855021E3-8D31-47B2-B787-65E1DDBB4FE0', 'Winter', GETDATE(), NULL, GETDATE(), NULL);
+('855021E3-8D31-47B2-B787-65E1DDBB4FE0', 'Winter', GETDATE(), NULL, GETDATE(), NULL),
 ('f2231caa-ad7f-42f6-8283-043d54af790c', 'Summer', GETDATE(), NULL, GETDATE(), NULL);
+
 INSERT INTO [EduTrailDb].[dbo].[StatusTypes]
 (
     Id,
@@ -377,6 +378,10 @@ VALUES
     NULL
 );
 
+Admin PASS Hash and Salt
+-----------------------
+Hash: p7fCwcYSX9RBZxY7A1GfoBb6wjSWpCe7iZgOSw2FmrVpGFeYjAZ5NtJ2VhGO+onJM15ICUlHGZJ0H2QuFuamLw==
+Salt: 8p8/8SQodYAGCItjYQdhwHTsSspxKU1Al2WCLZdBcYiiT7hhE52w1JgCiKIi0tSHkf9Dix1XIIf7UP1Sqg0S2Wg3sllq9Y/XcYoKBQ9+6uceUUIjr3eYHaAZZt7ihkwReCvzAkdUGhPnAssxX74H9towc0tXbtFl2bu3u3uhsQI=
 
 
 ------------------------------
