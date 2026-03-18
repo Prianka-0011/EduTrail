@@ -42,8 +42,7 @@ export class SignInComponent {
     this.authService.signIn(this.user).subscribe({
       next: () => {
         this.isLoading = false;
-        this.toastr.success('Login successful', 'Success');
-
+        //this.toastr.success('Login successful', 'Success');
         this.router.navigate(['/learning-suite']);
       },
       error: () => {
