@@ -14,6 +14,7 @@ using EduTrail.Application.Users;
 using EduTrail.Application.Enrolements;
 using EduTrail.Application.UserDashboards;
 using EduTrail.Application.LabRequests;
+using EduTrail.Application.Auths;
 using EduTrail.Application.Shared;
 using Quartz;
 

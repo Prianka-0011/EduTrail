@@ -5,7 +5,7 @@ namespace EduTrail.Application.Shared
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(User user);
+        string GenerateToken(User user, string tokenType = "");
     }
 
 }

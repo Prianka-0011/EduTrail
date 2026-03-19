@@ -43,11 +43,13 @@ namespace EduTrail.API.Controllers
             if (!res)
                 return Unauthorized();
 
-             return Ok(new { IsEmailSent = res });
+            return Ok(new { IsEmailSent = res });
         }
-        // public async Task<ActionResult>ResetPassword()
-        // {
-
-        // }
+        [HttpPost("change-password")]
+        public async Task<ActionResult> ChangePassword(ChangePasswordCommand command)
+        {
+            var res = await _mediator.Send(command);
+            return Ok(new { Message = res });
+        }
     }
 }

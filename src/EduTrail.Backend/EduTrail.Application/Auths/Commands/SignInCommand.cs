@@ -16,20 +16,14 @@ namespace EduTrail.Application.Auths
         public class Handler : IRequestHandler<SignInCommand, bool>
         {
             private readonly IAuthRepository _repository;
-            private readonly IJwtTokenGenerator _jwtTokenGenerator;
-            private readonly IHttpContextAccessor _httpContextAccessor;
-            private readonly IWebHostEnvironment _environment;
-
+            private readonly ICommonService _service;
             public Handler(
                 IAuthRepository repository,
-                IJwtTokenGenerator jwtTokenGenerator,
-                IHttpContextAccessor httpContextAccessor,
-                IWebHostEnvironment environment)
+                ICommonService service
+                )
             {
                 _repository = repository;
-                _jwtTokenGenerator = jwtTokenGenerator;
-                _httpContextAccessor = httpContextAccessor;
-                _environment = environment;
+                _service = service;
             }
 
             public async Task<bool> Handle(SignInCommand request, CancellationToken cancellationToken)
@@ -48,9 +42,9 @@ namespace EduTrail.Application.Auths
                 if (!isPasswordValid)
                     throw new Exception("Invalid credentials");
 
-                var token = _jwtTokenGenerator.GenerateToken(user);
+                var token = _service._JwtTokenGenerator.GenerateToken(user);
 
-                var context = _httpContextAccessor.HttpContext;
+                var context = _service._HttpContextAccessor.HttpContext;
 
                 if (context != null)
                 {
@@ -62,7 +56,7 @@ namespace EduTrail.Application.Auths
                         Expires = DateTimeOffset.UtcNow.AddMinutes(60)
                     };
 
-                    context.Response.Cookies.Append(AuthsVariable.AuthTokenName, token, cookieOptions);
+                    context.Response.Cookies.Append(_service._AuthTokenCookieName, token, cookieOptions);
                 }
 
                 return true;

@@ -9,17 +9,17 @@ namespace EduTrail.Application.Shared
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
-        private readonly IConfiguration _configuration;
+        private readonly ICommonService _service;
 
-        public JwtTokenGenerator(IConfiguration configuration)
+        public JwtTokenGenerator(ICommonService service)
         {
-            _configuration = configuration;
+            _service = service;
         }
 
-        public string GenerateToken(User user)
+        public string GenerateToken(User user, string tokenType = "")
         {
             var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])
+                Encoding.UTF8.GetBytes(_service._Configuration["Jwt:Key"])
             );
 
             var credentials = new SigningCredentials(
@@ -27,16 +27,23 @@ namespace EduTrail.Application.Shared
                 SecurityAlgorithms.HmacSha256
             );
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, user.Email)
             };
 
+            if (!string.IsNullOrEmpty(tokenType))
+            {
+                claims.Add(new Claim("type", tokenType));
+            }
+
             var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
+                issuer: _service._Configuration["Jwt:Issuer"],
+                audience: _service._Configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(6),
+                expires: tokenType == "reset-pass"
+                    ? DateTime.UtcNow.AddMinutes(30)
+                    : DateTime.UtcNow.AddDays(1),
                 signingCredentials: credentials
             );
 

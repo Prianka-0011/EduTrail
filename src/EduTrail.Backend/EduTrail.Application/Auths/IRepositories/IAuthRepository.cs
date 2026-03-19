@@ -1,11 +1,11 @@
-using EduTrail.Application.Auths;
+
 using EduTrail.Domain.Entities;
 
-namespace EduTrail.Application.LabRequests
+namespace EduTrail.Application.Auths
 {
     public interface IAuthRepository
     {
-        Task<User>GetUserByEmail(string email);
-        // Task<SignDto> SignIn();
+        Task<User> GetUserByEmail(string email);
+        Task<User> UpdateAsync(User user);
     }
 }

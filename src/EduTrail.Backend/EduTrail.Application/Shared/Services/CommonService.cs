@@ -15,6 +15,9 @@ namespace EduTrail.Application.Shared
         private readonly IEmailTemplateService _emailTemplateService;
         private readonly IWebHostEnvironment _environment;
         private readonly IConfiguration _configuration;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly IMapper _mapper;
+        // private readonly IMEdi
         private static readonly ILogger<CommonService> _logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<CommonService>();
 
         public CommonService(
@@ -22,7 +25,10 @@ namespace EduTrail.Application.Shared
             IConfiguration configuration,
             ISchedulerFactory schedulerFactory,
             IWebHostEnvironment environment,
-            IEmailTemplateService emailTemplateService, IJwtTokenGenerator jwtTokenGenerator)
+            IEmailTemplateService emailTemplateService,
+            IJwtTokenGenerator jwtTokenGenerator,
+            IMapper mapper,
+            ICurrentUserService currentUserService)
         {
             _httpContextAccessor = httpContextAccessor;
             _schedulerFactory = schedulerFactory;
@@ -30,7 +36,8 @@ namespace EduTrail.Application.Shared
             _emailTemplateService = emailTemplateService;
             _environment = environment;
             _jwtTokenGenerator = jwtTokenGenerator;
-
+            _mapper = mapper;
+            _currentUserService = currentUserService;
         }
 
         private static string LogAndThrow(string message)
@@ -39,7 +46,7 @@ namespace EduTrail.Application.Shared
             throw new Exception(message);
         }
 
-        public IHttpContextAccessor _HttpContextAccessor => _httpContextAccessor;
+        public string _AuthTokenCookieName => "Authorization";
         public ISchedulerFactory _SchedulerFactory => _schedulerFactory;
         public IEmailTemplateService _EmailTemplateService => _emailTemplateService;
 
@@ -66,5 +73,8 @@ namespace EduTrail.Application.Shared
         public IConfiguration _Configuration =>  _configuration;
 
         public IJwtTokenGenerator _JwtTokenGenerator => _jwtTokenGenerator;
+        public IMapper _Mapper => _mapper;
+        public string _SecretKey => _configuration["Jwt:Key"];
+        public ICurrentUserService _CurrentUserService => _currentUserService;
     }
 }

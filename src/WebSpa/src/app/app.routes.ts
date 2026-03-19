@@ -5,6 +5,7 @@ import { LearningSuiteComponent } from './features/learning-suite/learning-suite
 import { learningSuiteRoutes } from './features/learning-suite/learning-suite-routing.module';
 import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
+import { ChangePasswordComponent } from './features/auth/components/change-password/change-password.component';
 
 export const routes: Routes = [
     {
@@ -23,6 +24,10 @@ export const routes: Routes = [
         component: LearningSuiteComponent,
         canActivate: [AuthGuard],
         children: learningSuiteRoutes
+    },
+    {
+        path: 'change-password',
+        component: ChangePasswordComponent,
     },
     {
         path: '**',

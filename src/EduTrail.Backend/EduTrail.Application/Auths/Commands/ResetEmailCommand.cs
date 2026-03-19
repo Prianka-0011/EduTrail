@@ -33,12 +33,12 @@ namespace EduTrail.Application.Auths
                 if (user == null || !user.IsActive)
                     throw new Exception("User not found");
 
-                var token = _service._JwtTokenGenerator.GenerateToken(user);
+                var token = _service._JwtTokenGenerator.GenerateToken(user, "reset-pass");
                 var baseUrl = Environment.GetEnvironmentVariable("APPLICATION_URL")?? "https://localhost:7238/";
-                var resetLink = $"{baseUrl}/reset-password?token={token}";
+                var resetLink = $"{baseUrl}change-password?token={token}";
 
                 var (htmlBody, textBody) =
-               _service._EmailTemplateService.PasswordResetTemplate(
+                _service._EmailTemplateService.PasswordResetTemplate(
                     resetLink,
                     user.FirstName + " " + user.LastName
                 );

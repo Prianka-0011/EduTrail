@@ -11,8 +11,9 @@ namespace EduTrail.Application.Shared
         ISchedulerFactory _SchedulerFactory { get; }
         IWebHostEnvironment _Environment { get; }
         IConfiguration _Configuration { get; }
-        IJwtTokenGenerator _JwtTokenGenerator{ get; }
-        IEmailTemplateService _EmailTemplateService  { get; }
+        IJwtTokenGenerator _JwtTokenGenerator { get; }
+        IEmailTemplateService _EmailTemplateService { get; }
+        IMapper _Mapper{ get; }
         int SaltKeySize { get; }
         string _ApplicarionUrl { get; }
         string SmtpServer { get; }
@@ -26,6 +27,9 @@ namespace EduTrail.Application.Shared
         string _SmtpNoReplyName { get; }
         string FilesDirectory { get; }
         string TempFilesDirectory { get; }
+        string _AuthTokenCookieName { get; }
+        string _SecretKey {get; }
+        ICurrentUserService _CurrentUserService{get;}
     }
 
 }
