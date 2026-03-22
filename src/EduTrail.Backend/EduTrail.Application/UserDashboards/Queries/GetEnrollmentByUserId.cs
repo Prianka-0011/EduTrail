@@ -35,13 +35,14 @@ namespace EduTrail.Application.UserDashboards
             }
             private static List<DropdownItemDtoInt> GetMonthsByTerm(Guid termTypeId)
             {
-                if (termTypeId == CustomCategory.TermType.Fall)
+
+                if (termTypeId == CustomCategory.TermType.Winter)
                 {
                     return new List<DropdownItemDtoInt>
                     {
-                        new() { Id = CustomCategory.Months.September, Name = "September" },
-                        new() { Id = CustomCategory.Months.October,   Name = "October" },
-                        new() { Id = CustomCategory.Months.November,  Name = "November" }
+                        new() { Id = CustomCategory.Months.January, Name = "January" },
+                        new() { Id = CustomCategory.Months.February,  Name = "February" },
+                        new() { Id = CustomCategory.Months.March, Name = "March" }
                     };
                 }
 
@@ -49,19 +50,29 @@ namespace EduTrail.Application.UserDashboards
                 {
                     return new List<DropdownItemDtoInt>
                     {
-                        new() { Id = CustomCategory.Months.March, Name = "March" },
                         new() { Id = CustomCategory.Months.April, Name = "April" },
-                        new() { Id = CustomCategory.Months.May,   Name = "May" }
+                        new() { Id = CustomCategory.Months.May, Name = "May" },
+                        new() { Id = CustomCategory.Months.June,   Name = "June" }
                     };
                 }
 
-                if (termTypeId == CustomCategory.TermType.Winter)
+                if (termTypeId == CustomCategory.TermType.Summer)
                 {
                     return new List<DropdownItemDtoInt>
                     {
-                        new() { Id = CustomCategory.Months.December, Name = "December" },
-                        new() { Id = CustomCategory.Months.January,  Name = "January" },
-                        new() { Id = CustomCategory.Months.February, Name = "February" }
+                        new() { Id = CustomCategory.Months.July, Name = "July" },
+                        new() { Id = CustomCategory.Months.August,  Name = "August" },
+                        new() { Id = CustomCategory.Months.September, Name = "September" }
+                    };
+                }
+
+                if (termTypeId == CustomCategory.TermType.Fall)
+                {
+                    return new List<DropdownItemDtoInt>
+                    {
+                        new() { Id = CustomCategory.Months.September, Name = "September" },
+                        new() { Id = CustomCategory.Months.October,   Name = "October" },
+                        new() { Id = CustomCategory.Months.November,  Name = "November" }
                     };
                 }
 
