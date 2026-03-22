@@ -1,4 +1,5 @@
 using AutoMapper;
+using EduTrail.Application.Shared;
 using EduTrail.Application.Shared.Dtos;
 using EduTrail.Shared;
 using MediatR;
@@ -10,19 +11,19 @@ namespace EduTrail.Application.UserDashboards
         public Guid CourseOfferingId { get; set; }
         public class Handler : IRequestHandler<GetEnrollmentByUserId, UserEnrollementDto>
         {
-            private readonly IMapper _mapper;
+            private readonly ICommonService _service;
             private readonly IUserCourseOfferingRepository _repository;
-            public Handler(IUserCourseOfferingRepository repository, IMapper mapper)
+            public Handler(IUserCourseOfferingRepository repository, ICommonService service)
             {
                 _repository = repository;
-                _mapper = mapper;
+                _service = service;
             }
             public async Task<UserEnrollementDto> Handle(GetEnrollmentByUserId request, CancellationToken cancellationToken)
             {
-                var currentLoginUserId = Guid.Parse("C77A7ABF-BF2C-4DFF-51BD-08DE83B7A5E7");
+                var currentLoginUserId = _service._CurrentUserService.GetUserId();
                 var enrolement = await _repository.GetEnrollmentByUserIdAsync(currentLoginUserId, request.CourseOfferingId);
 
-                var dto = _mapper.Map<UserEnrollementDetailsDto>(enrolement) ?? new UserEnrollementDetailsDto();
+                var dto = _service._Mapper.Map<UserEnrollementDetailsDto>(enrolement) ?? new UserEnrollementDetailsDto();
 
                 dto.IsTa = enrolement.User.Roles.Any(c => c.Id == CustomCategory.RoleType.TA) ? true : false;
                 return new UserEnrollementDto

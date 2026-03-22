@@ -474,12 +474,12 @@
         },
         "compile": {
           "lib/net9.0/Microsoft.CodeAnalysis.dll": {
-            "related": ".pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.dll": {
-            "related": ".pdb"
+            "related": ".pdb;.xml"
           }
         },
         "resource": {
@@ -532,12 +532,12 @@
         },
         "compile": {
           "lib/net9.0/Microsoft.CodeAnalysis.CSharp.dll": {
-            "related": ".pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.CSharp.dll": {
-            "related": ".pdb"
+            "related": ".pdb;.xml"
           }
         },
         "resource": {
@@ -594,12 +594,12 @@
         },
         "compile": {
           "lib/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll": {
-            "related": ".pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll": {
-            "related": ".pdb"
+            "related": ".pdb;.xml"
           }
         },
         "resource": {
@@ -654,12 +654,12 @@
         },
         "compile": {
           "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.dll": {
-            "related": ".pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.dll": {
-            "related": ".pdb"
+            "related": ".pdb;.xml"
           }
         },
         "resource": {
@@ -734,13 +734,13 @@
         "compile": {
           "lib/net9.0/Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll": {},
           "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll": {
-            "related": ".pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll": {},
           "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll": {
-            "related": ".pdb"
+            "related": ".pdb;.xml"
           }
         },
         "resource": {
@@ -1697,30 +1697,30 @@
           }
         }
       },
-      "Edutrail.Domain/1.0.0": {
+      "EduTrail.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": "10.0.0"
         },
         "compile": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
+          "bin/placeholder/EduTrail.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
+          "bin/placeholder/EduTrail.Domain.dll": {}
         }
       },
-      "Edutrail.Shared/1.0.0": {
+      "EduTrail.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "Edutrail.Domain": "1.0.0"
+          "EduTrail.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
+          "bin/placeholder/EduTrail.Shared.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
+          "bin/placeholder/EduTrail.Shared.dll": {}
         }
       }
     }
@@ -4466,23 +4466,23 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Edutrail.Domain/1.0.0": {
+    "EduTrail.Domain/1.0.0": {
       "type": "project",
-      "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
-      "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
+      "path": "../EduTrail.Domain/EduTrail.Domain.csproj",
+      "msbuildProject": "../EduTrail.Domain/EduTrail.Domain.csproj"
     },
-    "Edutrail.Shared/1.0.0": {
+    "EduTrail.Shared/1.0.0": {
       "type": "project",
-      "path": "../Edutrail.Shared/Edutrail.Shared.csproj",
-      "msbuildProject": "../Edutrail.Shared/Edutrail.Shared.csproj"
+      "path": "../EduTrail.Shared/EduTrail.Shared.csproj",
+      "msbuildProject": "../EduTrail.Shared/EduTrail.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
       "AutoMapper >= 12.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
-      "Edutrail.Domain >= 1.0.0",
-      "Edutrail.Shared >= 1.0.0",
+      "EduTrail.Domain >= 1.0.0",
+      "EduTrail.Shared >= 1.0.0",
       "MediatR >= 12.0.1",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 11.1.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 10.0.4",
@@ -4524,11 +4524,11 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj"
             },
-            "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj"
             }
           }
         }

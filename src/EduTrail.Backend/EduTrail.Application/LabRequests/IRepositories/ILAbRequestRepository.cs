@@ -9,5 +9,6 @@ namespace EduTrail.Application.LabRequests
   
         Task<LabRequest> CreateHelpRequestAsync(LabRequest course);
         Task<IEnumerable<LabRequest>> GetAllLabRequestByCourseOfferingAsync(Guid courseOfferingId);
+        Task<Enrollment> GetEnrollementByUserId(Guid userId);
     }
 }

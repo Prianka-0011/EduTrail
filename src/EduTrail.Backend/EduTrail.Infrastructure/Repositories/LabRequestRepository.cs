@@ -62,11 +62,11 @@ namespace EduTrail.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return autoGenerateNumber;  
         }
-        public async Task<AutoGenerateNumber> GetEnrollementByUserId(Guid userId)
+        public async Task<Enrollment> GetEnrollementByUserId(Guid userId)
         {
-            _context.AutoGenerateNumbers.Update(autoGenerateNumber);
+            var enrollement = _context.Enrollments.Where(c=>c.UserId == userId).FirstOrDefault();
             await _context.SaveChangesAsync();
-            return autoGenerateNumber;  
+            return enrollement;  
         }
     }
 }
