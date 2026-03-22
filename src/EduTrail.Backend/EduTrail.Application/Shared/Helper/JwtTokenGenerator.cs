@@ -28,9 +28,9 @@ namespace EduTrail.Application.Shared
             );
 
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, user.Email)
-            };
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+    };
 
             if (!string.IsNullOrEmpty(tokenType))
             {

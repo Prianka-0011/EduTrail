@@ -32,10 +32,15 @@ namespace EduTrail.Application.Shared
                 ClockSkew = TimeSpan.Zero
             }, out _);
 
-            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                              ?? throw new UnauthorizedAccessException("User ID claim not found");
+            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            return Guid.Parse(userIdClaim);
+            if (string.IsNullOrEmpty(userIdClaim))
+                throw new UnauthorizedAccessException("User ID claim not found");
+
+            if (!Guid.TryParse(userIdClaim, out var userId))
+                throw new UnauthorizedAccessException("Invalid user ID");
+
+            return userId;
         }
     }
 }
