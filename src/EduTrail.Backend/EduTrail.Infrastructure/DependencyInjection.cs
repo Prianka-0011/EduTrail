@@ -14,7 +14,9 @@ using EduTrail.Application.Users;
 using EduTrail.Application.Enrolements;
 using EduTrail.Application.UserDashboards;
 using EduTrail.Application.LabRequests;
+using EduTrail.Application.Auths;
 using EduTrail.Application.Shared;
+using Quartz;
 
 
 namespace EduTrail.Infrastructure
@@ -54,37 +56,36 @@ namespace EduTrail.Infrastructure
             });
 
             // Quartz setup
-            // services.AddQuartz(q =>
-            // {
-            //     q.SchedulerName = "EduTrail-Scheduler";
-            //     q.SchedulerId = "AUTO";
+            services.AddQuartz(q =>
+            {
+                q.SchedulerName = "EduTrail-Scheduler";
+                q.SchedulerId = "AUTO";
 
-            //     q.UseSimpleTypeLoader();
+                q.UseSimpleTypeLoader();
 
-            //     q.UsePersistentStore(s =>
-            //     {
-            //         s.UseClustering();
-            //         s.UseSqlServer(c =>
-            //         {
-            //             c.ConnectionString = GetConnectionString(dbName);
-            //             c.TablePrefix = "EMOTIA_QRTZ_";
-            //         });
-            //         s.UseJsonSerializer();
-            //     });
+                q.UsePersistentStore(s =>
+                {
+                    s.UseClustering();
+                    s.UseSqlServer(c =>
+                    {
+                        c.ConnectionString = GetConnectionString(dbName);
+                        c.TablePrefix = "QURTZ_";
+                    });
+                    s.UseJsonSerializer();
+                });
 
-            //     q.UseDefaultThreadPool(tp =>
-            //     {
-            //         tp.MaxConcurrency = 10;
-            //     });
-            // });
+                q.UseDefaultThreadPool(tp =>
+                {
+                    tp.MaxConcurrency = 10;
+                });
+            });
 
-            // services.AddQuartzHostedService(options =>
-            // {
-            //     options.WaitForJobsToComplete = true;
-            // });
+            services.AddQuartzHostedService(options =>
+            {
+                options.WaitForJobsToComplete = true;
+            });
 
             // Register other services, repositories, etc.
-            // services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITestRepository, TestRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<ITermRepository, TermRepository>();

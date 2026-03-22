@@ -24,10 +24,9 @@ namespace EduTrail.Application.Auths
                     return Task.FromResult(false);
                 }
 
-                var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
                 var email = user.FindFirstValue(ClaimTypes.Email);
 
-                return Task.FromResult(true);
+                return Task.FromResult(!string.IsNullOrEmpty(email));
             }
         }
     }

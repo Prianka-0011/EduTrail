@@ -66,7 +66,7 @@
       "Humanizer.Core/2.14.1": {
         "type": "package",
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/Humanizer.dll": {
             "related": ".xml"
           }
         },
@@ -209,7 +209,7 @@
           "System.Security.Permissions": "7.0.0"
         },
         "compile": {
-          "ref/net7.0/_._": {
+          "ref/net7.0/Microsoft.Build.dll": {
             "related": ".xml"
           }
         },
@@ -222,7 +222,7 @@
       "Microsoft.Build.Framework/17.14.28": {
         "type": "package",
         "compile": {
-          "ref/net9.0/_._": {
+          "ref/net9.0/Microsoft.Build.Framework.dll": {
             "related": ".xml"
           }
         },
@@ -246,7 +246,7 @@
           "System.Security.Cryptography.ProtectedData": "9.0.0"
         },
         "compile": {
-          "ref/net9.0/_._": {
+          "ref/net9.0/Microsoft.Build.Tasks.Core.dll": {
             "related": ".xml"
           }
         },
@@ -265,7 +265,7 @@
           "System.Security.Cryptography.ProtectedData": "9.0.0"
         },
         "compile": {
-          "ref/net9.0/_._": {
+          "ref/net9.0/Microsoft.Build.Utilities.Core.dll": {
             "related": ".xml"
           }
         },
@@ -288,7 +288,7 @@
           "Microsoft.CodeAnalysis.Analyzers": "3.11.0"
         },
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/Microsoft.CodeAnalysis.dll": {
             "related": ".pdb;.xml"
           }
         },
@@ -346,7 +346,7 @@
           "Microsoft.CodeAnalysis.Common": "[4.14.0]"
         },
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/Microsoft.CodeAnalysis.CSharp.dll": {
             "related": ".pdb;.xml"
           }
         },
@@ -408,7 +408,7 @@
           "System.Composition": "9.0.0"
         },
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll": {
             "related": ".pdb;.xml"
           }
         },
@@ -468,7 +468,7 @@
           "System.Composition": "9.0.0"
         },
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.dll": {
             "related": ".pdb;.xml"
           }
         },
@@ -540,7 +540,10 @@
           "System.Windows.Extensions": "9.0.0"
         },
         "compile": {
-          "lib/net9.0/_._": {}
+          "lib/net9.0/Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll": {},
+          "lib/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll": {
+            "related": ".pdb;.xml"
+          }
         },
         "runtime": {
           "lib/net9.0/Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll": {},
@@ -1120,7 +1123,7 @@
       "Microsoft.Extensions.DependencyModel/10.0.0": {
         "type": "package",
         "compile": {
-          "lib/net10.0/_._": {
+          "lib/net10.0/Microsoft.Extensions.DependencyModel.dll": {
             "related": ".xml"
           }
         },
@@ -1263,7 +1266,7 @@
       "Microsoft.NET.StringTools/17.14.28": {
         "type": "package",
         "compile": {
-          "ref/net9.0/_._": {
+          "ref/net9.0/Microsoft.NET.StringTools.dll": {
             "related": ".xml"
           }
         },
@@ -1305,7 +1308,7 @@
           "System.CodeDom": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {}
+          "lib/net6.0/Mono.TextTemplating.dll": {}
         },
         "runtime": {
           "lib/net6.0/Mono.TextTemplating.dll": {}
@@ -1317,7 +1320,7 @@
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
             "related": ".xml"
           }
         },
@@ -1327,13 +1330,78 @@
           }
         }
       },
-      "Swashbuckle.AspNetCore/10.1.4": {
+      "Quartz/3.10.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Quartz.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Quartz.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Quartz.Extensions.DependencyInjection/3.10.0": {
+        "type": "package",
+        "dependencies": {
+          "Quartz": "3.10.0"
+        },
+        "compile": {
+          "lib/net8.0/Quartz.Extensions.DependencyInjection.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Quartz.Extensions.DependencyInjection.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Quartz.Extensions.Hosting/3.10.0": {
+        "type": "package",
+        "dependencies": {
+          "Quartz.Extensions.DependencyInjection": "3.10.0"
+        },
+        "compile": {
+          "lib/net8.0/Quartz.Extensions.Hosting.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Quartz.Extensions.Hosting.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Quartz.Serialization.Json/3.10.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "Quartz": "3.10.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Quartz.Serialization.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Quartz.Serialization.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore/10.1.5": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "10.0.0",
-          "Swashbuckle.AspNetCore.Swagger": "10.1.4",
-          "Swashbuckle.AspNetCore.SwaggerGen": "10.1.4",
-          "Swashbuckle.AspNetCore.SwaggerUI": "10.1.4"
+          "Swashbuckle.AspNetCore.Swagger": "10.1.5",
+          "Swashbuckle.AspNetCore.SwaggerGen": "10.1.5",
+          "Swashbuckle.AspNetCore.SwaggerUI": "10.1.5"
         },
         "build": {
           "build/Swashbuckle.AspNetCore.props": {}
@@ -1342,7 +1410,7 @@
           "buildMultiTargeting/Swashbuckle.AspNetCore.props": {}
         }
       },
-      "Swashbuckle.AspNetCore.Swagger/10.1.4": {
+      "Swashbuckle.AspNetCore.Swagger/10.1.5": {
         "type": "package",
         "dependencies": {
           "Microsoft.OpenApi": "2.4.1"
@@ -1361,10 +1429,10 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Swashbuckle.AspNetCore.SwaggerGen/10.1.4": {
+      "Swashbuckle.AspNetCore.SwaggerGen/10.1.5": {
         "type": "package",
         "dependencies": {
-          "Swashbuckle.AspNetCore.Swagger": "10.1.4"
+          "Swashbuckle.AspNetCore.Swagger": "10.1.5"
         },
         "compile": {
           "lib/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
@@ -1377,7 +1445,7 @@
           }
         }
       },
-      "Swashbuckle.AspNetCore.SwaggerUI/10.1.4": {
+      "Swashbuckle.AspNetCore.SwaggerUI/10.1.5": {
         "type": "package",
         "compile": {
           "lib/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
@@ -1412,7 +1480,7 @@
       "System.CodeDom/9.0.0": {
         "type": "package",
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.CodeDom.dll": {
             "related": ".xml"
           }
         },
@@ -1447,7 +1515,7 @@
       "System.Composition.AttributedModel/9.0.0": {
         "type": "package",
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.Composition.AttributedModel.dll": {
             "related": ".xml"
           }
         },
@@ -1466,7 +1534,7 @@
           "System.Composition.AttributedModel": "9.0.0"
         },
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.Composition.Convention.dll": {
             "related": ".xml"
           }
         },
@@ -1485,7 +1553,7 @@
           "System.Composition.Runtime": "9.0.0"
         },
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.Composition.Hosting.dll": {
             "related": ".xml"
           }
         },
@@ -1501,7 +1569,7 @@
       "System.Composition.Runtime/9.0.0": {
         "type": "package",
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.Composition.Runtime.dll": {
             "related": ".xml"
           }
         },
@@ -1522,7 +1590,7 @@
           "System.Composition.Runtime": "9.0.0"
         },
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.Composition.TypedParts.dll": {
             "related": ".xml"
           }
         },
@@ -1541,7 +1609,7 @@
           "System.Security.Cryptography.ProtectedData": "9.0.4"
         },
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.Configuration.ConfigurationManager.dll": {
             "related": ".xml"
           }
         },
@@ -1557,7 +1625,7 @@
       "System.Formats.Nrbf/9.0.0": {
         "type": "package",
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.Formats.Nrbf.dll": {
             "related": ".xml"
           }
         },
@@ -1606,7 +1674,7 @@
       "System.Reflection.MetadataLoadContext/7.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0/_._": {
+          "lib/net7.0/System.Reflection.MetadataLoadContext.dll": {
             "related": ".xml"
           }
         },
@@ -1625,7 +1693,7 @@
           "System.Formats.Nrbf": "9.0.0"
         },
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.Resources.Extensions.dll": {
             "related": ".xml"
           }
         },
@@ -1682,7 +1750,7 @@
           "System.Windows.Extensions": "9.0.0"
         },
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.Security.Permissions.dll": {
             "related": ".xml"
           }
         },
@@ -1698,7 +1766,7 @@
       "System.Windows.Extensions/9.0.0": {
         "type": "package",
         "compile": {
-          "lib/net9.0/_._": {
+          "lib/net9.0/System.Windows.Extensions.dll": {
             "related": ".xml"
           }
         },
@@ -1720,11 +1788,12 @@
         "dependencies": {
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
-          "Edutrail.Domain": "1.0.0",
-          "Edutrail.Shared": "1.0.0",
+          "EduTrail.Domain": "1.0.0",
+          "EduTrail.Shared": "1.0.0",
           "MediatR": "12.0.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.4",
+          "Quartz": "3.10.0",
           "System.IdentityModel.Tokens.Jwt": "8.16.0"
         },
         "compile": {
@@ -1734,14 +1803,17 @@
           "bin/placeholder/EduTrail.Application.dll": {}
         }
       },
-      "Edutrail.Domain/1.0.0": {
+      "EduTrail.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "10.0.0"
+        },
         "compile": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
+          "bin/placeholder/EduTrail.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
+          "bin/placeholder/EduTrail.Domain.dll": {}
         }
       },
       "EduTrail.Infrastructure/1.0.0": {
@@ -1749,10 +1821,14 @@
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "EduTrail.Application": "1.0.0",
-          "Edutrail.Domain": "1.0.0",
-          "Edutrail.Shared": "1.0.0",
+          "EduTrail.Domain": "1.0.0",
+          "EduTrail.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore": "10.0.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "10.0.0"
+          "Microsoft.EntityFrameworkCore.SqlServer": "10.0.0",
+          "Quartz": "3.10.0",
+          "Quartz.Extensions.DependencyInjection": "3.10.0",
+          "Quartz.Extensions.Hosting": "3.10.0",
+          "Quartz.Serialization.Json": "3.10.0"
         },
         "compile": {
           "bin/placeholder/EduTrail.Infrastructure.dll": {}
@@ -1761,17 +1837,17 @@
           "bin/placeholder/EduTrail.Infrastructure.dll": {}
         }
       },
-      "Edutrail.Shared/1.0.0": {
+      "EduTrail.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "Edutrail.Domain": "1.0.0"
+          "EduTrail.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
+          "bin/placeholder/EduTrail.Shared.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
+          "bin/placeholder/EduTrail.Shared.dll": {}
         }
       }
     }
@@ -4037,24 +4113,106 @@
         "packageIcon.png"
       ]
     },
-    "Swashbuckle.AspNetCore/10.1.4": {
-      "sha512": "3y9YcUdzND3E21NiGvhxEVw2/rdQSbSLDOxrAMP96ZCaDVeB8b30L8QeWA9cfkxfyeXt+F2t1umKE0kaPxm4FA==",
+    "Quartz/3.10.0": {
+      "sha512": "9LqcKWFtn5nrj7KX8VASOK8FMgrgMCT9NlHzDtYtVQlKMnOaf45329KnA4dNSmpQqJofZqEJPnsIlnQP4xNbyA==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore/10.1.4",
+      "path": "quartz/3.10.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net462/Quartz.dll",
+        "lib/net462/Quartz.xml",
+        "lib/net472/Quartz.dll",
+        "lib/net472/Quartz.xml",
+        "lib/net6.0/Quartz.dll",
+        "lib/net6.0/Quartz.xml",
+        "lib/netstandard2.0/Quartz.dll",
+        "lib/netstandard2.0/Quartz.xml",
+        "quartz-logo-small.png",
+        "quartz.3.10.0.nupkg.sha512",
+        "quartz.nuspec",
+        "quick-start.md"
+      ]
+    },
+    "Quartz.Extensions.DependencyInjection/3.10.0": {
+      "sha512": "GV+Xw7wI/jd/zlRvrmFb+D8nF93o8jWFOG8KhW5Z1VsqLwrIVMqu2m+imTax83OcbUWceB8zhUksUYTIxuHh4g==",
+      "type": "package",
+      "path": "quartz.extensions.dependencyinjection/3.10.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net6.0/Quartz.Extensions.DependencyInjection.dll",
+        "lib/net6.0/Quartz.Extensions.DependencyInjection.xml",
+        "lib/net8.0/Quartz.Extensions.DependencyInjection.dll",
+        "lib/net8.0/Quartz.Extensions.DependencyInjection.xml",
+        "lib/netcoreapp3.1/Quartz.Extensions.DependencyInjection.dll",
+        "lib/netcoreapp3.1/Quartz.Extensions.DependencyInjection.xml",
+        "lib/netstandard2.0/Quartz.Extensions.DependencyInjection.dll",
+        "lib/netstandard2.0/Quartz.Extensions.DependencyInjection.xml",
+        "microsoft-di-integration.md",
+        "quartz-logo-small.png",
+        "quartz.extensions.dependencyinjection.3.10.0.nupkg.sha512",
+        "quartz.extensions.dependencyinjection.nuspec"
+      ]
+    },
+    "Quartz.Extensions.Hosting/3.10.0": {
+      "sha512": "p1WZBotHMEvwOjHP66Fd2iXjMQYK+XrAvCZ8tkpdzIn9FyT/9Msvu5WMPRzmKMBBa/ZKlMmfidRsCwEeweHa9Q==",
+      "type": "package",
+      "path": "quartz.extensions.hosting/3.10.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "hosted-services-integration.md",
+        "lib/net6.0/Quartz.Extensions.Hosting.dll",
+        "lib/net6.0/Quartz.Extensions.Hosting.xml",
+        "lib/net8.0/Quartz.Extensions.Hosting.dll",
+        "lib/net8.0/Quartz.Extensions.Hosting.xml",
+        "lib/netcoreapp3.1/Quartz.Extensions.Hosting.dll",
+        "lib/netcoreapp3.1/Quartz.Extensions.Hosting.xml",
+        "lib/netstandard2.0/Quartz.Extensions.Hosting.dll",
+        "lib/netstandard2.0/Quartz.Extensions.Hosting.xml",
+        "quartz-logo-small.png",
+        "quartz.extensions.hosting.3.10.0.nupkg.sha512",
+        "quartz.extensions.hosting.nuspec"
+      ]
+    },
+    "Quartz.Serialization.Json/3.10.0": {
+      "sha512": "9UziS4vVkWe0D3Vr4EE+vcfEJ0m7yFneDx5C3R5F6g4FXVvSStdOAqGF7SgngyiKbMkxQJp+HAqubpDDSvxKig==",
+      "type": "package",
+      "path": "quartz.serialization.json/3.10.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "json-serialization.md",
+        "lib/net462/Quartz.Serialization.Json.dll",
+        "lib/net462/Quartz.Serialization.Json.xml",
+        "lib/net472/Quartz.Serialization.Json.dll",
+        "lib/net472/Quartz.Serialization.Json.xml",
+        "lib/netstandard2.0/Quartz.Serialization.Json.dll",
+        "lib/netstandard2.0/Quartz.Serialization.Json.xml",
+        "quartz-logo-small.png",
+        "quartz.serialization.json.3.10.0.nupkg.sha512",
+        "quartz.serialization.json.nuspec"
+      ]
+    },
+    "Swashbuckle.AspNetCore/10.1.5": {
+      "sha512": "/eNk9z/8quXhDX14o3XLbwAX/84uIWSbiUD7cI/UrQnoBMOiyAtzKxNEJUtf/TyxjFpcXxE9FAfLvtbNpxHBSg==",
+      "type": "package",
+      "path": "swashbuckle.aspnetcore/10.1.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "build/Swashbuckle.AspNetCore.props",
         "buildMultiTargeting/Swashbuckle.AspNetCore.props",
         "docs/package-readme.md",
-        "swashbuckle.aspnetcore.10.1.4.nupkg.sha512",
+        "swashbuckle.aspnetcore.10.1.5.nupkg.sha512",
         "swashbuckle.aspnetcore.nuspec"
       ]
     },
-    "Swashbuckle.AspNetCore.Swagger/10.1.4": {
-      "sha512": "4ac45rVXsgustOXx6abChvIXtWjc1gUgwEpExz8pkQTTXjVTuRtfyMCN0srgxwpIAw/UoH/LYcbgqrjRcYwhfg==",
+    "Swashbuckle.AspNetCore.Swagger/10.1.5": {
+      "sha512": "s4Mct6+Ob0LK9vYVaZcYi/RFFCOEJNjf6nJ5ZPoxtpdFSlzR6i9AHI7Vl44obX8cynRxJW7prA1IUabkiXolFg==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore.swagger/10.1.4",
+      "path": "swashbuckle.aspnetcore.swagger/10.1.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4068,14 +4226,14 @@
         "lib/net9.0/Swashbuckle.AspNetCore.Swagger.pdb",
         "lib/net9.0/Swashbuckle.AspNetCore.Swagger.xml",
         "package-readme.md",
-        "swashbuckle.aspnetcore.swagger.10.1.4.nupkg.sha512",
+        "swashbuckle.aspnetcore.swagger.10.1.5.nupkg.sha512",
         "swashbuckle.aspnetcore.swagger.nuspec"
       ]
     },
-    "Swashbuckle.AspNetCore.SwaggerGen/10.1.4": {
-      "sha512": "gbh8gJ97lMw0ScCdbEhAzwlHSWKiTzYtHfS6/e7u4e4c0ms6mOccLFgRsWF0ekgpDh+AlA0yWc5X5ec+6cxCXQ==",
+    "Swashbuckle.AspNetCore.SwaggerGen/10.1.5": {
+      "sha512": "ysQIRgqnx4Vb/9+r3xnEAiaxYmiBHO8jTg7ACaCh+R3Sn+ZKCWKD6nyu0ph3okP91wFSh/6LgccjeLUaQHV+ZA==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore.swaggergen/10.1.4",
+      "path": "swashbuckle.aspnetcore.swaggergen/10.1.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4089,14 +4247,14 @@
         "lib/net9.0/Swashbuckle.AspNetCore.SwaggerGen.pdb",
         "lib/net9.0/Swashbuckle.AspNetCore.SwaggerGen.xml",
         "package-readme.md",
-        "swashbuckle.aspnetcore.swaggergen.10.1.4.nupkg.sha512",
+        "swashbuckle.aspnetcore.swaggergen.10.1.5.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggergen.nuspec"
       ]
     },
-    "Swashbuckle.AspNetCore.SwaggerUI/10.1.4": {
-      "sha512": "A1ewmv/Xq5YkjQoSW29Kc9IoIC6pu210F1Fmzmj1EO7QJLTs6w3tOJatST6s41+Y8eUr5A1JLiXZ14U5EgN6ow==",
+    "Swashbuckle.AspNetCore.SwaggerUI/10.1.5": {
+      "sha512": "tQWVKNJWW7lf6S0bv22+7yfxK5IKzvsMeueF4XHSziBfREhLKt42OKzi6/1nINmyGlM4hGbR8aSMg72dLLVBLw==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore.swaggerui/10.1.4",
+      "path": "swashbuckle.aspnetcore.swaggerui/10.1.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4110,7 +4268,7 @@
         "lib/net9.0/Swashbuckle.AspNetCore.SwaggerUI.pdb",
         "lib/net9.0/Swashbuckle.AspNetCore.SwaggerUI.xml",
         "package-readme.md",
-        "swashbuckle.aspnetcore.swaggerui.10.1.4.nupkg.sha512",
+        "swashbuckle.aspnetcore.swaggerui.10.1.5.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
     },
@@ -4614,20 +4772,20 @@
       "path": "../EduTrail.Application/EduTrail.Application.csproj",
       "msbuildProject": "../EduTrail.Application/EduTrail.Application.csproj"
     },
-    "Edutrail.Domain/1.0.0": {
+    "EduTrail.Domain/1.0.0": {
       "type": "project",
-      "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
-      "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
+      "path": "../EduTrail.Domain/EduTrail.Domain.csproj",
+      "msbuildProject": "../EduTrail.Domain/EduTrail.Domain.csproj"
     },
     "EduTrail.Infrastructure/1.0.0": {
       "type": "project",
       "path": "../EduTrail.Infrastructure/EduTrail.Infrastructure.csproj",
       "msbuildProject": "../EduTrail.Infrastructure/EduTrail.Infrastructure.csproj"
     },
-    "Edutrail.Shared/1.0.0": {
+    "EduTrail.Shared/1.0.0": {
       "type": "project",
-      "path": "../Edutrail.Shared/Edutrail.Shared.csproj",
-      "msbuildProject": "../Edutrail.Shared/Edutrail.Shared.csproj"
+      "path": "../EduTrail.Shared/EduTrail.Shared.csproj",
+      "msbuildProject": "../EduTrail.Shared/EduTrail.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4640,7 +4798,7 @@
       "Microsoft.Extensions.Configuration >= 10.0.0",
       "Microsoft.Extensions.Configuration.Binder >= 10.0.0",
       "Microsoft.Extensions.DependencyInjection >= 10.0.0",
-      "Swashbuckle.AspNetCore >= 10.1.4"
+      "Swashbuckle.AspNetCore >= 10.1.5"
     ]
   },
   "packageFolders": {
@@ -4729,7 +4887,7 @@
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
-            "version": "[10.1.4, )"
+            "version": "[10.1.5, )"
           }
         },
         "imports": [
@@ -5206,6 +5364,16 @@
       "warningLevel": 1,
       "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.0.1 was resolved.",
       "libraryId": "MediatR",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
+      "libraryId": "AutoMapper",
       "targetGraphs": [
         "net10.0"
       ]

@@ -14,30 +14,35 @@ namespace EduTrail.Application.LabRequests
         {
             private readonly ILabRequestRepository _repository;
             private readonly IMapper _mapper;
+            private readonly ICommonService _commonService;
             private readonly LabRequestHelper _labRequestHelper;
 
-            public Handler(ILabRequestRepository repository, IMapper mapper,LabRequestHelper labRequestHelper )
+
+            public Handler(
+                ILabRequestRepository repository,
+                LabRequestHelper labRequestHelper,
+                ICommonService commonService
+                )
             {
                 _repository = repository;
-                _mapper = mapper;
                 _labRequestHelper = labRequestHelper;
+                _commonService = commonService;
 
             }
             public async Task<HelpRequestDto> Handle(SubmitHelpRequestCommand request, CancellationToken cancellationToken)
             {
-                var currentLoginUserId = Guid.Parse("BE7CC9F8-7150-4E22-9137-08DE77468F3B");
-                var labRequest = _mapper.Map<LabRequest>(request.HelpRequest);
+                var currentLoginUserId = _commonService._CurrentUserService.GetUserId();
+                var enrolementId = await _repository.GetEnrollementByUserId(currentLoginUserId);
+                var labRequest = _commonService._Mapper.Map<LabRequest>(request.HelpRequest);
                 string prefix = "LR";
                 var requestNumber = await _labRequestHelper.GenerateLabRequestNumber(prefix);
                 labRequest.RequestNumber = requestNumber;
-                labRequest.StudentId = currentLoginUserId;
+                labRequest.StudentId = enrolementId;
                 labRequest.StatusId = CustomCategory.HelpRequestStatus.Pending;
                 await _repository.CreateHelpRequestAsync(labRequest);
-                var result = _mapper.Map<HelpRequestDetailDto>(labRequest);
+                var result = _commonService._Mapper.Map<HelpRequestDetailDto>(labRequest);
                 return new HelpRequestDto { DetailsDto = result };
             }
-
-           
         }
     }
 }

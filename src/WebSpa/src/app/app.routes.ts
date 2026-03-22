@@ -4,6 +4,8 @@ import { AuthComponent } from './features/auth/auth.component';
 import { LearningSuiteComponent } from './features/learning-suite/learning-suite.component';
 import { learningSuiteRoutes } from './features/learning-suite/learning-suite-routing.module';
 import { AuthGuard } from './guards/auth.guard';
+import { GuestGuard } from './guards/guest.guard';
+import { ChangePasswordComponent } from './features/auth/components/change-password/change-password.component';
 
 export const routes: Routes = [
     {
@@ -14,6 +16,7 @@ export const routes: Routes = [
     {
         path: 'auth',
         component: AuthComponent,
+        canActivate: [GuestGuard],
         children: authRoutes
     },
     {
@@ -21,7 +24,11 @@ export const routes: Routes = [
         component: LearningSuiteComponent,
         canActivate: [AuthGuard],
         children: learningSuiteRoutes
-    }, 
+    },
+    {
+        path: 'change-password',
+        component: ChangePasswordComponent,
+    },
     {
         path: '**',
         redirectTo: 'auth'

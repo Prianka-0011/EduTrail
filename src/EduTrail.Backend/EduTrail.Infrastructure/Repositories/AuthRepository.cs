@@ -22,7 +22,13 @@ namespace EduTrail.Infrastructure.Repositories
 
         public async Task<User> GetUserByEmail(string email)
         {
-            return await _context.Users.Where(c=>c.Email == email).FirstOrDefaultAsync();
+            return await _context.Users.Where(c => c.Email == email).FirstOrDefaultAsync();
+        }
+        public async Task<User> UpdateAsync(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return user;
         }
 
     }

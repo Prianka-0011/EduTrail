@@ -3,11 +3,16 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    RouterLinkActive,
+  ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
 })
@@ -37,8 +42,7 @@ export class SignInComponent {
     this.authService.signIn(this.user).subscribe({
       next: () => {
         this.isLoading = false;
-        this.toastr.success('Login successful', 'Success');
-
+        //this.toastr.success('Login successful', 'Success');
         this.router.navigate(['/learning-suite']);
       },
       error: () => {

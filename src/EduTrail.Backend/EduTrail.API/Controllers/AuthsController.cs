@@ -26,7 +26,7 @@ namespace EduTrail.API.Controllers
 
             return Ok(res);
         }
-        
+
         [HttpGet("is-login")]
         [Authorize]
         public async Task<ActionResult> IsLogin()
@@ -34,9 +34,22 @@ namespace EduTrail.API.Controllers
             var isLoggedIn = await _mediator.Send(new IsLoginQuery());
             return Ok(new { IsAuthenticated = isLoggedIn });
         }
-        // public async Task<ActionResult>ResetPassword()
-        // {
 
-        // }
+        [HttpPost("reset-email-sent")]
+        public async Task<ActionResult> ResetEmail(ResetEmailCommand command)
+        {
+            var res = await _mediator.Send(command);
+
+            if (!res)
+                return Unauthorized();
+
+            return Ok(new { IsEmailSent = res });
+        }
+        [HttpPost("change-password")]
+        public async Task<ActionResult> ChangePassword(ChangePasswordCommand command)
+        {
+            var res = await _mediator.Send(command);
+            return Ok(new { Message = res });
+        }
     }
 }
