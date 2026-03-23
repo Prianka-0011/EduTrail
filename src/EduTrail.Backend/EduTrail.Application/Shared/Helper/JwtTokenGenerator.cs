@@ -9,17 +9,17 @@ namespace EduTrail.Application.Shared
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
-        private readonly ICommonService _service;
+        private readonly IConfiguration _config;
 
-        public JwtTokenGenerator(ICommonService service)
+        public JwtTokenGenerator(IConfiguration config)
         {
-            _service = service;
+            _config = config;
         }
 
         public string GenerateToken(User user, string tokenType = "")
         {
             var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_service._Configuration["Jwt:Key"])
+                Encoding.UTF8.GetBytes(_config["Jwt:Key"])
             );
 
             var credentials = new SigningCredentials(
@@ -38,8 +38,8 @@ namespace EduTrail.Application.Shared
             }
 
             var token = new JwtSecurityToken(
-                issuer: _service._Configuration["Jwt:Issuer"],
-                audience: _service._Configuration["Jwt:Audience"],
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
                 claims: claims,
                 expires: tokenType == "reset-pass"
                     ? DateTime.UtcNow.AddMinutes(30)

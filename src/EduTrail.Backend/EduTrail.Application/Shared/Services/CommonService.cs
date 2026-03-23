@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -76,5 +77,7 @@ namespace EduTrail.Application.Shared
         public IMapper _Mapper => _mapper;
         public string _SecretKey => _configuration["Jwt:Key"];
         public ICurrentUserService _CurrentUserService => _currentUserService;
+
+        public IHttpContextAccessor _HttpContextAccessor => _httpContextAccessor;
     }
 }
