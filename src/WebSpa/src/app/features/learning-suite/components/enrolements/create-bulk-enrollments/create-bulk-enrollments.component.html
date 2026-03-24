@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <div class="card border-1">
+    <div class="card-body">
+
+      <form #enrolementForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- File Upload -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Upload CSV File</label>
+          <input 
+            type="file" 
+            class="form-control" 
+            accept=".csv"
+            (change)="onFileChange($event)"
+          />
+        </div>
+
+        <!-- Buttons -->
+        <div class="mt-4 d-flex justify-content-end">
+          <button type="button" class="btn btn-outline-secondary me-2" (click)="onCancel()">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="!selectedFile">
+            Create Enrollments
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

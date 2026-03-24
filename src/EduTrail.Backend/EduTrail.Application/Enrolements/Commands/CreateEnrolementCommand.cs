@@ -20,7 +20,7 @@ namespace EduTrail.Application.Enrolements
             }
             public async Task<EnrolementDto> Handle(CreateEnrolementCommand request, CancellationToken cancellationToken)
             {
-                var existing = await _repository.GetByCourseOfferingIdAndStudentIdAsync(request.enrolementDto.CourseOfferingId, request.enrolementDto.StudentId);
+                var existing = await _repository.GetByCourseOfferingIdAndStudentIdAsync(request.enrolementDto.CourseOfferingId, request.enrolementDto.UserId);
                 if (existing != null)
                 {
                     throw new InvalidOperationException(
@@ -28,7 +28,7 @@ namespace EduTrail.Application.Enrolements
                         "Student is already enrolled in this course offering."
                     );
                 }
-                var student = await _repository.GetStudentByIdAsync(request.enrolementDto.StudentId);
+                var student = await _repository.GetStudentByIdAsync(request.enrolementDto.UserId);
                 if (student == null)
                 {
                     throw new InvalidOperationException("Student not found.");

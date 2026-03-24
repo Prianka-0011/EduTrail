@@ -13,5 +13,6 @@ namespace EduTrail.Application.Enrolements
         Task<Enrollment> GetByCourseOfferingIdAndStudentIdAsync(Guid courseOfferingId, Guid studentId);
         Task<Role> GetRoleTaAsync();
         Task<User> GetStudentByIdAsync(Guid studentId);
+        Task BulkInsertAsync(IEnumerable<Enrollment> enrollments);
     }
 }

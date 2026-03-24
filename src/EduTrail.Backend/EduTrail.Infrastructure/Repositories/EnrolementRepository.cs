@@ -27,8 +27,8 @@ namespace EduTrail.Infrastructure.Repositories
         }
         public async Task<Enrollment> GetByIdAsync(Guid id)
         {
-            return await _context.Enrollments.Include(c=>c.CourseOffering).ThenInclude(c=>c.Term).Include(c=>c.User).ThenInclude(c=>c.Roles).Where(c => c.Id == id)
-            .Include(c=>c.TALabMonths).ThenInclude(c=>c.Weeks).ThenInclude(c=>c.Days).ThenInclude(c=>c.Slots).FirstOrDefaultAsync();
+            return await _context.Enrollments.Include(c => c.CourseOffering).ThenInclude(c => c.Term).Include(c => c.User).ThenInclude(c => c.Roles).Where(c => c.Id == id)
+            .Include(c => c.TALabMonths).ThenInclude(c => c.Weeks).ThenInclude(c => c.Days).ThenInclude(c => c.Slots).FirstOrDefaultAsync();
         }
         public async Task<List<User>> GetAllUsersAsync()
         {
@@ -74,7 +74,14 @@ namespace EduTrail.Infrastructure.Repositories
 
         public Task<User> GetStudentByIdAsync(Guid studentId)
         {
-            return _context.Users.Include(c=>c.Roles).Where(u => u.Id == studentId).FirstOrDefaultAsync();
+            return _context.Users.Include(c => c.Roles).Where(u => u.Id == studentId).FirstOrDefaultAsync();
         }
+
+        public async Task BulkInsertAsync(IEnumerable<Enrollment> enrollments)
+        {
+            await _context.Enrollments.AddRangeAsync(enrollments);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

@@ -45,6 +45,7 @@ namespace EduTrail.API.Controllers
 
             return Ok(new { IsEmailSent = res });
         }
+        
         [HttpPost("change-password")]
         public async Task<ActionResult> ChangePassword(ChangePasswordCommand command)
         {
