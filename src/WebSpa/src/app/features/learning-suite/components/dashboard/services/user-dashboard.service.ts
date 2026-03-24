@@ -6,6 +6,7 @@ import { ICourseOfferingByUser } from '../interfaces/iCourseOfferingByUser';
 import { IEnrolement } from '../../enrolements/interfaces/iEnrolement';
 import { IUserEnrolementByCourseOffering } from '../interfaces/iUserEnrolementByCourseOffering';
 import { IHelpRequest } from '../interfaces/iHelpRequest';
+import { ICurrentLoginUserDetail } from '../interfaces/iCurrentLoginUserDetail';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +38,7 @@ export class UserDashboardService {
       enrolementDto: {
         id: enrolement.detailsDto.id,
         courseOfferingId: enrolement.detailsDto.courseOfferingId,
-        studentId: enrolement.detailsDto.studentId,
-        studentName: enrolement.detailsDto.studentName,
+        userId: enrolement.detailsDto.userId,
         enrolledDate: enrolement.detailsDto.enrolledDate
           ? new Date(enrolement.detailsDto.enrolledDate).toISOString()
           : null,
@@ -80,8 +80,13 @@ export class UserDashboardService {
         })) ?? []
       }
     };
-    console.log(`${this.baseUrl}/${enrolement.detailsDto.id}`, "this")
     return this.http.put<IUserEnrolementByCourseOffering>(`${this.baseUrl}/${enrolement.detailsDto.id}`, payload);
   }
+
+  getCurrentLoginUser(): Observable<ICurrentLoginUserDetail>
+  {
+    console.log(this.baseUrl+"current-login-user")
+    return this.http.get<ICurrentLoginUserDetail>(this.baseUrl+"/current-login-user");
+  } 
 
 }

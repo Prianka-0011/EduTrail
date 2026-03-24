@@ -1,4 +1,5 @@
-import { IDropdownItemInt } from "../../../../../shared/interface/iDropdownItem";
+
+import { IDropdownItem, IDropdownItemInt } from "../../../../../shared/interface/iDropdownItem";
 import { ITALabMonth } from "../../enrolements/interfaces/iTALabMonth";
 
 export interface IUserEnrolementByCourseOffering {
@@ -11,11 +12,13 @@ export interface IUserEnrolementByCourseOffering {
 export interface IUserEnrolementByCourseOfferingDetail {
     id: string;
     courseOfferingId: string;
-    studentId: string;
-    studentName?: string | null;
+    userId: string;
+    userName?: string | null;
     enrolledDate: string;
     isTa: boolean;
     isActive?: boolean;
     months?: ITALabMonth[];
     totalWorkHoursPerWeek?: number | 10;
+    roles?: IDropdownItem[];
+    
 }

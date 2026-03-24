@@ -75,30 +75,11 @@ export class EnrollmentProfileComponent implements OnInit {
     this.loadEnrolement();
   }
 
-  // private loadEnrolement(): void {
-  //   const id = this.route.snapshot.queryParamMap.get('id');
-  //   // if (!id || id === this.EMPTY_ID) return;
-
-  //   this.enrolementService.getCourseById(id ?? this.EMPTY_ID).subscribe(data => {
-  //     const enrolledDate = data.detailsDto?.enrolledDate
-  //       ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
-  //       : '';
-  //     this.enrolement = {
-  //       ...this.enrolement,
-  //       detailsDto: {
-  //         ...data.detailsDto,
-  //         enrolledDate
-  //       },
-  //       users: data.users ?? [],
-  //     };
-  //     this.maxWeeklyHours = data.detailsDto?.totalWorkHoursPerWeek ?? this.maxWeeklyHours;
-  //     this.taLabMonths = data.detailsDto?.months ?? [];
-  //     console.log("this.taLabMonths:", this.taLabMonths);
-  //   });
-  // }
   private loadEnrolement(): void {
     const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId'); //Because I am getting it from parent this route defined in parent
     this.enrolementService.getEnrolementByCourseOfferingAndLogingUser(courseOfferingId ?? this.EMPTY_ID).subscribe(data => {
+
+      console.log("enrolement data", data.detailsDto)
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
         : '';
@@ -141,13 +122,13 @@ export class EnrollmentProfileComponent implements OnInit {
       detailsDto: {
         id: this.EMPTY_ID,
         courseOfferingId: '',
-        studentId: '',
-        studentName: '',
+        userId: '',
+        userName: '',
         enrolledDate: new Date().toISOString().split('T')[0],
         isTa: false,
-        totalWorkHoursPerWeek: this.maxWeeklyHours
+        totalWorkHoursPerWeek: this.maxWeeklyHours,
+        roles: []
       },
-      // users: []
     };
   }
 
@@ -155,12 +136,7 @@ export class EnrollmentProfileComponent implements OnInit {
     this.enrolement.detailsDto.months = this.taLabMonths;
     const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId')!;
     this.enrolement.detailsDto.courseOfferingId = courseOfferingId;
-
     const request$ = this.enrolementService.updateEnrolement(this.enrolement);
-      // this.enrolement.detailsDto.id === this.EMPTY_ID
-      //   ? this.enrolementService.createEnrolement(this.enrolement)
-      //   : this.enrolementService.updateEnrolement(this.enrolement);
-
     request$.subscribe({
       next: () => {
         this.toastr.success('Enrollment saved successfully');

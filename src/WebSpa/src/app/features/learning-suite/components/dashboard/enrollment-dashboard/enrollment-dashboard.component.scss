@@ -80,7 +80,10 @@
   background: #f3f4f6;
   font-weight: 600;
 }
-
+.menu a i {
+  margin-right: 0.5rem; 
+  transition: font-weight 0.2s, color 0.2s;
+}
 /* CONTENT */
 .content {
   flex: 1;

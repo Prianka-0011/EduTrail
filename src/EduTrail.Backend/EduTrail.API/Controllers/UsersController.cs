@@ -1,6 +1,7 @@
 using EduTrail.API.Controllers;
 using EduTrail.Application.Users;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
@@ -17,6 +18,8 @@ public class UsersController : BaseController
         var result = await _mediator.Send(new GetAllUsersQuery());
         return Ok(result);
     }
+
+   
 
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDto>> GetById(Guid id)
