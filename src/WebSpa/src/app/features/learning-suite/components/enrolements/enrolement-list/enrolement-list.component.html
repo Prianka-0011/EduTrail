@@ -11,7 +11,7 @@
           <span>Create</span>
         </button>
 
-        <button (click)="openCreateDrawer()" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
+        <button (click)="openBulkCreateDrawer()" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
           <i class="bi bi-plus-lg"></i>
           <span>Bulk Create</span>
         </button>
@@ -139,6 +139,13 @@
   <ng-container *ngIf="drawerOpen">
     <app-enrolement-create-or-edit (saved)="onEnrolementSaved()"
       (cancel)="closeDrawer()"></app-enrolement-create-or-edit>
+  </ng-container>
+</app-side-drawer>
+
+<app-side-drawer [opened]="bulkDrawerOpen" width="1000px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+   <ng-container *ngIf="bulkDrawerOpen">
+    <app-create-bulk-enrollments (saved)="onEnrolementSaved()"
+      (cancel)="closeDrawer()"></app-create-bulk-enrollments>
   </ng-container>
 </app-side-drawer>
 

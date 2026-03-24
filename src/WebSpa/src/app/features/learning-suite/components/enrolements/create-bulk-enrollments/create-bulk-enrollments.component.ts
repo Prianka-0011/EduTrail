@@ -1,17 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EnrolementService } from '../services/enrolement.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-bulk-enrollments',
+  imports: [CommonModule, FormsModule],
   templateUrl: './create-bulk-enrollments.component.html',
   styleUrl: './create-bulk-enrollments.component.scss'
 })
-export class CreateBulkEnrollmentsComponent {
+export class CreateBulkEnrollmentsComponent implements OnInit {
 
   selectedFile: File | null = null;
   courseOfferingId = '';
 
-  constructor(private enrollmentService: EnrolementService) {}
+  constructor(
+    private enrollmentService: EnrolementService,
+    private route: ActivatedRoute,
+    private toast: ToastrService
+  ) { }
+  ngOnInit(): void {
+    this.courseOfferingId = this.route.snapshot.paramMap.get('courseOfferingId')!;
+    console.log("courseOfferingId", this.courseOfferingId)
+  }
 
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -34,7 +47,7 @@ export class CreateBulkEnrollmentsComponent {
 
   onSubmit(): void {
     if (!this.selectedFile || !this.courseOfferingId) {
-      alert('File and Course Offering are required');
+      this.toast.error('File and Course Offering are required');
       return;
     }
 

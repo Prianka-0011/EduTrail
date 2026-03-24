@@ -89,10 +89,12 @@ export class EnrolementService {
 
   bulkCreateEnrollments(file: File, courseOfferingId: string): Observable<any> {
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('courseOfferingId', courseOfferingId);
 
-    return this.http.post(this.baseUrl + 'bulk', formData);
+    formData.append('DetailDto.CourseOfferingId', courseOfferingId);
+    formData.append('DetailDto.File', file);
+
+    return this.http.post(this.baseUrl + 'bulk-upload', formData);
+    // return this.http.post(this.baseUrl + 'bulk-upload', payload);
   }
 
 }

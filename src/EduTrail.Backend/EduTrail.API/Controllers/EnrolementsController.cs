@@ -45,8 +45,9 @@ namespace EduTrail.API.Controllers
         }
 
         [Authorize]
+        [Consumes("multipart/form-data")]
         [HttpPost("bulk-upload")]
-        public async Task<IActionResult> BulkUpload(BulkEnrollmentUploadCommand command)
+        public async Task<IActionResult> BulkUpload([FromForm] BulkEnrollmentUploadCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

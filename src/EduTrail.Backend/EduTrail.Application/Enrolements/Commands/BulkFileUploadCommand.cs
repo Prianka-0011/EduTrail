@@ -30,13 +30,13 @@ namespace EduTrail.Application.Enrolements
                 if (request.DetailDto.File == null || request.DetailDto.File.Length == 0)
                     throw new Exception("No file provided");
 
-                // Save temp file
                 var tempFilePath = await _tempFilesService.SaveTempFileAsync(request.DetailDto.File);
 
                 List<EnrollmentCsvDto> records;
                 using (var reader = new StreamReader(tempFilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
+                    csv.Context.RegisterClassMap<EnrollmentCsvMap>();
                     records = csv.GetRecords<EnrollmentCsvDto>().ToList();
                 }
 
