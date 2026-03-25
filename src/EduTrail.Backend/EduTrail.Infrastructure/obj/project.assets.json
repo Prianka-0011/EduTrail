@@ -64,6 +64,19 @@
           }
         }
       },
+      "CsvHelper/33.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net9.0/CsvHelper.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/CsvHelper.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Humanizer.Core/2.14.1": {
         "type": "package",
         "compile": {
@@ -2059,8 +2072,9 @@
         "dependencies": {
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
-          "EduTrail.Domain": "1.0.0",
-          "EduTrail.Shared": "1.0.0",
+          "CsvHelper": "33.1.0",
+          "Edutrail.Domain": "1.0.0",
+          "Edutrail.Shared": "1.0.0",
           "MediatR": "12.0.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.4",
@@ -2075,30 +2089,30 @@
           "bin/placeholder/EduTrail.Application.dll": {}
         }
       },
-      "EduTrail.Domain/1.0.0": {
+      "Edutrail.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": "10.0.0"
         },
         "compile": {
-          "bin/placeholder/EduTrail.Domain.dll": {}
+          "bin/placeholder/Edutrail.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/EduTrail.Domain.dll": {}
+          "bin/placeholder/Edutrail.Domain.dll": {}
         }
       },
-      "EduTrail.Shared/1.0.0": {
+      "Edutrail.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "EduTrail.Domain": "1.0.0"
+          "Edutrail.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/EduTrail.Shared.dll": {}
+          "bin/placeholder/Edutrail.Shared.dll": {}
         },
         "runtime": {
-          "bin/placeholder/EduTrail.Shared.dll": {}
+          "bin/placeholder/Edutrail.Shared.dll": {}
         }
       }
     }
@@ -2171,6 +2185,32 @@
         "lib/net8.0/Azure.Identity.xml",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "CsvHelper/33.1.0": {
+      "sha512": "kqfTOZGrn7NarNeXgjh86JcpTHUoeQDMB8t9NVa/ZtlSYiV1rxfRnQ49WaJsob4AiGrbK0XDzpyKkBwai4F8eg==",
+      "type": "package",
+      "path": "csvhelper/33.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "csvhelper.33.1.0.nupkg.sha512",
+        "csvhelper.nuspec",
+        "lib/net462/CsvHelper.dll",
+        "lib/net462/CsvHelper.xml",
+        "lib/net47/CsvHelper.dll",
+        "lib/net47/CsvHelper.xml",
+        "lib/net48/CsvHelper.dll",
+        "lib/net48/CsvHelper.xml",
+        "lib/net8.0/CsvHelper.dll",
+        "lib/net8.0/CsvHelper.xml",
+        "lib/net9.0/CsvHelper.dll",
+        "lib/net9.0/CsvHelper.xml",
+        "lib/netstandard2.0/CsvHelper.dll",
+        "lib/netstandard2.0/CsvHelper.xml",
+        "lib/netstandard2.1/CsvHelper.dll",
+        "lib/netstandard2.1/CsvHelper.xml"
       ]
     },
     "Humanizer.Core/2.14.1": {
@@ -5469,22 +5509,22 @@
       "path": "../EduTrail.Application/EduTrail.Application.csproj",
       "msbuildProject": "../EduTrail.Application/EduTrail.Application.csproj"
     },
-    "EduTrail.Domain/1.0.0": {
+    "Edutrail.Domain/1.0.0": {
       "type": "project",
-      "path": "../EduTrail.Domain/EduTrail.Domain.csproj",
-      "msbuildProject": "../EduTrail.Domain/EduTrail.Domain.csproj"
+      "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
+      "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
     },
-    "EduTrail.Shared/1.0.0": {
+    "Edutrail.Shared/1.0.0": {
       "type": "project",
-      "path": "../EduTrail.Shared/EduTrail.Shared.csproj",
-      "msbuildProject": "../EduTrail.Shared/EduTrail.Shared.csproj"
+      "path": "../Edutrail.Shared/Edutrail.Shared.csproj",
+      "msbuildProject": "../Edutrail.Shared/Edutrail.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
       "EduTrail.Application >= 1.0.0",
-      "EduTrail.Domain >= 1.0.0",
-      "EduTrail.Shared >= 1.0.0",
+      "Edutrail.Domain >= 1.0.0",
+      "Edutrail.Shared >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 10.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 10.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 10.0.0",
@@ -5533,11 +5573,11 @@
             "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj": {
               "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj"
             },
-            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj"
             },
-            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj"
             }
           }
         }

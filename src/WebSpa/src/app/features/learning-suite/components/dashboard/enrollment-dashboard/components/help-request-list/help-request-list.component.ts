@@ -1,25 +1,41 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IHelpRequestDetail } from '../../../interfaces/iHelpRequest';
+import { IHelpRequest, IHelpRequestDetail } from '../../../interfaces/iHelpRequest';
 import { UserDashboardService } from '../../../services/user-dashboard.service';
 import { stringify } from 'node:querystring';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { LabRequestService } from '../../../services/lab-request.service';
+import { IDropdownItem } from '../../../../../../../shared/interface/iDropdownItem';
+import { ToastrService } from 'ngx-toastr';
+import { HelpRequestDetailViewComponent } from '../help-request-detail-view/help-request-detail-view.component';
+import { SideDrawerComponent } from '../../../../../../../shared/components/side-drawer/side-drawer.component';
+
 
 @Component({
   selector: 'app-help-request-list',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SideDrawerComponent,
+    HelpRequestDetailViewComponent
+  ],
   templateUrl: './help-request-list.component.html',
   styleUrl: './help-request-list.component.scss'
 })
 export class HelpRequestListComponent implements OnInit {
   EMPTY_ID = '00000000-0000-0000-0000-000000000000';
-  constructor(private labRequestService: LabRequestService, private route: ActivatedRoute) { }
-
+  constructor(
+    private labRequestService: LabRequestService,
+    private activeRoute: ActivatedRoute,
+    private router: Router,
+    private toast: ToastrService
+  ) { }
+  drawerOpen = false;
   requests: IHelpRequestDetail[] = [];
   filtered: IHelpRequestDetail[] = [];
   paged: IHelpRequestDetail[] = [];
+  statusList: IDropdownItem[] = [];
 
   pageSizeOptions = [5, 10, 20];
   pageSize = 10;
@@ -36,18 +52,33 @@ export class HelpRequestListComponent implements OnInit {
   }
 
   getAllRequests() {
-    const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId') ?? this.EMPTY_ID;
+    const courseOfferingId = this.activeRoute.parent?.snapshot.paramMap.get('courseOfferingId') ?? this.EMPTY_ID;
     this.labRequestService.getAllLabRequest(courseOfferingId).subscribe({
       next: res => {
-        console.log("res.detailsListDto", res.detailsListDto)
+        console.log("res.detailsListDto", res.statusList)
         this.requests = res.detailsListDto || [];
         this.applyFilter();
+        this.statusList = res.statusList ?? [];
       },
       error: err => console.error(err)
     });
-    // this.labRequestService.getAllLabRequest(courseOfferingId).subscribe({
-    //   next: res=> console.log(res)
-    // })
+  }
+
+  saveStatus(request: IHelpRequestDetail) {
+    console.log("request dT", request)
+    const payload: IHelpRequest = {
+      detailsDto: request
+    };
+
+    this.labRequestService.updateLabRequest(payload).subscribe({
+      next: () => {
+        this.getAllRequests()
+        this.toast.success('Status updated successfully');
+      },
+      error: () => {
+        this.toast.error('Failed to update status');
+      }
+    });
   }
 
   applyFilter() {
@@ -129,6 +160,22 @@ export class HelpRequestListComponent implements OnInit {
     const end = Math.min(this.currentPage * this.pageSize, this.totalItems);
 
     return `${start} – ${end} of ${this.totalItems}`;
+  }
+
+  openDetailDrawer(id:string) {
+    this.drawerOpen = true;
+    this.router.navigate([], {
+      queryParams: { id: id },
+      queryParamsHandling: 'merge'
+    })
+  }
+
+  closeDrawer() {
+    this.drawerOpen = false;
+    this.router.navigate([], {
+      queryParams: { id: undefined },
+      queryParamsHandling: 'merge'
+    });
   }
 
 }

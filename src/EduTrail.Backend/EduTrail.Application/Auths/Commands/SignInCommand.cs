@@ -51,7 +51,7 @@ namespace EduTrail.Application.Auths
                     var cookieOptions = new CookieOptions
                     {
                         HttpOnly = true,
-                        Secure = !_environment.IsDevelopment(),
+                        Secure = !_service._Environment.IsDevelopment(),
                         SameSite = SameSiteMode.Lax,
                         Expires = DateTimeOffset.UtcNow.AddMinutes(60)
                     };

@@ -1,27 +1,32 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using EduTrail.Shared;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace EduTrail.Application.Shared
 {
     public class CurrentUserService : ICurrentUserService
     {
-        private readonly ICommonService _service;
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IConfiguration _configuration;
 
-        public CurrentUserService(ICommonService service)
+        public CurrentUserService(IHttpContextAccessor contextAccessor, IConfiguration configuration)
         {
-            _service = service;
+            _contextAccessor = contextAccessor;
+            _configuration = configuration;
         }
 
         public Guid GetUserId()
         {
-            var context = _service.HttpContextAccessor.HttpContext;
-            if (context == null || !context.Request.Cookies.TryGetValue(_service.AuthTokenCookieName, out var token))
+            var context = _contextAccessor.HttpContext;
+            if (context == null || !context.Request.Cookies.TryGetValue(CustomCategory.AuthsVariable.AuthTokenName, out var token))
                 throw new UnauthorizedAccessException("User is not logged in");
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_service.JwtTokenGenerator._SecretKey);
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
 
             var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
             {

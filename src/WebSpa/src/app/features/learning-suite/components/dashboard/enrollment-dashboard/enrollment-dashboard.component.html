@@ -1,30 +1,34 @@
 <div class="profile-layout">
   <aside class="sidebar2">
     <div class="user-info">
-      <div class="avatar-circle">PA</div>
       <div>
-        <div class="name">Nipa Ani</div>
+        <div class="name">{{ userDetail.fullName }}</div>
         <div class="email">
-          <p>nipa&#64;gmail.com</p>
+          <p>{{ userDetail.email }}</p>
         </div>
       </div>
-
     </div>
+
     <nav class="menu">
-      <div class="menu-title">Personal</div>
+      <ng-container *ngFor="let item of menu">
+        <a *ngIf="!item.children?.length" [routerLink]="[item.route]" routerLinkActive="active">
+          <i *ngIf="item.icon" class="{{ item.icon }}" style="margin-right: 0.5rem;"></i>
+          {{ item.label }}
+        </a>
 
-      <a routerLink="enrollment-profile" routerLinkActive="active">
-        My Profile
-      </a>
-
-      <a [routerLink]="['ta-lab-schedule']" routerLinkActive="active">
-        Schedule
-      </a>
-
-      <div class="menu-title">Help</div>
-      <a [routerLink]="['submit-help-request']" routerLinkActive="active">Submit Help Request</a>
-      <a [routerLink]="['help-request-list']" routerLinkActive="active">Help Request List</a>
-      
+        <div *ngIf="item.children?.length" class="menu-group">
+          <div class="menu-label">
+            <i *ngIf="item.icon" class="{{ item.icon }}" style="margin-right: 0.5rem;"></i>
+            {{ item.label }}
+          </div>
+          <div class="submenu">
+            <a *ngFor="let child of item.children" [routerLink]="[child.route]" routerLinkActive="active">
+              <i *ngIf="child.icon" class="{{ child.icon }}" style="margin-right: 0.5rem;"></i>
+              {{ child.label }}
+            </a>
+          </div>
+        </div>
+      </ng-container>
     </nav>
   </aside>
 

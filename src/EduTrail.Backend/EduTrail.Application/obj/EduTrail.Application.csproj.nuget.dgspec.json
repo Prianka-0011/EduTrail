@@ -33,11 +33,11 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj": {
-                "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj"
+              "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj": {
+                "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj"
               },
-              "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj": {
-                "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj"
+              "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj": {
+                "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj"
               }
             }
           }
@@ -65,6 +65,10 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.1.0, )"
             },
             "MediatR": {
               "target": "Package",
@@ -385,14 +389,14 @@
         }
       }
     },
-    "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj": {
+    "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj",
-        "projectName": "EduTrail.Domain",
-        "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj",
+        "projectUniqueName": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj",
+        "projectName": "Edutrail.Domain",
+        "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj",
         "packagesPath": "C:\\Users\\pmondal\\.nuget\\packages\\",
-        "outputPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\obj\\",
+        "outputPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -731,14 +735,14 @@
         }
       }
     },
-    "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj": {
+    "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj",
-        "projectName": "EduTrail.Shared",
-        "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj",
+        "projectUniqueName": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj",
+        "projectName": "Edutrail.Shared",
+        "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj",
         "packagesPath": "C:\\Users\\pmondal\\.nuget\\packages\\",
-        "outputPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\obj\\",
+        "outputPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -760,8 +764,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj": {
-                "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj"
+              "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj": {
+                "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj"
               }
             }
           }

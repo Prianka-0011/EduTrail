@@ -32,12 +32,12 @@ namespace EduTrail.Application.LabRequests
             public async Task<HelpRequestDto> Handle(SubmitHelpRequestCommand request, CancellationToken cancellationToken)
             {
                 var currentLoginUserId = _commonService._CurrentUserService.GetUserId();
-                var enrolementId = await _repository.GetEnrollementByUserId(currentLoginUserId);
+                var enrolement = await _repository.GetEnrollementByUserId(currentLoginUserId);
                 var labRequest = _commonService._Mapper.Map<LabRequest>(request.HelpRequest);
                 string prefix = "LR";
                 var requestNumber = await _labRequestHelper.GenerateLabRequestNumber(prefix);
                 labRequest.RequestNumber = requestNumber;
-                labRequest.StudentId = enrolementId;
+                labRequest.StudentId = enrolement.Id;
                 labRequest.StatusId = CustomCategory.HelpRequestStatus.Pending;
                 await _repository.CreateHelpRequestAsync(labRequest);
                 var result = _commonService._Mapper.Map<HelpRequestDetailDto>(labRequest);

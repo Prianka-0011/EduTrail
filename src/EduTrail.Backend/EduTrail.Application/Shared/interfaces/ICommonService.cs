@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +31,7 @@ namespace EduTrail.Application.Shared
         string _AuthTokenCookieName { get; }
         string _SecretKey {get; }
         ICurrentUserService _CurrentUserService{get;}
+        IConfigurationRepository _ConfigurationRepository{get;}
     }
 
 }

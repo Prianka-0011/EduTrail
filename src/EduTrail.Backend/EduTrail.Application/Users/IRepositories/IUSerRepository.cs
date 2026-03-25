@@ -6,11 +6,14 @@ namespace EduTrail.Application.Users
     public interface IUserRepository
     {
         Task<User> CreateAsync(User user);
+        Task<User> CreateNotSaveChangeAsync(User user);
         Task<IEnumerable<User>> GetAllAsync();
         Task<User> GetByIdAsync(Guid id);
+         Task<User> GetByEmailAsync(string email);
         Task<User> UpdateAsync(User user);
         Task<bool> DeleteAsync(Guid id);
         Task<IEnumerable<Role>> GetAllRolesAsync();
         Task<IEnumerable<Role>> GetRolesByIdsAsync(IEnumerable<DropdownItemDto> roleIds);
+        Task SaveChangesAsync();
     }
 }

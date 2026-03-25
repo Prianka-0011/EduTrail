@@ -23,6 +23,7 @@ namespace EduTrail.Application
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IEmailTemplateService, EmailTemplateService>();
             services.AddScoped<ICommonService, CommonService>();
+            services.AddScoped<ITempFilesService, TempFilesService>();
 
             return services;
         }

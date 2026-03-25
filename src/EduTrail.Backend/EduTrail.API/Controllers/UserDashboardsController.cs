@@ -1,6 +1,7 @@
 using EduTrail.Application.Enrolements;
 using EduTrail.Application.UserDashboards;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduTrail.API.Controllers
@@ -39,6 +40,13 @@ namespace EduTrail.API.Controllers
                 return BadRequest("Enrolement ID mismatch");
             }
             return Ok(await _mediator.Send(command));
+        }
+        [Authorize]
+        [HttpGet("current-login-user")]
+        public async Task<ActionResult> GetCurrentLoginUser()
+        {
+            var result = await _mediator.Send(new GetCurrentLoginUserQuery());
+            return Ok(result);
         }
 
     }

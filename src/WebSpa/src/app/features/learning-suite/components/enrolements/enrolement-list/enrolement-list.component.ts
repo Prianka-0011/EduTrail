@@ -8,10 +8,16 @@ import { FormsModule } from '@angular/forms';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { EnrolementCreateOrEditComponent } from '../enrolement-create-or-edit/enrolement-create-or-edit.component';
 import { ToastrService } from 'ngx-toastr';
+import { CreateBulkEnrollmentsComponent } from '../create-bulk-enrollments/create-bulk-enrollments.component';
 
 @Component({
   selector: 'app-enrolement-list',
-  imports: [CommonModule, FormsModule, SideDrawerComponent, EnrolementCreateOrEditComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SideDrawerComponent,
+    EnrolementCreateOrEditComponent,
+    CreateBulkEnrollmentsComponent],
   templateUrl: './enrolement-list.component.html',
   styleUrl: './enrolement-list.component.scss'
 })
@@ -25,6 +31,7 @@ export class EnrolementListComponent implements OnInit {
   currentPage = 1;
   totalItems = 0;
   drawerOpen = false;
+  bulkDrawerOpen = false;
   selectedEnrolementId: string | null = null;
   expandedRows = new Set<string>();
 
@@ -100,6 +107,16 @@ export class EnrolementListComponent implements OnInit {
     })
   }
 
+  openBulkCreateDrawer() {
+    console.log("I am here")
+    this.selectedEnrolementId = null;
+    this.bulkDrawerOpen = true;
+    this.router.navigate([], {
+      queryParams: { id: "bulk" },
+      queryParamsHandling: 'merge'
+    })
+  }
+
   openEditDrawer(id: string) {
     this.selectedEnrolementId = id;
     this.drawerOpen = true;
@@ -112,7 +129,7 @@ export class EnrolementListComponent implements OnInit {
   closeDrawer() {
     this.drawerOpen = false;
     this.selectedEnrolementId = null;
-     this.router.navigate([], {
+    this.router.navigate([], {
       queryParams: { id: undefined },
       queryParamsHandling: 'merge'
     });

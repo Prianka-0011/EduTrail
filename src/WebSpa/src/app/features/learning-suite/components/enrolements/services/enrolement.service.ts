@@ -24,7 +24,7 @@ export class EnrolementService {
     return this.http.post<IEnrolement>(this.baseUrl, {
       enrolementDto: {
         courseOfferingId: enrolement.detailsDto?.courseOfferingId,
-        studentId: enrolement.detailsDto?.studentId,
+        userId: enrolement.detailsDto?.userId,
         enrolledDate: enrolement.detailsDto?.enrolledDate,
         isTa: enrolement.detailsDto.isTa ?? false,
         totalWorkHoursPerWeek: enrolement.detailsDto.totalWorkHoursPerWeek,
@@ -41,7 +41,7 @@ export class EnrolementService {
       enrolementDto: {
         id: enrolement.detailsDto.id,
         courseOfferingId: enrolement.detailsDto.courseOfferingId,
-        studentId: enrolement.detailsDto.studentId,
+        userId: enrolement.detailsDto.userId,
         studentName: enrolement.detailsDto.studentName,
         enrolledDate: enrolement.detailsDto.enrolledDate
           ? new Date(enrolement.detailsDto.enrolledDate).toISOString()
@@ -86,6 +86,17 @@ export class EnrolementService {
     };
     return this.http.put<IEnrolement>(`${this.baseUrl}${enrolement.detailsDto.id}`, payload);
   }
+
+  bulkCreateEnrollments(file: File, courseOfferingId: string): Observable<any> {
+    const formData = new FormData();
+
+    formData.append('DetailDto.CourseOfferingId', courseOfferingId);
+    formData.append('DetailDto.File', file);
+
+    return this.http.post(this.baseUrl + 'bulk-upload', formData);
+    // return this.http.post(this.baseUrl + 'bulk-upload', payload);
+  }
+
 }
 
 

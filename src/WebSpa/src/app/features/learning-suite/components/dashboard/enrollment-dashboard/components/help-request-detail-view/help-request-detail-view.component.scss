@@ -1,0 +1,17 @@
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 2px;
+}
+
+.value {
+  font-size: 0.95rem;
+  color: #212529;
+  word-break: break-word;
+}

@@ -21,13 +21,13 @@ namespace EduTrail.Domain.Entities
         [EmailAddress]
         [MaxLength(150)]
         public string Email { get; set; }
+        // public string? ImageUrl { get; set; }
 
-    
         public string? PasswordHash { get; set; }
- 
+
         public string? PasswordSalt { get; set; }
         public bool IsActive { get; set; }
-      
+
         // Audit fields
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }

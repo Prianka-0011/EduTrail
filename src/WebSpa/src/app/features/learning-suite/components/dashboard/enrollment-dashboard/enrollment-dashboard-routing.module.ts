@@ -4,6 +4,7 @@ import { EnrollmentDashboardComponent } from "./enrollment-dashboard.component";
 import { TaLabScheduleComponent } from "./components/ta-lab-schedule/ta-lab-schedule.component";
 import { SubmitHelpRequestComponent } from "./components/submit-help-request/submit-help-request.component";
 import { HelpRequestListComponent } from "./components/help-request-list/help-request-list.component";
+import { CurrentUserHelpRequestListComponent } from "./components/current-user-help-request-list/current-user-help-request-list.component";
 
 
 export const enrollmentRoutes: Routes = [
@@ -29,5 +30,9 @@ export const enrollmentRoutes: Routes = [
   {
     path: 'help-request-list',
     component: HelpRequestListComponent
+  },
+  {
+    path: 'my-help-request-list',
+    component: CurrentUserHelpRequestListComponent
   }
 ];

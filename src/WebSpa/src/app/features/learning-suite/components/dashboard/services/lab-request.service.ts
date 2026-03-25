@@ -40,5 +40,36 @@ export class LabRequestService {
   );
 }
 
+ getLabRequestById(id: string): Observable<IHelpRequest> {
+  return this.http.get<IHelpRequest>(
+    `${this.baseUrl}/${id}`
+  );
+}
 
+ getAllLabRequestCurrentUser(courseOfferingId: string): Observable<IHelpRequest> {
+  return this.http.get<IHelpRequest>(
+    `${this.baseUrl}/help-request-by-current-user-list/${courseOfferingId}`
+  );
+}
+
+updateLabRequest(request: IHelpRequest) : Observable<IHelpRequest>
+{
+  const payload =
+    {
+      helpRequest:
+      {
+        id: request.detailsDto?.id,
+        requestNumber: request.detailsDto?.requestNumber,
+        studentId: request.detailsDto?.studentId,
+        zoomLink: request.detailsDto?.zoomLink,
+        issueTitle: request.detailsDto?.issueTitle,
+        issueDescription: request.detailsDto?.issueDescription,
+        trySofar: request.detailsDto?.trySofar,
+        statusId: request.detailsDto?.statusId,
+        courseOfferingId: request.detailsDto?.courseOfferingId,
+        requestedDate: request.detailsDto?.requestedDate,
+      }
+    }
+  return this.http.put<IHelpRequest>(`${this.baseUrl}/${request.detailsDto?.id}`, payload);
+}
 }

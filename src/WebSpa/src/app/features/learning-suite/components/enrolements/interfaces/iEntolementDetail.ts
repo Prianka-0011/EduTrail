@@ -4,7 +4,7 @@ import { ITALabMonth } from "./iTALabMonth";
 export interface IEnrolementDetail {
   id: string;
   courseOfferingId: string;
-  studentId: string;
+  userId: string;
   studentName?: string | null;
   enrolledDate: string;
   isTa: boolean;

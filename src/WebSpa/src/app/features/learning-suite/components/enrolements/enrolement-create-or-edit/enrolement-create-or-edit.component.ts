@@ -73,30 +73,10 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     this.loadEnrolement();
   }
 
-  // private loadEnrolement(): void {
-  //   const id = this.route.snapshot.queryParamMap.get('id');
-  //   // if (!id || id === this.EMPTY_ID) return;
-
-  //   this.enrolementService.getCourseById(id ?? this.EMPTY_ID).subscribe(data => {
-  //     const enrolledDate = data.detailsDto?.enrolledDate
-  //       ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
-  //       : '';
-  //     this.enrolement = {
-  //       ...this.enrolement,
-  //       detailsDto: {
-  //         ...data.detailsDto,
-  //         enrolledDate
-  //       },
-  //       users: data.users ?? [],
-  //     };
-  //     this.maxWeeklyHours = data.detailsDto?.totalWorkHoursPerWeek ?? this.maxWeeklyHours;
-  //     this.taLabMonths = data.detailsDto?.months ?? [];
-  //     console.log("this.taLabMonths:", this.taLabMonths);
-  //   });
-  // }
   private loadEnrolement(): void {
     const id = this.route.snapshot.queryParamMap.get('id');
     this.enrolementService.getEnrollmentById(id ?? this.EMPTY_ID).subscribe(data => {
+      console.log("data.detailsDto", data.detailsDto);
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
         : '';
@@ -139,7 +119,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
       detailsDto: {
         id: this.EMPTY_ID,
         courseOfferingId: '',
-        studentId: '',
+        userId: '',
         studentName: '',
         enrolledDate: new Date().toISOString().split('T')[0],
         isTa: false,

@@ -22,6 +22,8 @@ namespace EduTrail.Shared
         public static class HelpRequestStatus
         {
             public static Guid Pending { get; set; } = Guid.Parse("627407c8-700d-46fc-a3e5-02dc368fb75e");
+            public static Guid Completed { get; set; } = Guid.Parse("EB57ECC1-678E-48F9-8DB0-0BD79973F52F");
+
         }
 
         public static class RoleType

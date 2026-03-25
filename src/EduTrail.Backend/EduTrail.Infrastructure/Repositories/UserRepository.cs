@@ -60,5 +60,22 @@ namespace EduTrail.Infrastructure.Repositories
             var roles = _context.Roles.Where(r => roleIds.Select(rId => rId.Id).Contains(r.Id)).AsEnumerable();
             return await Task.FromResult(roles);
         }
+
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            return await _context.Users.Include(u => u.Roles).FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task<User> CreateNotSaveChangeAsync(User user)
+        {
+            await _context.Users.AddAsync(user);
+            return user;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

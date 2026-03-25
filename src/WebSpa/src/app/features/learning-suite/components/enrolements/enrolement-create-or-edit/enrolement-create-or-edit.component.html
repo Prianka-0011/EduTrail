@@ -7,9 +7,9 @@
         <div class="row g-3">
           <div class="col-md-12">
             <div class="floating">
-              <select class="form-select" name="studentId" [(ngModel)]="enrolement.detailsDto.studentId"
-                #studentId="ngModel" required (focus)="isStudentFocused = true" (blur)="isStudentFocused = false"
-                [ngClass]="{ active: enrolement.detailsDto.studentId || isStudentFocused }">
+              <select class="form-select" name="userId" [(ngModel)]="enrolement.detailsDto.userId"
+                #userId="ngModel" required (focus)="isStudentFocused = true" (blur)="isStudentFocused = false"
+                [ngClass]="{ active: enrolement.detailsDto.userId || isStudentFocused }">
                 <!-- <option value="" disabled>Select Student</option> -->
                 <option *ngFor="let s of enrolement.users" [value]="s.id">
                   {{ s.name }}
@@ -17,7 +17,7 @@
               </select>
               <label>Student *</label>
             </div>
-            <div class="text-danger small" *ngIf="studentId.invalid && studentId.touched">
+            <div class="text-danger small" *ngIf="userId.invalid && userId.touched">
               Student is required
             </div>
           </div>
