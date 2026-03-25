@@ -18,6 +18,7 @@ namespace EduTrail.Application.Shared
         private readonly IConfiguration _configuration;
         private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
+        private readonly IConfigurationRepository _configurationRepository;
         // private readonly IMEdi
         private static readonly ILogger<CommonService> _logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<CommonService>();
 
@@ -29,7 +30,9 @@ namespace EduTrail.Application.Shared
             IEmailTemplateService emailTemplateService,
             IJwtTokenGenerator jwtTokenGenerator,
             IMapper mapper,
-            ICurrentUserService currentUserService)
+            ICurrentUserService currentUserService,
+            IConfigurationRepository configurationRepository
+            )
         {
             _httpContextAccessor = httpContextAccessor;
             _schedulerFactory = schedulerFactory;
@@ -39,6 +42,7 @@ namespace EduTrail.Application.Shared
             _jwtTokenGenerator = jwtTokenGenerator;
             _mapper = mapper;
             _currentUserService = currentUserService;
+            _configurationRepository = configurationRepository;
         }
 
         private static string LogAndThrow(string message)
@@ -79,5 +83,7 @@ namespace EduTrail.Application.Shared
         public ICurrentUserService _CurrentUserService => _currentUserService;
 
         public IHttpContextAccessor _HttpContextAccessor => _httpContextAccessor;
+
+        public IConfigurationRepository _ConfigurationRepository => _configurationRepository;
     }
 }

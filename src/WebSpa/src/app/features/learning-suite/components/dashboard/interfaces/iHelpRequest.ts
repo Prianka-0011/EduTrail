@@ -1,10 +1,13 @@
+import { IDropdownItem } from "../../../../../shared/interface/iDropdownItem";
+
 export interface IHelpRequest {
   detailsDto?: IHelpRequestDetail,  
   detailsListDto?: IHelpRequestDetail[];
+  statusList?: IDropdownItem[];
 }
 
 export interface IHelpRequestDetail {
-  id?: string;
+  id: string;
   requestNumber?: string;
   zoomLink?: string;
   issueTitle?: string;
@@ -19,4 +22,5 @@ export interface IHelpRequestDetail {
   assignedTeacherName?: string;
   statusId?: string;
   statusName?: string;
+  dailyNumber?: number;
 }

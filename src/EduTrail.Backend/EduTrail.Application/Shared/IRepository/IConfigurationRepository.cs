@@ -8,5 +8,6 @@ namespace EduTrail.Application.Shared
         Task<AutoGenerateNumber> GetAutoGenerateNumberByPrefixAsync(string prefix);
         Task<AutoGenerateNumber> CreateAutoGenerate(AutoGenerateNumber autoGenerateNumber);
         Task<AutoGenerateNumber> UpdateAutoGenerate(AutoGenerateNumber autoGenerateNumber);
+        Task<List<Status>> GetStatusListByTypeId(Guid typeId);
     }
 }

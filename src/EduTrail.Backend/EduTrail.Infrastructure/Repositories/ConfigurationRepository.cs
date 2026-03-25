@@ -31,6 +31,13 @@ namespace EduTrail.Infrastructure.Repositories
             .FirstOrDefaultAsync();
             return entity;
         }
+
+        public async Task<List<Status>> GetStatusListByTypeId(Guid typeId)
+        {
+            var statusList = await _context.Statuses.Where(c=>c.StatusTypeId == typeId).ToListAsync();
+            return statusList;
+        }
+
         public async Task<AutoGenerateNumber> UpdateAutoGenerate(AutoGenerateNumber autoGenerateNumber)
         {
             _context.AutoGenerateNumbers.Update(autoGenerateNumber);

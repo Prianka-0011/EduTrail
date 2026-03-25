@@ -1,0 +1,88 @@
+<div class="card shadow-sm p-4">
+
+  <h4 class="mb-4 fw-semibold">Lab Request Details</h4>
+
+  <div class="row g-4">
+
+    <div class="col-md-6">
+      <div class="detail-item">
+        <span class="label">Request #</span>
+        <div class="value">{{ request.requestNumber }}</div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="detail-item">
+        <span class="label">Requested Date</span>
+        <div class="value">{{ request.requestedDate | date:'mediumDate' }}</div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="detail-item">
+        <span class="label">Student Name</span>
+        <div class="value">{{ request.studentName }}</div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="detail-item">
+        <span class="label">Course</span>
+        <div class="value">{{ request.courseOfferingName }}</div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="detail-item">
+        <span class="label">Assigned Teacher</span>
+        <div class="value">{{ request.assignedTeacherName || '-' }}</div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="detail-item">
+        <span class="label">Issue Title</span>
+        <div class="value">{{ request.issueTitle }}</div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="detail-item">
+        <span class="label">Issue Description</span>
+        <div class="value">{{ request.issueDescription }}</div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="detail-item">
+        <span class="label">Tried So Far</span>
+        <div class="value">{{ request.trySofar }}</div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="detail-item">
+        <span class="label">Zoom Link</span>
+        <div class="value">
+          <a *ngIf="request.zoomLink" [href]="request.zoomLink" target="_blank">
+            {{ request.zoomLink }}
+          </a>
+          <span *ngIf="!request.zoomLink">-</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="detail-item">
+        <span class="label">Status</span>
+        <div class="value">
+          <span class="badge bg-light text-dark border">
+            {{ request.statusName }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

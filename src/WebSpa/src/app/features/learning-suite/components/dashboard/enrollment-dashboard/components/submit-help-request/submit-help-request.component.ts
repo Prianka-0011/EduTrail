@@ -21,6 +21,7 @@ export class SubmitHelpRequestComponent implements OnInit {
   @ViewChild('helpRequestForm') helpRequestForm!: NgForm;
 
   helpRequest: IHelpRequestDetail = {
+    id: this.EMPTY_ID,
     issueTitle: '',
     issueDescription: '',
     trySofar: '',
@@ -64,6 +65,7 @@ export class SubmitHelpRequestComponent implements OnInit {
           zoomLink: ''
         });
         this.saved.emit();
+        this.toastr.success("Help request submitted successfully.")
       }
     });
   }

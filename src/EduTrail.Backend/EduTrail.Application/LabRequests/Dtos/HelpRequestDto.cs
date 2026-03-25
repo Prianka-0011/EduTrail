@@ -7,6 +7,7 @@ namespace EduTrail.Application.LabRequests
     {
         public HelpRequestDetailDto? DetailsDto { get; set; }
         public List<HelpRequestDetailDto>? DetailsListDto { get; set; }
+        public List<DropdownItemDto> StatusList { get; set; }
     }
 
     public class HelpRequestDetailDto
@@ -26,5 +27,6 @@ namespace EduTrail.Application.LabRequests
         public string? AssignedTeacherName { get; set; }
         public Guid? StatusId { get; set; }
         public string? StatusName { get; set; }
+        public int DailyNumber { get; set; }
     }
 }

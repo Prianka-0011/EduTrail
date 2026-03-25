@@ -89,6 +89,14 @@ export class EnrollmentDashboardComponent implements OnInit {
             rolesPermission: [CustomCategory.RoleType.Student]
           },
           {
+            label: 'My Help Request List',
+            icon: 'bi-list',
+            route: 'my-help-request-list',
+            rolesPermission: [
+              CustomCategory.RoleType.Student,
+            ]
+          },
+          {
             label: 'Help Request List',
             icon: 'bi-list',
             route: 'help-request-list',

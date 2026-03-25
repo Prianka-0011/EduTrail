@@ -31,6 +31,7 @@ namespace EduTrail.Application.Shared
         string _AuthTokenCookieName { get; }
         string _SecretKey {get; }
         ICurrentUserService _CurrentUserService{get;}
+        IConfigurationRepository _ConfigurationRepository{get;}
     }
 
 }
