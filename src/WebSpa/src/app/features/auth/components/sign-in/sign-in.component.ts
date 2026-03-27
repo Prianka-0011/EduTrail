@@ -29,6 +29,7 @@ export class SignInComponent {
   isPasswordFocused = false;
   isLoading = false;
   errorMessage = '';
+  showPassword: boolean = false;
 
   onSubmit() {
     if (!this.user.email || !this.user.password) {

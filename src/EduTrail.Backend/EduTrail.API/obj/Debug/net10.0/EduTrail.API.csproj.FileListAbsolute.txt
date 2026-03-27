@@ -238,7 +238,7 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\CsvHelper.dll
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\3rdpartylicenses.txt
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\favicon.ico
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\index.html
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\polyfills.dd106866b0abc19a.js
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\runtime.37b037475bcadbb2.js
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\styles.76f9dce6ba19a811.css
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\main.3d7e4a3e60093f91.js
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\polyfills.07750a28ba4a0ff0.js
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\main.c414f7e69e869684.js
