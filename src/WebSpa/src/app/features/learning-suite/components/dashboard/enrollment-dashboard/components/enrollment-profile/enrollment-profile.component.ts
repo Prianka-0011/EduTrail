@@ -78,8 +78,6 @@ export class EnrollmentProfileComponent implements OnInit {
   private loadEnrolement(): void {
     const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId'); //Because I am getting it from parent this route defined in parent
     this.enrolementService.getEnrolementByCourseOfferingAndLogingUser(courseOfferingId ?? this.EMPTY_ID).subscribe(data => {
-
-      console.log("enrolement data", data.detailsDto)
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
         : '';
@@ -156,7 +154,6 @@ export class EnrollmentProfileComponent implements OnInit {
 
   public getMonthName(monthNumber: number): string {
     var monthname = this.months.find(c => c.id == monthNumber)?.name ?? "";
-    console.log("monthNumber to get name", this.months, monthname, monthNumber)
     return monthname;
   }
 

@@ -51,7 +51,6 @@ export class EnrolementListComponent implements OnInit {
   getEnrolements(courseOfferingId: string) {
     this.enrolementService.getEnrolements(courseOfferingId).subscribe({
       next: (data: IEnrolement) => {
-        console.log('Received enrolement data:', data);
         this.enrolements = data.detailsDtoList ?? [];
         this.applyFilter();
       }

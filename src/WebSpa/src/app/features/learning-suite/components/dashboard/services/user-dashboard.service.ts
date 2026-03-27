@@ -14,6 +14,7 @@ import { ICurrentLoginUserDetail } from '../interfaces/iCurrentLoginUserDetail';
 export class UserDashboardService {
 
   baseUrl = enviroment.baseUrl + 'userDashboards'
+  enrollmentBaseUrl = enviroment.baseUrl+"enrolements/"
   constructor(private http: HttpClient) { }
   getCourseOfferingByUser(): Observable<ICourseOfferingByUser> {
     return this.http.get<ICourseOfferingByUser>(this.baseUrl)
@@ -86,6 +87,12 @@ export class UserDashboardService {
   getCurrentLoginUser(): Observable<ICurrentLoginUserDetail> {
     console.log(this.baseUrl + "current-login-user")
     return this.http.get<ICurrentLoginUserDetail>(this.baseUrl + "/current-login-user");
+  }
+
+  loadActiveUsers(courseOfferingId: string): Observable<IEnrolement>
+  {
+    console.log("I am here in this service")
+     return this.http.get<IEnrolement>(this.enrollmentBaseUrl + "course-offerings/" + courseOfferingId);
   }
   
   logout(): Observable<boolean> {

@@ -12,27 +12,47 @@
     <nav class="menu">
       <ng-container *ngFor="let item of menu">
         <a *ngIf="!item.children?.length" [routerLink]="[item.route]" routerLinkActive="active">
-          <i *ngIf="item.icon" class="{{ item.icon }}" style="margin-right: 0.5rem;"></i>
+          <i *ngIf="item.icon" class="{{ item.icon }}"></i>
           {{ item.label }}
         </a>
 
         <div *ngIf="item.children?.length" class="menu-group">
           <div class="menu-label">
-            <i *ngIf="item.icon" class="{{ item.icon }}" style="margin-right: 0.5rem;"></i>
+            <i *ngIf="item.icon" class="{{ item.icon }}"></i>
             {{ item.label }}
           </div>
           <div class="submenu">
             <a *ngFor="let child of item.children" [routerLink]="[child.route]" routerLinkActive="active">
-              <i *ngIf="child.icon" class="{{ child.icon }}" style="margin-right: 0.5rem;"></i>
+              <i *ngIf="child.icon" class="{{ child.icon }}"></i>
               {{ child.label }}
             </a>
           </div>
         </div>
       </ng-container>
+
+      <!-- Collapsible Active Users -->
+      <div class="menu-group">
+        <div class="menu-label" (click)="toggleActiveUsers()">
+          <i class="bi-people"></i>
+          Active Users
+          <i class="bi" [ngClass]="{'bi-chevron-down': !showActiveUsers, 'bi-chevron-up': showActiveUsers}"></i>
+        </div>
+        <div class="submenu" *ngIf="showActiveUsers">
+          <ul>
+            <li *ngFor="let user of activeUsers" (click)="openChat(user)" [class.selected]="selectedChatUser?.id === user.id">
+              <span>{{ user.studentName }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
   </aside>
 
   <main class="content">
     <router-outlet></router-outlet>
+
+    <section class="chat-panel" *ngIf="selectedChatUser">
+      <app-chat [receiver]="selectedChatUser"></app-chat>
+    </section>
   </main>
 </div>

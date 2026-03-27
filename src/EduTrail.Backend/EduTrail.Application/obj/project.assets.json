@@ -1694,10 +1694,14 @@
       "System.Windows.Extensions/9.0.0": {
         "type": "package",
         "compile": {
-          "lib/net9.0/System.Windows.Extensions.dll": {}
+          "lib/net9.0/System.Windows.Extensions.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net9.0/System.Windows.Extensions.dll": {}
+          "lib/net9.0/System.Windows.Extensions.dll": {
+            "related": ".xml"
+          }
         },
         "runtimeTargets": {
           "runtimes/win/lib/net9.0/System.Windows.Extensions.dll": {
