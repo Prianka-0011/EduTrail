@@ -41,6 +41,7 @@ namespace EduTrail.API.Controllers
             }
             return Ok(await _mediator.Send(command));
         }
+
         [Authorize]
         [HttpGet("current-login-user")]
         public async Task<ActionResult> GetCurrentLoginUser()
@@ -49,5 +50,11 @@ namespace EduTrail.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            return Ok(new { message = "Logged out successfully" });
+        }
     }
 }

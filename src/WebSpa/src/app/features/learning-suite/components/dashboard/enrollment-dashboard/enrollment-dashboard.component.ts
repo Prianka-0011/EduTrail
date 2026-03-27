@@ -122,7 +122,6 @@ export class EnrollmentDashboardComponent implements OnInit {
     ];
 
     this.menu = this.filterMenuByRoles(allMenu, roles);
-    console.log("menu", this.menu);
   }
 
   private filterMenuByRoles(menu: MenuItem[], userRoles: string[]): MenuItem[] {

@@ -52,5 +52,12 @@ namespace EduTrail.API.Controllers
             var res = await _mediator.Send(command);
             return Ok(new { Message = res });
         }
+
+        [HttpPost("change-password-manually")]
+        public async Task<ActionResult> ChangePasswordMannually(ChangePasswordManuallyCommand command)
+        {
+            var res = await _mediator.Send(command);
+            return Ok(new { Message = res });
+        }
     }
 }

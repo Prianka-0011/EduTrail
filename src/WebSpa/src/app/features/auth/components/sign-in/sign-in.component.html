@@ -14,12 +14,18 @@
           *Valid email is required
         </div>
 
-        <div class="floating mb-3">
-          <input type="password" id="password" name="password" class="form-control" [(ngModel)]="user.password"
-            #password="ngModel" (focus)="isPasswordFocused = true" (blur)="isPasswordFocused = false"
-            [ngClass]="{'active': user.password || isPasswordFocused}" required />
+        <div class="floating mb-3 position-relative">
+          <input [type]="showPassword ? 'text' : 'password'" id="password" name="password" class="form-control"
+            [(ngModel)]="user.password" #password="ngModel" (focus)="isPasswordFocused = true"
+            (blur)="isPasswordFocused = false" [ngClass]="{'active': user.password || isPasswordFocused}" required />
+
           <label for="password">Password *</label>
+
+          <span class="eye-icon" (click)="showPassword = !showPassword">
+            <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+          </span>
         </div>
+
         <div class="text-danger small mb-2" *ngIf="password.invalid && password.touched">
           *Password is required
         </div>
@@ -36,7 +42,10 @@
         </button>
 
         <div class="text-end mb-3">
-          <a routerLink="/auth/reset-password" class="small text-decoration-none">
+          <!-- <a routerLink="/auth/reset-password" class="small text-decoration-none">
+            Forgot Password?
+          </a> -->
+          <a routerLink="/auth/change-password" class="small text-decoration-none">
             Forgot Password?
           </a>
         </div>

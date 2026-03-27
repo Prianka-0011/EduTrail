@@ -54,5 +54,20 @@ export class AuthService {
     );
   }
 
+   changePasswordManually(changePass: IChanPass): Observable<string> {
+    const payload = {
+      changePasswordDto: {
+        email: changePass.email,
+        password: changePass.password,
+        token: changePass.token
+      }
+    }
+    
+    return this.http.post<{ message: string }>(this.baseUrl + 'change-password-manually', payload).pipe(
+      map(res => res.message),
+      catchError(err => of(err?.error?.message || 'Error changing password'))
+    );
+  }
+
 
 }

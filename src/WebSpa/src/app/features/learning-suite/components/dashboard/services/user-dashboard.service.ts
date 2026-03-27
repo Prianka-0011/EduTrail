@@ -83,10 +83,12 @@ export class UserDashboardService {
     return this.http.put<IUserEnrolementByCourseOffering>(`${this.baseUrl}/${enrolement.detailsDto.id}`, payload);
   }
 
-  getCurrentLoginUser(): Observable<ICurrentLoginUserDetail>
-  {
-    console.log(this.baseUrl+"current-login-user")
-    return this.http.get<ICurrentLoginUserDetail>(this.baseUrl+"/current-login-user");
-  } 
-
+  getCurrentLoginUser(): Observable<ICurrentLoginUserDetail> {
+    console.log(this.baseUrl + "current-login-user")
+    return this.http.get<ICurrentLoginUserDetail>(this.baseUrl + "/current-login-user");
+  }
+  
+  logout(): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}/logout`, {});
+  }
 }
