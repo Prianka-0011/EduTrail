@@ -49,18 +49,21 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const termId = params['id'];
-      // if (termId && termId !== EMPTY_ID) {
+       this.term.year = new Date().getFullYear();
+       console.log("Term ID from query params:", this.term.year); // Debug
+
+      console
       this.service.getById(termId).subscribe(data => {
         this.term = {
           ...data.detailDto,
+          year: new Date().getFullYear(),
           startDate: data.detailDto.startDate ? data.detailDto.startDate.split('T')[0] : '',
           endDate: data.detailDto.endDate ? data.detailDto.endDate.split('T')[0] : '',
         };
         this.types = data.types || [];
         console.log("Edit form", this.term)
-        this.syncDerivedFields();
+        //  this.syncDerivedFields();
       });
-      // }
     });
   }
 
@@ -77,20 +80,16 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
         this.term.name = selectedType.name + ' ' + this.term.year;
       }
     }
-    if (fieldNaame === 'startDate') {
-      if (this.term.startDate) {
-        this.term.year = new Date(this.term.startDate).getFullYear();
-        const selectedType = this.types.find(t => t.id === this.term.termTypeId);
-        if (selectedType) {
-          this.term.name = selectedType.name + ' ' + this.term.year;
-        }
-      }
-    }
-    if (fieldNaame === 'endDate') {
-      if (this.term.endDate && this.term.startDate && !this.isDateRangeValid()) {
-        this.term.endDate = '';
-      }
-    }
+    // if (fieldNaame === 'startDate') {
+    //   if (this.term.startDate) {
+    //     const selectedType = this.types.find(t => t.id === this.term.termTypeId);
+    //   }
+    // }
+    // if (fieldNaame === 'endDate') {
+    //   if (this.term.endDate && this.term.startDate && !this.isDateRangeValid()) {
+    //     this.term.endDate = '';
+    //   }
+    // }
   }
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -125,18 +124,18 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
   }
 
   onStartDateChange(): void {
-    this.syncDerivedFields();
+    // this.syncDerivedFields();
     if (this.term.endDate && !this.isDateRangeValid()) {
       this.term.endDate = '';
     }
   }
 
-  syncDerivedFields(): void {
-    if (this.term.startDate) {
-      this.minEndDate = this.term.startDate;
-      this.term.year = new Date(this.term.startDate).getFullYear();
-    }
-  }
+  // syncDerivedFields(): void {
+  //   if (this.term.startDate) {
+  //     this.minEndDate = this.term.startDate;
+  //     this.term.year = new Date(this.term.startDate).getFullYear();
+  //   }
+  // }
 
   isDateRangeValid(): boolean {
     if (!this.term.startDate || !this.term.endDate) return true;

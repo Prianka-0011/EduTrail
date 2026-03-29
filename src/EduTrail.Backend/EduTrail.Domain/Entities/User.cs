@@ -21,7 +21,9 @@ namespace EduTrail.Domain.Entities
         [EmailAddress]
         [MaxLength(150)]
         public string Email { get; set; }
-        // public string? ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? CanvasUserId { get; set; }
+        public string? SISId { get; set; }
 
         public string? PasswordHash { get; set; }
 

@@ -3,36 +3,33 @@
   <!-- Sidebar -->
   <aside class="sidebar d-flex flex-column" [class.collapsed]="isCollapsed">
     <div class="sidebar-header text-center py-3">
-      <h3>{{ isCollapsed ? 'ET' : 'EduTrail' }}</h3>
+      <h2>{{ isCollapsed ? 'MM' : 'MeadowMatrix' }}</h2>
     </div>
 
     <ul class="nav flex-column px-2">
       <ng-container *ngFor="let item of menu">
 
-        <!-- Single item -->
         <li class="nav-item" *ngIf="!item.children">
-          <a class="nav-link nav-item-link" [routerLink]="item.route" routerLinkActive="active"
-             [attr.title]="isCollapsed ? item.label : null">
+          <a class="nav-link nav-item-link" [routerLink]="item.route" routerLinkActive="active">
             <i class="bi bi-{{ item.icon }}"></i>
-            <span class="label" *ngIf="!isCollapsed">{{ item.label }}</span>
+            <span *ngIf="!isCollapsed">{{ item.label }}</span>
           </a>
         </li>
 
-        <!-- Parent item -->
-        <li class="nav-item parent-item" *ngIf="item.children">
-          <div class="nav-item-link parent-content" [class.active]="item.isOpen" (click)="toggleSubmenu(item)"
-               [attr.title]="isCollapsed ? item.label : null">
+        <li class="nav-item" *ngIf="item.children">
+          <div class="nav-item-link d-flex align-items-center"
+               (click)="toggleSubmenu(item)">
             <i class="bi bi-{{ item.icon }}"></i>
-            <span class="label" *ngIf="!isCollapsed">{{ item.label }}</span>
-            <span class="ms-auto" *ngIf="!isCollapsed">
-              <i class="bi" [ngClass]="item.isOpen ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
-            </span>
+            <span *ngIf="!isCollapsed">{{ item.label }}</span>
+            <i *ngIf="!isCollapsed" class="bi ms-auto"
+               [ngClass]="item.isOpen ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
           </div>
 
           <div class="sub-menu" *ngIf="item.isOpen && !isCollapsed">
-            <span class="submenu-bar"></span>
-            <a *ngFor="let child of item.children" class="sub-item" [routerLink]="child.route"
-               routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a *ngFor="let child of item.children"
+               class="sub-item"
+               [routerLink]="child.route"
+               routerLinkActive="active">
               <i class="bi bi-{{ child.icon }}"></i>
               <span>{{ child.label }}</span>
             </a>
@@ -47,9 +44,8 @@
   <div class="main-content flex-grow-1">
 
     <!-- Topbar -->
-    <nav class="topbar navbar px-3 d-flex align-items-center justify-content-between">
+    <nav class="topbar d-flex align-items-center justify-content-between px-3">
 
-      <!-- Sidebar toggle -->
       <button class="btn btn-light" (click)="toggleSidebar()">
         <i *ngIf="isCollapsed; else expanded" class="bi bi-chevron-double-right"></i>
         <ng-template #expanded>
@@ -57,27 +53,30 @@
         </ng-template>
       </button>
 
-      <div class="d-flex align-items-center gap-2">
+      <div class="d-flex align-items-center gap-3">
 
-        <!-- Notification -->
+        <!-- Bell -->
         <button class="btn btn-light">
           <i class="bi bi-bell"></i>
         </button>
 
-        <!-- User Dropdown -->
-        <div class="position-relative">
+        <!-- User Menu -->
+        <div class="user-menu-wrapper">
           <button class="btn btn-light" (click)="toggleUserMenu($event)">
             <i class="bi bi-person-circle"></i>
           </button>
 
           <div class="user-dropdown shadow" [class.open]="isUserMenuOpen">
-            <div class="px-3 py-2 border-bottom">
+            <div class="dropdown-header">
               <div class="fw-bold">{{ userDetail?.fullName }}</div>
               <div class="text-muted small">{{ userDetail?.email }}</div>
             </div>
-            <button class="dropdown-item" (click)="logout()">
-              <i class="bi bi-box-arrow-right me-2"></i> Logout
-            </button>
+
+            <div class="dropdown-body">
+              <button class="dropdown-item" (click)="logout()">
+                <i class="bi bi-box-arrow-right me-2"></i> Logout
+              </button>
+            </div>
           </div>
         </div>
 

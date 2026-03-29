@@ -42,6 +42,7 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<TALabWeek> TALabWeeks { get; set; }
         public DbSet<TALabDay> TALabDays { get; set; }
         public DbSet<TALabSlot> TALabSlots { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
         
         #region QUARTZ
 

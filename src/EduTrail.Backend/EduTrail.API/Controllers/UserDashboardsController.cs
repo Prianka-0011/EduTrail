@@ -52,9 +52,10 @@ namespace EduTrail.API.Controllers
 
         [Authorize]
         [HttpPost("logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout(LogoutCommand command)
         {
-            return Ok(new { message = "Logged out successfully" });
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }

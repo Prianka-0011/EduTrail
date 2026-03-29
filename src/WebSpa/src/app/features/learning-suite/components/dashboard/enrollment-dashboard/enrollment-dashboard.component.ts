@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { UserDashboardService } from '../services/user-dashboard.service';
 import { ToastrService } from 'ngx-toastr';
 import { ICurrentLoginUserDetail } from '../interfaces/iCurrentLoginUserDetail';
 import { MenuItem } from '../../../interfaces/MenuItem';
 import { CustomCategory } from '../../../../../shared/interface/customCategory';
+import { IEnrolementDetail } from '../../enrolements/interfaces/iEntolementDetail';
+import { ChatComponent } from '../../../../../chat/components/chat/chat.component';
 
 @Component({
   selector: 'app-enrollment-dashboard',
@@ -16,13 +18,17 @@ import { CustomCategory } from '../../../../../shared/interface/customCategory';
     RouterModule,
     CommonModule,
     FormsModule,
-    SideDrawerComponent
+    SideDrawerComponent,
+    ChatComponent
   ],
   templateUrl: './enrollment-dashboard.component.html',
   styleUrls: ['./enrollment-dashboard.component.scss']
 })
 export class EnrollmentDashboardComponent implements OnInit {
-
+  activeUsers: IEnrolementDetail[] = [];
+  selectedChatUser: IEnrolementDetail | null = null;
+  showActiveUsers = true;
+  courseOfferingId = "";
   userDetail: ICurrentLoginUserDetail = {
     id: '',
     fullName: '',
@@ -34,19 +40,35 @@ export class EnrollmentDashboardComponent implements OnInit {
 
   constructor(
     private service: UserDashboardService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.service.getCurrentLoginUser().subscribe({
       next: res => {
         this.userDetail = res;
-        console.log("user role", this.userDetail)
         this.buildMenu();
       },
-      error: () => {
-        this.toast.error('Failed to load user data');
-      }
+      error: () => this.toast.error('Failed to load user data')
+    });
+
+    this.loadActiveUsers();
+  }
+
+  toggleActiveUsers() {
+    this.showActiveUsers = !this.showActiveUsers;
+  }
+
+  private loadActiveUsers(): void {
+    this.courseOfferingId = this.route?.snapshot.paramMap.get('courseOfferingId') ?? '';
+    if (!this.courseOfferingId) return;
+
+    this.service.loadActiveUsers(this.courseOfferingId).subscribe({
+      next: users => {
+        this.activeUsers = users.detailsDtoList ?? [];
+      },
+      error: () => console.log('Failed to load active users')
     });
   }
 
@@ -70,7 +92,7 @@ export class EnrollmentDashboardComponent implements OnInit {
         ]
       },
       {
-        label: "Help",
+        label: 'Help',
         children: [
           {
             label: 'Schedule',
@@ -92,9 +114,7 @@ export class EnrollmentDashboardComponent implements OnInit {
             label: 'My Help Request List',
             icon: 'bi-list',
             route: 'my-help-request-list',
-            rolesPermission: [
-              CustomCategory.RoleType.Student,
-            ]
+            rolesPermission: [CustomCategory.RoleType.Student]
           },
           {
             label: 'Help Request List',
@@ -104,7 +124,7 @@ export class EnrollmentDashboardComponent implements OnInit {
               CustomCategory.RoleType.TA,
               CustomCategory.RoleType.Instructor
             ]
-          },
+          }
         ]
       },
       {
@@ -116,6 +136,12 @@ export class EnrollmentDashboardComponent implements OnInit {
             icon: 'bi-gear',
             route: 'manage-users',
             rolesPermission: [CustomCategory.RoleType.Instructor]
+          },
+          {
+            label: 'Help Request Dashboard',
+            icon: 'bi-gear',
+            route: 'help-request-dashboard',
+            rolesPermission: [CustomCategory.RoleType.Instructor, CustomCategory.RoleType.TA]
           }
         ]
       }
@@ -137,10 +163,12 @@ export class EnrollmentDashboardComponent implements OnInit {
         if (hasAccess || filteredChildren.length > 0) {
           return { ...item, children: filteredChildren };
         }
-
         return null;
       })
       .filter(item => item !== null) as MenuItem[];
   }
 
+  openChat(user: IEnrolementDetail) {
+    this.selectedChatUser = user;
+  }
 }

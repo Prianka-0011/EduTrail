@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KdrLUOi/U2o=",
+  "dgSpecHash": "EvgY1BCz15w=",
   "success": true,
   "projectFilePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,7 @@
     "C:\\Users\\pmondal\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\11.1.0\\mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.4\\microsoft.aspnetcore.authentication.jwtbearer.10.0.4.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
+    "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.aspnetcore.signalr\\1.2.9\\microsoft.aspnetcore.signalr.1.2.9.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.aspnetcore.spaservices.extensions\\10.0.0\\microsoft.aspnetcore.spaservices.extensions.10.0.0.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\8.0.0\\microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.bcl.cryptography\\9.0.4\\microsoft.bcl.cryptography.9.0.4.nupkg.sha512",
@@ -82,6 +83,18 @@
     "C:\\Users\\pmondal\\.nuget\\packages\\system.windows.extensions\\9.0.0\\system.windows.extensions.9.0.0.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference Microsoft.AspNetCore.SignalR will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "libraryId": "Microsoft.AspNetCore.SignalR",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
     {
       "code": "NU1510",
       "level": "Warning",

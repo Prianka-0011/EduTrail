@@ -105,7 +105,6 @@ export class EnrolementCreateOrEditComponent implements OnInit {
       this.maxWeeklyHours = data.detailsDto?.totalWorkHoursPerWeek ?? this.maxWeeklyHours;
       this.taLabMonths = months;
       this.months = data.dropdownMonths ?? [];
-      console.log("taLabMonths after normalization:", this.taLabMonths);
     });
   }
 
@@ -158,7 +157,6 @@ export class EnrolementCreateOrEditComponent implements OnInit {
 
   public getMonthName(monthNumber: number): string {
     var monthname = this.months.find(c => c.id == monthNumber)?.name ?? "";
-    console.log("monthNumber to get name", this.months, monthname, monthNumber)
     return monthname;
   }
 

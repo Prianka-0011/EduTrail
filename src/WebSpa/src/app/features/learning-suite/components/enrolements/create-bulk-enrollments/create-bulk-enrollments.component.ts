@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { EnrolementService } from '../services/enrolement.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './create-bulk-enrollments.component.scss'
 })
 export class CreateBulkEnrollmentsComponent implements OnInit {
+  @Output() saved = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 
   selectedFile: File | null = null;
   courseOfferingId = '';
@@ -56,7 +58,7 @@ export class CreateBulkEnrollmentsComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log('Bulk upload success', response);
-          this.resetForm();
+          this.saved.emit();
         },
         error: (error) => {
           console.error('Bulk upload failed', error);
@@ -65,7 +67,7 @@ export class CreateBulkEnrollmentsComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.resetForm();
+     this.cancel.emit();
   }
 
   private resetForm(): void {

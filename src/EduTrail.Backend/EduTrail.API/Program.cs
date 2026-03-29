@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using static EduTrail.Shared.CustomCategory;
+using EduTrail.API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
@@ -95,6 +97,8 @@ app.UseHttpsRedirection();
 app.UseCors("AllowWebSpa");
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<ChatHub>("/hubs/chat");
+
 try
 {
     app.MapControllers();

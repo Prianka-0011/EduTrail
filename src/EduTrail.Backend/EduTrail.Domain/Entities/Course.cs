@@ -23,7 +23,7 @@ namespace EduTrail.Domain.Entities
         public DateTimeOffset? UpdatedDate { get; set; }
         public Guid? UpdatedById { get; set; }
         public ICollection<CourseOffering> CourseOfferings { get; set; }
-        
+
     }
 
 }

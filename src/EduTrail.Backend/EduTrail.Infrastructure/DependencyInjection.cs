@@ -17,6 +17,8 @@ using EduTrail.Application.LabRequests;
 using EduTrail.Application.Auths;
 using EduTrail.Application.Shared;
 using Quartz;
+using EduTrail.Application.Chats;
+using EduTrail.Application.HelpRequestDashboards;
 
 
 namespace EduTrail.Infrastructure
@@ -99,6 +101,9 @@ namespace EduTrail.Infrastructure
             services.AddScoped<ILabRequestRepository, LabRequestRepository>();
             services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IChatRepository, ChatRepository>();
+            services.AddScoped<IHelpRequestDashboardRepository, HelpRequestDashboardRepository>();
+            
             return services;
         }
     }
