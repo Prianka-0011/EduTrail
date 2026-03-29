@@ -988,14 +988,10 @@
       "Microsoft.EntityFrameworkCore.Abstractions/10.0.0": {
         "type": "package",
         "compile": {
-          "lib/net10.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/net10.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/net10.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/net10.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {}
         }
       },
       "Microsoft.EntityFrameworkCore.Analyzers/10.0.0": {
@@ -1020,14 +1016,10 @@
           "Newtonsoft.Json": "13.0.3"
         },
         "compile": {
-          "lib/net10.0/Microsoft.EntityFrameworkCore.Design.dll": {
-            "related": ".xml"
-          }
+          "lib/net10.0/Microsoft.EntityFrameworkCore.Design.dll": {}
         },
         "runtime": {
-          "lib/net10.0/Microsoft.EntityFrameworkCore.Design.dll": {
-            "related": ".xml"
-          }
+          "lib/net10.0/Microsoft.EntityFrameworkCore.Design.dll": {}
         },
         "build": {
           "build/net10.0/Microsoft.EntityFrameworkCore.Design.props": {}
@@ -1042,14 +1034,10 @@
           "Microsoft.Extensions.Logging": "10.0.0"
         },
         "compile": {
-          "lib/net10.0/Microsoft.EntityFrameworkCore.Relational.dll": {
-            "related": ".xml"
-          }
+          "lib/net10.0/Microsoft.EntityFrameworkCore.Relational.dll": {}
         },
         "runtime": {
-          "lib/net10.0/Microsoft.EntityFrameworkCore.Relational.dll": {
-            "related": ".xml"
-          }
+          "lib/net10.0/Microsoft.EntityFrameworkCore.Relational.dll": {}
         }
       },
       "Microsoft.EntityFrameworkCore.SqlServer/10.0.0": {
@@ -1084,14 +1072,10 @@
           "Microsoft.Extensions.Primitives": "10.0.0"
         },
         "compile": {
-          "lib/net10.0/Microsoft.Extensions.Caching.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/net10.0/Microsoft.Extensions.Caching.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/net10.0/Microsoft.Extensions.Caching.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/net10.0/Microsoft.Extensions.Caching.Abstractions.dll": {}
         },
         "build": {
           "buildTransitive/net8.0/_._": {}
@@ -2073,8 +2057,8 @@
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "CsvHelper": "33.1.0",
-          "Edutrail.Domain": "1.0.0",
-          "Edutrail.Shared": "1.0.0",
+          "EduTrail.Domain": "1.0.0",
+          "EduTrail.Shared": "1.0.0",
           "MediatR": "12.0.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.4",
@@ -2089,30 +2073,30 @@
           "bin/placeholder/EduTrail.Application.dll": {}
         }
       },
-      "Edutrail.Domain/1.0.0": {
+      "EduTrail.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": "10.0.0"
         },
         "compile": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
+          "bin/placeholder/EduTrail.Domain.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Edutrail.Domain.dll": {}
+          "bin/placeholder/EduTrail.Domain.dll": {}
         }
       },
-      "Edutrail.Shared/1.0.0": {
+      "EduTrail.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "Edutrail.Domain": "1.0.0"
+          "EduTrail.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
+          "bin/placeholder/EduTrail.Shared.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
+          "bin/placeholder/EduTrail.Shared.dll": {}
         }
       }
     }
@@ -5509,22 +5493,22 @@
       "path": "../EduTrail.Application/EduTrail.Application.csproj",
       "msbuildProject": "../EduTrail.Application/EduTrail.Application.csproj"
     },
-    "Edutrail.Domain/1.0.0": {
+    "EduTrail.Domain/1.0.0": {
       "type": "project",
-      "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
-      "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
+      "path": "../EduTrail.Domain/EduTrail.Domain.csproj",
+      "msbuildProject": "../EduTrail.Domain/EduTrail.Domain.csproj"
     },
-    "Edutrail.Shared/1.0.0": {
+    "EduTrail.Shared/1.0.0": {
       "type": "project",
-      "path": "../Edutrail.Shared/Edutrail.Shared.csproj",
-      "msbuildProject": "../Edutrail.Shared/Edutrail.Shared.csproj"
+      "path": "../EduTrail.Shared/EduTrail.Shared.csproj",
+      "msbuildProject": "../EduTrail.Shared/EduTrail.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
       "EduTrail.Application >= 1.0.0",
-      "Edutrail.Domain >= 1.0.0",
-      "Edutrail.Shared >= 1.0.0",
+      "EduTrail.Domain >= 1.0.0",
+      "EduTrail.Shared >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 10.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 10.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 10.0.0",
@@ -5573,11 +5557,11 @@
             "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj": {
               "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj"
             },
-            "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Domain\\EduTrail.Domain.csproj"
             },
-            "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj"
             }
           }
         }
