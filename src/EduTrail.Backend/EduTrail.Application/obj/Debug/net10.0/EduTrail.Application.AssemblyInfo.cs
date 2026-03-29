@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EduTrail.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa652868721077b7fd132bbf3d7da767251cc64f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb8aacca39c28b8a0a8e8b8a8c67747892425647")]
 [assembly: System.Reflection.AssemblyProductAttribute("EduTrail.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EduTrail.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

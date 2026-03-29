@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { MenuItem } from './interfaces/MenuItem';
@@ -24,6 +24,11 @@ export class LearningSuiteComponent implements OnInit {
 
   isCollapsed = false;
   isUserMenuOpen = false;
+  @HostListener('document:click')
+
+  closeMenu() {
+    this.isUserMenuOpen = false;
+  }
   userDetail: ICurrentLoginUserDetail = {
     id: "",
     fullName: "",

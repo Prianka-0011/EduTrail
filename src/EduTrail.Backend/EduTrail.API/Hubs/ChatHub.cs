@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.SignalR;
 using EduTrail.Application.Chats;
 using Microsoft.AspNetCore.Authorization;
 using MediatR;
+using System.Security.Claims;
 
 namespace EduTrail.API.Hubs
 {
@@ -18,17 +19,21 @@ namespace EduTrail.API.Hubs
 
         public override Task OnConnectedAsync()
         {
-            var userIdClaim = Context.User?.FindFirst("sub")?.Value;
+            var userIdClaim = Context.User?.FindFirst("sub")?.Value
+                              ?? Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
             if (Guid.TryParse(userIdClaim, out var userId))
             {
                 _connections[userId] = Context.ConnectionId;
             }
+
             return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
-            var userIdClaim = Context.User?.FindFirst("sub")?.Value;
+            var userIdClaim = Context.User?.FindFirst("sub")?.Value
+                              ?? Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (Guid.TryParse(userIdClaim, out var userId))
             {
                 _connections.Remove(userId);
@@ -60,7 +65,8 @@ namespace EduTrail.API.Hubs
 
         public async Task LoadHistory(Guid receiverId)
         {
-            var userIdClaim = Context.User?.FindFirst("sub")?.Value;
+            var userIdClaim = Context.User?.FindFirst("sub")?.Value
+                              ?? Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (!Guid.TryParse(userIdClaim, out var userId)) return;
 
             var messages = await _mediator.Send(new GetChatHistoryQuery

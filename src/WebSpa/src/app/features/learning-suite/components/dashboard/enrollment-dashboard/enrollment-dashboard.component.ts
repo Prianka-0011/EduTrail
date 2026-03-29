@@ -25,21 +25,23 @@ import { ChatComponent } from '../../../../../chat/components/chat/chat.componen
   styleUrls: ['./enrollment-dashboard.component.scss']
 })
 export class EnrollmentDashboardComponent implements OnInit {
-  activeUsers: IEnrolementDetail[] = []
+  activeUsers: IEnrolementDetail[] = [];
   selectedChatUser: IEnrolementDetail | null = null;
   showActiveUsers = true;
+  courseOfferingId = "";
   userDetail: ICurrentLoginUserDetail = {
     id: '',
     fullName: '',
     email: '',
     roles: []
   };
+
   menu: MenuItem[] = [];
 
   constructor(
     private service: UserDashboardService,
     private toast: ToastrService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -48,11 +50,10 @@ export class EnrollmentDashboardComponent implements OnInit {
         this.userDetail = res;
         this.buildMenu();
       },
-      error: () => {
-        this.toast.error('Failed to load user data');
-      }
+      error: () => this.toast.error('Failed to load user data')
     });
-    this.loadActiveUsers()
+
+    this.loadActiveUsers();
   }
 
   toggleActiveUsers() {
@@ -60,13 +61,12 @@ export class EnrollmentDashboardComponent implements OnInit {
   }
 
   private loadActiveUsers(): void {
-    const courseOfferingId = this.route?.snapshot.paramMap.get('courseOfferingId') ?? '';
-    if (!courseOfferingId) return;
+    this.courseOfferingId = this.route?.snapshot.paramMap.get('courseOfferingId') ?? '';
+    if (!this.courseOfferingId) return;
 
-    this.service.loadActiveUsers(courseOfferingId).subscribe({
+    this.service.loadActiveUsers(this.courseOfferingId).subscribe({
       next: users => {
         this.activeUsers = users.detailsDtoList ?? [];
-        console.log("loadActiveUsers", users.detailsDtoList)
       },
       error: () => console.log('Failed to load active users')
     });
@@ -92,7 +92,7 @@ export class EnrollmentDashboardComponent implements OnInit {
         ]
       },
       {
-        label: "Help",
+        label: 'Help',
         children: [
           {
             label: 'Schedule',
@@ -114,9 +114,7 @@ export class EnrollmentDashboardComponent implements OnInit {
             label: 'My Help Request List',
             icon: 'bi-list',
             route: 'my-help-request-list',
-            rolesPermission: [
-              CustomCategory.RoleType.Student,
-            ]
+            rolesPermission: [CustomCategory.RoleType.Student]
           },
           {
             label: 'Help Request List',
@@ -126,7 +124,7 @@ export class EnrollmentDashboardComponent implements OnInit {
               CustomCategory.RoleType.TA,
               CustomCategory.RoleType.Instructor
             ]
-          },
+          }
         ]
       },
       {
@@ -138,6 +136,12 @@ export class EnrollmentDashboardComponent implements OnInit {
             icon: 'bi-gear',
             route: 'manage-users',
             rolesPermission: [CustomCategory.RoleType.Instructor]
+          },
+          {
+            label: 'Help Request Dashboard',
+            icon: 'bi-gear',
+            route: 'help-request-dashboard',
+            rolesPermission: [CustomCategory.RoleType.Instructor, CustomCategory.RoleType.TA]
           }
         ]
       }
@@ -159,7 +163,6 @@ export class EnrollmentDashboardComponent implements OnInit {
         if (hasAccess || filteredChildren.length > 0) {
           return { ...item, children: filteredChildren };
         }
-
         return null;
       })
       .filter(item => item !== null) as MenuItem[];
@@ -167,7 +170,5 @@ export class EnrollmentDashboardComponent implements OnInit {
 
   openChat(user: IEnrolementDetail) {
     this.selectedChatUser = user;
-    console.log('Opening chat with:', user.studentName);
   }
-
 }

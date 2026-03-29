@@ -36,6 +36,7 @@ namespace EduTrail.Application.Chats
                     Id = Guid.NewGuid(),
                     UserId = sender.Id,
                     ReceiverId = receiver.Id,
+                    CourseOfferingId = request.DetailDto.CourseOfferingId,
                     Message = request.DetailDto.Message,
                     CreatedDate = DateTimeOffset.UtcNow
                 };
@@ -50,6 +51,7 @@ namespace EduTrail.Application.Chats
                 return new ChatMessageDto
                 {
                     UserId = sender.Id,
+                    CourseOfferingId = chatMessage.CourseOfferingId,
                     ReceiverId = receiver.Id,
                     UserName = userName,
                     Message = chatMessage.Message,

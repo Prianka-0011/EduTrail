@@ -7,6 +7,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
 import { CredentialInterceptor } from './interceptors/auth.interceptor';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -22,7 +23,8 @@ export const appConfig: ApplicationConfig = {
       ToastrModule.forRoot({
         positionClass: 'toast-bottom-right',
         preventDuplicates: true
-      })
+      }),
+      
     ),
     { provide: HTTP_INTERCEPTORS, useClass: CredentialInterceptor, multi: true }
   ]

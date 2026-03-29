@@ -241,4 +241,4 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\index.html
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\runtime.37b037475bcadbb2.js
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\styles.76f9dce6ba19a811.css
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\polyfills.07750a28ba4a0ff0.js
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\main.a794f34fc059a083.js
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\main.1adefe27c7dbfba5.js

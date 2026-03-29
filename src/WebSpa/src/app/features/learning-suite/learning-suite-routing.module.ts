@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { CourseListComponent } from "./components/courses/course-list/course-list.component";
-import { DashboardComponent } from "./components/dashboard/dashboard/dashboard.component";
+
 import { CourseCreateOrUpdateComponent } from "./components/courses/course-create-or-update/course-create-or-update.component";
 
 import { TermListComponent } from "./components/terms/term-list/term-list.component";
@@ -14,9 +14,7 @@ import { CourseOfferingByUserComponent } from "./components/dashboard/course-off
 import { EnrollmentDashboardComponent } from "./components/dashboard/enrollment-dashboard/enrollment-dashboard.component";
 import { enrollmentRoutes } from "./components/dashboard/enrollment-dashboard/enrollment-dashboard-routing.module";
 import { LearningSuiteComponent } from "./learning-suite.component";
-// import { EnrolementListComponent } from "./components/enrolements/enrolement-list/enrolement-list.component";
-
-
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
 
 
 export const learningSuiteRoutes: Routes = [
