@@ -91,7 +91,6 @@ export class UserDashboardService {
 
   loadActiveUsers(courseOfferingId: string): Observable<IEnrolement>
   {
-    console.log("I am here in this service")
      return this.http.get<IEnrolement>(this.enrollmentBaseUrl + "course-offerings/" + courseOfferingId);
   }
   

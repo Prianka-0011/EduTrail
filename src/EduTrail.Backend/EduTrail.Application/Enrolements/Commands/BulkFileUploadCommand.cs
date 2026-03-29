@@ -2,8 +2,10 @@
 
 using System.Globalization;
 using CsvHelper;
+using EduTrail.Application.Shared.Dtos;
 using EduTrail.Application.Users;
 using EduTrail.Domain.Entities;
+using EduTrail.Shared;
 using MediatR;
 
 namespace EduTrail.Application.Enrolements
@@ -16,6 +18,7 @@ namespace EduTrail.Application.Enrolements
         {
             private readonly IEnrolementRepository _repository;
             private readonly IUserRepository _userRepository;
+
             private readonly ITempFilesService _tempFilesService;
 
             public Handler(IEnrolementRepository repository, ITempFilesService tempFilesService, IUserRepository userRepository)
@@ -43,9 +46,14 @@ namespace EduTrail.Application.Enrolements
                 var enrollments = new List<Enrollment>();
                 var users = (await _userRepository.GetAllAsync()).ToList();
 
+                var role = await _userRepository.GetRolesByIdsAsync(new List<DropdownItemDto>
+                    {
+                        new DropdownItemDto { Id = CustomCategory.RoleType.Student, Name = "Student" }
+                    });
                 foreach (var row in records)
                 {
                     var user = users.FirstOrDefault(u => u.Email.Equals(row.Email, StringComparison.OrdinalIgnoreCase));
+
 
                     if (user == null)
                     {
@@ -55,12 +63,21 @@ namespace EduTrail.Application.Enrolements
                             FirstName = row.FullName.Split(' ')[0],
                             LastName = row.FullName.Split(' ').Last(),
                             Email = row.Email,
+                            SISId = row.SISId,
+                            CanvasUserId = row.CanvasUserId,
                             IsActive = true,
                             CreatedDate = DateTimeOffset.UtcNow
                         };
                         await _userRepository.CreateNotSaveChangeAsync(user);
+                        user.Roles ??= new List<Role>();
 
+                        var firstRole = role.FirstOrDefault();
+                        if (firstRole != null)
+                        {
+                            user.Roles.Add(firstRole);
+                        }
                         users.Add(user);
+                        user.Roles.Add(role.FirstOrDefault());
                     }
 
                     var existing = await _repository.GetByCourseOfferingIdAndStudentIdAsync(request.DetailDto.CourseOfferingId, user.Id);

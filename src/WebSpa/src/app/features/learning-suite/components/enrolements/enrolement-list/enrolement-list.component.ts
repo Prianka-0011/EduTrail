@@ -107,7 +107,7 @@ export class EnrolementListComponent implements OnInit {
   }
 
   openBulkCreateDrawer() {
-    console.log("I am here")
+    
     this.selectedEnrolementId = null;
     this.bulkDrawerOpen = true;
     this.router.navigate([], {
@@ -126,6 +126,7 @@ export class EnrolementListComponent implements OnInit {
   }
 
   closeDrawer() {
+    console.log("Closing drawer dd")
     this.drawerOpen = false;
     this.selectedEnrolementId = null;
     this.router.navigate([], {
@@ -134,7 +135,23 @@ export class EnrolementListComponent implements OnInit {
     });
   }
 
+    closeBulkDrawer() {
+    console.log("Closing drawer dd")
+    this.bulkDrawerOpen = false;
+    this.selectedEnrolementId = null;
+    this.router.navigate([], {
+      queryParams: { id: undefined },
+      queryParamsHandling: 'merge'
+    });
+  }
+
   onEnrolementSaved() {
+    this.closeDrawer();
+    const courseOfferingId = this.route.snapshot.paramMap.get('courseOfferingId');
+    if (courseOfferingId) this.getEnrolements(courseOfferingId);
+  }
+
+   onEnrolementBulkSaved() {
     this.closeDrawer();
     const courseOfferingId = this.route.snapshot.paramMap.get('courseOfferingId');
     if (courseOfferingId) this.getEnrolements(courseOfferingId);

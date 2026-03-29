@@ -142,10 +142,10 @@
   </ng-container>
 </app-side-drawer>
 
-<app-side-drawer [opened]="bulkDrawerOpen" width="1000px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+<app-side-drawer [opened]="bulkDrawerOpen" width="1000px" (closed)="closeBulkDrawer()" [headerTemplate]="drawerHeaderBulk">
    <ng-container *ngIf="bulkDrawerOpen">
-    <app-create-bulk-enrollments (saved)="onEnrolementSaved()"
-      (cancel)="closeDrawer()"></app-create-bulk-enrollments>
+    <app-create-bulk-enrollments (saved)="onEnrolementBulkSaved()"
+      (cancel)="closeBulkDrawer()"></app-create-bulk-enrollments>
   </ng-container>
 </app-side-drawer>
 
@@ -154,6 +154,15 @@
     <i class="bi bi-journal-bookmark"></i>
     <span>
       {{ selectedEnrolementId ? 'Edit Enrollment' : 'Create Enrollment' }}
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #drawerHeaderBulk>
+  <div class="d-flex align-items-center gap-2">
+    <i class="bi bi-journal-bookmark"></i>
+    <span>
+      Create Bulk Enrollment
     </span>
   </div>
 </ng-template>
