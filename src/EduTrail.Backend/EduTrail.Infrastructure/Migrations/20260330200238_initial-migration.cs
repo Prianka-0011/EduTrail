@@ -15,15 +15,15 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "AuditEntries",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TableName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RecordId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Operation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ChangedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OldValues = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NewValues = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ChangedProperties = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TableName = table.Column<string>(type: "text", nullable: true),
+                    RecordId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Operation = table.Column<string>(type: "text", nullable: true),
+                    ChangeDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ChangedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    OldValues = table.Column<string>(type: "text", nullable: true),
+                    NewValues = table.Column<string>(type: "text", nullable: true),
+                    ChangedProperties = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -34,10 +34,10 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "AutoGenerateNumbers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Number = table.Column<int>(type: "int", nullable: false),
-                    Year = table.Column<int>(type: "int", nullable: false),
-                    Prefix = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Number = table.Column<int>(type: "integer", nullable: false),
+                    Year = table.Column<int>(type: "integer", nullable: false),
+                    Prefix = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,15 +48,15 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Courses",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CourseCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    CourseName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    TimeZone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Institute = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CourseCode = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    CourseName = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    TimeZone = table.Column<string>(type: "text", nullable: true),
+                    Institute = table.Column<string>(type: "text", nullable: true),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,19 +67,19 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QuestionAttempt",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AttemptNumber = table.Column<int>(type: "int", nullable: false),
-                    GeneratedParametersJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CorrectAnswerJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StudentAnswerJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Score = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CorrectScorePercentage = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AttemptNumber = table.Column<int>(type: "integer", nullable: false),
+                    GeneratedParametersJson = table.Column<string>(type: "text", nullable: false),
+                    CorrectAnswerJson = table.Column<string>(type: "text", nullable: false),
+                    StudentAnswerJson = table.Column<string>(type: "text", nullable: true),
+                    Score = table.Column<decimal>(type: "numeric", nullable: false),
+                    CorrectScorePercentage = table.Column<int>(type: "integer", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,15 +90,15 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QuestionLines",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CodeLine = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CorrectOrder = table.Column<int>(type: "int", nullable: false),
-                    IsMovable = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CodeLine = table.Column<string>(type: "text", nullable: false),
+                    CorrectOrder = table.Column<int>(type: "integer", nullable: false),
+                    IsMovable = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -109,15 +109,15 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QuestionTypes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Code = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -128,10 +128,10 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_BLOB_TRIGGERS",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    BLOB_DATA = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    BLOB_DATA = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,9 +142,9 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_CALENDARS",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    CALENDAR_NAME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    CALENDAR = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    CALENDAR_NAME = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    CALENDAR = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,19 +155,19 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_FIRED_TRIGGERS",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    ENTRY_ID = table.Column<string>(type: "nvarchar(140)", maxLength: 140, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    INSTANCE_NAME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    ENTRY_ID = table.Column<string>(type: "character varying(140)", maxLength: 140, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    INSTANCE_NAME = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     FIRED_TIME = table.Column<long>(type: "bigint", nullable: false),
                     SCHED_TIME = table.Column<long>(type: "bigint", nullable: false),
-                    PRIORITY = table.Column<int>(type: "int", nullable: false),
-                    STATE = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
-                    JOB_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    JOB_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    IS_NONCONCURRENT = table.Column<bool>(type: "bit", nullable: true),
-                    REQUESTS_RECOVERY = table.Column<bool>(type: "bit", nullable: true)
+                    PRIORITY = table.Column<int>(type: "integer", nullable: false),
+                    STATE = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
+                    JOB_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    JOB_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
+                    IS_NONCONCURRENT = table.Column<bool>(type: "boolean", nullable: true),
+                    REQUESTS_RECOVERY = table.Column<bool>(type: "boolean", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -178,16 +178,16 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_JOB_DETAILS",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    JOB_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    JOB_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    DESCRIPTION = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    JOB_CLASS_NAME = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    IS_DURABLE = table.Column<bool>(type: "bit", nullable: false),
-                    IS_NONCONCURRENT = table.Column<bool>(type: "bit", nullable: false),
-                    IS_UPDATE_DATA = table.Column<bool>(type: "bit", nullable: false),
-                    REQUESTS_RECOVERY = table.Column<bool>(type: "bit", nullable: false),
-                    JOB_DATA = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    JOB_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    JOB_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    DESCRIPTION = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
+                    JOB_CLASS_NAME = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    IS_DURABLE = table.Column<bool>(type: "boolean", nullable: false),
+                    IS_NONCONCURRENT = table.Column<bool>(type: "boolean", nullable: false),
+                    IS_UPDATE_DATA = table.Column<bool>(type: "boolean", nullable: false),
+                    REQUESTS_RECOVERY = table.Column<bool>(type: "boolean", nullable: false),
+                    JOB_DATA = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -198,8 +198,8 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_LOCKS",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    LOCK_NAME = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    LOCK_NAME = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,8 +210,8 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_PAUSED_TRIGGER_GRPS",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false)
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -222,8 +222,8 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_SCHEDULER_STATE",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    INSTANCE_NAME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    INSTANCE_NAME = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     LAST_CHECKIN_TIME = table.Column<long>(type: "bigint", nullable: false),
                     CHECKIN_INTERVAL = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -236,13 +236,13 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(70)", maxLength: 70, nullable: false),
+                    Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -253,13 +253,13 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "StatusTypes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -270,12 +270,12 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "TermTypes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -286,13 +286,13 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Tests",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -303,18 +303,21 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    MiddleName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PasswordSalt = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FirstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    MiddleName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    LastName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CanvasUserId = table.Column<string>(type: "text", nullable: true),
+                    SISId = table.Column<string>(type: "text", nullable: true),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    PasswordSalt = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -325,15 +328,15 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Submissions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionAttemptId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StudentAnswerJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Score = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SubmittedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    QuestionAttemptId = table.Column<Guid>(type: "uuid", nullable: false),
+                    StudentAnswerJson = table.Column<string>(type: "text", nullable: false),
+                    Score = table.Column<decimal>(type: "numeric", nullable: false),
+                    SubmittedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -350,28 +353,28 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_TRIGGERS",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    JOB_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    JOB_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    DESCRIPTION = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    JOB_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    JOB_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    DESCRIPTION = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
                     NEXT_FIRE_TIME = table.Column<long>(type: "bigint", nullable: true),
                     PREV_FIRE_TIME = table.Column<long>(type: "bigint", nullable: true),
-                    PRIORITY = table.Column<int>(type: "int", nullable: true),
-                    TRIGGER_STATE = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
-                    TRIGGER_TYPE = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    PRIORITY = table.Column<int>(type: "integer", nullable: true),
+                    TRIGGER_STATE = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
+                    TRIGGER_TYPE = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
                     START_TIME = table.Column<long>(type: "bigint", nullable: false),
                     END_TIME = table.Column<long>(type: "bigint", nullable: true),
-                    CALENDAR_NAME = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    MISFIRE_INSTR = table.Column<int>(type: "int", nullable: true),
-                    JOB_DATA = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    CALENDAR_NAME = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    MISFIRE_INSTR = table.Column<int>(type: "integer", nullable: true),
+                    JOB_DATA = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QURTZ_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
                     table.ForeignKey(
-                        name: "FK_QURTZ_TRIGGERS_QURTZ_JOB_DETAILS_SCHED_NAME_JOB_NAME_JOB_GROUP",
+                        name: "FK_QURTZ_TRIGGERS_QURTZ_JOB_DETAILS_SCHED_NAME_JOB_NAME_JOB_GR~",
                         columns: x => new { x.SCHED_NAME, x.JOB_NAME, x.JOB_GROUP },
                         principalTable: "QURTZ_JOB_DETAILS",
                         principalColumns: new[] { "SCHED_NAME", "JOB_NAME", "JOB_GROUP" },
@@ -382,14 +385,14 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Statuses",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StatusTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    StatusTypeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -406,16 +409,16 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Terms",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Year = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    EndDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    TermTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Year = table.Column<int>(type: "integer", nullable: false),
+                    StartDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    EndDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    TermTypeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -432,8 +435,8 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "RoleUser",
                 columns: table => new
                 {
-                    RolesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    RolesId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -456,17 +459,17 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_CRON_TRIGGERS",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    CRON_EXPRESSION = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TIME_ZONE_ID = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: true)
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    CRON_EXPRESSION = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    TIME_ZONE_ID = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QURTZ_CRON_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
                     table.ForeignKey(
-                        name: "FK_QURTZ_CRON_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NAME_TRIGGER_GROUP",
+                        name: "FK_QURTZ_CRON_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NAME_~",
                         columns: x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP },
                         principalTable: "QURTZ_TRIGGERS",
                         principalColumns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP" },
@@ -477,18 +480,18 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_SIMPLE_TRIGGERS",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    REPEAT_COUNT = table.Column<int>(type: "int", nullable: false),
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    REPEAT_COUNT = table.Column<int>(type: "integer", nullable: false),
                     REPEAT_INTERVAL = table.Column<long>(type: "bigint", nullable: false),
-                    TIMES_TRIGGERED = table.Column<int>(type: "int", nullable: false)
+                    TIMES_TRIGGERED = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QURTZ_SIMPLE_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
                     table.ForeignKey(
-                        name: "FK_QURTZ_SIMPLE_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NAME_TRIGGER_GROUP",
+                        name: "FK_QURTZ_SIMPLE_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NAM~",
                         columns: x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP },
                         principalTable: "QURTZ_TRIGGERS",
                         principalColumns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP" },
@@ -499,27 +502,27 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QURTZ_SIMPROP_TRIGGERS",
                 columns: table => new
                 {
-                    SCHED_NAME = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    STR_PROP_1 = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
-                    STR_PROP_2 = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
-                    STR_PROP_3 = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
-                    INT_PROP_1 = table.Column<int>(type: "int", nullable: true),
-                    INT_PROP_2 = table.Column<int>(type: "int", nullable: true),
+                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    STR_PROP_1 = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
+                    STR_PROP_2 = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
+                    STR_PROP_3 = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
+                    INT_PROP_1 = table.Column<int>(type: "integer", nullable: true),
+                    INT_PROP_2 = table.Column<int>(type: "integer", nullable: true),
                     LONG_PROP_1 = table.Column<long>(type: "bigint", nullable: true),
                     LONG_PROP_2 = table.Column<long>(type: "bigint", nullable: true),
                     DEC_PROP_1 = table.Column<decimal>(type: "numeric(13,4)", nullable: true),
                     DEC_PROP_2 = table.Column<decimal>(type: "numeric(13,4)", nullable: true),
-                    BOOL_PROP_1 = table.Column<bool>(type: "bit", nullable: true),
-                    BOOL_PROP_2 = table.Column<bool>(type: "bit", nullable: true),
-                    TIME_ZONE_ID = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: true)
+                    BOOL_PROP_1 = table.Column<bool>(type: "boolean", nullable: true),
+                    BOOL_PROP_2 = table.Column<bool>(type: "boolean", nullable: true),
+                    TIME_ZONE_ID = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QURTZ_SIMPROP_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
                     table.ForeignKey(
-                        name: "FK_QURTZ_SIMPROP_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NAME_TRIGGER_GROUP",
+                        name: "FK_QURTZ_SIMPROP_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NA~",
                         columns: x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP },
                         principalTable: "QURTZ_TRIGGERS",
                         principalColumns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP" },
@@ -530,14 +533,14 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "CourseOfferings",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TermId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    InstructorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CourseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TermId = table.Column<Guid>(type: "uuid", nullable: false),
+                    InstructorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -565,19 +568,19 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Assessments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    AvailableCredit = table.Column<int>(type: "int", nullable: false),
-                    MaxScore = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OpenDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    DueDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CourseOfferingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    AvailableCredit = table.Column<int>(type: "integer", nullable: false),
+                    MaxScore = table.Column<int>(type: "integer", nullable: false),
+                    CourseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OpenDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    DueDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    CourseOfferingId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -596,19 +599,56 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ChatMessages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ReceiverId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CourseOfferingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Message = table.Column<string>(type: "text", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChatMessages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ChatMessages_CourseOfferings_CourseOfferingId",
+                        column: x => x.CourseOfferingId,
+                        principalTable: "CourseOfferings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChatMessages_Users_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChatMessages_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Enrollments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CourseOfferingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TotalWorkHoursPerWeek = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    EnrolledDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CourseOfferingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: true),
+                    TotalWorkHoursPerWeek = table.Column<decimal>(type: "numeric", nullable: true),
+                    EnrolledDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -630,15 +670,15 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Labs",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Capacity = table.Column<int>(type: "int", nullable: true),
-                    CourseOfferingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Capacity = table.Column<int>(type: "integer", nullable: true),
+                    CourseOfferingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -655,16 +695,16 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Questions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    OriginalValue = table.Column<int>(type: "int", nullable: false),
-                    MaxPoints = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    QuestionTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AssessmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    OriginalValue = table.Column<int>(type: "integer", nullable: false),
+                    MaxPoints = table.Column<decimal>(type: "numeric", nullable: false),
+                    QuestionTypeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AssessmentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -687,22 +727,22 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "LabRequests",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ZoomLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IssueTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IssueDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TrySofar = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CourseOfferingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    AssignedTeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    RequestNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    ZoomLink = table.Column<string>(type: "text", nullable: true),
+                    IssueTitle = table.Column<string>(type: "text", nullable: true),
+                    IssueDescription = table.Column<string>(type: "text", nullable: true),
+                    TrySofar = table.Column<string>(type: "text", nullable: true),
+                    StudentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CourseOfferingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RequestedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    AssignedTeacherId = table.Column<Guid>(type: "uuid", nullable: true),
+                    StatusId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -723,7 +763,7 @@ namespace EduTrail.Infrastructure.Migrations
                         column: x => x.StudentId,
                         principalTable: "Enrollments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LabRequests_Statuses_StatusId",
                         column: x => x.StatusId,
@@ -736,10 +776,10 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "TALabMonths",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Month = table.Column<int>(type: "int", nullable: false),
-                    Year = table.Column<int>(type: "int", nullable: false),
-                    EnrollmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Month = table.Column<int>(type: "integer", nullable: false),
+                    Year = table.Column<int>(type: "integer", nullable: false),
+                    EnrollmentId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -756,15 +796,15 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QuestionVariantTemplates",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AttemptScore = table.Column<int>(type: "int", nullable: false),
-                    Template = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Language = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    AttemptScore = table.Column<int>(type: "integer", nullable: false),
+                    Template = table.Column<string>(type: "text", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -781,14 +821,14 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QuestionVariationRules",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Key = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    OptionsJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Key = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    OptionsJson = table.Column<string>(type: "text", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -805,9 +845,9 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "TALabWeeks",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    WeekNumber = table.Column<int>(type: "int", nullable: false),
-                    TALabMonthId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    WeekNumber = table.Column<int>(type: "integer", nullable: false),
+                    TALabMonthId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -824,14 +864,14 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "TALabDays",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TALabWeekId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LabDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TALabWeekId = table.Column<Guid>(type: "uuid", nullable: false),
+                    LabDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -848,17 +888,17 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "TALabSlots",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TALabDayId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Mode = table.Column<int>(type: "int", nullable: false),
-                    RemoteLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TALabDayId = table.Column<Guid>(type: "uuid", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    Mode = table.Column<int>(type: "integer", nullable: false),
+                    RemoteLink = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -880,6 +920,21 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "IX_Assessments_CourseOfferingId",
                 table: "Assessments",
                 column: "CourseOfferingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChatMessages_CourseOfferingId",
+                table: "ChatMessages",
+                column: "CourseOfferingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChatMessages_ReceiverId",
+                table: "ChatMessages",
+                column: "ReceiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChatMessages_UserId",
+                table: "ChatMessages",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseOfferings_CourseId",
@@ -1065,6 +1120,9 @@ namespace EduTrail.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AutoGenerateNumbers");
+
+            migrationBuilder.DropTable(
+                name: "ChatMessages");
 
             migrationBuilder.DropTable(
                 name: "LabRequests");
