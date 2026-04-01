@@ -20,6 +20,14 @@ namespace EduTrail.API.Controllers
             var result = await _mediator.Send(new GetAllEnrolementsQuery { CourseOfferingId = courseOfferingId });
             return Ok(result);
         }
+
+        [Authorize]
+        [HttpGet("active-ta/{courseOfferingId}")]
+        public async Task<ActionResult<EnrolementDto>> GetAllActiveTAs(Guid? courseOfferingId)
+        {
+            var result = await _mediator.Send(new GetAllActiveTAsQuery { CourseOfferingId = courseOfferingId });
+            return Ok(result);
+        }
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<EnrolementDto>> GetById(Guid id)

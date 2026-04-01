@@ -6,6 +6,7 @@ namespace EduTrail.Application.Enrolements
     {
         public Guid CourseOfferingId { get; set; }
         public IFormFile File { get; set; }
+        public bool IsTa { get; set; }
     }
 }
 

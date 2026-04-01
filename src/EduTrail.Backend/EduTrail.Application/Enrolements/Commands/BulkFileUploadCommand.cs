@@ -46,9 +46,14 @@ namespace EduTrail.Application.Enrolements
                 var enrollments = new List<Enrollment>();
                 var users = (await _userRepository.GetAllAsync()).ToList();
 
-                var role = await _userRepository.GetRolesByIdsAsync(new List<DropdownItemDto>
+                var roleStudent = await _userRepository.GetRolesByIdsAsync(new List<DropdownItemDto>
                     {
                         new DropdownItemDto { Id = CustomCategory.RoleType.Student, Name = "Student" }
+                    });
+
+                var roleTA = await _userRepository.GetRolesByIdsAsync(new List<DropdownItemDto>
+                    {
+                        new DropdownItemDto { Id = CustomCategory.RoleType.TA, Name = "TA" }
                     });
                 foreach (var row in records)
                 {
@@ -70,27 +75,37 @@ namespace EduTrail.Application.Enrolements
                         };
                         await _userRepository.CreateNotSaveChangeAsync(user);
                         user.Roles ??= new List<Role>();
-
-                        var firstRole = role.FirstOrDefault();
-                        if (firstRole != null)
+                        if (request.DetailDto.IsTa)
                         {
-                            user.Roles.Add(firstRole);
+                            var firstRole = roleTA.FirstOrDefault();
+                            if (firstRole != null)
+                            {
+                                user.Roles.Add(firstRole);
+                            }
+                            users.Add(user);
                         }
-                        users.Add(user);
-                        user.Roles.Add(role.FirstOrDefault());
+                        else
+                        {
+                            var firstRole = roleStudent.FirstOrDefault();
+                            if (firstRole != null)
+                            {
+                                user.Roles.Add(firstRole);
+                            }
+                            users.Add(user);
+                        }
+
+                        var existing = await _repository.GetByCourseOfferingIdAndStudentIdAsync(request.DetailDto.CourseOfferingId, user.Id);
+                        if (existing != null) continue;
+
+                        enrollments.Add(new Enrollment
+                        {
+                            Id = Guid.NewGuid(),
+                            CourseOfferingId = request.DetailDto.CourseOfferingId,
+                            UserId = user.Id,
+                            EnrolledDate = DateTimeOffset.UtcNow,
+                            IsActive = true
+                        });
                     }
-
-                    var existing = await _repository.GetByCourseOfferingIdAndStudentIdAsync(request.DetailDto.CourseOfferingId, user.Id);
-                    if (existing != null) continue;
-
-                    enrollments.Add(new Enrollment
-                    {
-                        Id = Guid.NewGuid(),
-                        CourseOfferingId = request.DetailDto.CourseOfferingId,
-                        UserId = user.Id,
-                        EnrolledDate = DateTimeOffset.UtcNow,
-                        IsActive = true
-                    });
                 }
                 await _repository.BulkInsertAsync(enrollments);
 
@@ -100,5 +115,5 @@ namespace EduTrail.Application.Enrolements
             }
         }
     }
-
 }
+

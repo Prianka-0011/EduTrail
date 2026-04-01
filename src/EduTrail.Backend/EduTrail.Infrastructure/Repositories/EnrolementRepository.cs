@@ -3,6 +3,7 @@ using EduTrail.Application.Courses;
 using EduTrail.Application.Enrolements;
 using EduTrail.Domain.Entities;
 using EduTrail.Infrastructure.Data;
+using EduTrail.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduTrail.Infrastructure.Repositories
@@ -18,7 +19,7 @@ namespace EduTrail.Infrastructure.Repositories
         {
             var query = _context.Enrollments
             .Include(c => c.CourseOffering)
-            .Include(c => c.User).AsQueryable();
+            .Include(c => c.User).ThenInclude(C=>C.Roles).AsQueryable();
             if (courseOfferingId.HasValue)
             {
                 query = query.Where(e => e.CourseOfferingId == courseOfferingId.Value);
@@ -83,5 +84,16 @@ namespace EduTrail.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Enrollment>> GetAllActiveTAsAsync(Guid? courseOfferingId = null, Guid? RoleId = null)
+        {
+             var query = _context.Enrollments
+            .Include(c => c.CourseOffering)
+            .Include(c => c.User).ThenInclude(C=>C.Roles).AsQueryable();
+            if (courseOfferingId.HasValue)
+            {
+                query = query.Where(e => e.CourseOfferingId == courseOfferingId.Value && e.User.Roles.Any(r => r.Id == RoleId.Value));
+            }
+            return await query.ToListAsync();
+        }
     }
 }
