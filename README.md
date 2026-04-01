@@ -453,6 +453,41 @@ VALUES
     NULL,
     NULL
 );
+INSERT INTO "Users" (
+    "Id", 
+    "FirstName", 
+    "MiddleName", 
+    "LastName", 
+    "Email", 
+    "ImageUrl", 
+    "CanvasUserId", 
+    "SISId", 
+    "PasswordHash", 
+    "PasswordSalt", 
+    "IsActive", 
+    "CreatedDate", 
+    "CreatedById", 
+    "UpdatedDate", 
+    "UpdatedById"
+)
+VALUES (
+    gen_random_uuid(),            -- Generates a new unique Id
+    'Admin',                      -- FirstName
+    NULL,                         -- MiddleName
+    'Power',                      -- LastName
+    'adminpower@yopmail.com',     -- Email
+    NULL,                         -- ImageUrl
+    NULL,                         -- CanvasUserId
+    NULL,                         -- SISId
+    'OIvraEJwj1gYf1uQu+8lYeyw8ripiCmFWWCenFC20h7aG7GOOgmhftzqN02nxt4b5h97rymt0a7rRVUG7afLUg==', -- PasswordHash
+    'wLsTHb6azf2oj7JQ/vEA9cb/1g/axBQS4BSdoero47jX6XPkwEVFtllcKbr3t5e6hd7JDDEdhFjNUtSfmoUKtfa3wJY9F9rRLXCoLAdeRJGln8YsbJgKvfz5mDgsXao+7PuelGiPKcm/lTE0FIQ+F0H47dOmRbpgAE1qA8FkEqc=', -- PasswordSalt
+    TRUE,                         -- IsActive
+    NOW(),                        -- CreatedDate
+    '8F3B2A91-6E5C-4C7B-9E91-1A2D4F8C3B10', -- CreatedById (RoleId of Admin)
+    NOW(),                        -- UpdatedDate
+    '8F3B2A91-6E5C-4C7B-9E91-1A2D4F8C3B10'  -- UpdatedById (RoleId of Admin)
+);
+
 
 Admin PASS Hash and Salt
 -----------------------
