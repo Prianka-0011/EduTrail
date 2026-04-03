@@ -4,6 +4,8 @@ namespace EduTrail.Infrastructure.Migrations.DataMigrations
 {
     public abstract partial class InitialDataMigration : Migration
     {
+        private readonly Guid _defaultAdminId = Guid.Parse(Environment.GetEnvironmentVariable("DEFAULT_ADMIN_ID") ?? "bf1ec798-50be-4449-9820-af261774542c");
+        private readonly Guid _defaultAdminRoleId = Guid.Parse(Environment.GetEnvironmentVariable("DEFAULT_ADMIN_ROLE_ID") ?? "8f3b2a91-6e5c-4c7b-9e91-1a2d4f8c3b10");
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
@@ -61,6 +63,11 @@ namespace EduTrail.Infrastructure.Migrations.DataMigrations
                 true, DateTime.UtcNow, Guid.Parse("8f3b2a91-6e5c-4c7b-9e91-1a2d4f8c3b10"), DateTime.UtcNow, Guid.Parse("8f3b2a91-6e5c-4c7b-9e91-1a2d4f8c3b10")
             }
                 });
+                migrationBuilder.InsertData(
+                table: "RoleUser",
+                columns: new[] { "UsersId", "RolesId" },
+                values: new object[] { _defaultAdminId, _defaultAdminRoleId }
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
