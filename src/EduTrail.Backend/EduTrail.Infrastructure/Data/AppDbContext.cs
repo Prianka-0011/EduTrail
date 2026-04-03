@@ -46,27 +46,27 @@ namespace EduTrail.Infrastructure.Data
         
         #region QUARTZ
 
-        public virtual DbSet<QURTZ_BLOB_TRIGGER> QURTZ_BLOB_TRIGGERS { get; set; }
+        public virtual DbSet<QURTZ_BLOB_TRIGGER> QRTZ_BLOB_TRIGGERS { get; set; }
 
-        public virtual DbSet<QURTZ_CALENDAR> QURTZ_CALENDARS { get; set; }
+        public virtual DbSet<QURTZ_CALENDAR> QRTZ_CALENDARS { get; set; }
 
-        public virtual DbSet<QURTZ_CRON_TRIGGER> QURTZ_CRON_TRIGGERS { get; set; }
+        public virtual DbSet<QURTZ_CRON_TRIGGER> QRTZ_CRON_TRIGGERS { get; set; }
 
-        public virtual DbSet<QURTZ_FIRED_TRIGGER> QURTZ_FIRED_TRIGGERS { get; set; }
+        public virtual DbSet<QURTZ_FIRED_TRIGGER> QRTZ_FIRED_TRIGGERS { get; set; }
 
-        public virtual DbSet<QURTZ_JOB_DETAIL> QURTZ_JOB_DETAILS { get; set; }
+        public virtual DbSet<QURTZ_JOB_DETAIL> QRTZ_JOB_DETAILS { get; set; }
 
-        public virtual DbSet<QURTZ_LOCK> QURTZ_LOCKS { get; set; }
+        public virtual DbSet<QURTZ_LOCK> QRTZ_LOCKS { get; set; }
 
-        public virtual DbSet<QURTZ_PAUSED_TRIGGER_GRP> QURTZ_PAUSED_TRIGGER_GRPS { get; set; }
+        public virtual DbSet<QURTZ_PAUSED_TRIGGER_GRP> QRTZ_PAUSED_TRIGGER_GRPS { get; set; }
 
-        public virtual DbSet<QURTZ_SCHEDULER_STATE> QURTZ_SCHEDULER_STATES { get; set; }
+        public virtual DbSet<QURTZ_SCHEDULER_STATE> QRTZ_SCHEDULER_STATES { get; set; }
 
-        public virtual DbSet<QURTZ_SIMPLE_TRIGGER> QURTZ_SIMPLE_TRIGGERS { get; set; }
+        public virtual DbSet<QURTZ_SIMPLE_TRIGGER> QRTZ_SIMPLE_TRIGGERS { get; set; }
 
-        public virtual DbSet<QURTZ_SIMPROP_TRIGGER> QURTZ_SIMPROP_TRIGGERS { get; set; }
+        public virtual DbSet<QURTZ_SIMPROP_TRIGGER> QRTZ_SIMPROP_TRIGGERS { get; set; }
 
-        public virtual DbSet<QURTZ_TRIGGER> QURTZ_TRIGGERS { get; set; }
+        public virtual DbSet<QURTZ_TRIGGER> QRTZ_TRIGGERS { get; set; }
 
         #endregion
     }

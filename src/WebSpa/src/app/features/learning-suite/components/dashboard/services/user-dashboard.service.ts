@@ -91,7 +91,7 @@ export class UserDashboardService {
 
   loadActiveUsers(courseOfferingId: string): Observable<IEnrolement>
   {
-     return this.http.get<IEnrolement>(this.enrollmentBaseUrl + "course-offerings/" + courseOfferingId);
+     return this.http.get<IEnrolement>(this.enrollmentBaseUrl + "active-ta/" + courseOfferingId);
   }
   
   logout(): Observable<boolean> {

@@ -15,10 +15,10 @@
         "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
       },
       "env": {
-        "DB_HOST": "edu-trail-sql",
-        "DB_PORT": "1433",
+        "DB_HOST": "edu-trail-postgres",
+        "DB_PORT": "5432",
         "DB_NAME": "EduTrailDb",
-        "DB_USER": "sa",
+        "DB_USER": "postgres",
         "DB_PASS": "EduTrail123!",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -41,9 +41,9 @@
       },
       "env": {
         "DB_HOST": "localhost",
-        "DB_PORT": "1433",
+        "DB_PORT": "5432",
         "DB_NAME": "EduTrailDb",
-        "DB_USER": "sa",
+        "DB_USER": "postgres",
         "DB_PASS": "EduTrail123!",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

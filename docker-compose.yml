@@ -2,58 +2,71 @@ version: '3.8'
 
 services:
   database-edu-trail:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: edu-trail-sql
+    image: postgres:15
+    container_name: edu-trail-postgres
+    restart: always
     environment:
-      SA_PASSWORD: "EduTrail123!"
-      MSSQL_DB: "EduTrailDb"
-      ACCEPT_EULA: "Y"
+      POSTGRES_DB: EduTrailDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: EduTrail123!
     ports:
-      - "1433:1433"
+      - "5432:5432"
     volumes:
-      - sql_data:/var/opt/mssql
+      - postgres_data:/var/lib/postgresql/data
+  # database-edu-trail:
+  #   image: mcr.microsoft.com/mssql/server:2022-latest
+  #   container_name: edu-trail-sql
+  #   environment:
+  #     SA_PASSWORD: "EduTrail123!"
+  #     MSSQL_DB: "EduTrailDb"
+  #     ACCEPT_EULA: "Y"
+  #   ports:
+  #     - "1433:1433"
+  #   volumes:
+  #     - sql_data:/var/opt/mssql
     networks:
       - edutrail-network
 
-  edu-trail-service:
-    container_name: edu-trail-container
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "2029:2029"
-    depends_on:
-      - database-edu-trail
-    volumes:
-      - .:/edu-trail:cached
-      - /edu-trail/src/WebSpa/node_modules
-    environment:
-      DB_HOST: edu-trail-sql
-      DB_PORT: 1433
-      DB_NAME: EduTrailDb
-      DB_USER: sa
-      DB_PASS: EduTrail123!
-      APPLICATION_URL: https://localhost:7238
+  # edu-trail-service:
+  #   container_name: edu-trail-container
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "2029:2029"
+  #   depends_on:
+  #     - database-edu-trail
+  #   volumes:
+  #     - .:/edu-trail:cached
+  #     - /edu-trail/src/WebSpa/node_modules
+  #   environment:
+  #     # DB_HOST: edu-trail-sql
+  #     DB_HOST: edu-trail-postgres
+  #     DB_PORT: 5432
+  #     DB_NAME: EduTrailDb
+  #     DB_USER: postgres
+  #     DB_PASS: EduTrail123!
+  #     APPLICATION_URL: https://localhost:7238
 
-      # SMTP CONFIG
-      SMTP_ENABLED: "true"
-      SMTP_SERVER: smtp.gmail.com
-      SMTP_PORT: "587"
-      SMTP_USERNAME: priankanew0011@gmail.com
-      SMTP_PASSWORD: gdaz jwfh iwvb waqa
-      SMTP_ENABLE_SSL: "true"
-      SMTP_NO_REPLY_EMAIL: priankanew0011@gmail.com
-      SMTP_NO_REPLY_NAME: NoReplay
+  #     # SMTP CONFIG
+  #     SMTP_ENABLED: "true"
+  #     SMTP_SERVER: smtp.gmail.com
+  #     SMTP_PORT: "587"
+  #     SMTP_USERNAME: priankanew0011@gmail.com
+  #     SMTP_PASSWORD: gdaz jwfh iwvb waqa
+  #     SMTP_ENABLE_SSL: "true"
+  #     SMTP_NO_REPLY_EMAIL: priankanew0011@gmail.com
+  #     SMTP_NO_REPLY_NAME: NoReplay
 
-      TIME_ZONE_ID: Central Standard Time
-      FILES_DIRECTORY: /app/_files
-      TEMP_FILES_DIRECTORY: /app/_temp-files
+  #     TIME_ZONE_ID: Central Standard Time
+  #     FILES_DIRECTORY: /app/_files
+  #     TEMP_FILES_DIRECTORY: /app/_temp-files
 
-    networks:
-      - edutrail-network
+  #   networks:
+  #     - edutrail-network
 
 volumes:
-  sql_data:
+  postgres_data:
 
 networks:
   edutrail-network:

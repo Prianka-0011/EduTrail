@@ -3,6 +3,8 @@
 **EduTrail** is a modern, scalable e-commerce application built using **Angular** (frontend), **.NET Core** (backend), and **GraphQL**. The project follows **Clean Architecture principles** to ensure maintainability, testability, and scalability.
 
 ---
+# Reset Data Migration
+./src/EduTrail.Backend/EduTrail.Infrastructure/InitialDataMigration/reset-initial-migration.sh
 dotnet ef migrations add initial-migration -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
 
 ## **Folder Structure (Clean Architecture)**
@@ -377,6 +379,117 @@ VALUES
     NULL,
     NULL
 );
+
+//Postgres
+INSERT INTO "Roles"
+(
+    "Id",
+    "Name",
+    "Description",
+    "CreatedDate",
+    "CreatedById"
+)
+VALUES
+('8f3b2a91-6e5c-4c7b-9e91-1a2d4f8c3b10', 'Instructor', 'Role for course instructors', NOW(), '00000000-0000-0000-0000-000000000000'),
+('2c9d7f41-8a3e-4f2b-b6a5-9e1c3d4a7f82', 'Student',    'Role for students',           NOW(), '00000000-0000-0000-0000-000000000000'),
+('5a1e4c7d-9b82-4f36-a3c1-6d9e2f8b0a55', 'TA',         'Role for teaching assistants', NOW(), '00000000-0000-0000-0000-000000000000');
+
+
+INSERT INTO "TermTypes"
+(
+    "Id",
+    "Name",
+    "CreatedDate",
+    "CreatedById",
+    "UpdatedDate",
+    "UpdatedById"
+)
+VALUES
+('7e8f9f7e-75b3-4866-94a3-464f8711c544', 'Spring', NOW(), NULL, NOW(), NULL),
+('f262de21-7519-4468-b63a-653dafc6b8f9', 'Fall',   NOW(), NULL, NOW(), NULL),
+('855021e3-8d31-47b2-b787-65e1ddbb4fe0', 'Winter', NOW(), NULL, NOW(), NULL),
+('f2231caa-ad7f-42f6-8283-043d54af790c', 'Summer', NOW(), NULL, NOW(), NULL);
+
+
+INSERT INTO "StatusTypes"
+(
+    "Id",
+    "Name",
+    "Description",
+    "CreatedDate",
+    "CreatedById",
+    "UpdatedDate",
+    "UpdatedById"
+)
+VALUES
+(
+    'ce5e6303-3ac6-4af1-92b4-f708da026d20',
+    'Help Request',
+    'Status type for help request workflow',
+    NOW(),
+    NULL,
+    NULL,
+    NULL
+);
+
+
+INSERT INTO "Statuses"
+(
+    "Id",
+    "Name",
+    "Description",
+    "StatusTypeId",
+    "CreatedDate",
+    "CreatedById",
+    "UpdatedDate",
+    "UpdatedById"
+)
+VALUES
+(
+    '627407c8-700d-46fc-a3e5-02dc368fb75e',
+    'Pending',
+    'Help request is pending',
+    'ce5e6303-3ac6-4af1-92b4-f708da026d20',
+    NOW(),
+    NULL,
+    NULL,
+    NULL
+);
+INSERT INTO "Users" (
+    "Id", 
+    "FirstName", 
+    "MiddleName", 
+    "LastName", 
+    "Email", 
+    "ImageUrl", 
+    "CanvasUserId", 
+    "SISId", 
+    "PasswordHash", 
+    "PasswordSalt", 
+    "IsActive", 
+    "CreatedDate", 
+    "CreatedById", 
+    "UpdatedDate", 
+    "UpdatedById"
+)
+VALUES (
+    gen_random_uuid(),            -- Generates a new unique Id
+    'Admin',                      -- FirstName
+    NULL,                         -- MiddleName
+    'Power',                      -- LastName
+    'adminpower@yopmail.com',     -- Email
+    NULL,                         -- ImageUrl
+    NULL,                         -- CanvasUserId
+    NULL,                         -- SISId
+    'OIvraEJwj1gYf1uQu+8lYeyw8ripiCmFWWCenFC20h7aG7GOOgmhftzqN02nxt4b5h97rymt0a7rRVUG7afLUg==', -- PasswordHash
+    'wLsTHb6azf2oj7JQ/vEA9cb/1g/axBQS4BSdoero47jX6XPkwEVFtllcKbr3t5e6hd7JDDEdhFjNUtSfmoUKtfa3wJY9F9rRLXCoLAdeRJGln8YsbJgKvfz5mDgsXao+7PuelGiPKcm/lTE0FIQ+F0H47dOmRbpgAE1qA8FkEqc=', -- PasswordSalt
+    TRUE,                         -- IsActive
+    NOW(),                        -- CreatedDate
+    '8F3B2A91-6E5C-4C7B-9E91-1A2D4F8C3B10', -- CreatedById (RoleId of Admin)
+    NOW(),                        -- UpdatedDate
+    '8F3B2A91-6E5C-4C7B-9E91-1A2D4F8C3B10'  -- UpdatedById (RoleId of Admin)
+);
+
 
 Admin PASS Hash and Salt
 -----------------------

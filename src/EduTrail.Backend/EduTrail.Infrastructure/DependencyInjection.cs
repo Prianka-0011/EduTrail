@@ -20,39 +20,49 @@ using Quartz;
 using EduTrail.Application.Chats;
 using EduTrail.Application.HelpRequestDashboards;
 
-
 namespace EduTrail.Infrastructure
 {
     public static class DependencyInjection
     {
         private static string dbHost =>
             Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"
-                ? "edu-trail-sql"
+                ? "edu-trail-postgres"
                 : "localhost";
 
-        private static int dbPort => int.TryParse(Environment.GetEnvironmentVariable("DB_PORT"), out var port) ? port : 1433;
+        private static int dbPort => int.TryParse(Environment.GetEnvironmentVariable("DB_PORT"), out var port) ? port : 5432;
         private static string dbName => Environment.GetEnvironmentVariable("DB_NAME") ?? "EduTrailDb";
-        private static string dbUser => Environment.GetEnvironmentVariable("DB_USER") ?? "sa";
+        private static string dbUser => Environment.GetEnvironmentVariable("DB_USER") ?? "postgres";
         private static string dbPass => Environment.GetEnvironmentVariable("DB_PASS") ?? "EduTrail123!";
 
         public static string GetConnectionString(string databaseName)
         {
-            return $"Server={dbHost},{dbPort};Database={databaseName};User Id={dbUser};Password={dbPass};TrustServerCertificate=True;Encrypt=False;";
+            // return $"Server={dbHost},{dbPort};Database={databaseName};User Id={dbUser};Password={dbPass};TrustServerCertificate=True;Encrypt=False;";
+            return $"Host={dbHost};Port={dbPort};Database={databaseName};Username={dbUser};Password={dbPass}";
+
         }
 
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             Console.WriteLine($"DB Connection String: {GetConnectionString(dbName)}");
-
-            // Add EF Core with retry on transient failures
+            // services.AddDbContext<AppDbContext>(options =>
+            // {
+            //     options.UseSqlServer(
+            //         GetConnectionString(dbName),
+            //         sqlOptions => sqlOptions.EnableRetryOnFailure(
+            //             maxRetryCount: 5,
+            //             maxRetryDelay: TimeSpan.FromSeconds(10),
+            //             errorNumbersToAdd: null
+            //         )
+            //     );
+            // });
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(
+                options.UseNpgsql(
                     GetConnectionString(dbName),
-                    sqlOptions => sqlOptions.EnableRetryOnFailure(
+                    npgsqlOptions => npgsqlOptions.EnableRetryOnFailure(
                         maxRetryCount: 5,
                         maxRetryDelay: TimeSpan.FromSeconds(10),
-                        errorNumbersToAdd: null
+                        errorCodesToAdd: null
                     )
                 );
             });
@@ -68,14 +78,16 @@ namespace EduTrail.Infrastructure
                 q.UsePersistentStore(s =>
                 {
                     s.UseClustering();
-                    s.UseSqlServer(c =>
-                    {
-                        c.ConnectionString = GetConnectionString(dbName);
-                        c.TablePrefix = "QURTZ_";
-                    });
                     s.UseJsonSerializer();
+                    s.UsePostgres(postgresOptions =>
+                    {
+                        var connectionString = GetConnectionString(dbName);
+                        postgresOptions.ConnectionString = connectionString;
+                        postgresOptions.TablePrefix = "QRTZ_";
+                    });
+                    s.PerformSchemaValidation = false;
                 });
-
+              
                 q.UseDefaultThreadPool(tp =>
                 {
                     tp.MaxConcurrency = 10;
@@ -103,7 +115,7 @@ namespace EduTrail.Infrastructure
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IChatRepository, ChatRepository>();
             services.AddScoped<IHelpRequestDashboardRepository, HelpRequestDashboardRepository>();
-            
+
             return services;
         }
     }
