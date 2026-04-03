@@ -56,7 +56,7 @@ namespace EduTrail.Infrastructure.Migrations.DataMigrations
                 values: new object[,]
                 {
             {
-                Guid.NewGuid(), "Admin", null, "Power", "adminpower@yopmail.com", null,
+                _defaultAdminId, "Admin", null, "Power", "adminpower@yopmail.com", null,
                 null, null,
                 "OIvraEJwj1gYf1uQu+8lYeyw8ripiCmFWWCenFC20h7aG7GOOgmhftzqN02nxt4b5h97rymt0a7rRVUG7afLUg==",
                 "wLsTHb6azf2oj7JQ/vEA9cb/1g/axBQS4BSdoero47jX6XPkwEVFtllcKbr3t5e6hd7JDDEdhFjNUtSfmoUKtfa3wJY9F9rRLXCoLAdeRJGln8YsbJgKvfz5mDgsXao+7PuelGiPKcm/lTE0FIQ+F0H47dOmRbpgAE1qA8FkEqc=",
