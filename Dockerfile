@@ -17,6 +17,4 @@ RUN yarn build
 
 WORKDIR /edu-trail 
 EXPOSE 2029
-# ENTRYPOINT ["dotnet", "watch", "--project", "src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj", "run", "--urls=https://0.0.0.0:2029"]
-# ENTRYPOINT ["/bin/bash"]
 ENTRYPOINT ["dotnet", "watch", "--project", "src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj", "run", "--urls=https://0.0.0.0:2029"]

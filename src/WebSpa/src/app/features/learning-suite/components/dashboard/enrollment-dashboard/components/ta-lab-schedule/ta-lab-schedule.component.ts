@@ -18,20 +18,46 @@ export class TaLabScheduleComponent implements OnInit {
 
   EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 
+  // calendarOptions: any = {
+  //   plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+  //   initialView: 'dayGridMonth',
+  //   timeZone: 'local',
+  //   headerToolbar: {
+  //     left: 'prev,next today',
+  //     center: 'title',
+  //     right: 'dayGridMonth,timeGridWeek'
+  //   },
+  //   dayMaxEvents: true,
+  //   displayEventTime: true,
+  //   height: 'auto',
+  //   events: []
+  // };
   calendarOptions: any = {
-    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-    initialView: 'dayGridMonth',
-    timeZone: 'local',
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek'
-    },
-    dayMaxEvents: true,
-    displayEventTime: true,
-    height: 'auto',
-    events: []
-  };
+  plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+  initialView: 'dayGridMonth',
+  timeZone: 'local',
+  headerToolbar: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek'
+  },
+  dayMaxEvents: true,
+  displayEventTime: true,
+  height: 'auto',
+
+  eventDisplay: 'block',
+  eventTimeFormat: {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  },
+
+  dayHeaderClassNames: 'fc-custom-header',
+  dayCellClassNames: 'fc-custom-day',
+  eventClassNames: 'fc-custom-event',
+
+  events: []
+};
 
   constructor(
     private enrolementService: UserDashboardService,
@@ -94,7 +120,7 @@ export class TaLabScheduleComponent implements OnInit {
                     );
 
                     events.push({
-                      title: `${enrollment.studentName}'s Lab Hour`,
+                      title: `${enrollment.userName}'s Lab Hour`,
                       start: start,
                       end: end
                     });

@@ -157,28 +157,62 @@ export class EnrollmentProfileComponent implements OnInit {
     return monthname;
   }
 
-  addMonth(month: number, year: number): void {
-    console.log(month, "selected month ")
-    if (!month || !year) return;
-    if (this.taLabMonths.some(m => m.month === month && m.year === year)) return;
+  // addMonth(month: number, year: number): void {
+  //   console.log(month, "selected month ", year, this.taLabMonths)
+  //   if (!month || !year) return;
+  //   if (this.taLabMonths.some(m => m.month === month && m.year === year)) 
+  //   {
+  //     this.toastr.warning('This month is already added');
+  //     return
+  //   }           
+  //   const newMonth: ITALabMonth = {
+  //     id: this.generateGuid(),
+  //     month,
+  //     year,
+  //     weeks: [],
+  //     enrollmentId: this.enrolement.detailsDto.id,
+  //     isCollapsed: false
+  //   };
 
-    const newMonth: ITALabMonth = {
-      id: this.generateGuid(),
-      month,
-      year,
-      weeks: [],
-      enrollmentId: this.enrolement.detailsDto.id,
-      isCollapsed: false
-    };
+  //   for (let i = 1; i <= 5; i++) {
+  //     newMonth.weeks.push({ id: this.generateGuid(), taLabMonthId: newMonth.id, weekNumber: i, days: [] });
+  //   }
 
-    for (let i = 1; i <= 5; i++) {
-      newMonth.weeks.push({ id: this.generateGuid(), taLabMonthId: newMonth.id, weekNumber: i, days: [] });
-    }
+  //   this.taLabMonths.push(newMonth);
+  //   this.taLabMonths = [...this.taLabMonths];
+  // }
+addMonth(month: number, year: number): void {
+  const mth = Number(month);
+  const yr = Number(year);
 
-    this.taLabMonths.push(newMonth);
-    this.taLabMonths = [...this.taLabMonths];
+  if (!mth || !yr) return;
+
+  if (this.taLabMonths.some(m => m.month === mth && m.year === yr)) {
+    this.toastr.warning('This month is already added');
+    return;
   }
 
+  const newMonth: ITALabMonth = {
+    id: this.generateGuid(),
+    month: mth,
+    year: yr,
+    weeks: [],
+    enrollmentId: this.enrolement.detailsDto.id,
+    isCollapsed: false
+  };
+
+  for (let i = 1; i <= 5; i++) {
+    newMonth.weeks.push({
+      id: this.generateGuid(),
+      taLabMonthId: newMonth.id,
+      weekNumber: i,
+      days: []
+    });
+  }
+
+  this.taLabMonths.push(newMonth);
+  this.taLabMonths = [...this.taLabMonths];
+}
   addLabDayToWeek(month: ITALabMonth, weekNumber: number, date?: string): void {
     const week = month.weeks.find(w => w.weekNumber === weekNumber);
     if (!week) return;
