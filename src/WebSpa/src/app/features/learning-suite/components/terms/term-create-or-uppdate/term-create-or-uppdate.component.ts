@@ -49,8 +49,8 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const termId = params['id'];
-       this.term.year = new Date().getFullYear();
-       console.log("Term ID from query params:", this.term.year); // Debug
+      this.term.year = new Date().getFullYear();
+      console.log("Term ID from query params:", this.term.year); // Debug
 
       console
       this.service.getById(termId).subscribe(data => {
@@ -99,11 +99,39 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
     }
   }
 
+  // onSubmit(form: NgForm): void {
+  //   if (form.invalid || !this.isDateRangeValid()) return;
+
+  //   const payload: ITerm = {
+  //     detailDto: this.term,
+  //   };
+
+  //   const request$ =
+  //     this.term.id === EMPTY_ID
+  //       ? this.service.create(payload)
+  //       : this.service.update(payload);
+
+  //   request$.subscribe(() => {
+  //     this.saved.emit();
+  //     this.resetForm();
+  //   });
+  // }
+
+  toUtc(date: string): string {
+    if (!date) return '';
+    return new Date(date + 'T00:00:00').toISOString();
+  }
+
+
   onSubmit(form: NgForm): void {
     if (form.invalid || !this.isDateRangeValid()) return;
 
     const payload: ITerm = {
-      detailDto: this.term,
+      detailDto: {
+        ...this.term,
+        startDate: this.toUtc(this.term.startDate),
+        endDate: this.toUtc(this.term.endDate)
+      }
     };
 
     const request$ =

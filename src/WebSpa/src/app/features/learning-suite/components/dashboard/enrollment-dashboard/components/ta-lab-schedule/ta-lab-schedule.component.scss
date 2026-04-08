@@ -1,7 +1,66 @@
-.calendar-wrapper {
-  max-width: 2000px;
-  margin: 0 auto;
-  padding: 15px;
-  background: white;
-  border-radius: 8px;
+/* Remove blue text (day numbers, links) */
+.fc a,
+.fc a.fc-event {
+  color: #333 !important;
+  background-color: transparent !important;
+  text-decoration: none !important;
 }
+
+.fc a:hover {
+  color: #000 !important;
+}
+
+/* Toolbar buttons (remove blue focus/active) */
+.fc .fc-button-primary {
+  background: #f5f5f5 !important;
+  border: 1px solid #dcdcdc !important;
+  color: #333 !important;
+}
+
+.fc .fc-button-primary:hover {
+  background: #eaeaea !important;
+  border-color: #ccc !important;
+}
+
+.fc .fc-button-primary:focus {
+  box-shadow: none !important;
+}
+
+/* Active view button (Month / Week) */
+.fc .fc-button-primary.fc-button-active {
+  background: #333 !important;
+  color: #fff !important;
+  border-color: #333 !important;
+}
+
+/* Today button */
+.fc .fc-today-button {
+  background: #f5f5f5 !important;
+  color: #333 !important;
+  border: 1px solid #dcdcdc !important;
+}
+
+/* Remove blue highlight on selected day */
+.fc .fc-daygrid-day.fc-day-today,
+.fc .fc-timegrid-col.fc-day-today {
+  background: #f2f2f2 !important;
+}
+
+/* Remove blue selection highlight */
+.fc .fc-highlight {
+  background: #e5e5e5 !important;
+}
+
+/* Remove blue event borders */
+.fc-event {
+  border: none !important;
+}
+
+/* Remove blue focus outline */
+.fc *:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+

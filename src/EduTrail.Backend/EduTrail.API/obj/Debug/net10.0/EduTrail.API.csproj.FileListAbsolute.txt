@@ -49,7 +49,6 @@ D:/EduTrail/src/EduTrail.Backend/EduTrail.API/bin/Debug/net10.0/appsettings.json
 D:/EduTrail/src/EduTrail.Backend/EduTrail.API/bin/Debug/net10.0/3rdpartylicenses.txt
 D:/EduTrail/src/EduTrail.Backend/EduTrail.API/bin/Debug/net10.0/favicon.ico
 D:/EduTrail/src/EduTrail.Backend/EduTrail.API/bin/Debug/net10.0/index.html
-D:/EduTrail/src/EduTrail.Backend/EduTrail.API/bin/Debug/net10.0/main.5bfae300406f1e0d.js
 D:/EduTrail/src/EduTrail.Backend/EduTrail.API/bin/Debug/net10.0/polyfills.b71f80a3c44aa2f0.js
 D:/EduTrail/src/EduTrail.Backend/EduTrail.API/bin/Debug/net10.0/runtime.37b037475bcadbb2.js
 D:/EduTrail/src/EduTrail.Backend/EduTrail.API/bin/Debug/net10.0/styles.76f9dce6ba19a811.css
@@ -465,7 +464,6 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\appsettings.json
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\3rdpartylicenses.txt
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\favicon.ico
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\index.html
-D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\main.5bfae300406f1e0d.js
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\polyfills.b71f80a3c44aa2f0.js
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\runtime.37b037475bcadbb2.js
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\styles.76f9dce6ba19a811.css
@@ -622,3 +620,4 @@ D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net10.0\refint\EduTrail.
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net10.0\EduTrail.API.pdb
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net10.0\EduTrail.API.genruntimeconfig.cache
 D:\EduTrail\src\EduTrail.Backend\EduTrail.API\obj\Debug\net10.0\ref\EduTrail.API.dll
+D:\EduTrail\src\EduTrail.Backend\EduTrail.API\bin\Debug\net10.0\main.2970d65e6d61a364.js

@@ -152,7 +152,7 @@ export class EnrolementListComponent implements OnInit {
   }
 
    onEnrolementBulkSaved() {
-    this.closeDrawer();
+    this.closeBulkDrawer();
     const courseOfferingId = this.route.snapshot.paramMap.get('courseOfferingId');
     if (courseOfferingId) this.getEnrolements(courseOfferingId);
   }
