@@ -1,58 +1,52 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
-import { ICurrentLoginUserDetail } from '../../../features/learning-suite/components/dashboard/interfaces/iCurrentLoginUserDetail';
 import { IMessage } from '../../interfaces/iMessage';
 import { IEnrolementDetail } from '../../../features/learning-suite/components/enrolements/interfaces/iEntolementDetail';
+import { ICurrentLoginUserDetail } from '../../../features/learning-suite/components/dashboard/interfaces/iCurrentLoginUserDetail';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
+  imports: [ RouterOutlet, CommonModule, FormsModule, RouterModule ],
   templateUrl: './chat.component.html',
-  imports: [
-    RouterOutlet,
-    CommonModule,
-    FormsModule,
-    RouterModule
-  ],
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit, OnChanges {
+
   @Input() receiver!: IEnrolementDetail;
   @Input() sender!: ICurrentLoginUserDetail;
   @Input() courseOfferingId!: string;
 
+  @Output() onClose = new EventEmitter<void>();
+
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
 
-  user!: ICurrentLoginUserDetail;
   message: string = '';
   messages: IMessage[] = [];
 
-  constructor(private chatService: ChatService) {}
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.user = this.sender;
-
+  
     this.chatService.messages$.subscribe(msgs => {
       if (!this.receiver) return;
 
       this.messages = msgs.filter(m =>
-        (m.userId === this.user.id && m.receiverId === this.receiver.userId) ||
-        (m.userId === this.receiver.userId && m.receiverId === this.user.id)
+        (m.userId === this.sender.id && m.receiverId === this.receiver.userId) ||
+        (m.userId === this.receiver.userId && m.receiverId === this.sender.id)
       );
 
-      // Auto scroll to bottom
       setTimeout(() => {
         if (this.messagesContainer) {
-          this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+          this.messagesContainer.nativeElement.scrollTop =
+            this.messagesContainer.nativeElement.scrollHeight;
         }
-      }, 0);
+      });
     });
 
-    if (this.receiver?.userId) {
-      this.chatService.loadHistory(this.receiver.userId);
-    }
+    this.chatService.loadHistory(this.receiver.userId);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -64,15 +58,21 @@ export class ChatComponent implements OnInit, OnChanges {
   send() {
     if (!this.message || !this.receiver?.userId) return;
 
-    const messageDto: IMessage = {
+    const msg: IMessage = {
       userId: this.sender.id,
       receiverId: this.receiver.userId,
       courseOfferingId: this.courseOfferingId,
-      userName: this.user.fullName,
+      userName: this.sender.fullName,
       message: this.message,
       createdDate: new Date().toISOString()
     };
 
-    this.chatService.sendMessage(messageDto).then(() => this.message = '');
+    this.chatService.sendMessage(msg).then(() => {
+      this.message = '';
+    });
+  }
+
+  closeChat() {
+    this.onClose.emit();
   }
 }

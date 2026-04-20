@@ -32,8 +32,7 @@
         </div>
       </ng-container>
 
-      <!-- Collapsible Active Users -->
-      <div class="menu-group">
+      <div class="menu-group" *ngIf="isTA">
         <div class="menu-label" (click)="toggleActiveUsers()">
           Active Users
           <i class="bi" [ngClass]="{'bi-chevron-down': !showActiveUsers, 'bi-chevron-up': showActiveUsers}"></i>
@@ -41,12 +40,13 @@
         <div class="submenu" *ngIf="showActiveUsers">
           <ul>
             <li *ngFor="let user of activeUsers" (click)="openChat(user)"
-                [class.selected]="selectedChatUser?.id === user.id">
+              [class.selected]="selectedChatUser?.id === user.id">
               <span>{{ user.studentName }}</span>
             </li>
           </ul>
         </div>
       </div>
+
     </nav>
   </aside>
 
@@ -54,8 +54,8 @@
     <router-outlet></router-outlet>
 
     <!-- Chat Panel -->
-    <section class="chat-panel" *ngIf="selectedChatUser">
-      <app-chat [sender]="userDetail" [receiver]="selectedChatUser" [courseOfferingId]="courseOfferingId"></app-chat>
+    <section class="chat-panel" *ngIf="isChatOpen && selectedChatUser">
+      <app-chat [sender]="userDetail" [receiver]="selectedChatUser" [courseOfferingId]="courseOfferingId" (onClose)="closeChat()" ></app-chat>
     </section>
   </main>
 </div>

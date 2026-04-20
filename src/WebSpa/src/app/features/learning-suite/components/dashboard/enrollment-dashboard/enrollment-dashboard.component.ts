@@ -10,6 +10,10 @@ import { MenuItem } from '../../../interfaces/MenuItem';
 import { CustomCategory } from '../../../../../shared/interface/customCategory';
 import { IEnrolementDetail } from '../../enrolements/interfaces/iEntolementDetail';
 import { ChatComponent } from '../../../../../chat/components/chat/chat.component';
+import * as signalR from '@microsoft/signalr';
+import { enviroment } from '../../../../../../environments/environment';
+import { Subscription } from 'rxjs';
+import { ChatService } from '../../../../../chat/services/chat.service';
 
 @Component({
   selector: 'app-enrollment-dashboard',
@@ -26,7 +30,16 @@ import { ChatComponent } from '../../../../../chat/components/chat/chat.componen
 })
 export class EnrollmentDashboardComponent implements OnInit {
   activeUsers: IEnrolementDetail[] = [];
-  selectedChatUser: IEnrolementDetail | null = null;
+  isChatOpen = false;
+  private hubConnection!: signalR.HubConnection;
+  isTA = false;
+  selectedChatUser: IEnrolementDetail = {
+    id: '',
+    courseOfferingId: '',
+    userId: '',
+    enrolledDate: '',
+    isTa: false
+  };
   showActiveUsers = true;
   courseOfferingId = "";
   userDetail: ICurrentLoginUserDetail = {
@@ -35,19 +48,29 @@ export class EnrollmentDashboardComponent implements OnInit {
     email: '',
     roles: []
   };
+  private messageSub!: Subscription;
 
   menu: MenuItem[] = [];
 
   constructor(
     private service: UserDashboardService,
     private toast: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private chatService: ChatService
   ) { }
 
   ngOnInit(): void {
+    this.courseOfferingId = this.route?.snapshot.paramMap.get('courseOfferingId') ?? '';
+    this.messageSub = this.chatService.message$.subscribe(sender => {
+      console.log('🔥 Subject message received in dashboard:', sender);
+      this.handleIncomingMessage(sender);
+    });
     this.service.getCurrentLoginUser().subscribe({
       next: res => {
         this.userDetail = res;
+        this.isTA = this.userDetail.roles?.some(
+          r => r.id === CustomCategory.RoleType.TA
+        ) ?? false;
         this.buildMenu();
       },
       error: () => this.toast.error('Failed to load user data')
@@ -56,9 +79,45 @@ export class EnrollmentDashboardComponent implements OnInit {
     this.loadActiveUsers();
   }
 
+  private handleIncomingMessage(sender: IEnrolementDetail): void {
+    let matchedUser = this.activeUsers.find(u => u.userId === sender.userId);
+
+    if (!matchedUser) {
+      matchedUser = {
+        ...sender,
+        studentName: sender.studentName || 'Unknown User'
+      };
+    }
+
+    const wasChatOpen = this.isChatOpen;
+
+    this.selectedChatUser = { ...matchedUser };
+
+    if (!wasChatOpen) {
+      this.isChatOpen = true;
+    }
+
+    this.showActiveUsers = true;
+
+    this.toast.info(`New message from ${matchedUser.studentName}`);
+  }
+
+  ngOnDestroy(): void {
+    this.messageSub?.unsubscribe();
+  }
+
+
   toggleActiveUsers() {
     this.showActiveUsers = !this.showActiveUsers;
   }
+
+  closeChat(): void {
+    this.selectedChatUser = null as any;
+    this.isChatOpen = false;
+  }
+
+
+
 
   private loadActiveUsers(): void {
     this.courseOfferingId = this.route?.snapshot.paramMap.get('courseOfferingId') ?? '';
@@ -169,6 +228,12 @@ export class EnrollmentDashboardComponent implements OnInit {
   }
 
   openChat(user: IEnrolementDetail) {
-    this.selectedChatUser = user;
+    this.isChatOpen = false;
+
+    setTimeout(() => {
+      this.selectedChatUser = { ...user };
+      this.isChatOpen = true;
+    });
   }
+
 }

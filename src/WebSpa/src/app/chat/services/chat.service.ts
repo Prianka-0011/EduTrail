@@ -1,23 +1,30 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { IMessage } from '../interfaces/iMessage';
 import { enviroment } from '../../../environments/environment';
+import { IEnrolementDetail } from '../../features/learning-suite/components/enrolements/interfaces/iEntolementDetail';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
+
   private hubConnection!: signalR.HubConnection;
+
   private messagesSubject = new BehaviorSubject<IMessage[]>([]);
   public messages$ = this.messagesSubject.asObservable();
+
+  private messageSubject = new Subject<IEnrolementDetail>();
+public message$ = this.messageSubject.asObservable();
+
   private connectionReady: Promise<void>;
 
   constructor() {
-    this.connectionReady = this.buildAndStartConnection();
+    this.connectionReady = this.startConnection();
   }
 
-  private async buildAndStartConnection(): Promise<void> {
+  private async startConnection(): Promise<void> {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(enviroment.chatUrl, {
         accessTokenFactory: () => localStorage.getItem('token') || ''
@@ -29,22 +36,32 @@ export class ChatService {
 
     try {
       await this.hubConnection.start();
-      console.log('✅ SignalR Connected');
+      console.log('SignalR connected');
     } catch (err) {
-      console.error('❌ SignalR connection error:', err);
-      setTimeout(() => this.buildAndStartConnection(), 5000); // retry after 5s
+      console.error(err);
+      setTimeout(() => this.startConnection(), 5000);
     }
   }
 
   private registerEvents() {
+
     this.hubConnection.on('ReceiveMessage', (msg: IMessage) => {
-      console.log('📩 ReceiveMessage:', msg);
+
       const current = this.messagesSubject.value;
       this.messagesSubject.next([...current, msg]);
+
+      this.messageSubject.next({
+        id: '',
+        courseOfferingId: msg.courseOfferingId,
+        userId: msg.userId,
+        enrolledDate: '',
+        isTa: false,
+        studentName: msg.userName
+      });
+
     });
 
     this.hubConnection.on('ReceiveHistory', (msgs: IMessage[]) => {
-      console.log('📜 ReceiveHistory:', msgs);
       this.messagesSubject.next(msgs);
     });
   }
@@ -52,7 +69,7 @@ export class ChatService {
   async sendMessage(message: IMessage): Promise<void> {
     await this.connectionReady;
 
-    const payload = {
+    const payload: IMessage = {
       userId: message.userId,
       receiverId: message.receiverId,
       courseOfferingId: message.courseOfferingId,
@@ -64,18 +81,17 @@ export class ChatService {
     try {
       await this.hubConnection.invoke('SendMessage', payload);
     } catch (err) {
-      console.error('❌ SendMessage error:', err);
+      console.error('SendMessage error:', err);
     }
   }
 
   async loadHistory(receiverId: string): Promise<void> {
     await this.connectionReady;
 
-    console.log('📤 LoadHistory called', receiverId);
     try {
       await this.hubConnection.invoke('LoadHistory', receiverId);
     } catch (err) {
-      console.error('❌ LoadHistory error:', err);
+      console.error('LoadHistory error:', err);
     }
   }
 }
