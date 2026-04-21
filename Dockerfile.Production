@@ -15,7 +15,7 @@ WORKDIR /edu-trail
 
 COPY . .
 
-RUN dotnet restore ./EduTrail.sln 
+RUN dotnet restore ./src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj
 ## ./EduTrail.sln mean bacically /edu-trail/EduTrail.sln
 RUN dotnet publish ./src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj -c Release -o /app/publish
 
