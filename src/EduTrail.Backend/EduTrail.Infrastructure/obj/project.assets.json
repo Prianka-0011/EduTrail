@@ -1643,8 +1643,8 @@
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "CsvHelper": "33.1.0",
+          "EduTrail.Shared": "1.0.0",
           "Edutrail.Domain": "1.0.0",
-          "Edutrail.Shared": "1.0.0",
           "MediatR": "12.0.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.4",
@@ -1672,17 +1672,17 @@
           "bin/placeholder/Edutrail.Domain.dll": {}
         }
       },
-      "Edutrail.Shared/1.0.0": {
+      "EduTrail.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "Edutrail.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
+          "bin/placeholder/EduTrail.Shared.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Edutrail.Shared.dll": {}
+          "bin/placeholder/EduTrail.Shared.dll": {}
         }
       }
     }
@@ -4533,18 +4533,18 @@
       "path": "../Edutrail.Domain/Edutrail.Domain.csproj",
       "msbuildProject": "../Edutrail.Domain/Edutrail.Domain.csproj"
     },
-    "Edutrail.Shared/1.0.0": {
+    "EduTrail.Shared/1.0.0": {
       "type": "project",
-      "path": "../Edutrail.Shared/Edutrail.Shared.csproj",
-      "msbuildProject": "../Edutrail.Shared/Edutrail.Shared.csproj"
+      "path": "../EduTrail.Shared/EduTrail.Shared.csproj",
+      "msbuildProject": "../EduTrail.Shared/EduTrail.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
       "AppAny.Quartz.EntityFrameworkCore.Migrations.PostgreSQL >= 0.5.1",
       "EduTrail.Application >= 1.0.0",
+      "EduTrail.Shared >= 1.0.0",
       "Edutrail.Domain >= 1.0.0",
-      "Edutrail.Shared >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 10.0.4",
       "Microsoft.EntityFrameworkCore.Tools >= 10.0.4",
       "Microsoft.Extensions.Configuration >= 10.0.4",
@@ -4596,8 +4596,8 @@
             "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj": {
               "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Domain\\Edutrail.Domain.csproj"
             },
-            "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj": {
-              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\Edutrail.Shared\\Edutrail.Shared.csproj"
+            "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj": {
+              "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Shared\\EduTrail.Shared.csproj"
             }
           }
         }
@@ -4976,6 +4976,26 @@
       "warningLevel": 1,
       "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
       "libraryId": "AutoMapper",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.Security.Cryptography.Xml' 8.0.2 has a known high severity vulnerability, https://github.com/advisories/GHSA-37gx-xxp4-5rgx",
+      "libraryId": "System.Security.Cryptography.Xml",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.Security.Cryptography.Xml' 8.0.2 has a known high severity vulnerability, https://github.com/advisories/GHSA-w3x6-4m5h-cxqf",
+      "libraryId": "System.Security.Cryptography.Xml",
       "targetGraphs": [
         "net10.0"
       ]
