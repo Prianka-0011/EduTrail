@@ -18,7 +18,7 @@ services:
     container_name: edu-trail-container-prod
     build:
       context: .
-      dockerfile: Dockerfile.production
+      dockerfile: Dockerfile.Production
     env_file:
       - .env
     ports:
