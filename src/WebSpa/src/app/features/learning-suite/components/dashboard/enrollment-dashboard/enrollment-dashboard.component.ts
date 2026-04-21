@@ -68,6 +68,7 @@ export class EnrollmentDashboardComponent implements OnInit {
     this.service.getCurrentLoginUser().subscribe({
       next: res => {
         this.userDetail = res;
+        this.chatService.setCurrentUser(this.userDetail.id);
         this.isTA = this.userDetail.roles?.some(
           r => r.id === CustomCategory.RoleType.TA
         ) ?? false;
@@ -79,7 +80,37 @@ export class EnrollmentDashboardComponent implements OnInit {
     this.loadActiveUsers();
   }
 
+  // private handleIncomingMessage(sender: IEnrolementDetail): void {
+  //   let matchedUser = this.activeUsers.find(u => u.userId === sender.userId);
+
+  //   if (!matchedUser) {
+  //     matchedUser = {
+  //       ...sender,
+  //       studentName: sender.studentName || 'Unknown User'
+  //     };
+  //   }
+
+  //   const wasChatOpen = this.isChatOpen;
+
+  //   this.selectedChatUser = { ...matchedUser };
+
+  //   if (!wasChatOpen) {
+  //     this.isChatOpen = true;
+  //   }
+
+  //   this.showActiveUsers = true;
+
+  //   this.toast.info(`New message from ${matchedUser.studentName}`);
+  // }
+
   private handleIncomingMessage(sender: IEnrolementDetail): void {
+
+    console.log('Handling incoming message for userId:', sender);
+    const isSameChat =
+      this.selectedChatUser?.userId === sender.userId;
+
+    if (isSameChat) return;
+
     let matchedUser = this.activeUsers.find(u => u.userId === sender.userId);
 
     if (!matchedUser) {
@@ -89,11 +120,9 @@ export class EnrollmentDashboardComponent implements OnInit {
       };
     }
 
-    const wasChatOpen = this.isChatOpen;
-
     this.selectedChatUser = { ...matchedUser };
 
-    if (!wasChatOpen) {
+    if (!this.isChatOpen) {
       this.isChatOpen = true;
     }
 
@@ -101,6 +130,7 @@ export class EnrollmentDashboardComponent implements OnInit {
 
     this.toast.info(`New message from ${matchedUser.studentName}`);
   }
+
 
   ngOnDestroy(): void {
     this.messageSub?.unsubscribe();

@@ -1,4 +1,4 @@
-
+<!-- 
 
 <div class="chat-container">
   <div class="chat-header">
@@ -20,4 +20,36 @@
     <button (click)="send()">Send</button>
   </div>
 </div>
+ -->
+<div class="chat-container">
+  <div class="chat-header">
+    <h4>{{ receiver?.studentName || 'Chat' }}</h4>
+    <button class="close-btn" (click)="closeChat()">X</button>
+  </div>
 
+  <div class="chat-messages" #messagesContainer>
+    <div
+      *ngFor="let msg of messages"
+      [ngClass]="{
+        'my-message': msg.userId === sender?.id,
+        'other-message': msg.userId !== sender?.id
+      }"
+    >
+      <div class="message-user">{{ msg.userName }}</div>
+      <div class="message-text">{{ msg.message }}</div>
+      <div class="message-time">
+        {{ msg.createdDate | date: 'shortTime' }}
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-input">
+    <input
+      type="text"
+      [(ngModel)]="message"
+      (keyup.enter)="send()"
+      placeholder="Type a message..."
+    />
+    <button (click)="send()">Send</button>
+  </div>
+</div>

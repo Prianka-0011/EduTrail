@@ -16,16 +16,27 @@ export const routes: Routes = [
     {
         path: 'auth',
         component: AuthComponent,
-        // canActivate: [GuestGuard],
+        canActivate: [GuestGuard],
         children: authRoutes
     },
     {
         path: 'learning-suite',
         component: LearningSuiteComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children: learningSuiteRoutes
     },
     {
+        path: 'change-password-smtp-link',
+        component: ChangePasswordComponent,
+    },
+    {
+        path: '**',
+        redirectTo: 'auth',
+        canActivate: [GuestGuard],
+        children: learningSuiteRoutes
+    },
+    {
+        canActivate: [GuestGuard],
         path: 'change-password-smtp-link',
         component: ChangePasswordComponent,
     },

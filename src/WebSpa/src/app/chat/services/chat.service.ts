@@ -10,13 +10,19 @@ import { IEnrolementDetail } from '../../features/learning-suite/components/enro
 })
 export class ChatService {
 
+  private currentUserId: string = '';
+
+  setCurrentUser(userId: string) {
+    this.currentUserId = userId;
+  }
+
   private hubConnection!: signalR.HubConnection;
 
   private messagesSubject = new BehaviorSubject<IMessage[]>([]);
   public messages$ = this.messagesSubject.asObservable();
 
   private messageSubject = new Subject<IEnrolementDetail>();
-public message$ = this.messageSubject.asObservable();
+  public message$ = this.messageSubject.asObservable();
 
   private connectionReady: Promise<void>;
 
@@ -45,19 +51,38 @@ public message$ = this.messageSubject.asObservable();
 
   private registerEvents() {
 
+    // this.hubConnection.on('ReceiveMessage', (msg: IMessage) => {
+
+    //   const current = this.messagesSubject.value;
+    //   this.messagesSubject.next([...current, msg]);
+
+    //   this.messageSubject.next({
+    //     id: '',
+    //     courseOfferingId: msg.courseOfferingId,
+    //     userId: msg.userId,
+    //     enrolledDate: '',
+    //     isTa: false,
+    //     studentName: msg.userName
+    //   });
+
+    // });
+
     this.hubConnection.on('ReceiveMessage', (msg: IMessage) => {
 
       const current = this.messagesSubject.value;
       this.messagesSubject.next([...current, msg]);
 
-      this.messageSubject.next({
-        id: '',
-        courseOfferingId: msg.courseOfferingId,
-        userId: msg.userId,
-        enrolledDate: '',
-        isTa: false,
-        studentName: msg.userName
-      });
+      // ✅ Only trigger dashboard if message is from OTHER user
+      if (msg.userId !== this.currentUserId) {
+        this.messageSubject.next({
+          id: '',
+          courseOfferingId: msg.courseOfferingId,
+          userId: msg.userId,
+          enrolledDate: '',
+          isTa: false,
+          studentName: msg.userName
+        });
+      }
 
     });
 
