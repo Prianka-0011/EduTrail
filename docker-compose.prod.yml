@@ -13,7 +13,7 @@ services:
       - postgres_data_prod:/var/lib/postgresql/data
     networks:
       - edutrail-network-prod
-
+ 
   edu-trail-service:
     container_name: edu-trail-container-prod
     build:
