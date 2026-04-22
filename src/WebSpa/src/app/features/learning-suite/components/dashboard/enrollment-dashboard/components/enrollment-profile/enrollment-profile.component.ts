@@ -76,7 +76,7 @@ export class EnrollmentProfileComponent implements OnInit {
 
   private loadEnrolement(): void {
     const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId'); //Because I am getting it from parent this route defined in parent
-    this.dashboardService.getEnrolementByCourseOfferingAndLogingUser(courseOfferingId ?? this.EMPTY_ID).subscribe(data => {
+    this.dashboardService.getEnrollmentByCourseOfferingAndLoggedInUser(courseOfferingId ?? this.EMPTY_ID).subscribe(data => {
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
         : '';
@@ -133,7 +133,7 @@ export class EnrollmentProfileComponent implements OnInit {
     this.enrolement.detailsDto.months = this.taLabMonths;
     const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId')!;
     this.enrolement.detailsDto.courseOfferingId = courseOfferingId;
-    const request$ = this.dashboardService.updateEnrolement(this.enrolement);
+    const request$ = this.dashboardService.updateEnrollment(this.enrolement);
     request$.subscribe({
       next: () => {
         this.toastr.success('Enrollment saved successfully');

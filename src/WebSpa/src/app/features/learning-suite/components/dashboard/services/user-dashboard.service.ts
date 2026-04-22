@@ -14,13 +14,13 @@ import { IEnrollment } from '../../enrollments/interfaces/IEnrollment';
 export class UserDashboardService {
 
   baseUrl = enviroment.baseUrl + 'userDashboards'
-  enrollmentBaseUrl = enviroment.baseUrl+"enrolements/"
+  enrollmentBaseUrl = enviroment.baseUrl+"enrollments/"
   constructor(private http: HttpClient) { }
   getCourseOfferingByUser(): Observable<ICourseOfferingByUser> {
     return this.http.get<ICourseOfferingByUser>(this.baseUrl)
   }
 
-  getEnrolementByCourseOfferingAndLogingUser(courseOfferingId: string): Observable<IUserEnrolementByCourseOffering> {
+  getEnrollmentByCourseOfferingAndLoggedInUser(courseOfferingId: string): Observable<IUserEnrolementByCourseOffering> {
     console.log("courseOfferingId", this.baseUrl + "/" + courseOfferingId)
     return this.http.get<IUserEnrolementByCourseOffering>(this.baseUrl + "/" + courseOfferingId)
   }
@@ -30,23 +30,23 @@ export class UserDashboardService {
     return this.http.get<IUserEnrolementByCourseOffering>(this.baseUrl + "/ta-hours/" + courseOfferingId)
   }
 
-  updateEnrolement(enrolement: IUserEnrolementByCourseOffering): Observable<IUserEnrolementByCourseOffering> {
-    if (!enrolement.detailsDto?.id || enrolement.detailsDto?.id === '00000000-0000-0000-0000-000000000000') {
-      throw new Error('Cannot update enrolement with invalid ID');
+  updateEnrollment(enrollment: IUserEnrolementByCourseOffering): Observable<IUserEnrolementByCourseOffering> {
+    if (!enrollment.detailsDto?.id || enrollment.detailsDto?.id === '00000000-0000-0000-0000-000000000000') {
+      throw new Error('Cannot update enrollment with invalid ID');
     }
 
     const payload = {
       enrolementDto: {
-        id: enrolement.detailsDto.id,
-        courseOfferingId: enrolement.detailsDto.courseOfferingId,
-        userId: enrolement.detailsDto.userId,
-        enrolledDate: enrolement.detailsDto.enrolledDate
-          ? new Date(enrolement.detailsDto.enrolledDate).toISOString()
+        id: enrollment.detailsDto.id,
+        courseOfferingId: enrollment.detailsDto.courseOfferingId,
+        userId: enrollment.detailsDto.userId,
+        enrolledDate: enrollment.detailsDto.enrolledDate
+          ? new Date(enrollment.detailsDto.enrolledDate).toISOString()
           : null,
-        isActive: enrolement.detailsDto.isActive ?? true,
-        isTa: enrolement.detailsDto.isTa ?? false,
-        totalWorkHoursPerWeek: enrolement.detailsDto.totalWorkHoursPerWeek,
-        months: enrolement.detailsDto.months?.map(m => ({
+        isActive: enrollment.detailsDto.isActive ?? true,
+        isTa: enrollment.detailsDto.isTa ?? false,
+        totalWorkHoursPerWeek: enrollment.detailsDto.totalWorkHoursPerWeek,
+        months: enrollment.detailsDto.months?.map(m => ({
           id: m.id,
           month: m.month,
           year: m.year,
@@ -81,7 +81,7 @@ export class UserDashboardService {
         })) ?? []
       }
     };
-    return this.http.put<IUserEnrolementByCourseOffering>(`${this.baseUrl}/${enrolement.detailsDto.id}`, payload);
+    return this.http.put<IUserEnrolementByCourseOffering>(`${this.baseUrl}/${enrollment.detailsDto.id}`, payload);
   }
 
   getCurrentLoginUser(): Observable<ICurrentLoginUserDetail> {
