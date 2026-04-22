@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { CourseCreateOrUpdateComponent } from '../course-create-or-update/course-create-or-update.component';
 import { Router } from '@angular/router';
-import { ICourse } from '../interfaces/iCourse';
+import { ICourse } from '../interfaces/ICourse';
 
 
 @Component({

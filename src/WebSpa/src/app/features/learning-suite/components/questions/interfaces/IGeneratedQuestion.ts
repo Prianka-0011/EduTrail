@@ -1,4 +1,4 @@
-import { IQuestionLine } from "./iQuestionLine";
+import { IQuestionLine } from "./IQuestionLine";
 
 export interface IGeneratedQuestion {
   questionId: string;

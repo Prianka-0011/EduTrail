@@ -6,7 +6,7 @@ import { MenuItem } from './interfaces/MenuItem';
 import { CommonModule } from '@angular/common';
 import { CustomCategory } from '../../shared/interface/customCategory';
 import { CommonService } from '../../shared/services/common.service';
-import { ICurrentLoginUserDetail } from './components/dashboard/interfaces/iCurrentLoginUserDetail';
+import { ICurrentLoginUserDetail } from './components/dashboard/interfaces/ICurrentLoginUserDetail';
 
 @Component({
   selector: 'app-learning-suite',

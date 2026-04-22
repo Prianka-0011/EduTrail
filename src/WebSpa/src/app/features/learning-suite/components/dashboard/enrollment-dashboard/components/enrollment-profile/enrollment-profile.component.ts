@@ -2,16 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { IDropdownItemInt } from '../../../../../../../shared/interface/iDropdownItem';
-import { LabMode } from '../../../../enrolements/interfaces/iTALabSlot';
-import { IEnrolement } from '../../../../enrolements/interfaces/iEnrolement';
-import { ITALabMonth } from '../../../../enrolements/interfaces/iTALabMonth';
+import { LabMode } from '../../../../enrolements/interfaces/ITALabSlot';
+import { IEnrolement } from '../../../../enrolements/interfaces/IEnrolement';
+import { ITALabMonth } from '../../../../enrolements/interfaces/ITALabMonth';
 import { EnrolementService } from '../../../../enrolements/services/enrolement.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ITALabDay } from '../../../../enrolements/interfaces/iTALabDay';
-import { ITALabWeek } from '../../../../enrolements/interfaces/iTALabWeek';
+import { ITALabDay } from '../../../../enrolements/interfaces/ITALabDay';
+import { ITALabWeek } from '../../../../enrolements/interfaces/ITALabWeek';
 import { UserDashboardService } from '../../../services/user-dashboard.service';
-import { IUserEnrolementByCourseOffering } from '../../../interfaces/iUserEnrolementByCourseOffering';
+import { IUserEnrolementByCourseOffering } from '../../../interfaces/IUserEnrolementByCourseOffering';
 
 @Component({
   selector: 'app-enrollment-profile',

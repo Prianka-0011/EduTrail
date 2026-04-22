@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { LabRequestService } from '../../../services/lab-request.service';
-import { IHelpRequest, IHelpRequestDetail } from '../../../interfaces/iHelpRequest';
+import { IHelpRequest, IHelpRequestDetail } from '../../../interfaces/IHelpRequest';
 
 @Component({
   selector: 'app-help-request-detail-view',

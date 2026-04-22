@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { enviroment } from '../../../../../../environments/environment';
 
-import { IGeneratedQuestion } from '../interfaces/iGeneratedQuestion';
-import { IQuestion } from '../interfaces/iQuestion';
-import { IQuestionDetail } from '../interfaces/iQuestionDetail';
+import { IGeneratedQuestion } from '../interfaces/IGeneratedQuestion';
+import { IQuestion } from '../interfaces/IQuestion';
+import { IQuestionDetail } from '../interfaces/IQuestionDetail';
 
 
 

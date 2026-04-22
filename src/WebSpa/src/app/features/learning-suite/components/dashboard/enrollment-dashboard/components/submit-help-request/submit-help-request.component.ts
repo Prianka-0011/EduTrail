@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { IHelpRequest, IHelpRequestDetail } from '../../../interfaces/iHelpRequest';
+import { IHelpRequest, IHelpRequestDetail } from '../../../interfaces/IHelpRequest';
 import { UserDashboardService } from '../../../services/user-dashboard.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { enviroment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ICourseOfferingByUser } from '../interfaces/iCourseOfferingByUser';
-import { IEnrolement } from '../../enrolements/interfaces/iEnrolement';
-import { IUserEnrolementByCourseOffering } from '../interfaces/iUserEnrolementByCourseOffering';
-import { IHelpRequest } from '../interfaces/iHelpRequest';
-import { ICurrentLoginUserDetail } from '../interfaces/iCurrentLoginUserDetail';
+import { ICourseOfferingByUser } from '../interfaces/ICourseOfferingByUser';
+import { IEnrolement } from '../../enrolements/interfaces/IEnrolement';
+import { IUserEnrolementByCourseOffering } from '../interfaces/IUserEnrolementByCourseOffering';
+import { IHelpRequest } from '../interfaces/IHelpRequest';
+import { ICurrentLoginUserDetail } from '../interfaces/ICurrentLoginUserDetail';
 
 @Injectable({
   providedIn: 'root'

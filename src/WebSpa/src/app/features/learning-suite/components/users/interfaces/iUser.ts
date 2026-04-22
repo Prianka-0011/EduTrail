@@ -1,5 +1,5 @@
 import { IDropdownItem } from "../../../../../shared/interface/iDropdownItem";
-import { IUserDetail } from "./iUserDetail";
+import { IUserDetail } from "./IUserDetail";
 
 export interface IUser {
     detailDto: IUserDetail;

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IHelpRequest, IHelpRequestDetail } from '../../../interfaces/iHelpRequest';
+import { IHelpRequest, IHelpRequestDetail } from '../../../interfaces/IHelpRequest';
 import { UserDashboardService } from '../../../services/user-dashboard.service';
 import { stringify } from 'node:querystring';
 import { ActivatedRoute, Route, Router } from '@angular/router';

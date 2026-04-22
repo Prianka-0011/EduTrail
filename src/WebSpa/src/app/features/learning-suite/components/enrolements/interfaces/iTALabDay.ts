@@ -1,4 +1,4 @@
-import { ITALabSlot } from "./iTALabSlot";
+import { ITALabSlot } from "./ITALabSlot";
 
 export interface ITALabDay {
   id?: string;   // FK to Enrollment

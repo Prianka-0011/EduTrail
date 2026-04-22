@@ -8,7 +8,7 @@ import { QuestionService } from '../services/question.service';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 
 import { QuestionCreateOrUpdateComponent } from '../question-create-or-update/question-create-or-update.component';
-import { IQuestionDetail } from '../interfaces/iQuestionDetail';
+import { IQuestionDetail } from '../interfaces/IQuestionDetail';
 // import { QuestionCreateOrUpdateComponent } from '../question-create-or-update/question-create-or-update.component';
 
 @Component({

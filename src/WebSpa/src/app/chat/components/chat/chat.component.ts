@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
-import { IMessage } from '../../interfaces/iMessage';
-import { IEnrolementDetail } from '../../../features/learning-suite/components/enrolements/interfaces/iEntolementDetail';
-import { ICurrentLoginUserDetail } from '../../../features/learning-suite/components/dashboard/interfaces/iCurrentLoginUserDetail';
+import { IMessage } from '../../interfaces/IMessage';
+import { IEnrolementDetail } from '../../../features/learning-suite/components/enrolements/interfaces/IEntolementDetail';
+import { ICurrentLoginUserDetail } from '../../../features/learning-suite/components/dashboard/interfaces/ICurrentLoginUserDetail';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

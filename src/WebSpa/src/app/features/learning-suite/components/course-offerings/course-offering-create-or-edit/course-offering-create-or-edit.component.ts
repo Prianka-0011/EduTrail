@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ICourseOffering } from '../interfaces/iCourseOffering';
+import { ICourseOffering } from '../interfaces/ICourseOffering';
 import { EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';

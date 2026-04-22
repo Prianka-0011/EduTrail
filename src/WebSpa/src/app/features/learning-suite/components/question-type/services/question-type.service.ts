@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { enviroment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { IQuestionType } from '../interface/iQuestionType';
+import { IQuestionType } from '../interface/IQuestionType';
 
 @Injectable({
   providedIn: 'root'

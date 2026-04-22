@@ -1,5 +1,5 @@
 import { IDropdownItem, IDropdownItemInt } from "../../../../../shared/interface/iDropdownItem";
-import { IEnrolementDetail } from "./iEntolementDetail";
+import { IEnrolementDetail } from "./IEntolementDetail";
 
 export interface IEnrolement {
     detailsDto: IEnrolementDetail;

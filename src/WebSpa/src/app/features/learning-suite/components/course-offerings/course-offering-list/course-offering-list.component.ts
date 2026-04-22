@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CourseOfferingService } from '../services/course-offering.service';
-import { ICourseOffering } from '../interfaces/iCourseOffering';
+import { ICourseOffering } from '../interfaces/ICourseOffering';
 import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { CourseOfferingCreateOrEditComponent } from '../course-offering-create-or-edit/course-offering-create-or-edit.component';
-import { ICourseOfferingDetail } from '../interfaces/iCourseOfferignDetail';
+import { ICourseOfferingDetail } from '../interfaces/ICourseOfferignDetail';
 
 @Component({
   selector: 'app-course-offering-list',

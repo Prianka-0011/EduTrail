@@ -1,5 +1,5 @@
-import { ITALabDay } from "./iTALabDay";
-import { ITALabMonth } from "./iTALabMonth";
+import { ITALabDay } from "./ITALabDay";
+import { ITALabMonth } from "./ITALabMonth";
 
 export interface IEnrolementDetail {
   id: string;
