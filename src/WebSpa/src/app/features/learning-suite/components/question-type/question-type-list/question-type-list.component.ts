@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IQuestionType } from '../interface/iQuestionType';
+import { IQuestionType } from '../interface/IQuestionType';
 import { QuestionTypeService } from '../services/question-type.service';
 import { Router } from '@angular/router';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';

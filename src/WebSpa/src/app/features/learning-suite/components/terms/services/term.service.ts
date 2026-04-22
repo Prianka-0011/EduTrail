@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { enviroment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { ITerm, ITermDetails } from '../interfaces/iTerm';
+import { ITerm, ITermDetails } from '../interfaces/ITerm';
 
 
 @Injectable({

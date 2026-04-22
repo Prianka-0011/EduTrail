@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { IWeeklyLabRequest, IWeeklyLabRequestDetail } from '../interfaces/iWeeklyLabRequestDetail';
+import { IWeeklyLabRequest, IWeeklyLabRequestDetail } from '../interfaces/IWeeklyLabRequestDetail';
 import { enviroment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 

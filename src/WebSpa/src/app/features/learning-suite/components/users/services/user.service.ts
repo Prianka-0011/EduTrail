@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { enviroment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IUser } from '../interfaces/iUser';
-import { IUserDetail } from '../interfaces/iUserDetail';
+import { IUser } from '../interfaces/IUser';
+import { IUserDetail } from '../interfaces/IUserDetail';
 
 @Injectable({
   providedIn: 'root'

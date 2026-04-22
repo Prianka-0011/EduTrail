@@ -1,14 +1,14 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { IEnrolement } from '../interfaces/iEnrolement';
+import { IEnrolement } from '../interfaces/IEnrolement';
 import { ActivatedRoute } from '@angular/router';
 import { EnrolementService } from '../services/enrolement.service';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-import { ITALabDay } from '../interfaces/iTALabDay';
-import { ITALabSlot, LabMode } from '../interfaces/iTALabSlot';
-import { ITALabMonth } from '../interfaces/iTALabMonth';
-import { ITALabWeek } from '../interfaces/iTALabWeek';
+import { ITALabDay } from '../interfaces/ITALabDay';
+import { ITALabSlot, LabMode } from '../interfaces/ITALabSlot';
+import { ITALabMonth } from '../interfaces/ITALabMonth';
+import { ITALabWeek } from '../interfaces/ITALabWeek';
 import { IDropdownItem, IDropdownItemInt } from '../../../../../shared/interface/iDropdownItem';
 
 @Component({

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { enviroment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
-import { ISignIn } from '../interface/iSignIn';
-import { IChanPass } from '../interface/iChangePass';
+import { ISignIn } from '../interface/ISignIn';
+import { IChanPass } from '../interface/IChangePass';
 
 @Injectable({
   providedIn: 'root'

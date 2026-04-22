@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { TermService } from '../services/term.service';
-import { ITerm, ITermDetails } from '../interfaces/iTerm';
+import { ITerm, ITermDetails } from '../interfaces/ITerm';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';

@@ -1,5 +1,5 @@
-import { ITALabDay } from "./iTALabDay";
-import { ITALabWeek } from "./iTALabWeek";
+import { ITALabDay } from "./ITALabDay";
+import { ITALabWeek } from "./ITALabWeek";
 
 export interface ITALabMonth {
   id: string;

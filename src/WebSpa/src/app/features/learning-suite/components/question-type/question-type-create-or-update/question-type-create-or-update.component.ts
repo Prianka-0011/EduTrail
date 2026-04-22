@@ -4,7 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { QuestionTypeService } from '../services/question-type.service';
-import { IQuestionType } from '../interface/iQuestionType';
+import { IQuestionType } from '../interface/IQuestionType';
 
 const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 

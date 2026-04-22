@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { UserService } from '../services/user.service';
-import { IUser } from '../interfaces/iUser';
-import { IUserDetail } from '../interfaces/iUserDetail';
+import { IUser } from '../interfaces/IUser';
+import { IUserDetail } from '../interfaces/IUserDetail';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { UserCreateOrEditComponent } from '../user-create-or-edit/user-create-or-edit.component';
 

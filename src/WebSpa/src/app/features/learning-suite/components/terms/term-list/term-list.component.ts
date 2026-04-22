@@ -7,7 +7,7 @@ import { TermService } from '../services/term.service';
 
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { TermCreateOrUppdateComponent } from '../term-create-or-uppdate/term-create-or-uppdate.component';
-import { ITermDetails } from '../interfaces/iTerm';
+import { ITermDetails } from '../interfaces/ITerm';
 
 
 @Component({

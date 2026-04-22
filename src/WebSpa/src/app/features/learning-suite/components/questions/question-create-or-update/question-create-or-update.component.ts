@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionService } from '../services/question.service';
 import { IDropdownItem } from '../../../../../shared/interface/iDropdownItem';
-import { IQuestion } from '../interfaces/iQuestion';
+import { IQuestion } from '../interfaces/IQuestion';
 
 const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 

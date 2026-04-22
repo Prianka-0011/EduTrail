@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { UserDashboardService } from '../services/user-dashboard.service';
-import { ICourseOfferingByUserDetail } from '../interfaces/iCourseOfferingByUser';
+import { ICourseOfferingByUserDetail } from '../interfaces/ICourseOfferingByUser';
 
 @Component({
   selector: 'app-course-offering-by-user',

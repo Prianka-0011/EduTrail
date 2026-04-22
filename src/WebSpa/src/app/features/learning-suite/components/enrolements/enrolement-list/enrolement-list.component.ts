@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IEnrolementDetail } from '../interfaces/iEntolementDetail';
+import { IEnrolementDetail } from '../interfaces/IEntolementDetail';
 import { EnrolementService } from '../services/enrolement.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IEnrolement } from '../interfaces/iEnrolement';
+import { IEnrolement } from '../interfaces/IEnrolement';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';

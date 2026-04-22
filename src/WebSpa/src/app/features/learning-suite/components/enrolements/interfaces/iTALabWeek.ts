@@ -1,4 +1,4 @@
-import { ITALabDay } from "./iTALabDay";
+import { ITALabDay } from "./ITALabDay";
 
 export interface ITALabWeek {
     id?: string;

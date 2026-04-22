@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AssessmentService } from '../services/assessment.service';
-import { IAssessment } from '../interface/iAssessment';
+import { IAssessment } from '../interface/IAssessment';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';

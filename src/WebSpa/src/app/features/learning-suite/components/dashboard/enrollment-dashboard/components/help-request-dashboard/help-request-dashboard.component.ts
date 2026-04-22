@@ -4,7 +4,7 @@ import { SideDrawerComponent } from '../../../../../../../shared/components/side
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { IWeeklyLabRequestDetail } from '../../../interfaces/iWeeklyLabRequestDetail';
+import { IWeeklyLabRequestDetail } from '../../../interfaces/IWeeklyLabRequestDetail';
 import { HelpRequestDashboardService } from '../../../services/help-request-dashboard.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';

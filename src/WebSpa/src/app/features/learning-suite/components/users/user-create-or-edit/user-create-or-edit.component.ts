@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { IUserDetail } from '../interfaces/iUserDetail';
+import { IUserDetail } from '../interfaces/IUserDetail';
 import { UserService } from '../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IDropdownItem } from '../../../../../shared/interface/iDropdownItem';
 import { Subject } from 'rxjs/internal/Subject';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
-import { IUser } from '../interfaces/iUser';
+import { IUser } from '../interfaces/IUser';
 
 const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 @Component({

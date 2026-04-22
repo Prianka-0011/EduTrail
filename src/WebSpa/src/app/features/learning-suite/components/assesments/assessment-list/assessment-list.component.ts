@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IAssessment } from '../interface/iAssessment';
+import { IAssessment } from '../interface/IAssessment';
 import { Router } from '@angular/router';
 
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';

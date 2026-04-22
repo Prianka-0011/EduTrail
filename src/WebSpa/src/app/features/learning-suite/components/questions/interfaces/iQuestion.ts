@@ -1,6 +1,4 @@
-import { IVariationRule } from "./iVariationRule";
-import { IQuestionLine } from "./iQuestionLine";
-import { IQuestionDetail } from "./iQuestionDetail";
+import { IQuestionDetail } from "./IQuestionDetail";
 import { IDropdownItem } from "../../../../../shared/interface/iDropdownItem";
 
 export interface IQuestion {

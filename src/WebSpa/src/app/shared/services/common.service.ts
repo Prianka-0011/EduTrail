@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { enviroment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { ICurrentLoginUserDetail } from '../../features/learning-suite/components/dashboard/interfaces/iCurrentLoginUserDetail';
+import { ICurrentLoginUserDetail } from '../../features/learning-suite/components/dashboard/interfaces/ICurrentLoginUserDetail';
 
 
 @Injectable({

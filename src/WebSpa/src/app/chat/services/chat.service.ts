@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { IMessage } from '../interfaces/iMessage';
+import { IMessage } from '../interfaces/IMessage';
 import { enviroment } from '../../../environments/environment';
-import { IEnrolementDetail } from '../../features/learning-suite/components/enrolements/interfaces/iEntolementDetail';
+import { IEnrolementDetail } from '../../features/learning-suite/components/enrolements/interfaces/IEntolementDetail';
 
 @Injectable({
   providedIn: 'root'

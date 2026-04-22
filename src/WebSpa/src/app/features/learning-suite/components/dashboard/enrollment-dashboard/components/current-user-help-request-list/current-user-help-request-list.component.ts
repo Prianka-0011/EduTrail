@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LabRequestService } from '../../../services/lab-request.service';
-import { IHelpRequestDetail } from '../../../interfaces/iHelpRequest';
+import { IHelpRequestDetail } from '../../../interfaces/IHelpRequest';
 
 @Component({
   selector: 'app-current-user-help-request-list',
