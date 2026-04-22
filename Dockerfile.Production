@@ -13,18 +13,25 @@ RUN npm run build --prod
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS dotnet-build
 WORKDIR /edu-trail
 
-COPY . .
+# copy solution + all backend projects
+COPY EduTrail.sln ./
+COPY src/EduTrail.Backend ./src/EduTrail.Backend
 
-RUN dotnet restore ./src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj
-## ./EduTrail.sln mean bacically /edu-trail/EduTrail.sln
-RUN dotnet publish ./src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj -c Release -o /app/publish
+# restore full solution
+RUN dotnet restore EduTrail.sln
+
+# publish ONLY API (clean and production-safe)
+RUN dotnet publish src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj \
+    -c Release \
+    -o /app/publish \
+    --no-restore
 
 
 # -------- Runtime --------
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /edu-trail
-# copy from dotnet-build stage the published output to /app/publish in the runtime to ./Api inside the working directory
-COPY --from=dotnet-build /app/publish ./Api 
+
+COPY --from=dotnet-build /app/publish ./Api
 COPY --from=angular-build /edu-trail/src/WebSpa/dist/web-spa ./wwwroot
 
 EXPOSE 5000
