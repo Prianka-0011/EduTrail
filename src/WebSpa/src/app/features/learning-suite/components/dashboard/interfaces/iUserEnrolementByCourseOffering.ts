@@ -1,6 +1,6 @@
 
 import { IDropdownItem, IDropdownItemInt } from "../../../../../shared/interface/iDropdownItem";
-import { ITALabMonth } from "../../enrolements/interfaces/ITALabMonth";
+import { ITALabMonth } from "../../enrollments/interfaces/ITALabMonth";
 
 export interface IUserEnrolementByCourseOffering {
     dropdownMonths?: IDropdownItemInt[];

@@ -1,4 +1,4 @@
-using EduTrail.Application.Enrolements;
+
 using EduTrail.Application.LabRequests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

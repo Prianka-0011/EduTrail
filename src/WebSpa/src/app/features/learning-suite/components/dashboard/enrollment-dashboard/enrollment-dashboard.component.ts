@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ICurrentLoginUserDetail } from '../interfaces/ICurrentLoginUserDetail';
 import { MenuItem } from '../../../interfaces/MenuItem';
 import { CustomCategory } from '../../../../../shared/interface/customCategory';
-import { IEnrolementDetail } from '../../enrolements/interfaces/IEntolementDetail';
+import { IEnrollmentDetail } from '../../enrollments/interfaces/IEnrollmentDetail';
 import { ChatComponent } from '../../../../../chat/components/chat/chat.component';
 import * as signalR from '@microsoft/signalr';
 import { enviroment } from '../../../../../../environments/environment';
@@ -29,11 +29,11 @@ import { ChatService } from '../../../../../chat/services/chat.service';
   styleUrls: ['./enrollment-dashboard.component.scss']
 })
 export class EnrollmentDashboardComponent implements OnInit {
-  activeUsers: IEnrolementDetail[] = [];
+  activeUsers: IEnrollmentDetail[] = [];
   isChatOpen = false;
   private hubConnection!: signalR.HubConnection;
   isTA = false;
-  selectedChatUser: IEnrolementDetail = {
+  selectedChatUser: IEnrollmentDetail = {
     id: '',
     courseOfferingId: '',
     userId: '',
@@ -80,30 +80,7 @@ export class EnrollmentDashboardComponent implements OnInit {
     this.loadActiveUsers();
   }
 
-  // private handleIncomingMessage(sender: IEnrolementDetail): void {
-  //   let matchedUser = this.activeUsers.find(u => u.userId === sender.userId);
-
-  //   if (!matchedUser) {
-  //     matchedUser = {
-  //       ...sender,
-  //       studentName: sender.studentName || 'Unknown User'
-  //     };
-  //   }
-
-  //   const wasChatOpen = this.isChatOpen;
-
-  //   this.selectedChatUser = { ...matchedUser };
-
-  //   if (!wasChatOpen) {
-  //     this.isChatOpen = true;
-  //   }
-
-  //   this.showActiveUsers = true;
-
-  //   this.toast.info(`New message from ${matchedUser.studentName}`);
-  // }
-
-  private handleIncomingMessage(sender: IEnrolementDetail): void {
+  private handleIncomingMessage(sender: IEnrollmentDetail): void {
 
     console.log('Handling incoming message for userId:', sender);
     const isSameChat =
@@ -257,7 +234,7 @@ export class EnrollmentDashboardComponent implements OnInit {
       .filter(item => item !== null) as MenuItem[];
   }
 
-  openChat(user: IEnrolementDetail) {
+  openChat(user: IEnrollmentDetail) {
     this.isChatOpen = false;
 
     setTimeout(() => {

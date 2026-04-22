@@ -1,8 +1,5 @@
-using EduTrail.Application.Courses;
-using EduTrail.Application.Enrolements;
 using EduTrail.Application.HelpRequestDashboards;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduTrail.API.Controllers
