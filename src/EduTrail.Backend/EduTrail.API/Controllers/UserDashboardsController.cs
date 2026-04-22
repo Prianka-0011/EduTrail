@@ -1,4 +1,3 @@
-using EduTrail.Application.Enrolements;
 using EduTrail.Application.UserDashboards;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

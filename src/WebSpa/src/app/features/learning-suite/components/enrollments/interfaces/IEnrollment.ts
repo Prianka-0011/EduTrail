@@ -1,9 +1,9 @@
 import { IDropdownItem, IDropdownItemInt } from "../../../../../shared/interface/iDropdownItem";
-import { IEnrolementDetail } from "./IEntolementDetail";
+import { IEnrollmentDetail } from "./IEnrollmentDetail";
 
-export interface IEnrolement {
-    detailsDto: IEnrolementDetail;
-    detailsDtoList?: IEnrolementDetail[];
+export interface IEnrollment {
+    detailsDto: IEnrollmentDetail;
+    detailsDtoList?: IEnrollmentDetail[];
     users?: IDropdownItem[];
     dropdownMonths?: IDropdownItemInt[]
     

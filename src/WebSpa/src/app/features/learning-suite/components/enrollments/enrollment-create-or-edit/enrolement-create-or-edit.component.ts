@@ -1,15 +1,15 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { IEnrolement } from '../interfaces/IEnrolement';
+import { IEnrollment } from '../interfaces/IEnrollment';
 import { ActivatedRoute } from '@angular/router';
-import { EnrolementService } from '../services/enrolement.service';
+import { EnrollmentService } from '../services/enrollment.service';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ITALabDay } from '../interfaces/ITALabDay';
-import { ITALabSlot, LabMode } from '../interfaces/ITALabSlot';
+import { LabMode } from '../interfaces/ITALabSlot';
 import { ITALabMonth } from '../interfaces/ITALabMonth';
 import { ITALabWeek } from '../interfaces/ITALabWeek';
-import { IDropdownItem, IDropdownItemInt } from '../../../../../shared/interface/iDropdownItem';
+import { IDropdownItemInt } from '../../../../../shared/interface/iDropdownItem';
 
 @Component({
   selector: 'app-enrolement-create-or-edit',
@@ -42,7 +42,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
 
   years: number[] = [];
 
-  enrolement: IEnrolement = this.getEmptyEnrolement();
+  enrollment: IEnrollment = this.getEmptyEnrollment();
   taLabMonths: ITALabMonth[] = [];
 
   isStudentFocused = false;
@@ -60,7 +60,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   @Output() cancel = new EventEmitter<void>();
 
   constructor(
-    private enrolementService: EnrolementService,
+    private enrollmentService: EnrollmentService,
     private route: ActivatedRoute,
     private toastr: ToastrService
   ) { }
@@ -70,12 +70,12 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     for (let i = currentYear - 5; i <= currentYear + 5; i++) this.years.push(i);
     this.selectedYear = currentYear;
     this.selectedMonth = this.months[0].id;
-    this.loadEnrolement();
+    this.loadEnrollment();
   }
 
-  private loadEnrolement(): void {
+  private loadEnrollment(): void {
     const id = this.route.snapshot.queryParamMap.get('id');
-    this.enrolementService.getEnrollmentById(id ?? this.EMPTY_ID).subscribe(data => {
+    this.enrollmentService.getEnrollmentById(id ?? this.EMPTY_ID).subscribe(data => {
       console.log("data.detailsDto", data.detailsDto);
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
@@ -93,8 +93,8 @@ export class EnrolementCreateOrEditComponent implements OnInit {
         })) ?? []
       }));
 
-      this.enrolement = {
-        ...this.enrolement,
+      this.enrollment = {
+        ...this.enrollment,
         detailsDto: {
           ...data.detailsDto,
           enrolledDate
@@ -113,7 +113,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
     return new Date(date).toISOString().split('T')[0];
   }
 
-  getEmptyEnrolement(): IEnrolement {
+  getEmptyEnrollment(): IEnrollment {
     return {
       detailsDto: {
         id: this.EMPTY_ID,
@@ -129,14 +129,14 @@ export class EnrolementCreateOrEditComponent implements OnInit {
   }
 
   onSubmit(form: NgForm): void {
-    this.enrolement.detailsDto.months = this.taLabMonths;
+    this.enrollment.detailsDto.months = this.taLabMonths;
     const courseOfferingId = this.route.snapshot.paramMap.get('courseOfferingId')!;
-    this.enrolement.detailsDto.courseOfferingId = courseOfferingId;
+    this.enrollment.detailsDto.courseOfferingId = courseOfferingId;
 
     const request$ =
-      this.enrolement.detailsDto.id === this.EMPTY_ID
-        ? this.enrolementService.createEnrolement(this.enrolement)
-        : this.enrolementService.updateEnrolement(this.enrolement);
+      this.enrollment.detailsDto.id === this.EMPTY_ID
+        ? this.enrollmentService.createEnrollment(this.enrollment)
+        : this.enrollmentService.updateEnrollment(this.enrollment);
 
     request$.subscribe({
       next: () => {
@@ -170,7 +170,7 @@ export class EnrolementCreateOrEditComponent implements OnInit {
       month,
       year,
       weeks: [],
-      enrollmentId: this.enrolement.detailsDto.id,
+      enrollmentId: this.enrollment.detailsDto.id,
       isCollapsed: false
     };
 

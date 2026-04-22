@@ -2,14 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { IDropdownItemInt } from '../../../../../../../shared/interface/iDropdownItem';
-import { LabMode } from '../../../../enrolements/interfaces/ITALabSlot';
-import { IEnrolement } from '../../../../enrolements/interfaces/IEnrolement';
-import { ITALabMonth } from '../../../../enrolements/interfaces/ITALabMonth';
-import { EnrolementService } from '../../../../enrolements/services/enrolement.service';
+import { LabMode } from '../../../../enrollments/interfaces/ITALabSlot';
+
+import { ITALabMonth } from '../../../../enrollments/interfaces/ITALabMonth';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ITALabDay } from '../../../../enrolements/interfaces/ITALabDay';
-import { ITALabWeek } from '../../../../enrolements/interfaces/ITALabWeek';
+import { ITALabDay } from '../../../../enrollments/interfaces/ITALabDay';
+import { ITALabWeek } from '../../../../enrollments/interfaces/ITALabWeek';
 import { UserDashboardService } from '../../../services/user-dashboard.service';
 import { IUserEnrolementByCourseOffering } from '../../../interfaces/IUserEnrolementByCourseOffering';
 
@@ -61,7 +60,7 @@ export class EnrollmentProfileComponent implements OnInit {
   @Output() cancel = new EventEmitter<void>();
 
   constructor(
-    private enrolementService: UserDashboardService,
+    private dashboardService: UserDashboardService,
 
     private route: ActivatedRoute,
     private toastr: ToastrService
@@ -77,7 +76,7 @@ export class EnrollmentProfileComponent implements OnInit {
 
   private loadEnrolement(): void {
     const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId'); //Because I am getting it from parent this route defined in parent
-    this.enrolementService.getEnrolementByCourseOfferingAndLogingUser(courseOfferingId ?? this.EMPTY_ID).subscribe(data => {
+    this.dashboardService.getEnrolementByCourseOfferingAndLogingUser(courseOfferingId ?? this.EMPTY_ID).subscribe(data => {
       const enrolledDate = data.detailsDto?.enrolledDate
         ? new Date(data.detailsDto.enrolledDate).toISOString().split('T')[0]
         : '';
@@ -134,7 +133,7 @@ export class EnrollmentProfileComponent implements OnInit {
     this.enrolement.detailsDto.months = this.taLabMonths;
     const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId')!;
     this.enrolement.detailsDto.courseOfferingId = courseOfferingId;
-    const request$ = this.enrolementService.updateEnrolement(this.enrolement);
+    const request$ = this.dashboardService.updateEnrolement(this.enrolement);
     request$.subscribe({
       next: () => {
         this.toastr.success('Enrollment saved successfully');

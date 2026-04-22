@@ -2,26 +2,26 @@ import { Injectable } from '@angular/core';
 import { enviroment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { IEnrolement } from '../interfaces/IEnrolement';
+import { IEnrollment } from '../interfaces/IEnrollment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EnrolementService {
+export class EnrollmentService {
 
-  baseUrl = enviroment.baseUrl + 'enrolements/';
+  baseUrl = enviroment.baseUrl + 'enrollments/';
   constructor(private http: HttpClient) { }
-  getEnrolements(courseOfferingId: string): Observable<IEnrolement> {
-    return this.http.get<IEnrolement>(this.baseUrl + "course-offerings/" + courseOfferingId);
+  getEnrollments(courseOfferingId: string): Observable<IEnrollment> {
+    return this.http.get<IEnrollment>(this.baseUrl + "course-offerings/" + courseOfferingId);
   }
 
-  getEnrollmentById(id: string): Observable<IEnrolement> {
-    return this.http.get<IEnrolement>(this.baseUrl + id);
+  getEnrollmentById(id: string): Observable<IEnrollment> {
+    return this.http.get<IEnrollment>(this.baseUrl + id);
   }
 
-  createEnrolement(enrolement: IEnrolement): Observable<IEnrolement> {
+  createEnrollment(enrolement: IEnrollment): Observable<IEnrollment> {
     console.log("Creating enrolement:", enrolement);
-    return this.http.post<IEnrolement>(this.baseUrl, {
+    return this.http.post<IEnrollment>(this.baseUrl, {
       enrolementDto: {
         courseOfferingId: enrolement.detailsDto?.courseOfferingId,
         userId: enrolement.detailsDto?.userId,
@@ -32,7 +32,7 @@ export class EnrolementService {
     });
   }
 
-  updateEnrolement(enrolement: IEnrolement): Observable<IEnrolement> {
+  updateEnrollment(enrolement: IEnrollment): Observable<IEnrollment> {
     if (!enrolement.detailsDto?.id || enrolement.detailsDto?.id === '00000000-0000-0000-0000-000000000000') {
       throw new Error('Cannot update enrolement with invalid ID');
     }
@@ -84,7 +84,7 @@ export class EnrolementService {
         })) ?? []
       }
     };
-    return this.http.put<IEnrolement>(`${this.baseUrl}${enrolement.detailsDto.id}`, payload);
+    return this.http.put<IEnrollment>(`${this.baseUrl}${enrolement.detailsDto.id}`, payload);
   }
 
   bulkCreateEnrollments(file: File, courseOfferingId: string): Observable<any> {

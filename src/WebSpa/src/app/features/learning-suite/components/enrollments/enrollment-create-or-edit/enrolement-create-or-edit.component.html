@@ -1,17 +1,17 @@
 <div class="container mt-5">
   <div class="card border-1">
     <div class="card-body">
-      <!-- {{enrolement.users | json}} -->
-      <form #enrolementForm="ngForm" (ngSubmit)="onSubmit(enrolementForm)" novalidate>
+      <!-- {{enrollment.users | json}} -->
+      <form #enrollmentForm="ngForm" (ngSubmit)="onSubmit(enrollmentForm)" novalidate>
 
         <div class="row g-3">
           <div class="col-md-12">
             <div class="floating">
-              <select class="form-select" name="userId" [(ngModel)]="enrolement.detailsDto.userId"
+              <select class="form-select" name="userId" [(ngModel)]="enrollment.detailsDto.userId"
                 #userId="ngModel" required (focus)="isStudentFocused = true" (blur)="isStudentFocused = false"
-                [ngClass]="{ active: enrolement.detailsDto.userId || isStudentFocused }">
+                [ngClass]="{ active: enrollment.detailsDto.userId || isStudentFocused }">
                 <!-- <option value="" disabled>Select Student</option> -->
-                <option *ngFor="let s of enrolement.users" [value]="s.id">
+                <option *ngFor="let s of enrollment.users" [value]="s.id">
                   {{ s.name }}
                 </option>
               </select>
@@ -25,9 +25,9 @@
           <div class="col-md-12">
             <div class="floating">
               <input type="date" class="form-control" name="enrolledDate"
-                [(ngModel)]="enrolement.detailsDto.enrolledDate" #enrolledDate="ngModel" required
+                [(ngModel)]="enrollment.detailsDto.enrolledDate" #enrolledDate="ngModel" required
                 (focus)="isDateFocused = true" (blur)="isDateFocused = false"
-                [ngClass]="{ active: enrolement.detailsDto.enrolledDate || isDateFocused }" />
+                [ngClass]="{ active: enrollment.detailsDto.enrolledDate || isDateFocused }" />
               <label>Enrollment Date *</label>
             </div>
             <div class="text-danger small" *ngIf="enrolledDate.invalid && enrolledDate.touched">
@@ -38,25 +38,25 @@
           <div class="col-md-12">
             <div class="form-check mt-2">
               <input class="form-check-input" type="checkbox" id="isTa" name="isTa"
-                [(ngModel)]="enrolement.detailsDto.isTa" />
+                [(ngModel)]="enrollment.detailsDto.isTa" />
               <label class="form-check-label" for="isTa">
                 Teaching Assistant
               </label>
             </div>
           </div>
 
-          <div class="col-md-12" *ngIf="enrolement.detailsDto.isTa">
+          <div class="col-md-12" *ngIf="enrollment.detailsDto.isTa">
             <div class="floating">
               <input type="number" class="form-control" name="totalWorkHoursPerWeek"
-                [(ngModel)]="enrolement.detailsDto.totalWorkHoursPerWeek" required
+                [(ngModel)]="enrollment.detailsDto.totalWorkHoursPerWeek" required
                 (focus)="totalHoursPerWeekFocused = true" (blur)="totalHoursPerWeekFocused = false"
-                [ngClass]="{ active: enrolement.detailsDto.totalWorkHoursPerWeek || totalHoursPerWeekFocused }" />
+                [ngClass]="{ active: enrollment.detailsDto.totalWorkHoursPerWeek || totalHoursPerWeekFocused }" />
               <label>Total Weekly Hours *</label>
             </div>
           </div>
         </div>
 
-        <div class="row mt-4" *ngIf="enrolement.detailsDto.isTa && enrolement.detailsDto.id !== EMPTY_ID">
+        <div class="row mt-4" *ngIf="enrollment.detailsDto.isTa && enrollment.detailsDto.id !== EMPTY_ID">
           <div class="col-md-12 d-flex align-items-start gap-1 mb-3">
             <h5>TA Lab Hours</h5>
           </div>
@@ -229,7 +229,7 @@
         <div class="mt-4 d-flex justify-content-end">
           <button type="button" class="btn btn-secondary me-2" (click)="onCancel()">Cancel</button>
           <button type="submit" class="btn btn-primary">
-            {{ enrolement.detailsDto.id !== EMPTY_ID ? 'Update Enrollment' : 'Create Enrollment' }}
+            {{ enrollment.detailsDto.id !== EMPTY_ID ? 'Update Enrollment' : 'Create Enrollment' }}
           </button>
         </div>
 

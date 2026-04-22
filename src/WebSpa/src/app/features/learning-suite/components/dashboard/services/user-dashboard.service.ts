@@ -3,10 +3,10 @@ import { enviroment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ICourseOfferingByUser } from '../interfaces/ICourseOfferingByUser';
-import { IEnrolement } from '../../enrolements/interfaces/IEnrolement';
 import { IUserEnrolementByCourseOffering } from '../interfaces/IUserEnrolementByCourseOffering';
 import { IHelpRequest } from '../interfaces/IHelpRequest';
 import { ICurrentLoginUserDetail } from '../interfaces/ICurrentLoginUserDetail';
+import { IEnrollment } from '../../enrollments/interfaces/IEnrollment';
 
 @Injectable({
   providedIn: 'root'
@@ -89,9 +89,9 @@ export class UserDashboardService {
     return this.http.get<ICurrentLoginUserDetail>(this.baseUrl + "/current-login-user");
   }
 
-  loadActiveUsers(courseOfferingId: string): Observable<IEnrolement>
+  loadActiveUsers(courseOfferingId: string): Observable<IEnrollment>
   {
-     return this.http.get<IEnrolement>(this.enrollmentBaseUrl + "active-ta/" + courseOfferingId);
+     return this.http.get<IEnrollment>(this.enrollmentBaseUrl + "active-ta/" + courseOfferingId);
   }
   
   logout(): Observable<boolean> {

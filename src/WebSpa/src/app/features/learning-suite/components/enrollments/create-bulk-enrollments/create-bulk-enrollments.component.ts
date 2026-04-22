@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { EnrolementService } from '../services/enrolement.service';
+import { EnrollmentService } from '../services/enrollment.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -19,7 +19,7 @@ export class CreateBulkEnrollmentsComponent implements OnInit {
   courseOfferingId = '';
 
   constructor(
-    private enrollmentService: EnrolementService,
+    private enrollmentService: EnrollmentService,
     private route: ActivatedRoute,
     private toast: ToastrService
   ) { }

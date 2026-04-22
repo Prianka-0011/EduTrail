@@ -1,7 +1,6 @@
-import { ITALabDay } from "./ITALabDay";
 import { ITALabMonth } from "./ITALabMonth";
 
-export interface IEnrolementDetail {
+export interface IEnrollmentDetail {
   id: string;
   courseOfferingId: string;
   userId: string;

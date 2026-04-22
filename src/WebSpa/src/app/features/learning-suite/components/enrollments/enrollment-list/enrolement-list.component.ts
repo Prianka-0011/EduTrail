@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { IEnrolementDetail } from '../interfaces/IEntolementDetail';
-import { EnrolementService } from '../services/enrolement.service';
+import { IEnrollmentDetail } from '../interfaces/IEnrollmentDetail';
+import { EnrollmentService } from '../services/enrollment.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IEnrolement } from '../interfaces/IEnrolement';
+import { IEnrollment } from '../interfaces/IEnrollment';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
-import { EnrolementCreateOrEditComponent } from '../enrolement-create-or-edit/enrolement-create-or-edit.component';
+import { EnrolementCreateOrEditComponent } from '../enrollment-create-or-edit/enrolement-create-or-edit.component';
 import { ToastrService } from 'ngx-toastr';
 import { CreateBulkEnrollmentsComponent } from '../create-bulk-enrollments/create-bulk-enrollments.component';
 
@@ -22,9 +22,9 @@ import { CreateBulkEnrollmentsComponent } from '../create-bulk-enrollments/creat
   styleUrl: './enrolement-list.component.scss'
 })
 export class EnrolementListComponent implements OnInit {
-  enrolements: IEnrolementDetail[] = [];
-  filteredEnrolements: IEnrolementDetail[] = [];
-  pagedEnrolements: IEnrolementDetail[] = [];
+  enrolements: IEnrollmentDetail[] = [];
+  filteredEnrolements: IEnrollmentDetail[] = [];
+  pagedEnrolements: IEnrollmentDetail[] = [];
   searchText = '';
   pageSizeOptions = [5, 10, 20];
   pageSize = 10;
@@ -36,7 +36,7 @@ export class EnrolementListComponent implements OnInit {
   expandedRows = new Set<string>();
 
   constructor(
-    private enrolementService: EnrolementService,
+    private enrollmentService: EnrollmentService,
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService
@@ -49,8 +49,8 @@ export class EnrolementListComponent implements OnInit {
   }
 
   getEnrolements(courseOfferingId: string) {
-    this.enrolementService.getEnrolements(courseOfferingId).subscribe({
-      next: (data: IEnrolement) => {
+    this.enrollmentService.getEnrollments(courseOfferingId).subscribe({
+      next: (data: IEnrollment) => {
         this.enrolements = data.detailsDtoList ?? [];
         this.applyFilter();
       }

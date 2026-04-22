@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { IMessage } from '../../interfaces/IMessage';
-import { IEnrolementDetail } from '../../../features/learning-suite/components/enrolements/interfaces/IEntolementDetail';
+import { IEnrollmentDetail } from '../../../features/learning-suite/components/enrollments/interfaces/IEnrollmentDetail';
 import { ICurrentLoginUserDetail } from '../../../features/learning-suite/components/dashboard/interfaces/ICurrentLoginUserDetail';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ChatComponent implements OnInit, OnChanges {
 
-  @Input() receiver!: IEnrolementDetail;
+  @Input() receiver!: IEnrollmentDetail;
   @Input() sender!: ICurrentLoginUserDetail;
   @Input() courseOfferingId!: string;
 

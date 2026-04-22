@@ -1,6 +1,5 @@
-import { IDropdownItemInt } from "../../../../../shared/interface/iDropdownItem";
 import { ICourseOfferingDetail } from "../../course-offerings/interfaces/ICourseOfferignDetail";
-import { ITALabMonth } from "../../enrolements/interfaces/ITALabMonth";
+
 
 export interface ICourseOfferingByUser {
     detailsDtoList?: ICourseOfferingDetail[];

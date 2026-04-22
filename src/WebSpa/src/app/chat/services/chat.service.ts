@@ -3,7 +3,7 @@ import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { IMessage } from '../interfaces/IMessage';
 import { enviroment } from '../../../environments/environment';
-import { IEnrolementDetail } from '../../features/learning-suite/components/enrolements/interfaces/IEntolementDetail';
+import {  IEnrollmentDetail } from '../../features/learning-suite/components/enrollments/interfaces/IEnrollmentDetail';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class ChatService {
   private messagesSubject = new BehaviorSubject<IMessage[]>([]);
   public messages$ = this.messagesSubject.asObservable();
 
-  private messageSubject = new Subject<IEnrolementDetail>();
+  private messageSubject = new Subject<IEnrollmentDetail>();
   public message$ = this.messageSubject.asObservable();
 
   private connectionReady: Promise<void>;
