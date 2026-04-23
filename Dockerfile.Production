@@ -14,25 +14,22 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS dotnet-build
 WORKDIR /edu-trail
 
 # copy solution + all backend projects
-COPY EduTrail.sln ./
+
 COPY src/EduTrail.Backend ./src/EduTrail.Backend
 
 # restore full solution
-RUN dotnet restore EduTrail.sln
+RUN dotnet restore ./src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj --disable-parallel
 
 # publish ONLY API (clean and production-safe)
-RUN dotnet publish src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj \
-    -c Release \
-    -o /app/publish \
-    --no-restore
+RUN dotnet publish ./src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj -c Release -o out
 
 
 # -------- Runtime --------
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /edu-trail
 
-COPY --from=dotnet-build /app/publish ./Api
-COPY --from=angular-build /edu-trail/src/WebSpa/dist/web-spa ./wwwroot
+COPY --from=dotnet-build ./out ./Api
+COPY --from=angular-build ./src/WebSpa/dist/web-spa ./wwwroot
 
 EXPOSE 5000
 
