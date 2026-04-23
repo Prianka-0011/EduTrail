@@ -6,12 +6,12 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v10.0": {
-      "Edutrail.Domain/1.0.0": {
+      "EduTrail.Domain/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": "10.0.0"
         },
         "runtime": {
-          "Edutrail.Domain.dll": {}
+          "EduTrail.Domain.dll": {}
         }
       },
       "Humanizer.Core/2.14.1": {
@@ -757,7 +757,7 @@
     }
   },
   "libraries": {
-    "Edutrail.Domain/1.0.0": {
+    "EduTrail.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

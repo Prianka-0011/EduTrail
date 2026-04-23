@@ -25,9 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Edutrail.Domain\Edutrail.Domain.csproj" />
-    <ProjectReference Include="..\Edutrail.Application\Edutrail.Application.csproj" />
-    <ProjectReference Include="..\Edutrail.Shared\Edutrail.Shared.csproj" />
+    <ProjectReference Include="..\EduTrail.Domain\EduTrail.Domain.csproj" />
+    <ProjectReference Include="..\EduTrail.Application\EduTrail.Application.csproj" />
+    <ProjectReference Include="..\EduTrail.Shared\EduTrail.Shared.csproj" />
   </ItemGroup>
 
 </Project>
