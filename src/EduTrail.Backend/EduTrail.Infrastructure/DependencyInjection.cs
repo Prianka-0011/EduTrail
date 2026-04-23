@@ -25,8 +25,8 @@ namespace EduTrail.Infrastructure
     public static class DependencyInjection
     {
         private static string dbHost =>
-            Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"
-                ? "edu-trail-postgres"
+            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"
+                ? "edu-trail-postgres-prod"
                 : "localhost";
 
         private static int dbPort => int.TryParse(Environment.GetEnvironmentVariable("DB_PORT"), out var port) ? port : 5432;
