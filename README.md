@@ -58,14 +58,14 @@ dotnet add reference ../EduTrail.Infrastructure/EduTrail.Infrastructure.csproj
 
 
 # Application → Domain
-cd ../Edutrail.Application
-dotnet add reference ../Edutrail.Domain/Edutrail.Domain.csproj
+cd ../EduTrail.Application
+dotnet add reference ../EduTrail.Domain/EduTrail.Domain.csproj
 
 
 
 # Infrastructure → Domain & Applicationv
-cd ../Edutrail.Infrastructure
-dotnet add reference ../Edutrail.Domain/Edutrail.Domain.csproj
+cd ../EduTrail.Infrastructure
+dotnet add reference ../EduTrail.Domain/EduTrail.Domain.csproj
 
 Configure Application to Run on Debug mode
 .vscode/launch.json
@@ -90,7 +90,7 @@ Add Audit trail for entity.
 ### **Create Projects**
 
 cd /src
-ng new Edutrail.WebSpa --routing --style=scss
+ng new EduTrail.WebSpa --routing --style=scss
 
 # Hot reloading
 
@@ -100,7 +100,7 @@ Package.Json
 
 
 
-# **Database and Entity Framework Edutrail.API**
+# **Database and Entity Framework EduTrail.API**
 dotnet add package Microsoft.EntityFrameworkCore           # Core ORM functionality
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer # SQL Server provider
 dotnet add package Microsoft.EntityFrameworkCore.Tools     # Enables dotnet ef commands
@@ -108,7 +108,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design    # Provides design-tim
 dotnet add package BCrypt.Net-Next                 
 
 
-# ** Edutrail.Infrastructure**
+# ** EduTrail.Infrastructure**
 dotnet add package Microsoft.EntityFrameworkCore   # Core ORM functionality
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer # SQL Server provider 
 dotnet add package Microsoft.Extensions.DependencyInjection
@@ -118,10 +118,10 @@ dotnet add package Quartz.Extensions.Hosting
 dotnet add package Quartz.Serialization.Json
 
 Add AppDbContext #Entity Framework Core (EF Core) DbContext class (AppDbContext inherits from DbContext, which is the main class in EF Core responsible for interacting with the database.)
-Add DependencyInjection to the Edutrail.Infrastructure
+Add DependencyInjection to the EduTrail.Infrastructure
 
 # **Run migration command**
-dotnet ef migrations add InitialCreate -s ../Edutrail.API/Edutrail.API.csproj -o Data/Migrations
+dotnet ef migrations add InitialCreate -s ../EduTrail.API/EduTrail.API.csproj -o Data/Migrations
 Update database Add Code to Program.cs auto update the database 
 
 
@@ -139,7 +139,7 @@ MapGraphQL("/graphql");
 
 
 # Add Certificate 
-dotnet dev-certs https --trust --export-path .devcontainer/local_cert.pfx -p Edutrail123
+dotnet dev-certs https --trust --export-path .devcontainer/local_cert.pfx -p EduTrail123
 
 # Configuration for GraphQl
 builder.Services
@@ -148,7 +148,7 @@ builder.Services
 app.MapGraphQL("/graphql");
 
 # Angular app# https 
-ng serve --ssl true --ssl-cert "D:\Edutrail\.devcontainer\server.crt" --ssl-key "D:\Edutrail\.devcontainer\server.key"
+ng serve --ssl true --ssl-cert "D:\EduTrail\.devcontainer\server.crt" --ssl-key "D:\EduTrail\.devcontainer\server.key"
 
 # Frontend Layout 
 
