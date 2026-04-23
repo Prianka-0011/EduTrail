@@ -1113,7 +1113,7 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "CsvHelper": "33.1.0",
           "EduTrail.Domain": "1.0.0",
-          "EduTrail.Shared": "1.0.0",
+          "Edutrail.Shared": "1.0.0",
           "MediatR": "12.0.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.4",
@@ -1147,7 +1147,7 @@
           "AppAny.Quartz.EntityFrameworkCore.Migrations.PostgreSQL": "0.5.1",
           "EduTrail.Application": "1.0.0",
           "EduTrail.Domain": "1.0.0",
-          "EduTrail.Shared": "1.0.0",
+          "Edutrail.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore": "10.0.4",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1",
           "Quartz": "3.17.0",
@@ -1162,17 +1162,17 @@
           "bin/placeholder/EduTrail.Infrastructure.dll": {}
         }
       },
-      "EduTrail.Shared/1.0.0": {
+      "Edutrail.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "EduTrail.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/EduTrail.Shared.dll": {}
+          "bin/placeholder/Edutrail.Shared.dll": {}
         },
         "runtime": {
-          "bin/placeholder/EduTrail.Shared.dll": {}
+          "bin/placeholder/Edutrail.Shared.dll": {}
         }
       }
     }
@@ -3577,10 +3577,10 @@
       "path": "../EduTrail.Infrastructure/EduTrail.Infrastructure.csproj",
       "msbuildProject": "../EduTrail.Infrastructure/EduTrail.Infrastructure.csproj"
     },
-    "EduTrail.Shared/1.0.0": {
+    "Edutrail.Shared/1.0.0": {
       "type": "project",
-      "path": "../EduTrail.Shared/EduTrail.Shared.csproj",
-      "msbuildProject": "../EduTrail.Shared/EduTrail.Shared.csproj"
+      "path": "../Edutrail.Shared/Edutrail.Shared.csproj",
+      "msbuildProject": "../Edutrail.Shared/Edutrail.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
