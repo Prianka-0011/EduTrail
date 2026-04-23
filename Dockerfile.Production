@@ -1,6 +1,5 @@
-# -------- Angular Build --------
 FROM node:20 AS angular-build
-WORKDIR /edu-trail/src/WebSpa
+WORKDIR /app
 
 COPY src/WebSpa/package*.json ./
 RUN npm install
@@ -9,30 +8,25 @@ COPY src/WebSpa/ ./
 RUN npm run build --prod
 
 
-# -------- .NET Build --------
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS dotnet-build
-WORKDIR /edu-trail
+WORKDIR /app
 
-# copy solution + all backend projects
+COPY . .
 
-COPY src/EduTrail.Backend ./src/EduTrail.Backend
+RUN dotnet restore EduTrail.sln --disable-parallel
 
-# restore full solution
-RUN dotnet restore ./src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj --disable-parallel
-
-# publish ONLY API (clean and production-safe)
-RUN dotnet publish ./src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj -c Release -o out
+RUN dotnet publish ./src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj -c Release -o /out
 
 
-# -------- Runtime --------
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
-WORKDIR /edu-trail
+WORKDIR /app
 
-COPY --from=dotnet-build ./out ./Api
-COPY --from=angular-build ./src/WebSpa/dist/web-spa ./wwwroot
+COPY --from=dotnet-build /out .
+COPY --from=angular-build /app/dist/web-spa ./wwwroot
 
 EXPOSE 5000
 
 ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_URLS=http://+:5000
 
-ENTRYPOINT ["dotnet", "Api/EduTrail.API.dll"]
+ENTRYPOINT ["dotnet", "EduTrail.API.dll"]
