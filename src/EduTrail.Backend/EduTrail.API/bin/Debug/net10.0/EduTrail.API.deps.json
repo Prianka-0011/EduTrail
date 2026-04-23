@@ -759,7 +759,7 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "CsvHelper": "33.1.0",
           "EduTrail.Domain": "1.0.0",
-          "Edutrail.Shared": "1.0.0",
+          "EduTrail.Shared": "1.0.0",
           "MediatR": "12.0.1",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.4",
@@ -789,7 +789,7 @@
           "AppAny.Quartz.EntityFrameworkCore.Migrations.PostgreSQL": "0.5.1",
           "EduTrail.Application": "1.0.0",
           "EduTrail.Domain": "1.0.0",
-          "Edutrail.Shared": "1.0.0",
+          "EduTrail.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore": "10.0.4",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1",
           "Quartz": "3.17.0",
@@ -804,13 +804,14 @@
           }
         }
       },
-      "Edutrail.Shared/1.0.0": {
+      "EduTrail.Shared/1.0.0": {
         "dependencies": {
           "EduTrail.Domain": "1.0.0"
         },
         "runtime": {
           "EduTrail.Shared.dll": {
-            "fileVersion": "0.0.0.0"
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       }
@@ -1194,7 +1195,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Edutrail.Shared/1.0.0": {
+    "EduTrail.Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
