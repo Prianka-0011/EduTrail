@@ -13,7 +13,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN dotnet restore EduTrail.sln --disable-parallel
+RUN dotnet restore ./EduTrail.sln --disable-parallel
 
 RUN dotnet publish ./src/EduTrail.Backend/EduTrail.API/EduTrail.API.csproj -c Release -o /out
 
