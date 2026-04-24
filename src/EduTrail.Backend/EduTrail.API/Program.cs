@@ -24,7 +24,7 @@ builder.Services
     .AddAuthorization()
     .AddCors(option => option.AddPolicy("AllowWebSpa", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins("http://localhost:4200", "http://localhost:5001")
               .AllowAnyHeader()
               .AllowCredentials()
               .AllowAnyMethod();
