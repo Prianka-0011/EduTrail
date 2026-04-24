@@ -3,7 +3,6 @@ using EduTrail.Application;
 using EduTrail.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using EduTrail.API.Middlewares;
-using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -11,32 +10,26 @@ using static EduTrail.Shared.CustomCategory;
 using EduTrail.API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services
-.AddHttpContextAccessor()
-.AddAuthorization()
-.AddCors(option => option.AddPolicy("AllowWebSpa", policy =>
-{
-    policy.WithOrigins("http://localhost:4200")
-          .AllowAnyHeader()
-          .AllowCredentials()
-          .AllowAnyMethod();
-}));
 
-builder.Services.AddSpaStaticFiles(configuration =>
-{
-    configuration.RootPath = System.IO.Path.Combine(builder.Environment.ContentRootPath, "..", "..", "WebSpa", "dist", "web-spa");
-});
-// builder.Services.Configure<CookiePolicyOptions>(options =>
-// {
-//     options.CheckConsentNeeded = context => true;
-//     options.MinimumSameSitePolicy = SameSiteMode.None;
-// });
+builder.Services
+    .AddHttpContextAccessor()
+    .AddAuthorization()
+    .AddCors(option => option.AddPolicy("AllowWebSpa", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowCredentials()
+              .AllowAnyMethod();
+    }));
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
 {
@@ -69,8 +62,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     };
 });
 
-
-
 static void UpdateDatabase(IApplicationBuilder app)
 {
     using var serviceScope = app.ApplicationServices
@@ -80,42 +71,37 @@ static void UpdateDatabase(IApplicationBuilder app)
     using var context = serviceScope.ServiceProvider
         .GetService<AppDbContext>()
         ?? throw new Exception("AppDbContext service not found");
+
     context.Database.Migrate();
 }
 
 var app = builder.Build();
+
 UpdateDatabase(app);
 
-// Configure the HTTP request pipeline.
+// Swagger only in dev
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseGlobalExceptionHandler();
+
 app.UseHttpsRedirection();
+
+// IMPORTANT: serve Angular from wwwroot
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseCors("AllowWebSpa");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapHub<ChatHub>("/hubs/chat");
 
-try
-{
-    app.MapControllers();
-}
-catch (ReflectionTypeLoadException ex)
-{
-    foreach (var e in ex.LoaderExceptions)
-    {
-        Console.WriteLine(e.ToString());
-    }
-    throw;
-}
-app.UseSpaStaticFiles();
-app.UseSpa(spa =>
-{
-    spa.Options.SourcePath = System.IO.Path.Combine("..", "..", "WebSpa");
-});
-app.Run();
+app.MapControllers();
 
+app.Run();
 
