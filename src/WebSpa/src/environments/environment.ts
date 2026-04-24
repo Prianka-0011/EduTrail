@@ -4,8 +4,8 @@
 //     chatUrl: "https://localhost:7238/hubs/chat"
 // }
 
-export const enviroment = {
+export const environment = {
     production: true,
-    baseUrl: "http://localhost:5001/api/",
-    chatUrl: "http://localhost:5001/hubs/chat"
+    baseUrl: "http://169.228.34.148:5001/api/",
+    chatUrl: "http://169.228.34.148:5001/hubs/chat"
 }
