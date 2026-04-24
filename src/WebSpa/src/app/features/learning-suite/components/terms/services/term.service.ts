@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ITerm, ITermDetails } from '../interfaces/ITerm';
 
@@ -10,7 +10,7 @@ import { ITerm, ITermDetails } from '../interfaces/ITerm';
 })
 export class TermService {
 
-  baseUrl = enviroment.baseUrl + 'terms/';
+  baseUrl = environment.baseUrl + 'terms/';
 
   constructor(private http: HttpClient) { }
 

@@ -11,7 +11,7 @@ import { CustomCategory } from '../../../../../shared/interface/customCategory';
 import { IEnrollmentDetail } from '../../enrollments/interfaces/IEnrollmentDetail';
 import { ChatComponent } from '../../../../../chat/components/chat/chat.component';
 import * as signalR from '@microsoft/signalr';
-import { enviroment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { Subscription } from 'rxjs';
 import { ChatService } from '../../../../../chat/services/chat.service';
 

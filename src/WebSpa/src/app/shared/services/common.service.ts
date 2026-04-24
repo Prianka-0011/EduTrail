@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ICurrentLoginUserDetail } from '../../features/learning-suite/components/dashboard/interfaces/ICurrentLoginUserDetail';
 
@@ -10,7 +10,7 @@ import { ICurrentLoginUserDetail } from '../../features/learning-suite/component
 })
 export class CommonService {
 
-  baseUrl = enviroment.baseUrl + 'userDashboards'
+  baseUrl = environment.baseUrl + 'userDashboards'
   constructor(private http: HttpClient) { }
 
   getCurrentLoginUser(): Observable<ICurrentLoginUserDetail>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ISignIn } from '../interface/ISignIn';
@@ -9,7 +9,7 @@ import { IChanPass } from '../interface/IChangePass';
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = enviroment.baseUrl + "auths/"
+  baseUrl = environment.baseUrl + "auths/"
   constructor(private http: HttpClient) { }
 
   signIn(data: ISignIn): Observable<boolean> {

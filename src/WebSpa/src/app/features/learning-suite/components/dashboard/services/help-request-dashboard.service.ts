@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { IWeeklyLabRequest, IWeeklyLabRequestDetail } from '../interfaces/IWeeklyLabRequestDetail';
-import { enviroment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HelpRequestDashboardService {
 
-  private baseUrl = enviroment.baseUrl + 'helpRequestDashboards/';
+  private baseUrl = environment.baseUrl + 'helpRequestDashboards/';
 
   constructor(private http: HttpClient) { }
 

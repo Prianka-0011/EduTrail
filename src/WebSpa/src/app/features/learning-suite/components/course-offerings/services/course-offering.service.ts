@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ICourseOffering } from '../interfaces/ICourseOffering';
@@ -9,7 +9,7 @@ import { ICourseOffering } from '../interfaces/ICourseOffering';
 })
 export class CourseOfferingService {
 
-  baseUrl = enviroment.baseUrl + 'courseOfferings/';
+  baseUrl = environment.baseUrl + 'courseOfferings/';
   constructor(private http: HttpClient) { }
   
   getCourseOfferings(): Observable<ICourseOffering> {
