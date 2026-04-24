@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ICourse } from '../interfaces/ICourse';
 
@@ -10,7 +10,7 @@ import { ICourse } from '../interfaces/ICourse';
 export class CourseService {
 
   constructor(private http: HttpClient) { }
-  baseUrl = enviroment.baseUrl + 'courses/';
+  baseUrl = environment.baseUrl + 'courses/';
 
   getCourses(): Observable<ICourse[]> {
     return this.http.get<ICourse[]>(this.baseUrl);

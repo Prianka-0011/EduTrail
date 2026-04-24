@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { IMessage } from '../interfaces/IMessage';
-import { enviroment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import {  IEnrollmentDetail } from '../../features/learning-suite/components/enrollments/interfaces/IEnrollmentDetail';
 
 @Injectable({
@@ -32,7 +32,7 @@ export class ChatService {
 
   private async startConnection(): Promise<void> {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(enviroment.chatUrl, {
+      .withUrl(environment.chatUrl, {
         accessTokenFactory: () => localStorage.getItem('token') || ''
       })
       .withAutomaticReconnect()

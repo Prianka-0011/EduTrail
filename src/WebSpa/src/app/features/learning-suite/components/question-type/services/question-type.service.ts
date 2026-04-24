@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { IQuestionType } from '../interface/IQuestionType';
 
@@ -10,7 +10,7 @@ import { IQuestionType } from '../interface/IQuestionType';
 export class QuestionTypeService {
 
   constructor(private http: HttpClient) { }
-  baseUrl = enviroment.baseUrl + 'questionTypes/';
+  baseUrl = environment.baseUrl + 'questionTypes/';
   getAll(): Observable<IQuestionType[]> {
     return this.http.get<IQuestionType[]>(this.baseUrl);
   }

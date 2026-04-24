@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { IEnrollment } from '../interfaces/IEnrollment';
@@ -9,7 +9,7 @@ import { IEnrollment } from '../interfaces/IEnrollment';
 })
 export class EnrollmentService {
 
-  baseUrl = enviroment.baseUrl + 'enrollments/';
+  baseUrl = environment.baseUrl + 'enrollments/';
   constructor(private http: HttpClient) { }
   getEnrollments(courseOfferingId: string): Observable<IEnrollment> {
     return this.http.get<IEnrollment>(this.baseUrl + "course-offerings/" + courseOfferingId);

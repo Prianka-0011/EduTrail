@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IHelpRequest } from '../interfaces/IHelpRequest';
@@ -9,7 +9,7 @@ import { IHelpRequest } from '../interfaces/IHelpRequest';
 })
 export class LabRequestService {
 
-  baseUrl = enviroment.baseUrl + 'labRequests'
+  baseUrl = environment.baseUrl + 'labRequests'
   constructor(private http: HttpClient) { }
  
   createHelpRequest(request: IHelpRequest): Observable<IHelpRequest> {

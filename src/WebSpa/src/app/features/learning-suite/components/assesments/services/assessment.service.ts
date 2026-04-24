@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IAssessment } from '../interface/IAssessment';
@@ -10,7 +10,7 @@ import { IAssessment } from '../interface/IAssessment';
 })
 export class AssessmentService {
 
-  baseUrl: string = enviroment.baseUrl + 'assessments/';
+  baseUrl: string = environment.baseUrl + 'assessments/';
   constructor(private http: HttpClient) { }
 
   getAssessments(): Observable<IAssessment[]> {

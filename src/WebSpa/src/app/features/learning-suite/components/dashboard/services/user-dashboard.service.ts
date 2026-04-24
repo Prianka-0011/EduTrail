@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ICourseOfferingByUser } from '../interfaces/ICourseOfferingByUser';
@@ -13,8 +13,8 @@ import { IEnrollment } from '../../enrollments/interfaces/IEnrollment';
 })
 export class UserDashboardService {
 
-  baseUrl = enviroment.baseUrl + 'userDashboards'
-  enrollmentBaseUrl = enviroment.baseUrl+"enrollments/"
+  baseUrl = environment.baseUrl + 'userDashboards'
+  enrollmentBaseUrl = environment.baseUrl+"enrollments/"
   constructor(private http: HttpClient) { }
   getCourseOfferingByUser(): Observable<ICourseOfferingByUser> {
     return this.http.get<ICourseOfferingByUser>(this.baseUrl)
