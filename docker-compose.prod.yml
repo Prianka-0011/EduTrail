@@ -23,6 +23,8 @@ services:
       - .env-service 
     ports:
       - "5001:5000"
+    volumes:
+      - ./.devcontainer/local_cert.pfx:/https/https.pfx:ro
     depends_on:
       - database-edu-trail
     networks:
