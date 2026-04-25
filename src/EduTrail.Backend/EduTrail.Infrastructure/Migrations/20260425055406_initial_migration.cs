@@ -125,114 +125,6 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "QURTZ_BLOB_TRIGGERS",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    BLOB_DATA = table.Column<byte[]>(type: "bytea", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_BLOB_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QURTZ_CALENDARS",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    CALENDAR_NAME = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    CALENDAR = table.Column<byte[]>(type: "bytea", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_CALENDARS", x => new { x.SCHED_NAME, x.CALENDAR_NAME });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QURTZ_FIRED_TRIGGERS",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    ENTRY_ID = table.Column<string>(type: "character varying(140)", maxLength: 140, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    INSTANCE_NAME = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    FIRED_TIME = table.Column<long>(type: "bigint", nullable: false),
-                    SCHED_TIME = table.Column<long>(type: "bigint", nullable: false),
-                    PRIORITY = table.Column<int>(type: "integer", nullable: false),
-                    STATE = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
-                    JOB_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
-                    JOB_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
-                    IS_NONCONCURRENT = table.Column<bool>(type: "boolean", nullable: true),
-                    REQUESTS_RECOVERY = table.Column<bool>(type: "boolean", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_FIRED_TRIGGERS", x => new { x.SCHED_NAME, x.ENTRY_ID });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QURTZ_JOB_DETAILS",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    JOB_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    JOB_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    DESCRIPTION = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
-                    JOB_CLASS_NAME = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
-                    IS_DURABLE = table.Column<bool>(type: "boolean", nullable: false),
-                    IS_NONCONCURRENT = table.Column<bool>(type: "boolean", nullable: false),
-                    IS_UPDATE_DATA = table.Column<bool>(type: "boolean", nullable: false),
-                    REQUESTS_RECOVERY = table.Column<bool>(type: "boolean", nullable: false),
-                    JOB_DATA = table.Column<byte[]>(type: "bytea", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_JOB_DETAILS", x => new { x.SCHED_NAME, x.JOB_NAME, x.JOB_GROUP });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QURTZ_LOCKS",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    LOCK_NAME = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_LOCKS", x => new { x.SCHED_NAME, x.LOCK_NAME });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QURTZ_PAUSED_TRIGGER_GRPS",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_PAUSED_TRIGGER_GRPS", x => new { x.SCHED_NAME, x.TRIGGER_GROUP });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QURTZ_SCHEDULER_STATE",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    INSTANCE_NAME = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    LAST_CHECKIN_TIME = table.Column<long>(type: "bigint", nullable: false),
-                    CHECKIN_INTERVAL = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_SCHEDULER_STATE", x => new { x.SCHED_NAME, x.INSTANCE_NAME });
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -350,38 +242,6 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "QURTZ_TRIGGERS",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    JOB_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    JOB_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    DESCRIPTION = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
-                    NEXT_FIRE_TIME = table.Column<long>(type: "bigint", nullable: true),
-                    PREV_FIRE_TIME = table.Column<long>(type: "bigint", nullable: true),
-                    PRIORITY = table.Column<int>(type: "integer", nullable: true),
-                    TRIGGER_STATE = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
-                    TRIGGER_TYPE = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
-                    START_TIME = table.Column<long>(type: "bigint", nullable: false),
-                    END_TIME = table.Column<long>(type: "bigint", nullable: true),
-                    CALENDAR_NAME = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    MISFIRE_INSTR = table.Column<int>(type: "integer", nullable: true),
-                    JOB_DATA = table.Column<byte[]>(type: "bytea", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
-                    table.ForeignKey(
-                        name: "FK_QURTZ_TRIGGERS_QURTZ_JOB_DETAILS_SCHED_NAME_JOB_NAME_JOB_GR~",
-                        columns: x => new { x.SCHED_NAME, x.JOB_NAME, x.JOB_GROUP },
-                        principalTable: "QURTZ_JOB_DETAILS",
-                        principalColumns: new[] { "SCHED_NAME", "JOB_NAME", "JOB_GROUP" },
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Statuses",
                 columns: table => new
                 {
@@ -452,80 +312,6 @@ namespace EduTrail.Infrastructure.Migrations
                         column: x => x.UsersId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QURTZ_CRON_TRIGGERS",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    CRON_EXPRESSION = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    TIME_ZONE_ID = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_CRON_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
-                    table.ForeignKey(
-                        name: "FK_QURTZ_CRON_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NAME_~",
-                        columns: x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP },
-                        principalTable: "QURTZ_TRIGGERS",
-                        principalColumns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP" },
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QURTZ_SIMPLE_TRIGGERS",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    REPEAT_COUNT = table.Column<int>(type: "integer", nullable: false),
-                    REPEAT_INTERVAL = table.Column<long>(type: "bigint", nullable: false),
-                    TIMES_TRIGGERED = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_SIMPLE_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
-                    table.ForeignKey(
-                        name: "FK_QURTZ_SIMPLE_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NAM~",
-                        columns: x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP },
-                        principalTable: "QURTZ_TRIGGERS",
-                        principalColumns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP" },
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QURTZ_SIMPROP_TRIGGERS",
-                columns: table => new
-                {
-                    SCHED_NAME = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    TRIGGER_NAME = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    TRIGGER_GROUP = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
-                    STR_PROP_1 = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
-                    STR_PROP_2 = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
-                    STR_PROP_3 = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
-                    INT_PROP_1 = table.Column<int>(type: "integer", nullable: true),
-                    INT_PROP_2 = table.Column<int>(type: "integer", nullable: true),
-                    LONG_PROP_1 = table.Column<long>(type: "bigint", nullable: true),
-                    LONG_PROP_2 = table.Column<long>(type: "bigint", nullable: true),
-                    DEC_PROP_1 = table.Column<decimal>(type: "numeric(13,4)", nullable: true),
-                    DEC_PROP_2 = table.Column<decimal>(type: "numeric(13,4)", nullable: true),
-                    BOOL_PROP_1 = table.Column<bool>(type: "boolean", nullable: true),
-                    BOOL_PROP_2 = table.Column<bool>(type: "boolean", nullable: true),
-                    TIME_ZONE_ID = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QURTZ_SIMPROP_TRIGGERS", x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP });
-                    table.ForeignKey(
-                        name: "FK_QURTZ_SIMPROP_TRIGGERS_QURTZ_TRIGGERS_SCHED_NAME_TRIGGER_NA~",
-                        columns: x => new { x.SCHED_NAME, x.TRIGGER_NAME, x.TRIGGER_GROUP },
-                        principalTable: "QURTZ_TRIGGERS",
-                        principalColumns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1007,71 +793,6 @@ namespace EduTrail.Infrastructure.Migrations
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_FT_G_J",
-                table: "QURTZ_FIRED_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "JOB_GROUP", "JOB_NAME" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_FT_G_T",
-                table: "QURTZ_FIRED_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "TRIGGER_GROUP", "TRIGGER_NAME" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_FT_INST_JOB_REQ_RCVRY",
-                table: "QURTZ_FIRED_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "INSTANCE_NAME", "REQUESTS_RECOVERY" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_T_C",
-                table: "QURTZ_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "CALENDAR_NAME" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_T_G_J",
-                table: "QURTZ_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "JOB_GROUP", "JOB_NAME" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_T_N_G_STATE",
-                table: "QURTZ_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "TRIGGER_GROUP", "TRIGGER_STATE" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_T_N_STATE",
-                table: "QURTZ_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "TRIGGER_NAME", "TRIGGER_GROUP", "TRIGGER_STATE" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_T_NEXT_FIRE_TIME",
-                table: "QURTZ_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "NEXT_FIRE_TIME" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_T_NFT_ST",
-                table: "QURTZ_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "TRIGGER_STATE", "NEXT_FIRE_TIME" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_T_NFT_ST_MISFIRE",
-                table: "QURTZ_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "MISFIRE_INSTR", "NEXT_FIRE_TIME", "TRIGGER_STATE" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_T_NFT_ST_MISFIRE_GRP",
-                table: "QURTZ_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "MISFIRE_INSTR", "NEXT_FIRE_TIME", "TRIGGER_GROUP", "TRIGGER_STATE" });
-
-            migrationBuilder.CreateIndex(
-                name: "IDX_QRTZ_T_STATE",
-                table: "QURTZ_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "TRIGGER_STATE" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QURTZ_TRIGGERS_SCHED_NAME_JOB_NAME_JOB_GROUP",
-                table: "QURTZ_TRIGGERS",
-                columns: new[] { "SCHED_NAME", "JOB_NAME", "JOB_GROUP" });
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RoleUser_UsersId",
                 table: "RoleUser",
                 column: "UsersId");
@@ -1140,33 +861,6 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "QuestionVariationRules");
 
             migrationBuilder.DropTable(
-                name: "QURTZ_BLOB_TRIGGERS");
-
-            migrationBuilder.DropTable(
-                name: "QURTZ_CALENDARS");
-
-            migrationBuilder.DropTable(
-                name: "QURTZ_CRON_TRIGGERS");
-
-            migrationBuilder.DropTable(
-                name: "QURTZ_FIRED_TRIGGERS");
-
-            migrationBuilder.DropTable(
-                name: "QURTZ_LOCKS");
-
-            migrationBuilder.DropTable(
-                name: "QURTZ_PAUSED_TRIGGER_GRPS");
-
-            migrationBuilder.DropTable(
-                name: "QURTZ_SCHEDULER_STATE");
-
-            migrationBuilder.DropTable(
-                name: "QURTZ_SIMPLE_TRIGGERS");
-
-            migrationBuilder.DropTable(
-                name: "QURTZ_SIMPROP_TRIGGERS");
-
-            migrationBuilder.DropTable(
                 name: "RoleUser");
 
             migrationBuilder.DropTable(
@@ -1185,9 +879,6 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "QURTZ_TRIGGERS");
-
-            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
@@ -1204,9 +895,6 @@ namespace EduTrail.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "QuestionTypes");
-
-            migrationBuilder.DropTable(
-                name: "QURTZ_JOB_DETAILS");
 
             migrationBuilder.DropTable(
                 name: "TALabWeeks");
