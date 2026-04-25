@@ -9,7 +9,7 @@ namespace EduTrail.Application.Shared
     public interface ICommonService
     {
         IHttpContextAccessor _HttpContextAccessor { get; }
-        ISchedulerFactory _SchedulerFactory { get; }
+        // ISchedulerFactory _SchedulerFactory { get; }
         IWebHostEnvironment _Environment { get; }
         IConfiguration _Configuration { get; }
         IJwtTokenGenerator _JwtTokenGenerator { get; }

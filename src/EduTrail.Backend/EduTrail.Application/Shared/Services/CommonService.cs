@@ -12,7 +12,7 @@ namespace EduTrail.Application.Shared
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
-        private readonly ISchedulerFactory _schedulerFactory;
+        // private readonly ISchedulerFactory _schedulerFactory;
         private readonly IEmailTemplateService _emailTemplateService;
         private readonly IWebHostEnvironment _environment;
         private readonly IConfiguration _configuration;
@@ -25,7 +25,7 @@ namespace EduTrail.Application.Shared
         public CommonService(
             IHttpContextAccessor httpContextAccessor,
             IConfiguration configuration,
-            ISchedulerFactory schedulerFactory,
+            // ISchedulerFactory schedulerFactory,
             IWebHostEnvironment environment,
             IEmailTemplateService emailTemplateService,
             IJwtTokenGenerator jwtTokenGenerator,
@@ -35,7 +35,7 @@ namespace EduTrail.Application.Shared
             )
         {
             _httpContextAccessor = httpContextAccessor;
-            _schedulerFactory = schedulerFactory;
+            // _schedulerFactory = schedulerFactory;
             _configuration = configuration;
             _emailTemplateService = emailTemplateService;
             _environment = environment;
@@ -52,7 +52,7 @@ namespace EduTrail.Application.Shared
         }
 
         public string _AuthTokenCookieName => "Authorization";
-        public ISchedulerFactory _SchedulerFactory => _schedulerFactory;
+        // public ISchedulerFactory _SchedulerFactory => _schedulerFactory;
         public IEmailTemplateService _EmailTemplateService => _emailTemplateService;
 
         public int SaltKeySize => 64;

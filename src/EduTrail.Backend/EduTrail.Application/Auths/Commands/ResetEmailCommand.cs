@@ -54,8 +54,8 @@ namespace EduTrail.Application.Auths
                     Text = textBody
                 });
 
-                var scheduler = await _service._SchedulerFactory.GetScheduler();
-                await scheduler.ScheduleJob(job, trigger, default);
+                // var scheduler = await _service._SchedulerFactory.GetScheduler();
+                // await scheduler.ScheduleJob(job, trigger, default);
 
                 return true;
             }
