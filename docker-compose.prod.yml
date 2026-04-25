@@ -23,6 +23,9 @@ services:
       - .env-service 
     ports:
       - "5001:5000"
+    volumes:
+      - files_data:/app/_files
+      - temp_files_data:/app/_temp-files
     depends_on:
       - database-edu-trail
     networks:

@@ -88,7 +88,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseGlobalExceptionHandler();
 
-// app.UseHttpsRedirection();
+// if (!app.Environment.IsProduction())
+// {
+//     app.UseHttpsRedirection();
+// }
+
 
 // IMPORTANT: serve Angular from wwwroot
 app.UseDefaultFiles();
