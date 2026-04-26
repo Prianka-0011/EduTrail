@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using static EduTrail.Shared.CustomCategory;
 using EduTrail.API.Hubs;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,10 +25,13 @@ builder.Services
     .AddAuthorization()
     .AddCors(option => option.AddPolicy("AllowWebSpa", policy =>
     {
-        policy.WithOrigins("http://localhost:4200", "http://localhost:5001")
-              .AllowAnyHeader()
-              .AllowCredentials()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+                "https://mangrovenode.com",
+                "https://www.mangrovenode.com"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
     }));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -62,6 +66,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     };
 });
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 static void UpdateDatabase(IApplicationBuilder app)
 {
     using var serviceScope = app.ApplicationServices
@@ -69,8 +82,7 @@ static void UpdateDatabase(IApplicationBuilder app)
         .CreateScope();
 
     using var context = serviceScope.ServiceProvider
-        .GetService<AppDbContext>()
-        ?? throw new Exception("AppDbContext service not found");
+        .GetRequiredService<AppDbContext>();
 
     context.Database.Migrate();
 }
@@ -79,7 +91,6 @@ var app = builder.Build();
 
 UpdateDatabase(app);
 
-// Swagger only in dev
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -88,13 +99,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseGlobalExceptionHandler();
 
-// if (!app.Environment.IsProduction())
-// {
-//     app.UseHttpsRedirection();
-// }
+app.UseForwardedHeaders();
 
+app.UseHttpsRedirection();
 
-// IMPORTANT: serve Angular from wwwroot
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
@@ -108,4 +116,3 @@ app.MapHub<ChatHub>("/hubs/chat");
 app.MapControllers();
 
 app.Run();
-

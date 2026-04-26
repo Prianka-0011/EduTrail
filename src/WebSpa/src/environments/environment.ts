@@ -6,6 +6,6 @@
 
 export const environment = {
     production: true,
-    baseUrl: "http://169.228.34.148:5001/api/",
-    chatUrl: "http://169.228.34.148:5001/hubs/chat"
+    baseUrl: "https://mangrovenode.com/api/",
+    chatUrl: "https://mangrovenode.com/hubs/chat"
 }
