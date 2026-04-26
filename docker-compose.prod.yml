@@ -13,14 +13,14 @@ services:
       - postgres_data_prod:/var/lib/postgresql/data
     networks:
       - edutrail-network-prod
- 
+
   edu-trail-service:
     container_name: edu-trail-container-prod
     build:
       context: .
       dockerfile: Dockerfile.Production
     env_file:
-      - .env-service 
+      - .env-service
     ports:
       - "5001:5000"
     volumes:
@@ -33,6 +33,8 @@ services:
 
 volumes:
   postgres_data_prod:
+  files_data:
+  temp_files_data:
 
 networks:
   edutrail-network-prod:
