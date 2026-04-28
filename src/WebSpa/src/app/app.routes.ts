@@ -30,12 +30,6 @@ export const routes: Routes = [
         component: ChangePasswordComponent,
     },
     {
-        path: '**',
-        redirectTo: 'auth',
-        canActivate: [GuestGuard],
-        children: learningSuiteRoutes
-    },
-    {
         canActivate: [GuestGuard],
         path: 'change-password-smtp-link',
         component: ChangePasswordComponent,
