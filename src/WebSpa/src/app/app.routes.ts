@@ -29,11 +29,11 @@ export const routes: Routes = [
         path: 'change-password-smtp-link',
         component: ChangePasswordComponent,
     },
-    {
-        canActivate: [GuestGuard],
-        path: 'change-password-smtp-link',
-        component: ChangePasswordComponent,
-    },
+    // {
+    //     canActivate: [GuestGuard],
+    //     path: 'change-password-smtp-link',
+    //     component: ChangePasswordComponent,
+    // },
     {
         path: '**',
         redirectTo: 'auth'

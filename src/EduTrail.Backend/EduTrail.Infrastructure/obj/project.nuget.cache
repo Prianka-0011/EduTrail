@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tvqURYPFAQo=",
+  "dgSpecHash": "KuoQ2RrDdAI=",
   "success": true,
-  "projectFilePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pmondal\\.nuget\\packages\\appany.quartz.entityframeworkcore.migrations\\0.5.1\\appany.quartz.entityframeworkcore.migrations.0.5.1.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\appany.quartz.entityframeworkcore.migrations.postgresql\\0.5.1\\appany.quartz.entityframeworkcore.migrations.postgresql.0.5.1.nupkg.sha512",
@@ -94,9 +94,9 @@
       "code": "NU1608",
       "level": "Warning",
       "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.0.1 was resolved.",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
       "libraryId": "MediatR",
       "targetGraphs": [
         "net10.0"
@@ -106,9 +106,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
       "libraryId": "AutoMapper",
       "targetGraphs": [
         "net10.0"
@@ -118,9 +118,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'System.Security.Cryptography.Xml' 8.0.2 has a known high severity vulnerability, https://github.com/advisories/GHSA-37gx-xxp4-5rgx",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
       "libraryId": "System.Security.Cryptography.Xml",
       "targetGraphs": [
         "net10.0"
@@ -130,9 +130,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'System.Security.Cryptography.Xml' 8.0.2 has a known high severity vulnerability, https://github.com/advisories/GHSA-w3x6-4m5h-cxqf",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Infrastructure\\EduTrail.Infrastructure.csproj",
       "libraryId": "System.Security.Cryptography.Xml",
       "targetGraphs": [
         "net10.0"

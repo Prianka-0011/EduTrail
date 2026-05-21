@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "48bi53zEivc=",
+  "dgSpecHash": "sgcVBaQRBd0=",
   "success": true,
-  "projectFilePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+  "projectFilePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pmondal\\.nuget\\packages\\appany.quartz.entityframeworkcore.migrations\\0.5.1\\appany.quartz.entityframeworkcore.migrations.0.5.1.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\appany.quartz.entityframeworkcore.migrations.postgresql\\0.5.1\\appany.quartz.entityframeworkcore.migrations.postgresql.0.5.1.nupkg.sha512",
@@ -15,7 +15,7 @@
     "C:\\Users\\pmondal\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\11.1.0\\mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.4\\microsoft.aspnetcore.authentication.jwtbearer.10.0.4.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
-    "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.aspnetcore.spaservices.extensions\\10.0.0\\microsoft.aspnetcore.spaservices.extensions.10.0.0.nupkg.sha512",
+    "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.aspnetcore.spaservices.extensions\\10.0.7\\microsoft.aspnetcore.spaservices.extensions.10.0.7.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.build.framework\\18.0.2\\microsoft.build.framework.18.0.2.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.11.0\\microsoft.codeanalysis.analyzers.3.11.0.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\microsoft.codeanalysis.common\\5.0.0\\microsoft.codeanalysis.common.5.0.0.nupkg.sha512",
@@ -67,9 +67,9 @@
       "code": "NU1510",
       "level": "Warning",
       "message": "PackageReference Microsoft.Extensions.Configuration will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "libraryId": "Microsoft.Extensions.Configuration",
       "targetGraphs": [
         "net10.0"
@@ -79,9 +79,9 @@
       "code": "NU1510",
       "level": "Warning",
       "message": "PackageReference Microsoft.Extensions.Configuration.Binder will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "libraryId": "Microsoft.Extensions.Configuration.Binder",
       "targetGraphs": [
         "net10.0"
@@ -91,9 +91,9 @@
       "code": "NU1510",
       "level": "Warning",
       "message": "PackageReference Microsoft.Extensions.DependencyInjection will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "libraryId": "Microsoft.Extensions.DependencyInjection",
       "targetGraphs": [
         "net10.0"
@@ -103,9 +103,9 @@
       "code": "NU1608",
       "level": "Warning",
       "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.0.1 was resolved.",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "libraryId": "MediatR",
       "targetGraphs": [
         "net10.0"
@@ -115,9 +115,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.API\\EduTrail.API.csproj",
       "libraryId": "AutoMapper",
       "targetGraphs": [
         "net10.0"

@@ -3,7 +3,7 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { routes } from './app.routes';
 import { CredentialInterceptor } from './interceptors/auth.interceptor';
 
@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
 
     provideClientHydration(withEventReplay()),
 
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
 
     importProvidersFrom(
       BrowserAnimationsModule, // must come first
@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
         positionClass: 'toast-bottom-right',
         preventDuplicates: true
       }),
-      
+
     ),
     { provide: HTTP_INTERCEPTORS, useClass: CredentialInterceptor, multi: true }
   ]

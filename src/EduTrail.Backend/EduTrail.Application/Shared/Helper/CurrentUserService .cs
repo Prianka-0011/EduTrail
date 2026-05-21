@@ -21,31 +21,17 @@ namespace EduTrail.Application.Shared
 
         public Guid GetUserId()
         {
-            var context = _contextAccessor.HttpContext;
-            if (context == null || !context.Request.Cookies.TryGetValue(CustomCategory.AuthsVariable.AuthTokenName, out var token))
-                throw new UnauthorizedAccessException("User is not logged in");
+            var test = _contextAccessor.HttpContext;
+            var claims = _contextAccessor.HttpContext?.User?.Claims
+            .Select(x => new { x.Type, x.Value })
+            .ToList();
+            var userIdClaim = _contextAccessor.HttpContext?.User?
+                .FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+            if (string.IsNullOrWhiteSpace(userIdClaim))
+                throw new UnauthorizedAccessException("User not logged in");
 
-            var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ClockSkew = TimeSpan.Zero
-            }, out _);
-
-            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (string.IsNullOrEmpty(userIdClaim))
-                throw new UnauthorizedAccessException("User ID claim not found");
-
-            if (!Guid.TryParse(userIdClaim, out var userId))
-                throw new UnauthorizedAccessException("Invalid user ID");
-
-            return userId;
+            return Guid.Parse(userIdClaim);
         }
     }
 }

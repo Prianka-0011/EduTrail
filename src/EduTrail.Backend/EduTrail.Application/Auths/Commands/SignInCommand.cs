@@ -51,11 +51,11 @@ namespace EduTrail.Application.Auths
                     var cookieOptions = new CookieOptions
                     {
                         HttpOnly = true,
-                        Secure = !_service._Environment.IsDevelopment(),
-                        SameSite = SameSiteMode.Lax,
-                        Expires = DateTimeOffset.UtcNow.AddMinutes(60)
+                        Secure = true,
+                        SameSite = SameSiteMode.None,
+                        Expires = DateTimeOffset.UtcNow.AddMinutes(60),
+                        Path = "/"
                     };
-
                     context.Response.Cookies.Append(_service._AuthTokenCookieName, token, cookieOptions);
                 }
 

@@ -9,7 +9,7 @@ export class CredentialInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const authReq = req.clone({ withCredentials: true });
-
+        console.log(authReq, "CredentialInterceptor")
         return next.handle(authReq).pipe(
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 401) {

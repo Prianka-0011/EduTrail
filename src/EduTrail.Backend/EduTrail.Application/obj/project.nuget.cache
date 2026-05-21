@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VC60a93rmRA=",
+  "dgSpecHash": "FsAItDoethU=",
   "success": true,
-  "projectFilePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+  "projectFilePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pmondal\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\pmondal\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
@@ -95,9 +95,9 @@
       "code": "NU1608",
       "level": "Warning",
       "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.0.1 was resolved.",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
       "libraryId": "MediatR",
       "targetGraphs": [
         "net10.0"
@@ -107,9 +107,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'AutoMapper' 12.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
       "libraryId": "AutoMapper",
       "targetGraphs": [
         "net10.0"
@@ -119,9 +119,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-37gx-xxp4-5rgx",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
       "libraryId": "System.Security.Cryptography.Xml",
       "targetGraphs": [
         "net10.0"
@@ -131,9 +131,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-w3x6-4m5h-cxqf",
-      "projectPath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+      "projectPath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
+      "filePath": "C:\\Users\\pmondal\\Documents\\EduTrail\\src\\EduTrail.Backend\\EduTrail.Application\\EduTrail.Application.csproj",
       "libraryId": "System.Security.Cryptography.Xml",
       "targetGraphs": [
         "net10.0"

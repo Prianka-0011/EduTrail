@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSignalR();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
@@ -23,66 +24,71 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services
     .AddHttpContextAccessor()
     .AddAuthorization()
-    .AddCors(option => option.AddPolicy("AllowWebSpa", policy =>
+    .AddCors(options =>
     {
-        policy.WithOrigins(
-                "https://mangrovenode.com",
-                "https://www.mangrovenode.com"
-            )
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
-    }));
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
-        )
-    };
-
-    options.Events = new JwtBearerEvents
-    {
-        OnMessageReceived = context =>
+        options.AddPolicy("AllowWebSpa", policy =>
         {
-            var token = context.Request.Cookies[AuthsVariable.AuthTokenName];
+            policy.WithOrigins(
+                    "https://mangrovenode.com",
+                    "https://www.mangrovenode.com",
+                    "http://localhost:4200",
+                    "https://localhost:7238",
+                    "https://localhost:4200"
+                )
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+    });
 
-            if (!string.IsNullOrEmpty(token))
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+            )
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
             {
-                context.Token = token;
-            }
+                var token = context.Request.Cookies[AuthsVariable.AuthTokenName];
 
-            return Task.CompletedTask;
-        }
-    };
-});
+                if (!string.IsNullOrWhiteSpace(token))
+                {
+                    context.Token = token;
+                }
+
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders =
-        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        ForwardedHeaders.XForwardedFor |
+        ForwardedHeaders.XForwardedProto;
 
     options.KnownNetworks.Clear();
     options.KnownProxies.Clear();
 });
 
-static void UpdateDatabase(IApplicationBuilder app)
+static void UpdateDatabase(WebApplication app)
 {
-    using var serviceScope = app.ApplicationServices
-        .GetRequiredService<IServiceScopeFactory>()
-        .CreateScope();
+    using var scope = app.Services.CreateScope();
 
-    using var context = serviceScope.ServiceProvider
-        .GetRequiredService<AppDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
     context.Database.Migrate();
 }
@@ -93,6 +99,7 @@ UpdateDatabase(app);
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -103,16 +110,33 @@ app.UseForwardedHeaders();
 
 app.UseHttpsRedirection();
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseDefaultFiles();
+    app.UseStaticFiles();
+}
+
+app.UseRouting();
 
 app.UseCors("AllowWebSpa");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHub<ChatHub>("/hubs/chat");
 
+
+app.MapHub<ChatHub>("/hubs/chat");
 app.MapControllers();
+
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSpa(spa =>
+//     {
+//         spa.Options.SourcePath =
+//             builder.Configuration["SpaRoot"] ?? "../WebSpa";
+
+//         spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+//     });
+// }
 
 app.Run();

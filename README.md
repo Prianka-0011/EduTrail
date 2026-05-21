@@ -1,4 +1,8 @@
 # EduTrail
+--
+# Git
+  git config --global user.email "priankanew0011@gmail.com"
+  git config --global user.name "Prianka-0011"
 
 **EduTrail** is a modern, scalable e-commerce application built using **Angular** (frontend), **.NET Core** (backend), and **GraphQL**. The project follows **Clean Architecture principles** to ensure maintainability, testability, and scalability.
 
@@ -526,3 +530,19 @@ General
 No lab hours during scheduled Problem-Solving Sessions or Discussion Section
 No more than 4 Lab Hours in a row
 First day of Lab Hours is Wednesday of Week 1 (the oﬃcial release date of PA1)
+
+--------------------------------------------
+Angular http to https
+
+# Choco install mkcert (globaly)
+# mkcert -install (globaly)
+# cd src/webspa
+# mkcert localhost 127.0.0.1 ::1
+
+This creates files like:
+
+localhost+2.pem
+localhost+2-key.pem
+
+# $env:NODE_OPTIONS="--openssl-legacy-provider"
+# ng serve --ssl true --ssl-cert "./localhost+2.pem" --ssl-key "./localhost+2-key.pem"

@@ -19,8 +19,6 @@ public class UsersController : BaseController
         return Ok(result);
     }
 
-   
-
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDto>> GetById(Guid id)
     {
