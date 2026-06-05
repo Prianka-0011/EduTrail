@@ -46,6 +46,22 @@ namespace EduTrail.Infrastructure.Migrations.DataMigrations
                 });
 
             migrationBuilder.InsertData(
+            table: "Statuses",
+            columns: new[] { "Id", "Name", "Description", "StatusTypeId", "CreatedDate", "CreatedById", "UpdatedDate", "UpdatedById" },
+            values: new object[,]
+            {
+            { Guid.Parse("ED733676-90BE-49AA-AF3C-335169678B86"), "InProgress", "Help request is in progress", Guid.Parse("ce5e6303-3ac6-4af1-92b4-f708da026d20"), DateTime.UtcNow, null, null, null }
+            });
+
+            migrationBuilder.InsertData(
+                      table: "Statuses",
+                      columns: new[] { "Id", "Name", "Description", "StatusTypeId", "CreatedDate", "CreatedById", "UpdatedDate", "UpdatedById" },
+                      values: new object[,]
+                      {
+            { Guid.Parse("EB57ECC1-678E-48F9-8DB0-0BD79973F52F"), "Completed", "Help request is completed", Guid.Parse("ce5e6303-3ac6-4af1-92b4-f708da026d20"), DateTime.UtcNow, null, null, null }
+                      });
+
+            migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[]
                 {
@@ -63,11 +79,11 @@ namespace EduTrail.Infrastructure.Migrations.DataMigrations
                 true, DateTime.UtcNow, Guid.Parse("8f3b2a91-6e5c-4c7b-9e91-1a2d4f8c3b10"), DateTime.UtcNow, Guid.Parse("8f3b2a91-6e5c-4c7b-9e91-1a2d4f8c3b10")
             }
                 });
-                migrationBuilder.InsertData(
-                table: "RoleUser",
-                columns: new[] { "UsersId", "RolesId" },
-                values: new object[] { _defaultAdminId, _defaultAdminRoleId }
-            );
+            migrationBuilder.InsertData(
+            table: "RoleUser",
+            columns: new[] { "UsersId", "RolesId" },
+            values: new object[] { _defaultAdminId, _defaultAdminRoleId }
+        );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

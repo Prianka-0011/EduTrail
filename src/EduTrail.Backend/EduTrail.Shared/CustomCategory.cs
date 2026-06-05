@@ -23,6 +23,7 @@ namespace EduTrail.Shared
         {
             public static Guid Pending { get; set; } = Guid.Parse("627407c8-700d-46fc-a3e5-02dc368fb75e");
             public static Guid Completed { get; set; } = Guid.Parse("EB57ECC1-678E-48F9-8DB0-0BD79973F52F");
+            public static Guid InProgress { get; set; } = Guid.Parse("ED733676-90BE-49AA-AF3C-335169678B86");
 
         }
 
