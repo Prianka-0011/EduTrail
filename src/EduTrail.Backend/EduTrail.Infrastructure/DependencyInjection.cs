@@ -26,7 +26,7 @@ namespace EduTrail.Infrastructure
     {
         private static string dbHost =>
             Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"
-                ? "edu-trail-postgres-prod"
+                ? "database-edu-trail"
                 : "localhost";
 
         private static int dbPort => int.TryParse(Environment.GetEnvironmentVariable("DB_PORT"), out var port) ? port : 5432;
