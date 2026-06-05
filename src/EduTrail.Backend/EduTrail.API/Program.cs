@@ -108,12 +108,12 @@ app.UseGlobalExceptionHandler();
 
 app.UseForwardedHeaders();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseDefaultFiles();
-    app.UseStaticFiles();
+    // app.UseDefaultFiles();
+    // app.UseStaticFiles();
 }
 
 app.UseRouting();

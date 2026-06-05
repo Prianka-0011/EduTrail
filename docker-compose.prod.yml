@@ -26,6 +26,7 @@ services:
       - database-edu-trail
     networks:
       - edutrail-network-prod
+      - dokploy-network
 
     labels:
       - "traefik.enable=true"
@@ -33,6 +34,7 @@ services:
       - "traefik.http.routers.edutrail.entrypoints=websecure"
       - "traefik.http.routers.edutrail.tls=true"
       - "traefik.http.services.edutrail.loadbalancer.server.port=5000"
+      - "traefik.docker.network=dokploy-network"
 
 volumes:
   postgres_data_prod:
@@ -42,3 +44,6 @@ volumes:
 networks:
   edutrail-network-prod:
     driver: bridge
+
+  dokploy-network:
+    external: true
