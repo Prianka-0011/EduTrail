@@ -7,8 +7,6 @@ services:
     restart: always
     env_file:
       - .env-db
-    ports:
-      - "5433:5432"
     volumes:
       - postgres_data_prod:/var/lib/postgresql/data
     networks:
@@ -21,8 +19,6 @@ services:
       dockerfile: Dockerfile.Production
     env_file:
       - .env-service
-    ports:
-      - "5001:5000"
     volumes:
       - files_data:/app/_files
       - temp_files_data:/app/_temp-files
@@ -30,6 +26,13 @@ services:
       - database-edu-trail
     networks:
       - edutrail-network-prod
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.edutrail.rule=Host(`mangrovenode.com`)"
+      - "traefik.http.routers.edutrail.entrypoints=websecure"
+      - "traefik.http.routers.edutrail.tls=true"
+      - "traefik.http.services.edutrail.loadbalancer.server.port=5000"
 
 volumes:
   postgres_data_prod:
