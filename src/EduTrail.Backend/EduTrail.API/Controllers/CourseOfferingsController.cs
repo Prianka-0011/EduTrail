@@ -1,5 +1,6 @@
 using EduTrail.Application.CourseOfferings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduTrail.API.Controllers
@@ -12,6 +13,7 @@ namespace EduTrail.API.Controllers
         {
         }
         
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> GetAllCourseOfferings()
         {
@@ -19,6 +21,7 @@ namespace EduTrail.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetCourseOfferingById(Guid id)
         {
@@ -26,6 +29,7 @@ namespace EduTrail.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> CreateCourseOffering([FromBody] CreateCourseOfferingCommand command)
         {
@@ -33,6 +37,7 @@ namespace EduTrail.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCourseOffering(Guid id, [FromBody] UpdateCourseOfferingCommand command)
         {
