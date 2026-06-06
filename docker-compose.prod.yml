@@ -35,7 +35,7 @@ services:
       - "traefik.docker.network=dokploy-network"
 
       - "traefik.http.routers.edutrail.rule=Host(`mangrovenode.com`)"
-      - "traefik.http.routers.edutrail.entrypoints=web,websecure"
+      - "traefik.http.routers.edutrail.entrypoints=websecure"
       - "traefik.http.routers.edutrail.tls=true"
       - "traefik.http.routers.edutrail.tls.certresolver=letsencrypt"
 
