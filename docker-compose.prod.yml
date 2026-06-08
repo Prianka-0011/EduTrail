@@ -1,56 +1,56 @@
-version: '3.8'
+  version: '3.8'
 
-services:
-  database-edu-trail:
-    image: postgres:15
-    env_file:
-      - .env-db
-    volumes:
-      - postgres_data_prod:/var/lib/postgresql/data
-    networks:
-      - edutrail-network-prod
+  services:
+    database-edu-trail:
+      image: postgres:15
+      env_file:
+        - .env-db
+      volumes:
+        - postgres_data_prod:/var/lib/postgresql/data
+      networks:
+        - edutrail-network-prod
 
-  edu-trail-service:
-    image: edutrail-edu-trail-service:prod
-    build:
-      context: .
-      dockerfile: Dockerfile.Production
+    edu-trail-service:
+      image: edutrail-edu-trail-service:prod
+      build:
+        context: .
+        dockerfile: Dockerfile.Production
 
-    env_file:
-      - .env-service
+      env_file:
+        - .env-service
 
-    volumes:
-      - files_data:/app/_files
-      - temp_files_data:/app/_temp-files
+      volumes:
+        - files_data:/app/_files
+        - temp_files_data:/app/_temp-files
 
-    depends_on:
-      - database-edu-trail
+      depends_on:
+        - database-edu-trail
 
-    networks:
-      - edutrail-network-prod
-      - dokploy-network
+      networks:
+        - edutrail-network-prod
+        - dokploy-network
 
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=dokploy-network"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=dokploy-network"
 
-      - "traefik.http.routers.edutrail.rule=Host(`mangrovenode.com`)"
-      - "traefik.http.routers.edutrail.entrypoints=websecure"
-      - "traefik.http.routers.edutrail.tls=true"
-      - "traefik.http.routers.edutrail.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.edutrail.rule=Host(`mangrovenode.com`)"
+        - "traefik.http.routers.edutrail.entrypoints=websecure"
+        - "traefik.http.routers.edutrail.tls=true"
+        - "traefik.http.routers.edutrail.tls.certresolver=letsencrypt"
 
-      - "traefik.http.services.edutrail.loadbalancer.server.port=5000"
-      - "traefik.http.services.edutrail.loadbalancer.server.scheme=http"
+        - "traefik.http.services.edutrail.loadbalancer.server.port=5000"
+        - "traefik.http.services.edutrail.loadbalancer.server.scheme=http"
 
-volumes:
-  postgres_data_prod:
-  files_data:
-  temp_files_data:
+  volumes:
+    postgres_data_prod:
+    files_data:
+    temp_files_data:
 
-networks:
-  edutrail-network-prod:
-    driver: overlay
-    attachable: true
+  networks:
+    edutrail-network-prod:
+      driver: overlay
+      attachable: true
 
-  dokploy-network:
-    external: true
+    dokploy-network:
+      external: true
