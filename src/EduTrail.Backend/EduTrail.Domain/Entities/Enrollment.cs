@@ -21,8 +21,8 @@ namespace EduTrail.Domain.Entities
 
         public bool IsActive { get; set; } = true;
         public ICollection<TALabMonth> TALabMonths { get; set; } = new List<TALabMonth>();
+        public ICollection<Post> Posts { get; set; } = new List<Post>();
         // Audit fields
-
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }
         public DateTimeOffset? UpdatedDate { get; set; }
