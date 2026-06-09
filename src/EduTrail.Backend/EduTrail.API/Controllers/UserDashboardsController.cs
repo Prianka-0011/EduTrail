@@ -12,24 +12,32 @@ namespace EduTrail.API.Controllers
         public UserDashboardsController(IMediator mediator) : base(mediator)
         {
         }
+
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> GetAllCourseOfferingByUser()
         {
             var result = await _mediator.Send(new GetAllCourseOfferingByUserQuery());
             return Ok(result);
         }
+        
+        [Authorize]
         [HttpGet("{courseOfferingId}")]
         public async Task<ActionResult> GetEnrollementById(Guid courseOfferingId)
         {
             var result = await _mediator.Send(new GetEnrollmentByUserId { CourseOfferingId = courseOfferingId });
             return Ok(result);
         }
+
+        [Authorize]
         [HttpGet("ta-hours/{courseOfferingId}")]
         public async Task<ActionResult> GetTAAndLabHoursByCourseOffering(Guid courseOfferingId)
         {
             var result = await _mediator.Send(new GetTAAndLabHoursByCourseOfferingQuery { CourseOfferingId = courseOfferingId });
             return Ok(result);
         }
+
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<UserEnrollementDto>> Update(Guid id, UpdateTAHourForEnrolementCommand command)
         {
@@ -41,7 +49,7 @@ namespace EduTrail.API.Controllers
             return Ok(await _mediator.Send(command));
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpGet("current-login-user")]
         public async Task<ActionResult> GetCurrentLoginUser()
         {
@@ -49,7 +57,7 @@ namespace EduTrail.API.Controllers
             return Ok(result);
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout(LogoutCommand command)
         {

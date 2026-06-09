@@ -13,7 +13,8 @@ namespace EduTrail.API.Controllers
         public EnrollmentsController(IMediator mediator) : base(mediator)
         {
         }
-        //[Authorize]
+        
+        [Authorize]
         [HttpGet("course-offerings/{courseOfferingId}")]
         public async Task<ActionResult<EnrolementDto>> GetAll(Guid? courseOfferingId)
         {
@@ -21,26 +22,29 @@ namespace EduTrail.API.Controllers
             return Ok(result);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("active-ta/{courseOfferingId}")]
         public async Task<ActionResult<EnrolementDto>> GetAllActiveTAs(Guid? courseOfferingId)
         {
             var result = await _mediator.Send(new GetAllActiveTAsQuery { CourseOfferingId = courseOfferingId });
             return Ok(result);
         }
-        //[Authorize]
+
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<EnrolementDto>> GetById(Guid id)
         {
             return Ok(await _mediator.Send(new GetEnrolementByIdQuery { Id = id }));
         }
-        //[Authorize]
+
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<EnrolementDto>> Create(CreateEnrolementCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        //[Authorize]
+
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<EnrolementDto>> Update(Guid id, UpdateEnrolementCommand command)
         {
@@ -52,7 +56,7 @@ namespace EduTrail.API.Controllers
             return Ok(await _mediator.Send(command));
         }
 
-        //[Authorize]
+        [Authorize]
         [Consumes("multipart/form-data")]
         [HttpPost("bulk-upload")]
         public async Task<IActionResult> BulkUpload([FromForm] BulkEnrollmentUploadCommand command)

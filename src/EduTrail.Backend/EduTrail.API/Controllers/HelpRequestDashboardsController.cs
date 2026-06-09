@@ -1,5 +1,6 @@
 using EduTrail.Application.HelpRequestDashboards;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduTrail.API.Controllers
@@ -11,6 +12,7 @@ namespace EduTrail.API.Controllers
         public HelpRequestDashboardsController(IMediator mediator) : base(mediator)
         {
         }
+        [Authorize]
         [HttpGet("weekly-lab-requests")]
         public async Task<IActionResult> GetWeeklyLabRequests()
         {

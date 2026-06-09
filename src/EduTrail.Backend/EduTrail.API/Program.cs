@@ -108,12 +108,12 @@ app.UseGlobalExceptionHandler();
 
 app.UseForwardedHeaders();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseDefaultFiles();
-    app.UseStaticFiles();
+    // app.UseDefaultFiles();
+    // app.UseStaticFiles();
 }
 
 app.UseRouting();
@@ -127,16 +127,5 @@ app.UseAuthorization();
 
 app.MapHub<ChatHub>("/hubs/chat");
 app.MapControllers();
-
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSpa(spa =>
-//     {
-//         spa.Options.SourcePath =
-//             builder.Configuration["SpaRoot"] ?? "../WebSpa";
-
-//         spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-//     });
-// }
 
 app.Run();

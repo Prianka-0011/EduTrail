@@ -12,6 +12,7 @@ public class UsersController : BaseController
     {
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<List<UserDto>>> GetAll()
     {
@@ -19,6 +20,7 @@ public class UsersController : BaseController
         return Ok(result);
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDto>> GetById(Guid id)
     {
@@ -26,6 +28,7 @@ public class UsersController : BaseController
         return Ok(result);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<UserDto>> Create([FromBody] CreateUserCommand command)
     {
@@ -33,6 +36,7 @@ public class UsersController : BaseController
         return Ok(result);
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<ActionResult<UserDto>> Update(Guid id, [FromBody] UpdateUserCommand command)
     {

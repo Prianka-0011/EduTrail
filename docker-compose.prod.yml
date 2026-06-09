@@ -43,10 +43,10 @@ services:
       restart_policy:
         condition: on-failure
 
-volumes:
-  postgres_data_prod:
-  files_data:
-  temp_files_data:
+  volumes:
+    postgres_data_prod:
+    files_data:
+    temp_files_data:
 
 networks:
   edutrail-network-prod:

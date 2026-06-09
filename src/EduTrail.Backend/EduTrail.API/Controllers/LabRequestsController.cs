@@ -1,6 +1,7 @@
 
 using EduTrail.Application.LabRequests;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduTrail.API.Controllers
@@ -12,7 +13,8 @@ namespace EduTrail.API.Controllers
         public LabRequestsController(IMediator mediator) : base(mediator)
         {
         }
-
+        
+        [Authorize]
         [HttpGet("help-request-list/{courseOfferingId}")]
         public async Task<ActionResult> GetAllLabRequest(Guid courseOfferingId)
         {
@@ -20,6 +22,7 @@ namespace EduTrail.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetLabRequestById(Guid Id)
         {
@@ -27,12 +30,14 @@ namespace EduTrail.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPost("help-request")]
         public async Task<ActionResult> SubmitHelpRequest(SubmitHelpRequestCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
+        [Authorize]
         [HttpGet("help-request-by-current-user-list/{courseOfferingId}")]
         public async Task<ActionResult> GetAllLabRequestByCurrentUser(Guid courseOfferingId)
         {
@@ -40,6 +45,7 @@ namespace EduTrail.API.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateRequest(UpdateHelpRequestCommand command)
         {
