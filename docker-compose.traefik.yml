@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v2.11
+    command:
+      - --configFile=/etc/traefik/traefik.yml
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - traefik_letsencrypt:/letsencrypt
+    networks:
+      - dokploy-network
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  traefik_letsencrypt:
+
+networks:
+  dokploy-network:
+    external: true

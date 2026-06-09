@@ -1,35 +1,47 @@
-version: '3.8'
+version: "3.8"
 
 services:
+
   database-edu-trail:
     image: postgres:15
-    container_name: edu-trail-postgres-prod
-    restart: always
     env_file:
       - .env-db
-    ports:
-      - "5433:5432"
     volumes:
       - postgres_data_prod:/var/lib/postgresql/data
     networks:
       - edutrail-network-prod
 
   edu-trail-service:
-    container_name: edu-trail-container-prod
-    build:
-      context: .
-      dockerfile: Dockerfile.Production
+    image: edutrail-edu-trail-service:prod
+
     env_file:
       - .env-service
-    ports:
-      - "5001:5000"
+
     volumes:
       - files_data:/app/_files
       - temp_files_data:/app/_temp-files
+
     depends_on:
       - database-edu-trail
+
     networks:
       - edutrail-network-prod
+      - dokploy-network
+
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=dokploy-network"
+
+        - "traefik.http.routers.edutrail.rule=Host(`mangrovenode.com`)"
+        - "traefik.http.routers.edutrail.entrypoints=websecure"
+        - "traefik.http.routers.edutrail.tls=true"
+        - "traefik.http.routers.edutrail.tls.certresolver=letsencrypt"
+
+        - "traefik.http.services.edutrail.loadbalancer.server.port=5000"
+
+      restart_policy:
+        condition: on-failure
 
 volumes:
   postgres_data_prod:
@@ -38,4 +50,8 @@ volumes:
 
 networks:
   edutrail-network-prod:
-    driver: bridge
+    driver: overlay
+    attachable: true
+
+  dokploy-network:
+    external: true
