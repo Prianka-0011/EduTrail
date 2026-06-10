@@ -29,11 +29,13 @@ services:
       - dokploy-network
 
     deploy:
+      replicas: 1
+
       labels:
         - "traefik.enable=true"
         - "traefik.docker.network=dokploy-network"
 
-        - "traefik.http.routers.edutrail.rule=Host(`mangrovenode.com`)"
+        - "traefik.http.routers.edutrail.rule=Host(`mangrovenode.com`) || Host(`www.mangrovenode.com`)"
         - "traefik.http.routers.edutrail.entrypoints=websecure"
         - "traefik.http.routers.edutrail.tls=true"
         - "traefik.http.routers.edutrail.tls.certresolver=letsencrypt"
@@ -43,10 +45,10 @@ services:
       restart_policy:
         condition: on-failure
 
-  volumes:
-    postgres_data_prod:
-    files_data:
-    temp_files_data:
+volumes:
+  postgres_data_prod:
+  files_data:
+  temp_files_data:
 
 networks:
   edutrail-network-prod:
