@@ -6,17 +6,18 @@ using EduTrail.API.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using static EduTrail.Shared.CustomCategory;
 using EduTrail.API.Hubs;
 using Microsoft.AspNetCore.HttpOverrides;
+using static EduTrail.Shared.CustomCategory;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSignalR();
-
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -58,11 +59,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         OnMessageReceived = context =>
         {
             var token = context.Request.Cookies[AuthsVariable.AuthTokenName];
-
             if (!string.IsNullOrWhiteSpace(token))
-            {
                 context.Token = token;
-            }
 
             return Task.CompletedTask;
         }
@@ -87,32 +85,34 @@ using (var scope = app.Services.CreateScope())
     context.Database.Migrate();
 }
 
-app.UseGlobalExceptionHandler();
-
 app.UseForwardedHeaders();
-
 app.UseRouting();
-
-app.UseStaticFiles();
-app.UseDefaultFiles();
-
-app.UseCors("AllowWebSpa");
-
-app.UseAuthentication();
-app.UseAuthorization();
-
 
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.MapGet("/", context =>
+    {
+        context.Response.Redirect("/swagger");
+        return Task.CompletedTask;
+    });
 }
-else
+
+if (!app.Environment.IsDevelopment())
 {
-    // production-only settings (optional)
+    app.UseDefaultFiles();
+    app.UseStaticFiles();
     app.UseHsts();
 }
+
+app.UseCors("AllowWebSpa");
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseGlobalExceptionHandler();
 
 app.MapControllers();
 app.MapHub<ChatHub>("/hubs/chat");
