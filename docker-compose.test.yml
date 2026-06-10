@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+
+  database-edu-trail:
+    image: postgres:15
+    env_file:
+      - .env-db
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    networks:
+      - edutrail-network-prod
+
+  edu-trail-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.Production
+
+    env_file:
+      - .env-service
+
+    ports:
+      - "5000:5000"
+
+    volumes:
+      - files_data:/app/_files
+      - temp_files_data:/app/_temp-files
+
+    depends_on:
+      - database-edu-trail
+
+    networks:
+      - edutrail-network-prod
+
+volumes:
+  postgres_data_prod:
+  files_data:
+  temp_files_data:
+
+networks:
+  edutrail-network-prod:
+    driver: bridge
