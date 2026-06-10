@@ -23,11 +23,17 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowWebSpa", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+                "https://mangrovenode.com",
+                "https://www.mangrovenode.com",
+                "http://localhost:4200",
+                "https://localhost:4200"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 
@@ -75,38 +81,39 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 
 var app = builder.Build();
 
-// DB migration
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     context.Database.Migrate();
 }
 
-// Dev tools
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-
-// Middleware
 app.UseGlobalExceptionHandler();
-app.UseForwardedHeaders();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseForwardedHeaders();
 
 app.UseRouting();
 
-// Static files (frontend in wwwroot)
-app.UseDefaultFiles();
 app.UseStaticFiles();
+app.UseDefaultFiles();
 
-app.UseCors("AllowAll");
+app.UseCors("AllowWebSpa");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Endpoints
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+else
+{
+    // production-only settings (optional)
+    app.UseHsts();
+}
+
 app.MapControllers();
 app.MapHub<ChatHub>("/hubs/chat");
 
