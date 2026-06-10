@@ -39,7 +39,8 @@ services:
         - "traefik.http.routers.edutrail.entrypoints=websecure"
         - "traefik.http.routers.edutrail.tls=true"
         - "traefik.http.routers.edutrail.tls.certresolver=letsencrypt"
-
+        
+        - "traefik.http.routers.edutrail.service=edutrail"
         - "traefik.http.services.edutrail.loadbalancer.server.port=5000"
 
       restart_policy:
