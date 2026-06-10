@@ -14,65 +14,54 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSignalR();
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.Services
-    .AddHttpContextAccessor()
-    .AddAuthorization()
-    .AddCors(options =>
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
     {
-        options.AddPolicy("AllowWebSpa", policy =>
-        {
-            policy.WithOrigins(
-                    "https://mangrovenode.com",
-                    "https://www.mangrovenode.com",
-                    "http://localhost:4200",
-                    "https://localhost:7238",
-                    "https://localhost:4200"
-                )
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
-        });
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
+});
 
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
-            )
-        };
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+        )
+    };
 
-        options.Events = new JwtBearerEvents
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
         {
-            OnMessageReceived = context =>
+            var token = context.Request.Cookies[AuthsVariable.AuthTokenName];
+
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                var token = context.Request.Cookies[AuthsVariable.AuthTokenName];
-
-                if (!string.IsNullOrWhiteSpace(token))
-                {
-                    context.Token = token;
-                }
-
-                return Task.CompletedTask;
+                context.Token = token;
             }
-        };
-    });
+
+            return Task.CompletedTask;
+        }
+    };
+});
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
@@ -84,48 +73,41 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownProxies.Clear();
 });
 
-static void UpdateDatabase(WebApplication app)
+var app = builder.Build();
+
+// DB migration
+using (var scope = app.Services.CreateScope())
 {
-    using var scope = app.Services.CreateScope();
-
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
     context.Database.Migrate();
 }
 
-var app = builder.Build();
-
-UpdateDatabase(app);
-
+// Dev tools
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
 
+// Middleware
 app.UseGlobalExceptionHandler();
-
 app.UseForwardedHeaders();
 
-// app.UseHttpsRedirection();
-
-if (!app.Environment.IsDevelopment())
-{
-    // app.UseDefaultFiles();
-    // app.UseStaticFiles();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseRouting();
 
-app.UseCors("AllowWebSpa");
+// Static files (frontend in wwwroot)
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-
-
-app.MapHub<ChatHub>("/hubs/chat");
+// Endpoints
 app.MapControllers();
+app.MapHub<ChatHub>("/hubs/chat");
 
 app.Run();
