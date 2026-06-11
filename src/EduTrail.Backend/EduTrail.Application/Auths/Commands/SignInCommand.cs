@@ -19,15 +19,19 @@ namespace EduTrail.Application.Auths
             private readonly IAuthRepository _repository;
             private readonly ICommonService _service;
             private readonly ILogger<Handler> _logger;
+             private readonly IHttpContextAccessor _httpContextAccessor;
+
             public Handler(
                 IAuthRepository repository,
                 ICommonService service,
-                 ILogger<Handler> logger
+                 ILogger<Handler> logger,
+                 IHttpContextAccessor httpContextAccessor
                 )
             {
                 _repository = repository;
                 _service = service;
                 _logger = logger;
+                 _httpContextAccessor = httpContextAccessor;
             }
 
             public async Task<bool> Handle(SignInCommand request, CancellationToken cancellationToken)
@@ -58,7 +62,7 @@ namespace EduTrail.Application.Auths
 
                     var token = _service._JwtTokenGenerator.GenerateToken(user);
 
-                    var context = _service._HttpContextAccessor.HttpContext;
+                    var context = _httpContextAccessor.HttpContext;
 
                     if (context != null)
                     {

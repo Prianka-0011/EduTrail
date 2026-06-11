@@ -87,12 +87,13 @@ using (var scope = app.Services.CreateScope())
 
 app.UseForwardedHeaders();
 app.UseRouting();
-
+app.UseSwagger();
+app.UseSwaggerUI();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // app.UseSwagger();
+    // app.UseSwaggerUI();
 
     app.MapGet("/", context =>
     {
