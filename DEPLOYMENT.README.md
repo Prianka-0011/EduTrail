@@ -1,3 +1,5 @@
+
+# Before Depoyment change frontend enviroment file
 # docker build --no-cache -t edutrail-edu-trail-service:prod -f Dockerfile.Production .
 # docker stack rm edutrail
 # docker service ls
