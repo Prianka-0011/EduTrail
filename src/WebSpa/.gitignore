@@ -3,8 +3,8 @@
 /tmp
 /out-tsc
 /bazel-out
-# /obj
-# /bin
+/obj
+/bin
 
 # Node
 /node_modules
