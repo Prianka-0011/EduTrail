@@ -43,6 +43,13 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<TALabDay> TALabDays { get; set; }
         public DbSet<TALabSlot> TALabSlots { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        //Piazza
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<PostType> PostTypes { get; set; }
+        public DbSet<Poll> Polls { get; set; }
+        public DbSet<PollOption> PollOptions { get; set; }
+        public DbSet<PollVote> PollVotes { get; set; }
+        public DbSet<Folder> Folders { get; set; }
         
         #region QUARTZ
 
