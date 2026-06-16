@@ -208,7 +208,24 @@ export class EnrollmentDashboardComponent implements OnInit {
             icon: 'bi-gear',
             route: 'help-request-dashboard',
             rolesPermission: [CustomCategory.RoleType.Instructor, CustomCategory.RoleType.TA]
-          }
+          },
+        ]
+      },
+      {
+        label: 'Piazza',
+        children: [
+          {
+            label: 'Manage Folders',
+            icon: 'bi-gear',
+            route: 'manage-folders',
+            rolesPermission: [CustomCategory.RoleType.Instructor, CustomCategory.RoleType.TA]
+          },
+          {
+            label: 'Posts',
+            icon: 'bi-gear',
+            route: 'post-list',
+            rolesPermission: [CustomCategory.RoleType.Instructor, CustomCategory.RoleType.TA]
+          },
         ]
       }
     ];

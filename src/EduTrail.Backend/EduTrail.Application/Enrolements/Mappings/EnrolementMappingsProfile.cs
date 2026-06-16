@@ -13,6 +13,11 @@ namespace EduTrail.Application.Enrolements
                         s.User != null
                             ? s.User.FirstName + " " + s.User.LastName
                             : null))
+                .ForMember(d => d.StudentEmail,
+                    o => o.MapFrom(s =>
+                        s.User != null
+                            ? s.User.Email 
+                            : null))
                 .ForMember(d => d.IsTa, o => o.Ignore())
                 .ForMember(d => d.Months, o => o.MapFrom(s => s.TALabMonths));
 

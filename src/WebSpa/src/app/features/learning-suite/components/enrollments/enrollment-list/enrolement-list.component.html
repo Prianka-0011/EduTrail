@@ -33,7 +33,8 @@
     <table class="table custom-table">
       <thead>
         <tr>
-          <th>Student Name</th>
+          <th>Name</th>
+          <th>Email</th>
           <th>Enrollment Date</th>
           <th>Action</th>
         </tr>
@@ -45,6 +46,7 @@
           <!-- Parent row -->
           <tr>
             <td>{{ enrolement.studentName }}</td>
+            <td>{{ enrolement.studentEmail }}</td>
             <td>{{ enrolement.enrolledDate }}</td>
             <td>
               <button class="edit-icon-btn" (click)="openEditDrawer(enrolement.id); $event.stopPropagation()">

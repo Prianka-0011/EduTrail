@@ -52,6 +52,7 @@ export class EnrolementListComponent implements OnInit {
     this.enrollmentService.getEnrollments(courseOfferingId).subscribe({
       next: (data: IEnrollment) => {
         this.enrolements = data.detailsDtoList ?? [];
+        console.log("enrolements prianka", data.detailsDtoList)
         this.applyFilter();
       }
     });
