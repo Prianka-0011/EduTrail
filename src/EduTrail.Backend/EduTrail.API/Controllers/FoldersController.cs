@@ -1,5 +1,4 @@
-using EduTrail.Application.Courses;
-using EduTrail.Application.Enrolements;
+using EduTrail.Application.Folders;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +13,12 @@ namespace EduTrail.API.Controllers
         {
         }
         
-        
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<FolderDto>> GetAll(Guid? courseOfferingId)
+        {
+            return Ok(await _mediator.Send(new GetAllFoldersQuery {CourseOfferingId = courseOfferingId}));
+        }
 
     }
 }

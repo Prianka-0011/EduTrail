@@ -3,6 +3,7 @@ using System;
 using EduTrail.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260617051139_update-folder-table")]
+    partial class updatefoldertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,9 +293,6 @@ namespace EduTrail.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<Guid?>("ParentFolderId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uuid");
 
@@ -302,8 +302,6 @@ namespace EduTrail.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CourseOfferingId");
-
-                    b.HasIndex("ParentFolderId");
 
                     b.ToTable("Folders");
                 });
@@ -1389,13 +1387,7 @@ namespace EduTrail.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EduTrail.Domain.Entities.Folder", "ParentFolder")
-                        .WithMany("SubFolders")
-                        .HasForeignKey("ParentFolderId");
-
                     b.Navigation("CourseOffering");
-
-                    b.Navigation("ParentFolder");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Lab", b =>
@@ -1647,11 +1639,6 @@ namespace EduTrail.Infrastructure.Migrations
             modelBuilder.Entity("EduTrail.Domain.Entities.Enrollment", b =>
                 {
                     b.Navigation("TALabMonths");
-                });
-
-            modelBuilder.Entity("EduTrail.Domain.Entities.Folder", b =>
-                {
-                    b.Navigation("SubFolders");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Poll", b =>

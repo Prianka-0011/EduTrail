@@ -17,6 +17,22 @@ namespace EduTrail.Domain.Entities
 
         [Required]
         public bool IsActive { get; set; }
+
+        [Required]
+        public Guid CourseOfferingId { get; set; }
+
+        [ForeignKey(nameof(CourseOfferingId))]
+        public CourseOffering CourseOffering { get; set; } = null!;
+
+        // Parent Folder
+        public Guid? ParentFolderId { get; set; }
+
+        [ForeignKey(nameof(ParentFolderId))]
+        public Folder? ParentFolder { get; set; }
+
+        // Child Folders
+        public ICollection<Folder> SubFolders { get; set; } = new List<Folder>();
+
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }
         public DateTimeOffset? UpdatedDate { get; set; }
