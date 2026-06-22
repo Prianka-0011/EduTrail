@@ -1,0 +1,29 @@
+.folder-tree {
+  border-top: 1px solid #ddd;
+}
+
+.folder-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.folder-name {
+  font-size: 18px;
+  color: #0d6efd;
+}
+
+.drag-icon {
+  cursor: grab;
+  font-size: 18px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.btn-sm {
+  min-width: 120px;
+}

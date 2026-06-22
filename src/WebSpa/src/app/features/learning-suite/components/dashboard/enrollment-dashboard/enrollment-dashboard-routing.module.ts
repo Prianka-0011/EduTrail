@@ -6,6 +6,7 @@ import { SubmitHelpRequestComponent } from "./components/submit-help-request/sub
 import { HelpRequestListComponent } from "./components/help-request-list/help-request-list.component";
 import { CurrentUserHelpRequestListComponent } from "./components/current-user-help-request-list/current-user-help-request-list.component";
 import { HelpRequestDashboardComponent } from "./components/help-request-dashboard/help-request-dashboard.component";
+import { ManageFoldersComponent } from "./components/piazza/manage-folders/manage-folders.component";
 
 
 export const enrollmentRoutes: Routes = [
@@ -39,6 +40,10 @@ export const enrollmentRoutes: Routes = [
   {
     path: 'help-request-dashboard',
     component: HelpRequestDashboardComponent
+  },
+  {
+    path: 'manage-folders',
+    component: ManageFoldersComponent
   }
   
 ];
