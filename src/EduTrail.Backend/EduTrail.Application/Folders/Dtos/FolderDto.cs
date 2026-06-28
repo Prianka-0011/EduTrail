@@ -4,6 +4,8 @@ namespace EduTrail.Application.Folders
 {
     public class FolderDto
     {
+        public bool? IsSuccess { get; set; }
+        public string? Message {get; set;}
         public FolderDetailsDto DetailsDto { get; set; } = new FolderDetailsDto();
 
         public List<FolderDetailsDto> DetailsListDto { get; set; } = new List<FolderDetailsDto>();

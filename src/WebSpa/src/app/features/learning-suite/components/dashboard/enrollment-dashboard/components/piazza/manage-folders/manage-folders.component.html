@@ -1,184 +1,27 @@
 <div class="container py-4">
 
   <!-- CREATE FOLDER -->
-
-  <div class="mb-5">
-
-    <h4 class="fw-bold">
-      Create New Folders
-    </h4>
-
-    <p class="text-muted">
-      Add folders that are relevant for your course.
-    </p>
-
-    <div class="row g-3 align-items-center">
-
-      <div class="col-md-5">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Folder Name"
-          [(ngModel)]="newFolderName">
-      </div>
-
-      <div class="col-auto">
-
-        <div class="form-check">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            [(ngModel)]="isNumberedFolder">
-        </div>
-
-      </div>
-
-      <div class="col-auto">
-        Numbered
-      </div>
-
-      <div class="col-auto">
-
-        <input
-          type="number"
-          class="form-control"
-          style="width:80px"
-          [(ngModel)]="startNumber">
-
-      </div>
-
-      <div class="col-auto">
-        -
-      </div>
-
-      <div class="col-auto">
-
-        <input
-          type="number"
-          class="form-control"
-          style="width:80px"
-          [(ngModel)]="endNumber">
-
-      </div>
-
-      <div class="col-auto">
-
-        <button
-          class="btn btn-primary"
-          (click)="addFolder()">
-
-          Add Folder
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- ACTIONS -->
-
-  <div class="d-flex justify-content-between align-items-center mb-4">
-
-    <button
-      class="btn btn-outline-danger"
-      [disabled]="selectedFolders.length === 0"
-      (click)="deleteSelected()">
-
-      Delete Selected
-
-    </button>
-
-    <button
-      class="btn btn-outline-primary"
-      (click)="toggleAllFolders()">
-
-      {{ expandAll ? 'Hide All Subfolders' : 'Show All Subfolders' }}
-
-    </button>
-
-  </div>
-
-  <!-- FOLDER LIST -->
-
-  <div
-    *ngFor="let folder of folders"
-    class="card mb-3">
-
-    <!-- PARENT FOLDER -->
-
+  <div class="card mb-4">
     <div class="card-body">
 
-      <div class="d-flex justify-content-between align-items-center">
+      <h4 class="fw-bold">
+        Create New Folders
+      </h4>
 
-        <div class="d-flex align-items-center gap-3">
+      <p class="text-muted">
+        Add folders that are relevant for your course.
+      </p>
 
-          <input
-            type="checkbox"
-            class="form-check-input"
-            (change)="onSelect(folder,$event)">
+      <div class="row g-3 align-items-center">
 
-          <i class="bi bi-grip-vertical"></i>
-
-          <i
-            class="bi"
-            [ngClass]="folder.expanded ? 'bi-folder2-open' : 'bi-folder'"
-            (click)="toggleFolder(folder)"
-            style="cursor:pointer">
-          </i>
-
-          <span class="fw-semibold">
-            {{ folder.name }}
-          </span>
-
-        </div>
-
-        <div class="btn-group">
-
-          <button
-            class="btn btn-outline-secondary"
-            (click)="editFolder(folder)">
-            Edit
-          </button>
-
-          <button
-            class="btn btn-outline-primary"
-            (click)="createSubFolder(folder)">
-            Create Subfolder
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- CREATE SUBFOLDER PANEL -->
-
-    <div
-      *ngIf="folder.showCreateSubFolder"
-      class="border-top p-3 bg-light">
-
-      <div class="row g-2 align-items-center">
-
-        <div class="col-md-4">
-
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Subfolder Name"
-            [(ngModel)]="folder.subFolderName">
-
+        <div class="col-md-5">
+          <input type="text" class="form-control" placeholder="Folder Name" [(ngModel)]="newFolderName">
         </div>
 
         <div class="col-auto">
-
-          <input
-            type="checkbox"
-            class="form-check-input"
-            [(ngModel)]="folder.isNumberedSubFolder">
-
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="isNumberedFolder">
+          </div>
         </div>
 
         <div class="col-auto">
@@ -186,13 +29,7 @@
         </div>
 
         <div class="col-auto">
-
-          <input
-            type="number"
-            class="form-control"
-            style="width:80px"
-            [(ngModel)]="folder.subFolderStart">
-
+          <input type="number" class="form-control" style="width:80px" [(ngModel)]="startNumber">
         </div>
 
         <div class="col-auto">
@@ -200,92 +37,216 @@
         </div>
 
         <div class="col-auto">
-
-          <input
-            type="number"
-            class="form-control"
-            style="width:80px"
-            [(ngModel)]="folder.subFolderEnd">
-
+          <input type="number" class="form-control" style="width:80px" [(ngModel)]="endNumber">
         </div>
 
         <div class="col-auto">
-
-          <button
-            class="btn btn-primary"
-            (click)="addSubFolder(folder)">
-
-            Add Subfolder
-
+          <button class="btn btn-primary" (click)="addFolder()">
+            Add Folder
           </button>
-
-        </div>
-
-        <div class="col-auto">
-
-          <button
-            class="btn btn-outline-secondary"
-            (click)="cancelCreateSubFolder(folder)">
-
-            Cancel
-
-          </button>
-
         </div>
 
       </div>
 
     </div>
+  </div>
 
-    <!-- SUBFOLDERS -->
+  <!-- ACTION BUTTONS -->
+  <div class="d-flex justify-content-between mb-4">
 
-    <div
-      *ngIf="folder.expanded"
-      class="border-top">
+    <button class="btn btn-outline-danger" [disabled]="selectedFolders.length === 0" (click)="deleteSelected()">
+      Delete Selected
+    </button>
 
-      <div
-        *ngFor="let subFolder of folder.subFolders"
-        class="d-flex justify-content-between align-items-center px-5 py-3 border-bottom">
+  </div>
 
+  <!-- FOLDER LIST -->
+  <div *ngFor="let folder of folders" class="card mb-3">
+
+    <div class="card-body">
+
+      <!-- Folder Header -->
+      <div class="d-flex justify-content-between align-items-center">
+
+        <!-- LEFT -->
         <div class="d-flex align-items-center gap-3">
 
-          <input
-            type="checkbox"
-            class="form-check-input"
-            (change)="onSelect(subFolder,$event)">
+          <input type="checkbox" class="form-check-input" (change)="onSelect(folder,$event)">
 
-          <i class="bi bi-grip-vertical"></i>
+          <i class="bi" [ngClass]="folder.showCreateSubFolder ? 'bi-folder2-open' : 'bi-folder'">
+          </i>
 
-          <i class="bi bi-folder"></i>
-
-          <span>
-            {{ subFolder.name }}
+          <!-- VIEW MODE -->
+          <span *ngIf="!folder.isEditing" class="fw-semibold">
+            {{ folder.name }}
           </span>
 
+          <button *ngIf="!folder.isEditing" class="btn btn-outline-primary btn-sm" (click)="toggleAllFolders(folder)"
+            [title]="folder.expanded ? 'Hide Subfolders' : 'Show Subfolders'">
+
+            <i class="bi" [ngClass]="folder.expanded ? 'bi-chevron-up' : 'bi-chevron-down'">
+            </i>
+
+          </button>
+          <!-- EDIT MODE -->
+          <input *ngIf="folder.isEditing" type="text" class="form-control form-control-sm" style="width:250px"
+            [(ngModel)]="folder.editName">
         </div>
 
+        <!-- RIGHT -->
         <div class="btn-group">
 
-          <button
-            class="btn btn-sm btn-outline-secondary"
-            (click)="editFolder(subFolder)">
-            Edit
-          </button>
+          <ng-container *ngIf="!folder.isEditing">
+
+            <button class="btn btn-outline-secondary" (click)="editFolder(folder)">
+              Edit
+            </button>
+
+            <button class="btn btn-outline-primary" (click)="createSubFolder(folder)">
+              Create Subfolder
+            </button>
+
+          </ng-container>
+
+          <ng-container *ngIf="folder.isEditing">
+
+            <button class="btn btn-success" (click)="saveEdit(folder)">
+              Save
+            </button>
+
+            <button class="btn btn-outline-secondary" (click)="cancelEdit(folder)">
+              Cancel
+            </button>
+
+          </ng-container>
 
         </div>
 
       </div>
 
-      <div
-        *ngIf="folder.subFolders.length === 0"
-        class="text-muted px-5 py-3">
+      <!-- SUBFOLDER SECTION -->
+      <div class="mt-4 border-top pt-3">
 
-        No subfolders
+        <div *ngIf="folder.showCreateSubFolder" class="border rounded p-3 bg-light mt-3">
 
+          <div class="row g-3 align-items-center">
+
+            <div class="col-md-4">
+              <input type="text" class="form-control" placeholder="Subfolder Name" [(ngModel)]="folder.subFolderName">
+            </div>
+
+            <div class="col-auto">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="folder.isNumberedSubFolder">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              Numbered
+            </div>
+
+            <div class="col-auto">
+              <input type="number" class="form-control" style="width:80px" [(ngModel)]="folder.subFolderStart">
+            </div>
+
+            <div class="col-auto">
+              -
+            </div>
+
+            <div class="col-auto">
+              <input type="number" class="form-control" style="width:80px" [(ngModel)]="folder.subFolderEnd">
+            </div>
+
+            <div class="col-auto">
+              <button class="btn btn-primary" (click)="addSubFolder(folder)">
+                Add Subfolder
+              </button>
+            </div>
+
+            <div class="col-auto">
+              <button class="btn btn-outline-secondary" (click)="cancelSubFolder(folder)">
+                Cancel
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- <div class="sub-list" *ngIf="folder.expanded">
+          <div *ngFor="let subFolder of (folder.subFolders || [])"
+            class="border rounded p-2 mb-2 d-flex justify-content-between align-items-center">
+
+            <span *ngIf="!subFolder.isEditing">
+              {{ subFolder.name }}
+            </span>
+            <input *ngIf="subFolder.isEditing" type="text" class="form-control form-control-sm" style="width:220px"
+              [(ngModel)]="subFolder.editName">
+
+          </div>
+        </div> -->
+
+        <div class="sub-list" *ngIf="folder.expanded">
+          <div *ngFor="let subFolder of (folder.subFolders || [])"
+            class="border rounded p-2 mb-2 d-flex justify-content-between align-items-center">
+
+            <!-- Left -->
+            <div class="d-flex align-items-center gap-2">
+              <input type="checkbox" class="form-check-input" (change)="onSelect(subFolder,$event)">
+              <!-- View -->
+              <span *ngIf="!subFolder.isEditing">
+                {{ subFolder.name }}
+              </span>
+
+              <!-- Edit -->
+              <input *ngIf="subFolder.isEditing" type="text" class="form-control form-control-sm" style="width:220px"
+                [(ngModel)]="subFolder.editName">
+
+            </div>
+
+            <!-- Right -->
+            <div class="btn-group">
+
+              <ng-container *ngIf="!subFolder.isEditing">
+
+                <button class="btn btn-outline-secondary btn-sm" (click)="editSubFolder(subFolder)">
+                  Edit
+                </button>
+
+              </ng-container>
+
+              <ng-container *ngIf="subFolder.isEditing">
+
+                <button class="btn btn-success btn-sm" (click)="saveSubFolder(subFolder)">
+                  Save
+                </button>
+
+                <button class="btn btn-outline-secondary btn-sm" (click)="cancelSubFolderEdit(subFolder)">
+                  Cancel
+                </button>
+
+              </ng-container>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <!-- <div *ngIf="!folder.subFolders || folder.subFolders.length === 0" class="text-muted mb-3">
+          No subfolders created yet.
+        </div> -->
+
+        <!-- CREATE SUBFOLDER FORM -->
       </div>
 
     </div>
 
   </div>
+
+  <app-confirm-dialog [visible]="showDeleteModal" title="Delete Folders"
+    message="Are you sure you want to delete selected folders? This will also delete all subfolders."
+    confirmText="Delete" cancelText="Cancel" (confirmed)="onConfirmDelete()" (cancelled)="onCancelDelete()">
+  </app-confirm-dialog>
 
 </div>

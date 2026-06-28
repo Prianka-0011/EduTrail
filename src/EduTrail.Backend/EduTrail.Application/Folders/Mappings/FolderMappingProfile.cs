@@ -7,8 +7,8 @@ namespace EduTrail.Application.Folders
     {
         public FolderMappingProfile()
         {
-            CreateMap<FolderDto, Folder>();
-            CreateMap<Folder, FolderDto>();
+            CreateMap<FolderDetailsDto, Folder>();
+            CreateMap<Folder, FolderDetailsDto>();
         }
     }
 
