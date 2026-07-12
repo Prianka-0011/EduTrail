@@ -3,6 +3,7 @@ using System;
 using EduTrail.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260710163349_alter-post-table")]
+    partial class alterposttable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -428,9 +431,6 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid>("PostId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Question")
-                        .HasColumnType("text");
-
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uuid");
 
@@ -439,8 +439,7 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId")
-                        .IsUnique();
+                    b.HasIndex("PostId");
 
                     b.ToTable("Polls");
                 });
@@ -1285,21 +1284,6 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("AuditEntries");
                 });
 
-            modelBuilder.Entity("FolderPost", b =>
-                {
-                    b.Property<Guid>("FoldersId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PostsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("FoldersId", "PostsId");
-
-                    b.HasIndex("PostsId");
-
-                    b.ToTable("FolderPost");
-                });
-
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.Property<Guid>("RolesId")
@@ -1467,8 +1451,8 @@ namespace EduTrail.Infrastructure.Migrations
             modelBuilder.Entity("EduTrail.Domain.Entities.Poll", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Post", "Post")
-                        .WithOne("Poll")
-                        .HasForeignKey("EduTrail.Domain.Entities.Poll", "PostId")
+                        .WithMany()
+                        .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1634,21 +1618,6 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("TermType");
                 });
 
-            modelBuilder.Entity("FolderPost", b =>
-                {
-                    b.HasOne("EduTrail.Domain.Entities.Folder", null)
-                        .WithMany()
-                        .HasForeignKey("FoldersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EduTrail.Domain.Entities.Post", null)
-                        .WithMany()
-                        .HasForeignKey("PostsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Role", null)
@@ -1704,8 +1673,6 @@ namespace EduTrail.Infrastructure.Migrations
             modelBuilder.Entity("EduTrail.Domain.Entities.Post", b =>
                 {
                     b.Navigation("Enrollments");
-
-                    b.Navigation("Poll");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>

@@ -1,0 +1,239 @@
+<!-- <div class="table-container">
+
+    <div class="row align-items-center justify-content-between mb-3">
+
+        <div class="col-auto">
+            <h2 class="mb-0">Posts</h2>
+        </div>
+
+        <div class="col-auto">
+            <button class="btn btn-primary btn-sm" (click)="openDetailDrawer()">
+                <i class="bi bi-plus-lg me-1"></i>
+                New Post
+            </button>
+        </div>
+
+    </div>
+
+    
+    <div class="row justify-content-end">
+        <div class="col-md-4 col-10 mb-4">
+            <div class="search-input-wrapper">
+                <input type="text" class="form-control" placeholder="Search posts..." [(ngModel)]="searchText"
+                    (input)="applyFilter()">
+                <i class="bi bi-search search-icon"></i>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="table-responsive">
+        <table class="table custom-table">
+
+            <thead>
+                <tr>
+                    <th (click)="applySort('summary')" role="button">Summary</th>
+                    <th>Detail</th>
+                    <th (click)="applySort('createdDate')" role="button">Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let post of paged">
+
+                    <td>{{ post.summary }}</td>
+
+                    <td>{{ post.details }}</td>
+
+                    <td>
+                        {{ post.createdDate | date:'MMM dd, yyyy hh:mm a' }}
+                    </td>
+
+                    <td class="d-flex gap-2">
+
+                        <button class="btn btn-sm btn-primary" (click)="openDetailDrawer(post.id)">
+                            View
+                        </button>
+
+                        <button class="btn btn-sm btn-danger" (click)="deletePost(post.id)">
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+                <tr *ngIf="paged.length === 0">
+                    <td colspan="7" class="text-center py-4 text-muted">
+                        No records found
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+<app-side-drawer [opened]="drawerOpen" width="1200px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+
+    <ng-container *ngIf="drawerOpen">
+        <app-new-post (cancel)="closeDrawer()">
+        </app-new-post>
+    </ng-container>
+
+</app-side-drawer>
+
+<ng-template #drawerHeader>
+    <div class="d-flex align-items-center gap-2">
+        <div class="post-header">
+
+            <i class="bi bi-plus-circle header-icon"></i>
+
+            <h2>New Post</h2>
+        </div>
+    </div>
+</ng-template> -->
+
+
+<div class="posts-container">
+
+    <!-- Header -->
+    <div class="posts-header">
+
+        <div class="title-section">
+            <i class="bi bi-filter"></i>
+            <h2>All Posts</h2>
+        </div>
+
+
+        <div class="header-actions">
+            <button class="icon-btn">
+                <i class="bi bi-arrow-down-up"></i>
+            </button>
+
+            <button class="icon-btn">
+                <i class="bi bi-three-dots-vertical"></i>
+            </button>
+
+            <button class="btn btn-primary btn-sm" (click)="openDetailDrawer()">
+                <i class="bi bi-plus-lg me-1"></i>
+                New Post
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- Group -->
+    <div class="post-group" *ngFor="let group of groupedPosts">
+
+        <div class="group-header">
+            <i class="bi bi-chevron-down"></i>
+            <span>{{group.title}}</span>
+        </div>
+
+
+        <!-- Posts -->
+        <div class="post-card" *ngFor="let post of group.posts" (click)="openDetailDrawer(post.id)">
+
+
+            <div class="post-top">
+
+
+                <div class="post-type">
+
+                    <span class="type-box" [class.instructor]="post.postTypeName === 'Instructor'">
+                    </span>
+
+                    <span>
+                        {{post.postTypeName}}
+                    </span>
+
+                </div>
+
+
+                <div class="post-date">
+                    {{post.createdDate | date:'MM/dd/yy'}}
+                </div>
+
+            </div>
+
+
+
+            <div class="post-content">
+
+
+                <h3>
+                    {{post.summary}}
+                </h3>
+
+
+                <p>
+                    {{post.details}}
+                </p>
+
+
+            </div>
+
+            <div class="post-actions">
+                <button class="btn btn-sm btn-primary" (click)="viewPost(post)">
+                    <i class="fa fa-eye"></i> View Post
+                </button>
+
+                <button class="btn btn-sm btn-warning" (click)="editPost(post)">
+                    <i class="fa fa-edit"></i> Edit
+                </button>
+
+                <button class="btn btn-sm btn-danger" (click)="deleteFromEveryone(post)">
+                    <i class="fa fa-trash"></i> Delete
+                </button>
+
+                <button class="btn btn-sm btn-secondary" (click)="archivePost(post)">
+                    <i class="fa fa-archive"></i> Archive
+                    <span class="action-hint">(hide from your feed)</span>
+                </button>
+
+                <button class="btn btn-sm btn-danger" (click)="deleteFromEveryone(post)">
+                    <i class="fa fa-trash-alt"></i> Delete
+                    <span class="action-hint">(from everyone's feed)</span>
+                </button>
+
+                <button class="btn btn-sm btn-info" (click)="pinPost(post)">
+                    <i class="fa fa-thumbtack"></i> Pin
+                    <span class="action-hint">(to top of everyone's feed)</span>
+                </button>
+
+                <button class="btn btn-sm btn-light" (click)="markAsUnread(post)">
+                    <i class="fa fa-flag"></i> Mark as Unread
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<app-side-drawer [opened]="drawerOpen" width="1200px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+
+    <ng-container *ngIf="drawerOpen">
+        <app-new-post (cancel)="closeDrawer()">
+        </app-new-post>
+    </ng-container>
+
+</app-side-drawer>
+
+<ng-template #drawerHeader>
+    <div class="d-flex align-items-center gap-2">
+        <div class="post-header">
+
+            <i class="bi bi-plus-circle header-icon"></i>
+
+            <h2>New Post</h2>
+        </div>
+    </div>
+</ng-template>

@@ -7,6 +7,7 @@ import { HelpRequestListComponent } from "./components/help-request-list/help-re
 import { CurrentUserHelpRequestListComponent } from "./components/current-user-help-request-list/current-user-help-request-list.component";
 import { HelpRequestDashboardComponent } from "./components/help-request-dashboard/help-request-dashboard.component";
 import { ManageFoldersComponent } from "./components/piazza/manage-folders/manage-folders.component";
+import { PostsListComponent } from "./components/piazza/posts-list/posts-list.component";
 
 
 export const enrollmentRoutes: Routes = [
@@ -44,6 +45,10 @@ export const enrollmentRoutes: Routes = [
   {
     path: 'manage-folders',
     component: ManageFoldersComponent
+  },
+  {
+    path: 'post-list',
+    component: PostsListComponent
   }
   
 ];

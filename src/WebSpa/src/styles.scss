@@ -1,6 +1,23 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$my-theme: mat.define-theme((
+  color: (
+    theme-type: light
+  ),
+  typography: (
+    plain-family: Roboto,
+  )
+));
+
+html {
+  @include mat.all-component-themes($my-theme);
+}
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import 'ngx-toastr/toastr';
-
+@import 'ng-zorro-antd/ng-zorro-antd.min.css';
+@import "quill/dist/quill.snow.css";
 
 html,
 body {
@@ -360,3 +377,4 @@ h2 {
   color: #6c757d;
   font-size: 18px;
 }
+

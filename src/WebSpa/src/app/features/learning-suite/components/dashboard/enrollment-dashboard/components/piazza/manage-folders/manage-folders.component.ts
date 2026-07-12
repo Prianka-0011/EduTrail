@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ManageFolderService } from '../../../../services/manage-folder.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { IFolder, IFolderDetail } from '../../../../../enrollments/interfaces/IFolder';
+import { IFolder, IFolderDetail } from '../../../../interfaces/IFolder';
 import { ConfirmDialogComponent } from '../../../../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 

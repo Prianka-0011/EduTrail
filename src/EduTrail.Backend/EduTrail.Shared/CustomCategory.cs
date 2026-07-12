@@ -27,6 +27,14 @@ namespace EduTrail.Shared
 
         }
 
+        public static class PostTypes
+        {
+            public static Guid Note { get; set; } = Guid.Parse("9efb883c-9348-41c1-b51e-1dd463ec1f5b");
+            public static Guid Question { get; set; } = Guid.Parse("3002fb15-b1f7-47ba-90e8-34db886a901a");
+            public static Guid Poll { get; set; } = Guid.Parse("f35db777-9824-4d40-976d-33262c1c23ce");
+
+        }
+
         public static class RoleType
         {
             public static Guid TA { get; set; } = Guid.Parse("5A1E4C7D-9B82-4F36-A3C1-6D9E2F8B0A55");

@@ -1,0 +1,348 @@
+.new-post-container {
+    padding: 20px 35px;
+}
+
+
+.form-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+
+.label {
+    width: 180px;
+    min-width: 180px;
+    font-size: 18px;
+    font-weight: 600;
+    padding-top: 10px;
+}
+
+
+.form-control,
+.folder-dropdown,
+.details-box {
+    width: 100%;
+}
+
+
+/* Radio buttons */
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+}
+
+
+.radio-card {
+
+    display: flex;
+    gap: 12px;
+    padding: 18px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    flex: 1;
+
+    input {
+        margin-top: 5px;
+    }
+
+    strong {
+        font-size: 16px;
+    }
+
+    small {
+        display: block;
+        color: #666;
+        margin-top: 5px;
+    }
+}
+
+
+.radio-card.active {
+    background: #e8f1fb;
+}
+
+
+/* Post To */
+
+.inline-radio {
+
+    display: flex;
+    gap: 30px;
+    padding-top: 8px;
+
+    label {
+        font-size: 18px;
+    }
+}
+
+
+/* Folder */
+
+.folder-select {
+    flex: 1;
+}
+
+
+mat-form-field {
+    width: 100%;
+}
+
+
+/* Summary */
+
+.form-control {
+
+    height: 45px;
+    padding: 0 15px;
+
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    font-size: 16px;
+
+    &:focus {
+        outline: none;
+        border-color: #1261a0;
+    }
+}
+
+
+/* Editor */
+
+.editor-section {
+    flex: 1;
+}
+
+
+.editor-options {
+
+    display: flex;
+    gap: 25px;
+    margin-bottom: 12px;
+
+}
+
+
+.details-box {
+
+    height: 400px;
+    padding: 15px;
+
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    resize: none;
+
+    font-size: 16px;
+}
+
+
+/* Buttons */
+
+.action-buttons {
+
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 80px;
+
+}
+
+
+.cancel-btn,
+.submit-btn {
+
+    padding: 10px 30px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+
+}
+
+
+.cancel-btn {
+
+    background: white;
+    border: 1px solid #ccc;
+
+}
+
+
+.submit-btn {
+
+    background: #1261a0;
+    color: white;
+    border: none;
+
+}
+
+
+/* Angular Material dropdown fix */
+
+::ng-deep .cdk-overlay-container {
+    z-index: 9999 !important;
+}
+
+
+::ng-deep .mat-mdc-select-panel {
+    background: white !important;
+}
+
+::ng-deep .child-folder-option {
+  padding-left: 50px !important;
+}
+.folder-dropdown {
+    width: 100%;
+}
+
+::ng-deep .folder-dropdown .mat-mdc-text-field-wrapper {
+    height: 48px !important;
+}
+
+::ng-deep .folder-dropdown .mat-mdc-form-field-flex {
+    height: 48px !important;
+    align-items: center !important;
+}
+
+::ng-deep .folder-dropdown .mat-mdc-select-trigger {
+    height: 48px !important;
+    align-items: center !important;
+}
+
+.editor-container{
+    flex:1;
+}
+
+.editor-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.editor-types{
+    display:flex;
+    gap:30px;
+}
+
+.editor-body{
+    display:flex;
+    gap:15px;
+}
+
+.editor-body.preview>*{
+    width:50%;
+}
+
+.editor-body:not(.preview)>*{
+    width:100%;
+}
+
+textarea{
+
+    width:100%;
+    min-height:388PX;
+
+    border:1px solid #dcdcdc;
+
+    padding:15px;
+
+    resize:vertical;
+
+}
+
+.poll-card {
+    width: 100%;
+    max-width: 700px;
+    padding: 20px;
+    border: 1px solid #dfe3e8;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.poll-option-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.option-number {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #1976d2;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.option-input {
+    flex: 1;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.option-input:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(25,118,210,.15);
+}
+
+.delete-option {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: #f5f5f5;
+    color: #d32f2f;
+    font-size: 18px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.delete-option:hover {
+    background: #fdeaea;
+}
+
+.add-option-btn {
+    width: 100%;
+    margin-top: 8px;
+    height: 44px;
+    border: 2px dashed #1976d2;
+    background: #f8fbff;
+    color: #1976d2;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.add-option-btn:hover {
+    background: #eef6ff;
+}
+
+.editor-body {
+    width: 100%;
+}
+
+.preview-panel {
+    min-height: 388PX;
+    border: 1px solid #074c91;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-y: auto;
+    background: #fff;
+    line-height: 1.6;
+}

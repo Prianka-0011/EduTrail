@@ -1,0 +1,315 @@
+<div class="new-post-container">
+
+    <!-- Post Type -->
+    <div class="form-row">
+
+        <label class="label">
+            Post Type*
+        </label>
+
+        <div class="radio-group">
+
+            <label class="radio-card" *ngFor="let type of types" [class.active]="postDetail.postTypeId === type.id">
+
+                <input type="radio" name="postType" [value]="type.id" [(ngModel)]="postDetail.postTypeId"
+                    (change)="onPostTypeChange()">
+
+                <div>
+                    <strong>{{ type.name }}</strong>
+
+                    <small *ngIf="type.desctiption">
+                        {{ type.desctiption }}
+                    </small>
+                </div>
+
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- Poll Question -->
+    <div class="form-row" *ngIf="postDetail.postTypeId === CustomCategory.PostTypes.Poll">
+
+        <label class="label">
+            Poll Question*
+        </label>
+
+        <input class="form-control" [(ngModel)]="postDetail.poll!.question" placeholder="Enter your poll question">
+    </div>
+
+
+    <!-- Poll Options -->
+    <div class="form-row" *ngIf="postDetail.postTypeId === CustomCategory.PostTypes.Poll">
+
+        <label class="label">
+            Poll Options*
+        </label>
+
+
+        <div class="poll-card">
+
+
+            <div class="poll-option-row" *ngFor="let option of postDetail.poll?.options; let i = index">
+
+
+                <div class="option-number">
+                    {{ i + 1 }}
+                </div>
+
+
+                <input class="option-input" [(ngModel)]="option.optionText" placeholder="Enter option {{ i + 1 }}">
+
+
+                <button type="button" class="delete-option" *ngIf="(postDetail.poll?.options?.length ?? 0) > 2"
+                    (click)="removePollOption(i)">
+
+                    ✕
+
+                </button>
+
+
+            </div>
+
+
+            <button type="button" class="add-option-btn" (click)="addPollOption()">
+
+                + Add Option
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- Post To -->
+    <div class="form-row">
+
+        <label class="label">
+            Post To*
+        </label>
+
+
+        <div class="inline-radio">
+
+
+            <label>
+
+                <input type="radio" name="postTo" value="class" [(ngModel)]="postTo" (change)="onPostToChange()">
+
+                Entire Class
+
+            </label>
+
+
+
+            <label>
+
+                <input type="radio" name="postTo" value="individual" [(ngModel)]="postTo" (change)="onPostToChange()">
+
+                Individual Student(s) / Instructor(s)
+
+            </label>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Recipient Selection -->
+    <div class="form-row" *ngIf="postTo === 'individual'">
+
+
+        <label class="label">
+            Select User(s) *
+        </label>
+
+
+        <div class="folder-select">
+
+
+            <mat-form-field appearance="outline" class="folder-dropdown">
+
+
+                <mat-label>
+                    Select Student(s) / Instructor(s)
+                </mat-label>
+
+
+                <mat-select multiple [(ngModel)]="selectedUsers">
+
+
+                    <mat-select-trigger>
+
+                        {{ selectedUsers.length }}
+                        {{ selectedUsers.length === 1 ? 'user selected' : 'users selected' }}
+
+                    </mat-select-trigger>
+
+
+                    <mat-option *ngFor="let user of enrollements" [value]="user.id">
+
+                        {{ user.name }}
+
+                    </mat-option>
+
+
+                </mat-select>
+
+
+            </mat-form-field>
+
+
+        </div>
+
+
+    </div>
+
+    <!-- Folder Select -->
+    <div class="form-row">
+
+
+        <label class="label">
+            Select Folders *
+        </label>
+
+        <div class="folder-select">
+
+            <mat-form-field appearance="outline" class="folder-dropdown">
+
+                <mat-label>
+                    Select folder(s)
+                </mat-label>
+
+
+                <mat-select multiple [(ngModel)]="selectedFolderIds">
+
+                    <ng-container *ngFor="let folder of folders">
+
+                        <mat-option [value]="folder.id">
+
+                            {{ folder.name }}
+
+                        </mat-option>
+
+                        <mat-option *ngFor="let child of folder.childFolders" [value]="child.id"
+                            class="child-folder-option">
+
+                            {{ child.name }}
+
+                        </mat-option>
+
+                    </ng-container>
+
+                </mat-select>
+
+            </mat-form-field>
+
+        </div>
+
+    </div>
+
+    <!-- Summary -->
+    <div class="form-row">
+
+        <label class="label">
+            Summary*
+        </label>
+
+        <input class="form-control" maxlength="100" placeholder="Enter a one line summary, 100 characters or less"
+            [(ngModel)]="postDetail.summary">
+    </div>
+
+    <!-- Details -->
+    <div class="form-row">
+
+        <label class="label">
+            Details
+        </label>
+
+        <div class="editor-container">
+
+            <div class="editor-header">
+
+                <div class="editor-types">
+
+                    <label>
+
+                        <input type="radio" value="rich" name="editorType" [(ngModel)]="editorType">
+
+                        Rich text editor
+
+                    </label>
+
+                    <label>
+
+                        <input type="radio" value="plain" name="editorType" [(ngModel)]="editorType">
+
+                        Plain text editor
+
+                    </label>
+
+                    <label>
+
+                        <input type="radio" value="markdown" name="editorType" [(ngModel)]="editorType">
+
+                        Markdown editor
+
+                    </label>
+
+                </div>
+
+                <mat-slide-toggle [(ngModel)]="showPreview">
+                    Preview
+                </mat-slide-toggle>
+
+            </div>
+
+            <div class="editor-body" [class.preview]="showPreview">
+
+                <quill-editor *ngIf="editorType === 'rich'" [(ngModel)]="postDetail.details" theme="snow"
+                    style="height:300px" class="rich-editor">
+
+                </quill-editor>
+
+                <textarea *ngIf="editorType === 'plain'" [(ngModel)]="postDetail.details">
+
+                </textarea>
+
+                <textarea *ngIf="editorType === 'markdown'" [(ngModel)]="postDetail.details">
+
+                </textarea>
+
+                <div *ngIf="showPreview" class="preview-panel">
+
+                    <div [innerHTML]="postDetail.details"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="action-buttons">
+
+        <button type="button" class="cancel-btn" (click)="close()">
+            Cancel
+        </button>
+
+        <button type="button" class="submit-btn" (click)="submitPost()">
+            Post
+        </button>
+
+    </div>
+
+</div>

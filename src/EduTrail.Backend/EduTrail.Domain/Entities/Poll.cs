@@ -9,6 +9,7 @@ namespace EduTrail.Domain.Entities
 
         [Key]
         public Guid Id { get; set; }
+        public string? Question { get; set; }
 
         [Required]
         public Guid PostId { get; set; }

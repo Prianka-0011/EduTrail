@@ -24,18 +24,17 @@ namespace EduTrail.Domain.Entities
         [Required]
         public EditorType EditorType { get; set; }
 
-        [Required]
-        public bool IsAnnouncement { get; set; }
+        public bool? IsAnnouncement { get; set; } = false;
 
-        [Required]
-        public bool SendEmailImmediately { get; set; }
+        public bool? SendEmailImmediately { get; set; } = false;
 
-        [Required]
-        public bool IsScheduled { get; set; }
+        public bool? IsScheduled { get; set; } = false;
+
+        public bool? IsIndividual { get; set; } = false;
 
         public DateTimeOffset? ScheduledAt { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; } = false;
 
         public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
@@ -43,6 +42,8 @@ namespace EduTrail.Domain.Entities
         public Guid? CreatedById { get; set; }
         public DateTimeOffset? UpdatedDate { get; set; }
         public Guid? UpdatedById { get; set; }
+        public Poll? Poll { get; set; }
+        public ICollection<Folder> Folders { get; set; } = new List<Folder>();
     }
 
     public enum EditorType

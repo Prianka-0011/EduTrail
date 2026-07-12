@@ -20,6 +20,7 @@ using Quartz;
 using EduTrail.Application.Chats;
 using EduTrail.Application.HelpRequestDashboards;
 using EduTrail.Application.Folders;
+using EduTrail.Application.Posts;
 
 namespace EduTrail.Infrastructure
 {
@@ -117,6 +118,7 @@ namespace EduTrail.Infrastructure
             services.AddScoped<IChatRepository, ChatRepository>();
             services.AddScoped<IHelpRequestDashboardRepository, HelpRequestDashboardRepository>();
             services.AddScoped<IFolderRepository, FolderRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
 
             return services;
         }

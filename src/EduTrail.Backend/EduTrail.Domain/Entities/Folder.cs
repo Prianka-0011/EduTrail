@@ -37,5 +37,6 @@ namespace EduTrail.Domain.Entities
         public Guid? CreatedById { get; set; }
         public DateTimeOffset? UpdatedDate { get; set; }
         public Guid? UpdatedById { get; set; }
+        public ICollection<Post> Posts { get; set; } = new List<Post>();
     }
 }
