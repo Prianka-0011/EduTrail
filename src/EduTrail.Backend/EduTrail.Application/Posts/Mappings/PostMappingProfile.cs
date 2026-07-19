@@ -22,18 +22,17 @@ namespace EduTrail.Application.Posts
                 .ForMember(dest => dest.Enrollments,
                     opt => opt.Ignore());
 
-
             // Post Entity -> DTO
             CreateMap<Post, PostDetailDto>()
                 .ForMember(dest => dest.Poll,
                     opt => opt.MapFrom(src => src.Poll))
-
-                // Map many-to-many folders
                 .ForMember(dest => dest.FolderIds,
                     opt => opt.MapFrom(src =>
-                        src.Folders.Select(x => x.Id).ToList()));
-
-
+                        src.Folders.Select(x => x.Id).ToList()))
+                .ForMember(dest => dest.PostTypeName,
+                    opt => opt.MapFrom(src => src.PostType.Name))
+                .ForMember(dest => dest.CreatedDate,
+                opt => opt.MapFrom(src => src.CreatedDate));
 
             // Poll DTO -> Entity
             CreateMap<PollDto, Poll>()
@@ -49,12 +48,8 @@ namespace EduTrail.Application.Posts
                 .ForMember(dest => dest.Options,
                     opt => opt.MapFrom(src => src.Options));
 
-
-
             // Poll Entity -> DTO
             CreateMap<Poll, PollDto>();
-
-
 
             // Poll Option DTO -> Entity
             CreateMap<PollOptionDto, PollOption>()
@@ -70,12 +65,8 @@ namespace EduTrail.Application.Posts
                 .ForMember(dest => dest.Votes,
                     opt => opt.Ignore());
 
-
-
             // Poll Option Entity -> DTO
             CreateMap<PollOption, PollOptionDto>();
-
-
 
             // Poll Vote DTO -> Entity
             CreateMap<PollVoteDto, PollVote>()
@@ -87,8 +78,6 @@ namespace EduTrail.Application.Posts
 
                 .ForMember(dest => dest.Enrollment,
                     opt => opt.Ignore());
-
-
 
             // Poll Vote Entity -> DTO
             CreateMap<PollVote, PollVoteDto>();

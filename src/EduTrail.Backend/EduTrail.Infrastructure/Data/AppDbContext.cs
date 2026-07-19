@@ -76,5 +76,27 @@ namespace EduTrail.Infrastructure.Data
         // public virtual DbSet<QURTZ_TRIGGER> QRTZ_TRIGGERS { get; set; }
 
         #endregion
+
+                protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Post>()
+                .HasMany(p => p.Folders)
+                .WithMany(f => f.Posts)
+                .UsingEntity<Dictionary<string, object>>(
+                    "FolderPost",
+                    j => j
+                        .HasOne<Folder>()
+                        .WithMany()
+                        .HasForeignKey("FoldersId")
+                        .OnDelete(DeleteBehavior.Cascade),
+
+                    j => j
+                        .HasOne<Post>()
+                        .WithMany()
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade));
+        }
     }
 }

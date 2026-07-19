@@ -8,7 +8,10 @@ import { SideDrawerComponent } from '../../../../../../../../shared/components/s
 import { PostService } from '../../../../services/post.service';
 import { IPostDetail } from '../../../../interfaces/IPost';
 import { NewPostComponent } from '../new-post/new-post.component';
-
+import { StripHtmlPipe } from '../../../../../../../../shared/pipes/strip-html.pipe';
+import { CustomCategory } from '../../../../../../../../shared/interface/customCategory';
+import { MatIconModule } from '@angular/material/icon';
+import { EditPostComponent } from '../edit-post/edit-post.component';
 
 @Component({
   selector: 'app-posts-list',
@@ -17,14 +20,15 @@ import { NewPostComponent } from '../new-post/new-post.component';
     CommonModule,
     FormsModule,
     SideDrawerComponent,
-    NewPostComponent
+    NewPostComponent,
+    StripHtmlPipe,
+    MatIconModule,
+    EditPostComponent
   ],
   templateUrl: './posts-list.component.html',
   styleUrl: './posts-list.component.scss'
 })
 export class PostsListComponent implements OnInit {
-  EMPTY_ID = '00000000-0000-0000-0000-000000000000';
-
   constructor(
     private postService: PostService,
     private router: Router,
@@ -32,83 +36,76 @@ export class PostsListComponent implements OnInit {
     private activeRoute: ActivatedRoute
   ) { }
 
-
   drawerOpen = false;
 
+  EMPTY_ID = '00000000-0000-0000-0000-000000000000';
+  currentPost = this.EMPTY_ID;
 
   posts: IPostDetail[] = [];
   filtered: IPostDetail[] = [];
   paged: IPostDetail[] = [];
 
-
   groupedPosts: {
     title: string;
+    expanded: boolean;
     posts: IPostDetail[];
   }[] = [];
-
 
   pageSizeOptions = [5, 10, 20];
   pageSize = 10;
   currentPage = 1;
   totalItems = 0;
   courseOfferingId = "";
-
   sortColumn: keyof IPostDetail | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
-
-
   searchText = '';
 
-
-
   ngOnInit(): void {
-    // const courseOfferingId =
-    //   this.activeRoute.parent?.snapshot.paramMap.get('courseOfferingId')
-    //   ?? this.EMPTY_ID;
-    // this.getAllPosts(courseOfferingId);
-    this.loadDummyPosts();
+    this.courseOfferingId =
+      this.activeRoute.parent?.snapshot.paramMap.get('courseOfferingId')
+      ?? this.EMPTY_ID;
 
+    this.getAllPosts(this.courseOfferingId);
   }
 
+  getAllPosts(courseOfferingId: string): void {
 
-
-  // getAllPosts() {
-
-  //   this.postService.getAllPosts().subscribe({
-
-  //     next: res => {
-
-  //       this.posts = res.detailsListDto ?? [];
-
-  //       this.applyFilter();
-
-  //     },
-
-  //     error: err => console.error(err)
-
-  //   });
-
-  // }
-
-  getAllPosts(courseOfferingId: string) {
-    this.postService.getAllPosts(this.courseOfferingId)
+    this.postService.getAllPosts(courseOfferingId)
       .subscribe({
         next: res => {
+
           this.posts = res.detailsListDto ?? [];
+
           this.applyFilter();
         },
-        error: err => console.error(err)
+        error: err => {
+          console.error(err);
+          this.toast.error('Failed to load posts.');
+        }
       });
   }
 
+  getPostTypeIcon(postTypeId?: string): string {
+    switch (postTypeId) {
+      case CustomCategory.PostTypes.Note:
+        return 'note';
 
+      case CustomCategory.PostTypes.Question:
+        return 'help_outline';
+
+      case CustomCategory.PostTypes.Poll:
+        return 'poll';
+
+      default:
+        return 'article';
+    }
+  }
 
   applyFilter() {
 
     const value = this.searchText
       .toLowerCase()
       .trim();
-
 
     this.filtered = this.posts.filter(p =>
 
@@ -127,27 +124,18 @@ export class PostsListComponent implements OnInit {
       (p.postTypeName || '')
         .toLowerCase()
         .includes(value)
-
     );
-
 
     this.totalItems = this.filtered.length;
 
     this.currentPage = 1;
 
-
     this.applySort();
 
-
-    // Update Piazza style grouping
     this.groupPosts(this.filtered);
-
   }
 
-
-
   applySort(column?: keyof IPostDetail) {
-
 
     if (column) {
 
@@ -160,94 +148,55 @@ export class PostsListComponent implements OnInit {
 
       }
       else {
-
         this.sortColumn = column;
         this.sortDirection = 'asc';
-
       }
-
     }
 
-
-
     if (this.sortColumn) {
-
-
       const key = this.sortColumn;
 
-
       this.filtered.sort((a, b) => {
-
-
         const valueA =
           String(a[key] ?? '')
             .toLowerCase();
-
 
         const valueB =
           String(b[key] ?? '')
             .toLowerCase();
 
-
-
         return this.sortDirection === 'asc'
           ? valueA.localeCompare(valueB)
           : valueB.localeCompare(valueA);
-
-
       });
-
-
     }
 
-
     this.updatePage();
-
   }
 
-
-
-
   updatePage() {
-
-
     const start =
       (this.currentPage - 1) * this.pageSize;
-
 
     const end =
       start + this.pageSize;
 
-
     this.paged =
       this.filtered.slice(start, end);
-
-
   }
 
-
-
-
   groupPosts(posts: IPostDetail[]) {
-
-
     const groups: {
       [key: string]: {
         title: string;
         posts: IPostDetail[];
+        expanded: boolean;
       }
     } = {};
 
-
-
     posts.forEach(post => {
-
-
       const date =
         new Date(post.createdDate ?? new Date());
-
-
-
       let title =
         date.toLocaleDateString(
           'en-US',
@@ -258,128 +207,73 @@ export class PostsListComponent implements OnInit {
           }
         );
 
-
-
       const today = new Date();
-
-
       const yesterday = new Date();
 
       yesterday.setDate(
         today.getDate() - 1
       );
 
-
-
       if (
         date.toDateString() ===
         today.toDateString()
       ) {
-
         title = 'Today';
-
       }
       else if (
         date.toDateString() ===
         yesterday.toDateString()
       ) {
-
         title = 'Yesterday';
-
       }
-
-
 
       if (!groups[title]) {
 
         groups[title] = {
-
           title,
-
+          expanded: true,
           posts: []
-
         };
 
       }
-
-
-
       groups[title].posts.push(post);
-
-
     });
-
-
 
     this.groupedPosts =
       Object.values(groups);
-
-
   }
-
-
-
-
 
   changePageSize(size: number) {
-
     this.pageSize = +size;
-
     this.currentPage = 1;
-
     this.updatePage();
-
   }
 
-
-
   goToPage(page: number) {
-
-
     if (
       page < 1 ||
       page > this.totalPages
     ) {
-
       return;
-
     }
-
-
     this.currentPage = page;
-
     this.updatePage();
-
   }
 
-
-
-
   get totalPages(): number {
-
     return Math.ceil(
       this.totalItems / this.pageSize
     );
-
   }
 
-
-
   get rangeLabel(): string {
-
-
     if (!this.totalItems) {
-
       return '0 of 0';
-
     }
-
 
     const start =
       (this.currentPage - 1) *
       this.pageSize + 1;
-
-
 
     const end =
       Math.min(
@@ -387,52 +281,30 @@ export class PostsListComponent implements OnInit {
         this.totalItems
       );
 
-
-
     return `${start} – ${end} of ${this.totalItems}`;
-
   }
 
-
-
-
-  openDetailDrawer(id?: string) {
-
-
+  openDetailDrawer(id: string = this.EMPTY_ID): void {
+    this.currentPost = id;
     this.drawerOpen = true;
 
-
     this.router.navigate([], {
-
       queryParams: { id },
-
       queryParamsHandling: 'merge'
-
     });
-
-
   }
-
-
-
-
-  closeDrawer() {
-
-
+  closeDrawer(): void {
     this.drawerOpen = false;
+    this.currentPost = this.EMPTY_ID;
 
+    this.getAllPosts(this.courseOfferingId);
 
     this.router.navigate([], {
-
       queryParams: {
         id: undefined
       },
-
       queryParamsHandling: 'merge'
-
     });
-
-
   }
 
   // deletePost(id: string) {
@@ -480,52 +352,8 @@ export class PostsListComponent implements OnInit {
 
   // }
 
-  loadDummyPosts() {
-
-    this.posts = [
-      {
-        id: '1',
-        summary: 'Welcome to Computer Science Course',
-        details: 'This is an announcement post for all students. Please review the course materials before starting the first assignment.',
-        postTypeName: 'Instructor',
-        createdDate: '2026-07-11T10:30:00'
-      },
-      {
-        id: '2',
-        summary: 'Assignment 1 Discussion',
-        details: 'Students can discuss questions related to the first assignment here.',
-        postTypeName: 'Discussion',
-        createdDate: '2026-07-10T15:20:00'
-      },
-      {
-        id: '3',
-        summary: 'Database Design Question',
-        details: 'I have a question about normalization and database relationships.',
-        postTypeName: 'Student',
-        createdDate: '2026-07-10T09:15:00'
-      },
-      {
-        id: '4',
-        summary: 'Important Exam Information',
-        details: 'The midterm exam will be available next week. Please check the exam guidelines.',
-        postTypeName: 'Instructor',
-        createdDate: '2026-07-09T12:00:00'
-      },
-      {
-        id: '5',
-        summary: 'Project Team Discussion',
-        details: 'Team members can use this post to discuss project ideas and progress.',
-        postTypeName: 'Group',
-        createdDate: '2026-07-08T14:45:00'
-      }
-    ];
-
-    this.applyFilter();
-
-  }
 
   openMenuId: string | null = null;
-
 
   toggleMenu(id: string) {
 
@@ -536,7 +364,6 @@ export class PostsListComponent implements OnInit {
 
   }
 
-
   viewPost(post: IPostDetail): void {
     console.log('View Post:', post);
 
@@ -545,9 +372,14 @@ export class PostsListComponent implements OnInit {
   }
 
   editPost(post: IPostDetail): void {
-    console.log('Edit Post:', post);
-
-    // add your edit logic here
+    this.currentPost = post.id;
+    console.log(this.currentPost, "this.currentPost")
+    this.drawerOpen = true;
+    
+    this.router.navigate([], {
+      queryParams: { id: post.id },
+      queryParamsHandling: 'merge'
+    });
   }
 
   archivePost(post: IPostDetail): void {
@@ -566,5 +398,13 @@ export class PostsListComponent implements OnInit {
 
   markAsUnread(post: IPostDetail): void {
     console.log('Mark as unread:', post);
+  }
+
+  toggleGroup(group: {
+    title: string;
+    expanded: boolean;
+    posts: IPostDetail[];
+  }): void {
+    group.expanded = !group.expanded;
   }
 }

@@ -39,8 +39,10 @@ export class PostService {
         scheduledAt: postDetail.scheduledAt,
 
         isDeleted: postDetail.isDeleted,
-
-        poll: postDetail.poll
+        isIndividual: postDetail.isIndividual,
+        poll: postDetail.poll,
+        folderIds: postDetail.folderIds,
+        enrollmentIds: postDetail.enrollmentIds
       }
     };
 
@@ -68,18 +70,13 @@ export class PostService {
     id: string,
     courseOfferingId: string
   ): Observable<IPost> {
-
     return this.http.get<IPost>(
       `${this.baseUrl}/${id}?courseOfferingId=${courseOfferingId}`
     );
 
   }
 
-
-
   updatePost(postDetail: IPostDetail): Observable<IPost> {
-
-
     const payload = {
 
       postDetailDto: {
@@ -106,7 +103,9 @@ export class PostService {
 
         isDeleted: postDetail.isDeleted,
 
-        poll: postDetail.poll
+        poll: postDetail.poll,
+        
+        isIndividual: postDetail.isIndividual
 
       }
 

@@ -1,6 +1,7 @@
 using AutoMapper;
 using EduTrail.Application.Shared.Dtos;
 using EduTrail.Domain.Entities;
+using EduTrail.Shared;
 using MediatR;
 
 namespace EduTrail.Application.Posts
@@ -54,7 +55,10 @@ namespace EduTrail.Application.Posts
                     {
                         DetailsDto = new PostDetailDto
                         {
-                            Id = Guid.Empty
+                            Id = Guid.Empty,
+                            PostTypeId = CustomCategory.PostTypes.Note,
+                            EditorType = EditorType.RichText,
+                            IsIndividual = true,
                         },
                         Types = postTypeDrop,
                         Enrollements = enrollmentDrop,
@@ -63,7 +67,9 @@ namespace EduTrail.Application.Posts
                 }
 
                 var postDetailsDto = _mapper.Map<PostDetailDto>(post);
-
+                postDetailsDto.EditorType =  post.EditorType;
+                postDetailsDto.FolderIds = post.Folders.Select(c=>c.Id).ToList();
+                postDetailsDto.EnrollmentIds = post.Enrollments.Select(c=>c.Id).ToList();
                 return new PostDto
                 {
                     DetailsDto = postDetailsDto,

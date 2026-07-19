@@ -24,7 +24,7 @@ namespace EduTrail.Application.Posts
 
         public string? PostTypeName { get; set; }
 
-        public EditorType? EditorType { get; set; }
+        public EditorType EditorType { get; set; }
 
         public bool? IsAnnouncement { get; set; }
 
@@ -45,6 +45,7 @@ namespace EduTrail.Application.Posts
 
         // Folder selection
         public List<Guid> FolderIds { get; set; } = new();
+        public List<Guid> EnrollmentIds { get; set; } = new();
 
 
         // Poll

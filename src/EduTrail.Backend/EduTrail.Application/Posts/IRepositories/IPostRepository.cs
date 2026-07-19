@@ -1,7 +1,7 @@
 using EduTrail.Domain.Entities;
+
 namespace EduTrail.Application.Posts
 {
-
     public interface IPostRepository
     {
         Task<Post> CreateAsync(Post post);
@@ -10,8 +10,13 @@ namespace EduTrail.Application.Posts
         Task<Post> GetByIdAsync(Guid id);
         Task<Post> UpdateAsync(Post post);
         Task<bool> DeleteAsync(Guid id);
+
         Task<IEnumerable<Enrollment>> GetEnrollmentsByCourseOfferingAsync(Guid courseOfferingId);
+
+        // Add this
+        Task<List<Enrollment>> GetEnrollmentsByIdsAsync(List<Guid> enrollmentIds);
+
         Task<IEnumerable<Folder>> GetFoldersByCourseOfferingAsync(Guid courseOfferingId);
-         Task<List<Folder>> GetFoldersByIdsAsync(List<Guid> folderIds);
+        Task<List<Folder>> GetFoldersByIdsAsync(List<Guid> folderIds);
     }
 }

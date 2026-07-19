@@ -118,24 +118,19 @@
     <!-- Recipient Selection -->
     <div class="form-row" *ngIf="postTo === 'individual'">
 
-
         <label class="label">
             Select User(s) *
         </label>
 
-
         <div class="folder-select">
 
-
             <mat-form-field appearance="outline" class="folder-dropdown">
-
 
                 <mat-label>
                     Select Student(s) / Instructor(s)
                 </mat-label>
 
-
-                <mat-select multiple [(ngModel)]="selectedUsers">
+                <mat-select multiple [(ngModel)]="postDetail.enrollmentIds">
 
                     <mat-select-trigger>
                         {{ getSelectedUserNames() }}
@@ -147,21 +142,16 @@
 
                     </mat-option>
 
-
                 </mat-select>
-
 
             </mat-form-field>
 
-
         </div>
-
 
     </div>
 
     <!-- Folder Select -->
     <div class="form-row">
-
 
         <label class="label">
             Select Folders *
@@ -175,8 +165,12 @@
                     Select folder(s)
                 </mat-label>
 
+                <mat-select multiple [(ngModel)]="postDetail.folderIds">
 
-                <mat-select multiple [(ngModel)]="selectedFolderIds">
+                    <mat-select-trigger>
+                        {{ getSelectedFolderNames() }}
+                    </mat-select-trigger>
+
 
                     <ng-container *ngFor="let folder of folders">
 
@@ -186,6 +180,7 @@
 
                         </mat-option>
 
+
                         <mat-option *ngFor="let child of folder.childFolders" [value]="child.id"
                             class="child-folder-option">
 
@@ -194,6 +189,7 @@
                         </mat-option>
 
                     </ng-container>
+
 
                 </mat-select>
 

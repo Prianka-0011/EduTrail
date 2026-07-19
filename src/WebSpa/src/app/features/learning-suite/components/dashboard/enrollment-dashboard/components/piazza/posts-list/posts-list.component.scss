@@ -1,15 +1,15 @@
-// .post-header {
-//     display: flex;
-//     align-items: center;
-//     gap: 15px;
-//     margin-bottom: 25px;
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
 
-//     h2 {
-//         margin: 0;
-//         font-size: 24px;
-//         font-weight: 600;
-//     }
-// }
+    h2 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+    }
+}
 
 .posts-container {
     border: 1px solid #ddd;
@@ -68,7 +68,7 @@
     font-size: 20px;
     font-weight: 700;
 
-    border-top:1px solid #ddd;
+    border-top: 1px solid #ddd;
 }
 
 
@@ -77,15 +77,15 @@
 
     padding: 18px 30px;
 
-    border-bottom:1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    transition:.2s;
+    transition: .2s;
 
 
     &:hover {
-        background:#f4f8ff;
+        background: #f4f8ff;
     }
 
 }
@@ -94,9 +94,9 @@
 
 .post-top {
 
-    display:flex;
+    display: flex;
 
-    justify-content:space-between;
+    justify-content: space-between;
 
 }
 
@@ -104,13 +104,13 @@
 
 .post-type {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    gap:10px;
+    gap: 10px;
 
-    font-size:16px;
+    font-size: 16px;
 
 }
 
@@ -118,16 +118,16 @@
 
 .type-box {
 
-    width:20px;
-    height:20px;
+    width: 20px;
+    height: 20px;
 
-    background:#777;
+    background: #777;
 
-    border-radius:4px;
+    border-radius: 4px;
 
 
     &.instructor {
-        background:#ffb000;
+        background: #ffb000;
     }
 
 }
@@ -136,81 +136,80 @@
 
 .post-date {
 
-    font-size:16px;
-    color:#555;
+    font-size: 16px;
+    color: #555;
 
 }
 
 
 
 .post-content {
-
+    max-width: 100%;
+    overflow: hidden;
 
     h3 {
-
-        margin:5px 0;
-
-        font-size:22px;
-
-        font-weight:700;
-
+        margin: 5px 0;
+        font-size: 22px;
+        font-weight: 700;
     }
 
+    div {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        line-height: 1.5;
+    }
 
     p {
-
-        margin:0;
-
-        color:#555;
-
-        font-size:18px;
-
-        max-width:800px;
-
+        margin: 0 0 10px;
     }
-
 }
 
+.post-type-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 
+    mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+    }
+}
 
 .post-footer {
 
-    display:flex;
+    display: flex;
 
-    justify-content:flex-end;
+    justify-content: flex-end;
 
-    align-items:center;
+    align-items: center;
 
-    margin-top:10px;
+    margin-top: 10px;
 
 }
-
-
 
 .document-icon {
 
-    font-size:28px;
+    font-size: 28px;
 
-    color:#777;
+    color: #777;
 
 }
-
-
 
 .good-note {
 
-    background:#d9f7d9;
+    background: #d9f7d9;
 
-    color:#176b2c;
+    color: #176b2c;
 
-    padding:6px 12px;
+    padding: 6px 12px;
 
-    border-radius:5px;
+    border-radius: 5px;
 
-    font-weight:600;
+    font-weight: 600;
 
 }
-
 
 .post-actions {
     position: relative;
@@ -218,7 +217,6 @@
     align-items: center;
     gap: 10px;
 }
-
 
 .action-menu {
 
@@ -232,15 +230,13 @@
 
     border-radius: 12px;
 
-    box-shadow: 0 5px 20px rgba(0,0,0,.18);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .18);
 
     padding: 8px 0;
 
     z-index: 100;
 
 }
-
-
 
 .action-menu button {
 
@@ -264,38 +260,54 @@
 
 }
 
-
-
 .action-menu button:hover {
 
     background: #f5f5f5;
 
 }
 
-
-
 .action-menu i {
-
     font-size: 20px;
-
     width: 25px;
-
 }
-
-
 
 .action-menu span {
-
     display: flex;
-
     flex-direction: column;
-
 }
 
-
-
 .action-menu small {
-
     color: #6c757d;
+}
 
+.post-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.post-actions .btn {
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 5px 12px;
+    transition: all .2s ease;
+}
+
+.post-actions .btn-outline-secondary {
+    color: #495057;
+    border-color: #ced4da;
+    background: #fff;
+}
+
+.post-actions .btn-outline-secondary:hover {
+    background: #f8f9fa;
+    color: #212529;
+    border-color: #adb5bd;
+}
+
+.post-actions .btn-outline-danger:hover {
+    background: #dc3545;
+    color: #fff;
 }

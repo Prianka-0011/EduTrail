@@ -25,11 +25,10 @@ export interface IPostDetail {
     postTypeName?: string;
 
     editorType?: EditorType;
-
     isAnnouncement?: boolean;
     sendEmailImmediately?: boolean;
     isScheduled?: boolean;
-
+    courseOfferingId?: string;
     scheduledAt?: Date;
 
     isDeleted?: boolean;
@@ -37,6 +36,9 @@ export interface IPostDetail {
 
     // Poll
     poll?: IPoll;
+    folderIds?: string[];
+    isIndividual?: boolean;
+    enrollmentIds?: string[];
 }
 
 export interface IPoll {

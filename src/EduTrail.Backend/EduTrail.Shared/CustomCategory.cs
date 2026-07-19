@@ -6,7 +6,7 @@ namespace EduTrail.Shared
         {
             public static string AuthTokenName = "Authorization";
         }
-        
+
         public static class TermType
         {
             public static Guid Spring { get; set; } = Guid.Parse("7E8F9F7E-75B3-4866-94A3-464F8711C544");
@@ -14,7 +14,7 @@ namespace EduTrail.Shared
             public static Guid Winter { get; set; } = Guid.Parse("855021E3-8D31-47B2-B787-65E1DDBB4FE0");
             public static Guid Summer { get; set; } = Guid.Parse("f2231caa-ad7f-42f6-8283-043d54af790c");
         }
-         public static class StatusType
+        public static class StatusType
         {
             public static Guid HelpRequestStatusType { get; set; } = Guid.Parse("ce5e6303-3ac6-4af1-92b4-f708da026d20");
         }

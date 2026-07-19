@@ -65,7 +65,6 @@ export class HelpRequestListComponent implements OnInit {
   }
 
   saveStatus(request: IHelpRequestDetail) {
-    console.log("request dT", request)
     const payload: IHelpRequest = {
       detailsDto: request
     };

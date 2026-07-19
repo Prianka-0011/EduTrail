@@ -1,25 +1,21 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PostService } from '../../../../services/post.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { CustomCategory } from '../../../../../../../../shared/interface/customCategory';
+import { IDropdownItem } from '../../../../../../../../shared/interface/iDropdownItem';
+import { EditorType, IFolderTreeDto, IPostDetail } from '../../../../interfaces/IPost';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { QuillModule } from 'ngx-quill';
 import { MatRadioModule } from '@angular/material/radio';
-import { PostService } from '../../../../services/post.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-
-import { EditorType, IFolderTreeDto, IPostDetail } from '../../../../interfaces/IPost';
-import { IDropdownItem } from '../../../../../../../../shared/interface/iDropdownItem';
-import { CustomCategory } from '../../../../../../../../shared/interface/customCategory';
-
 
 @Component({
-  selector: 'app-new-post',
-  standalone: true,
+  selector: 'app-edit-post',
   imports: [
     CommonModule,
     FormsModule,
@@ -30,10 +26,10 @@ import { CustomCategory } from '../../../../../../../../shared/interface/customC
     QuillModule,
     MatRadioModule
   ],
-  templateUrl: './new-post.component.html',
-  styleUrl: './new-post.component.scss'
+  templateUrl: './edit-post.component.html',
+  styleUrl: './edit-post.component.scss'
 })
-export class NewPostComponent implements OnInit {
+export class EditPostComponent implements OnInit {
   CustomCategory = CustomCategory;
   EMPTY_ID = '00000000-0000-0000-0000-000000000000';
   @Output() saved = new EventEmitter<void>();
@@ -72,10 +68,6 @@ export class NewPostComponent implements OnInit {
 
   showPreview = false;
 
-  selectedFolderIds: string[] = [];
-
-  selectedUsers: string[] = [];
-
 
   constructor(
     private postService: PostService,
@@ -93,7 +85,7 @@ export class NewPostComponent implements OnInit {
 
 
     const postId =
-      this.activeRoute.parent?.snapshot.paramMap.get('postId')
+      this.activeRoute.snapshot.queryParamMap.get('id')
       ?? this.EMPTY_ID;
 
 
@@ -101,6 +93,9 @@ export class NewPostComponent implements OnInit {
       .subscribe({
 
         next: res => {
+
+          this.postDetail.enrollmentIds = this.postDetail.enrollmentIds ?? [];
+          this.postDetail.folderIds = this.postDetail.folderIds ?? [];
 
           this.postDetail = res.detailsDto ?? this.postDetail;
           this.postTo = res.detailsDto?.isIndividual == true ? "individual" : "class"
@@ -132,16 +127,9 @@ export class NewPostComponent implements OnInit {
 
   }
 
-  getSelectedUserNames(): string {
-    return this.enrollements
-      .filter(user => this.selectedUsers.includes(user.id))
-      .map(user => user.name)
-      .join(', ');
-  }
+
 
   onPostTypeChange(event: any) {
-    console.log('radio value:', event);
-    console.log('model value:', this.postDetail.postTypeId);
 
     if (this.postDetail.postTypeId === CustomCategory.PostTypes.Poll) {
 
@@ -191,10 +179,8 @@ export class NewPostComponent implements OnInit {
 
   onPostToChange(): void {
     if (this.postTo === 'class') {
-
-      this.selectedUsers = [];
+      this.postDetail.enrollmentIds = [];
     }
-
   }
 
   close(): void {
@@ -215,23 +201,56 @@ export class NewPostComponent implements OnInit {
 
     this.postTo = 'class';
 
-    this.selectedUsers = [];
+    // this.selectedUsers = [];
 
-    this.selectedFolderIds = [];
+    // this.selectedFolderIds = [];
 
     this.showPreview = false;
 
+  }
+
+  getSelectedUserNames(): string {
+    return this.enrollements
+      .filter(user => this.postDetail.enrollmentIds?.includes(user.id))
+      .map(user => user.name)
+      .join(', ');
+  }
+
+
+  getSelectedFolderNames(): string {
+    const allFolders = this.flattenFolders(this.folders);
+
+    return allFolders
+      .filter(folder => this.postDetail.folderIds?.includes(folder.id))
+      .map(folder => folder.name)
+      .join(', ');
+  }
+
+
+  private flattenFolders(folders: IFolderTreeDto[]): IFolderTreeDto[] {
+    return folders.reduce((result, folder) => {
+      result.push(folder);
+
+      if (folder.childFolders?.length) {
+        result.push(...this.flattenFolders(folder.childFolders));
+      }
+
+      return result;
+    }, [] as IFolderTreeDto[]);
   }
 
   submitPost(): void {
 
     const payload = {
       ...this.postDetail,
-      folderIds: this.selectedFolderIds,
+
+      isIndividual: this.postTo === 'individual',
+
       enrollmentIds: this.postTo === 'individual'
-        ? this.selectedUsers
+        ? this.postDetail.enrollmentIds
         : [],
-      isIndividual: this.postTo === 'individual'
+
+      folderIds: this.postDetail.folderIds
     };
 
     this.postService.createPost(payload)
