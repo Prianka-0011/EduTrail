@@ -54,17 +54,17 @@ export class PostService {
 
   }
 
- getAllPosts(courseOfferingId: string): Observable<IPost> {
+  getAllPosts(courseOfferingId: string): Observable<IPost> {
 
-  const params = new HttpParams()
-    .set('courseOfferingId', courseOfferingId);
+    const params = new HttpParams()
+      .set('courseOfferingId', courseOfferingId);
 
-  return this.http.get<IPost>(
-    this.baseUrl,
-    { params }
-  );
+    return this.http.get<IPost>(
+      this.baseUrl,
+      { params }
+    );
 
-}
+  }
 
   getPostById(
     id: string,
@@ -72,6 +72,14 @@ export class PostService {
   ): Observable<IPost> {
     return this.http.get<IPost>(
       `${this.baseUrl}/${id}?courseOfferingId=${courseOfferingId}`
+    );
+
+  }
+
+  getViewPostById(id: string) {
+    console.log("Post is triggering with id", id)
+    return this.http.get<IPost>(
+      `${this.baseUrl}/view/${id}`
     );
 
   }
@@ -104,7 +112,9 @@ export class PostService {
         isDeleted: postDetail.isDeleted,
 
         poll: postDetail.poll,
-        
+        folderIds: postDetail.folderIds,
+        enrollmentIds: postDetail.enrollmentIds,
+
         isIndividual: postDetail.isIndividual
 
       }

@@ -19,6 +19,7 @@ namespace EduTrail.Application.Posts
         public string Summary { get; set; } = string.Empty;
 
         public string? Details { get; set; }
+        public string? VisibilityText { get; set; }
 
         public Guid? PostTypeId { get; set; }
 
@@ -38,6 +39,8 @@ namespace EduTrail.Application.Posts
 
         public DateTimeOffset? CreatedDate { get; set; }
 
+        public DateTimeOffset? UpdateDate { get; set; }
+
         public bool? IsDeleted { get; set; }
 
         public bool? IsIndividual { get; set; } = false;
@@ -50,6 +53,8 @@ namespace EduTrail.Application.Posts
 
         // Poll
         public PollDto? Poll { get; set; }
+
+        public List<PostDiscussionDto> Discussions { get; set; } = new();
     }
 
     public class PollDto
@@ -86,5 +91,40 @@ namespace EduTrail.Application.Posts
         public Guid? ParentFolderId { get; set; }
 
         public ICollection<FolderTree> ChildFolders { get; set; } = new List<FolderTree>();
+    }
+
+    public class PostDiscussionDto
+    {
+        public Guid Id { get; set; }
+
+        public Guid PostId { get; set; }
+
+        public Guid? ParentDiscussionId { get; set; }
+
+        public Guid? EnrollmentId { get; set; }
+
+        // Author information
+        public string? AuthorName { get; set; }
+
+        public string? AuthorEmail { get; set; }
+
+
+        public string Content { get; set; } = string.Empty;
+
+        public EditorType EditorType { get; set; }
+
+        public bool IsResolved { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTimeOffset? CreatedDate { get; set; }
+
+        public Guid? CreatedById { get; set; }
+
+        public DateTimeOffset? UpdatedDate { get; set; }
+
+        public Guid? UpdatedById { get; set; }
+
+        public List<PostDiscussionDto> Replies { get; set; } = new();
     }
 }

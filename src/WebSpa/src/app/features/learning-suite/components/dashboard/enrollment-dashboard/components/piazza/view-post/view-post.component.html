@@ -1,0 +1,379 @@
+<div class="post-container" *ngIf="post">
+
+    <!-- Header -->
+    <div class="post-card">
+
+        <div class="post-type-badge">
+
+            <mat-icon>
+                {{ getPostTypeIcon(post.postTypeId) }}
+            </mat-icon>
+
+            {{ post.postTypeName }}
+
+        </div>
+        <div class="post-header">
+
+
+            <div class="post-title-section">
+
+                <div class="post-meta">
+
+                    <img src="https://ui-avatars.com/api/?name=User" class="avatar">
+
+                    <div>
+                        <div class="d-flex align-items-center gap-2">
+
+                            <span class="visibility-badge">
+
+                                <h5>
+                                    {{ post.summary }}
+                                </h5>
+                                <!-- {{ post.isIndividual ? 'Private' : 'Instructor' }} -->
+                            </span>
+                        </div>
+
+                        <div class="text-muted">
+
+                            {{ post.createdDate | date:'MMMM dd, yyyy' }}
+                            <mat-icon>
+                                {{ post.isIndividual ? 'groups' : 'public' }}
+                            </mat-icon>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- <button class="btn btn-primary" (click)="editPost()">
+
+                <i class="fa fa-pencil"></i>
+
+                Edit
+
+            </button> -->
+
+        </div>
+
+
+        <div class="visibility-box">
+            <i class="fa fa-eye"></i>
+
+            {{post.visibilityText}}
+        </div>
+
+
+        <div class="post-content" [innerHTML]="post.details">
+
+        </div>
+
+
+        <div class="action-bar">
+
+            <button (click)="likePost()">
+
+                👍
+
+            </button>
+
+            <button>
+
+                ⭐ Favorite
+
+            </button>
+
+            <button>
+
+                🔖 Bookmark
+
+            </button>
+
+            <button>
+
+                🔗 Share
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Follow-up Discussions -->
+
+    <div class="discussion-card">
+
+        <div class="discussion-header">
+
+            💬 {{ post.discussions?.length ?? 0 }} Follow-up Discussions
+
+        </div>
+
+
+        <div class="discussion" *ngFor="let discussion of post.discussions ?? []">
+
+
+            <div class="discussion-top">
+
+                <div class="status unresolved" *ngIf="!discussion.isResolved">
+
+                    Unresolved
+
+                </div>
+
+
+                <div class="status resolved" *ngIf="discussion.isResolved">
+
+                    Resolved
+
+                </div>
+
+            </div>
+
+
+            <div class="discussion-body">
+
+
+                <img [src]="'https://ui-avatars.com/api/?name=' + (discussion.authorName ?? 'User')" class="avatar">
+
+
+                <div class="discussion-content">
+
+
+                    <div class="discussion-author">
+
+                        <strong>
+
+                            {{ discussion.authorName ?? 'Unknown User' }}
+
+                        </strong>
+
+
+                        <span>
+
+                            {{ discussion.createdDate }}
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        {{ discussion.content }}
+
+                    </p>
+
+
+                    <div class="discussion-actions">
+
+
+                        <button (click)="likeDiscussion(discussion)">
+
+                            👍 {{ discussion.likes ?? 0 }}
+
+                        </button>
+
+
+                        <button>
+
+                            Reply
+
+                        </button>
+
+
+                    </div>
+
+
+
+                    <!-- Replies -->
+
+                    <div class="reply-box" *ngFor="let reply of discussion.replies ?? []">
+
+
+                        <img [src]="'https://ui-avatars.com/api/?name=' + (reply.authorName ?? 'User')"
+                            class="avatar small">
+
+
+                        <div class="reply-content">
+
+
+                            <div>
+
+                                <strong>
+
+                                    {{ reply.authorName ?? 'Unknown User' }}
+
+                                </strong>
+
+
+                                <span>
+
+                                    {{ reply.createdDate }}
+
+                                </span>
+
+
+                            </div>
+
+
+                            <p>
+
+                                {{ reply.content }}
+
+                            </p>
+
+
+                            <button (click)="likeReply(reply)">
+
+                                👍 {{ reply.likes ?? 0 }}
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- Reply Editor -->
+
+                    <div class="reply-editor">
+
+
+                        <textarea rows="3" placeholder="Write a reply...">
+                        </textarea>
+
+
+                        <div class="editor-actions">
+
+
+                            <button class="btn btn-primary" (click)="submitReply(discussion)">
+
+                                Reply
+
+                            </button>
+
+
+                            <button class="btn btn-light">
+
+                                Cancel
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- New Discussion -->
+
+        <div class="new-discussion">
+
+
+            <h5>
+
+                Start a Follow-up Discussion
+
+            </h5>
+
+
+            <div class="editor-type">
+
+
+                <label>
+
+                    <input type="radio" [checked]="post.editorType === 1">
+
+                    Rich Text
+
+                </label>
+
+
+                <label>
+
+                    <input type="radio" [checked]="post.editorType === 2">
+
+                    Plain Text
+
+                </label>
+
+
+                <label>
+
+                    <input type="radio" [checked]="post.editorType === 3">
+
+                    Markdown
+
+                </label>
+
+
+            </div>
+
+
+
+            <textarea rows="6" placeholder="Write your discussion...">
+            </textarea>
+
+
+
+            <div class="editor-actions">
+
+
+                <button class="btn btn-primary" (click)="startDiscussion()">
+
+                    Submit
+
+                </button>
+
+
+                <button class="btn btn-outline-secondary">
+
+                    Save Draft
+
+                </button>
+
+
+                <button class="btn btn-light">
+
+                    Cancel
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- Loading State -->
+
+<div class="text-center p-5" *ngIf="!post">
+
+    Loading post...
+
+</div>

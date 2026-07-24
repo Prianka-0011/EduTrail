@@ -12,6 +12,7 @@ import { StripHtmlPipe } from '../../../../../../../../shared/pipes/strip-html.p
 import { CustomCategory } from '../../../../../../../../shared/interface/customCategory';
 import { MatIconModule } from '@angular/material/icon';
 import { EditPostComponent } from '../edit-post/edit-post.component';
+import { ViewPostComponent } from '../view-post/view-post.component';
 
 @Component({
   selector: 'app-posts-list',
@@ -23,7 +24,8 @@ import { EditPostComponent } from '../edit-post/edit-post.component';
     NewPostComponent,
     StripHtmlPipe,
     MatIconModule,
-    EditPostComponent
+    EditPostComponent,
+    ViewPostComponent
   ],
   templateUrl: './posts-list.component.html',
   styleUrl: './posts-list.component.scss'
@@ -37,6 +39,7 @@ export class PostsListComponent implements OnInit {
   ) { }
 
   drawerOpen = false;
+  viewDrawerOpen = false;
 
   EMPTY_ID = '00000000-0000-0000-0000-000000000000';
   currentPost = this.EMPTY_ID;
@@ -365,17 +368,31 @@ export class PostsListComponent implements OnInit {
   }
 
   viewPost(post: IPostDetail): void {
-    console.log('View Post:', post);
+    this.viewDrawerOpen = true;
+    const id = post.id;
+    this.router.navigate([], {
+      queryParams: { id },
+      queryParamsHandling: 'merge'
+    });
+  }
 
-    // add your navigation logic here
-    // this.router.navigate(['/piazza/post', post.id]);
+  viewCloseDrawer(): void {
+    this.viewDrawerOpen = false;
+    this.getAllPosts(this.courseOfferingId);
+
+    this.router.navigate([], {
+      queryParams: {
+        id: undefined
+      },
+      queryParamsHandling: 'merge'
+    });
   }
 
   editPost(post: IPostDetail): void {
     this.currentPost = post.id;
     console.log(this.currentPost, "this.currentPost")
     this.drawerOpen = true;
-    
+
     this.router.navigate([], {
       queryParams: { id: post.id },
       queryParamsHandling: 'merge'

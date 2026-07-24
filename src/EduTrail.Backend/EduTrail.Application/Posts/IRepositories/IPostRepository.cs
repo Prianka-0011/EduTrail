@@ -9,7 +9,10 @@ namespace EduTrail.Application.Posts
         Task<IEnumerable<PostType>> GetAllTypeAsync();
         Task<Post> GetByIdAsync(Guid id);
         Task<Post> UpdateAsync(Post post);
+        void RemovePollOptions(IEnumerable<PollOption> options);
+        void RemovePollOption(PollOption option);
         Task<bool> DeleteAsync(Guid id);
+        void RemovePoll(Poll poll);
 
         Task<IEnumerable<Enrollment>> GetEnrollmentsByCourseOfferingAsync(Guid courseOfferingId);
 

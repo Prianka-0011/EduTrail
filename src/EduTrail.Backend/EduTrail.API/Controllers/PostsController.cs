@@ -33,6 +33,17 @@ namespace EduTrail.API.Controllers
         }
 
         [Authorize]
+        [HttpGet("view/{id}")]
+        public async Task<ActionResult> GetViewById(Guid id)
+        {
+            return Ok(await _mediator.Send(new GetPostViewByIdQuery
+            {
+                Id = id,
+                
+            }));
+        }
+
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<PostDto>> Create([FromBody] CreatePostCommand command)
         {
@@ -44,7 +55,7 @@ namespace EduTrail.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id, [FromBody] UpdatePostCommand command)
         {
-            if (id != command.postDetailDto.Id)
+            if (id != command.PostDetailDto.Id)
             {
                 return BadRequest("Post ID mismatch");
             }

@@ -93,7 +93,7 @@ export class NewPostComponent implements OnInit {
 
 
     const postId =
-      this.activeRoute.parent?.snapshot.paramMap.get('postId')
+      this.activeRoute.parent?.snapshot.paramMap.get('id')
       ?? this.EMPTY_ID;
 
 

@@ -253,7 +253,7 @@ export class EditPostComponent implements OnInit {
       folderIds: this.postDetail.folderIds
     };
 
-    this.postService.createPost(payload)
+    this.postService.updatePost(payload)
       .subscribe({
         next: () => {
           this.toast.success('Post created successfully');

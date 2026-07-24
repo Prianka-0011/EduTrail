@@ -30,15 +30,17 @@ export interface IPostDetail {
     isScheduled?: boolean;
     courseOfferingId?: string;
     scheduledAt?: Date;
-
+    updateDate? :Date;
     isDeleted?: boolean;
     createdDate?: string;
+    visibilityText? : string; 
 
     // Poll
     poll?: IPoll;
     folderIds?: string[];
     isIndividual?: boolean;
     enrollmentIds?: string[];
+    discussions?: IPostDiscussion[];
 }
 
 export interface IPoll {
@@ -57,4 +59,38 @@ export enum EditorType {
     RichText = 1,
     PlainText = 2,
     Markdown = 3
+}
+
+export interface IPostDiscussion {
+
+    id?: string;
+
+    postId?: string;
+
+    parentDiscussionId?: string | null;
+
+    enrollmentId?: string;
+
+
+    // Author
+    authorName?: string;
+
+    authorEmail?: string;
+
+
+    content?: string;
+
+    editorType?: EditorType;
+
+    isResolved?: boolean;
+
+    isDeleted?: boolean;
+
+    createdDate?: string;
+
+    updatedDate?: string;
+
+    likes?: number;
+
+    replies?: IPostDiscussion[];
 }

@@ -130,17 +130,23 @@
 
     <ng-container *ngIf="drawerOpen">
 
-        <!-- New Post -->
         <app-new-post *ngIf="currentPost === EMPTY_ID; else editPostTemplate" (cancel)="closeDrawer()">
         </app-new-post>
 
-
-        <!-- Edit Post -->
         <ng-template #editPostTemplate>
             <app-edit-post (cancel)="closeDrawer()">
             </app-edit-post>
         </ng-template>
 
+    </ng-container>
+
+</app-side-drawer>
+
+<app-side-drawer [opened]="viewDrawerOpen" width="1200px" (closed)="viewCloseDrawer()" [headerTemplate]="viewDrawerHeader">
+
+    <ng-container *ngIf="viewDrawerOpen">
+        <app-view-post (cancel)="viewCloseDrawer()">
+        </app-view-post>
     </ng-container>
 
 </app-side-drawer>
@@ -160,6 +166,24 @@
 
             <h2>
                 {{ currentPost === EMPTY_ID ? 'New Post' : 'Edit Post' }}
+            </h2>
+
+        </div>
+
+    </div>
+
+</ng-template>
+
+<ng-template #viewDrawerHeader>
+
+    <div class="d-flex align-items-center gap-2">
+
+        <div class="post-header">
+
+            <i class="header-icon bi bi-eye"></i>
+
+            <h2>
+                View Post
             </h2>
 
         </div>

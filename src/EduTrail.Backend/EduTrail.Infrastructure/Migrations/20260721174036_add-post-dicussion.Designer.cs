@@ -3,6 +3,7 @@ using System;
 using EduTrail.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260721174036_add-post-dicussion")]
+    partial class addpostdicussion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -568,16 +571,10 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<int>("EditorType")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("EnrollmentId")
-                        .HasColumnType("uuid");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsResolved")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool?>("IsVisibleToInstructor")
                         .HasColumnType("boolean");
 
                     b.Property<Guid?>("ParentDiscussionId")
@@ -593,8 +590,6 @@ namespace EduTrail.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EnrollmentId");
 
                     b.HasIndex("ParentDiscussionId");
 
@@ -1572,10 +1567,6 @@ namespace EduTrail.Infrastructure.Migrations
 
             modelBuilder.Entity("EduTrail.Domain.Entities.PostDiscussion", b =>
                 {
-                    b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
-                        .WithMany()
-                        .HasForeignKey("EnrollmentId");
-
                     b.HasOne("EduTrail.Domain.Entities.PostDiscussion", "ParentDiscussion")
                         .WithMany("Replies")
                         .HasForeignKey("ParentDiscussionId");
@@ -1585,8 +1576,6 @@ namespace EduTrail.Infrastructure.Migrations
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Enrollment");
 
                     b.Navigation("ParentDiscussion");
 

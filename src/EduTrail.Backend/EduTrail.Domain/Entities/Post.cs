@@ -37,7 +37,7 @@ namespace EduTrail.Domain.Entities
         public bool? IsDeleted { get; set; } = false;
 
         public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
-
+        public ICollection<PostDiscussion> Discussions { get; set; } = new List<PostDiscussion>();
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }
         public DateTimeOffset? UpdatedDate { get; set; }
