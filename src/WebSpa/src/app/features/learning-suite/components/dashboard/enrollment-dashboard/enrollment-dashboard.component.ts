@@ -212,7 +212,7 @@ export class EnrollmentDashboardComponent implements OnInit {
         ]
       },
       {
-        label: 'Piazza',
+        label: 'Discussion Hub',
         children: [
           {
             label: 'Manage Folders',
@@ -224,7 +224,7 @@ export class EnrollmentDashboardComponent implements OnInit {
             label: 'Posts',
             icon: 'bi-gear',
             route: 'post-list',
-            rolesPermission: [CustomCategory.RoleType.Instructor, CustomCategory.RoleType.TA]
+            rolesPermission: [CustomCategory.RoleType.Instructor, CustomCategory.RoleType.TA, CustomCategory.RoleType.Student]
           },
         ]
       }

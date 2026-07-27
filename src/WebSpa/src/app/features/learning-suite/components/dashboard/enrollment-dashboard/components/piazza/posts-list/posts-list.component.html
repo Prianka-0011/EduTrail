@@ -115,17 +115,6 @@
 
 </app-side-drawer>
 
-<ng-template #drawerHeader>
-    <div class="d-flex align-items-center gap-2">
-        <div class="post-header">
-
-            <i class="bi bi-plus-circle header-icon"></i>
-
-            <h2>New Post</h2>
-        </div>
-    </div>
-</ng-template>
-
 <app-side-drawer [opened]="drawerOpen" width="1200px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
 
     <ng-container *ngIf="drawerOpen">

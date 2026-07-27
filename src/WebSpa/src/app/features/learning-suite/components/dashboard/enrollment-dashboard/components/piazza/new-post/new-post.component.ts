@@ -61,8 +61,8 @@ export class NewPostComponent implements OnInit {
     poll: {
       question: '',
       options: [
-        { optionText: '' },
-        { optionText: '' }
+        { optionText: '', voteCount: 0 },
+        { optionText: '', voteCount: 0 }
       ]
     }
   };
@@ -115,8 +115,8 @@ export class NewPostComponent implements OnInit {
 
             this.postDetail.poll = {
               options: [
-                { optionText: '' },
-                { optionText: '' }
+                { optionText: '', voteCount: 0 },
+                { optionText: '', voteCount: 0 }
               ]
             };
 
@@ -148,8 +148,8 @@ export class NewPostComponent implements OnInit {
       this.postDetail.poll = {
         question: '',
         options: [
-          { optionText: '' },
-          { optionText: '' }
+          { optionText: '', voteCount: 0 },
+          { optionText: '', voteCount: 0 }
         ]
       };
 
@@ -170,7 +170,8 @@ export class NewPostComponent implements OnInit {
     }
 
     this.postDetail.poll.options.push({
-      optionText: ''
+      optionText: '',
+      voteCount:0
     });
 
   }

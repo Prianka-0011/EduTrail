@@ -2,18 +2,15 @@
 
     <!-- Header -->
     <div class="post-card">
-
         <div class="post-type-badge">
-
-            <mat-icon>
-                {{ getPostTypeIcon(post.postTypeId) }}
-            </mat-icon>
-
-            {{ post.postTypeName }}
-
+            <h5>
+                <mat-icon>
+                    {{ getPostTypeIcon(post.postTypeId) }}
+                </mat-icon> {{ post.postTypeName }}
+            </h5>
         </div>
-        <div class="post-header">
 
+        <div class="post-header">
 
             <div class="post-title-section">
 
@@ -36,7 +33,7 @@
                         <div class="text-muted">
 
                             {{ post.createdDate | date:'MMMM dd, yyyy' }}
-                            <mat-icon>
+                            <mat-icon class="small-icon">
                                 {{ post.isIndividual ? 'groups' : 'public' }}
                             </mat-icon>
 
@@ -47,14 +44,6 @@
                 </div>
 
             </div>
-
-            <!-- <button class="btn btn-primary" (click)="editPost()">
-
-                <i class="fa fa-pencil"></i>
-
-                Edit
-
-            </button> -->
 
         </div>
 
@@ -70,6 +59,66 @@
 
         </div>
 
+        <!-- Poll -->
+
+        <div class="poll-card" *ngIf="post.poll">
+
+            <h4 class="poll-title">
+                <mat-icon>
+                    {{ getPostTypeIcon(post.postTypeId) }}
+                </mat-icon> {{ post.poll.question }}
+            </h4>
+
+            <!-- <mat-radio-group [(ngModel)]="selectedPollOptionId" [disabled]="hasVoted"> -->
+            <mat-radio-group [(ngModel)]="selectedPollOptionId"  [disabled]="hasVoted">
+                <div class="poll-option" *ngFor="let option of post.poll.options">
+
+                    <mat-radio-button [value]="option.id">
+
+                        {{ option.optionText }}
+
+                    </mat-radio-button>
+
+                    <div class="poll-result" *ngIf="hasVoted">
+
+                        <div class="progress">
+
+                            <div class="progress-bar" [style.width.%]="getVotePercentage(option.voteCount)">
+
+                            </div>
+
+                        </div>
+
+                        <span>
+                            {{ option.voteCount }}
+                            vote{{ option.voteCount !== 1 ? 's' : '' }}
+                            ({{ getVotePercentage(option.voteCount) }}%)
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </mat-radio-group>
+
+            <div class="poll-footer">
+
+                <!-- <button class="btn btn-primary" (click)="votePoll()" [disabled]="!selectedPollOptionId || hasVoted">
+
+                    Vote
+
+                </button> -->
+                <button class="btn btn-primary" (click)="votePoll()" [disabled]="!selectedPollOptionId || hasVoted">
+                    Vote
+                </button>
+
+                <span class="total-votes">
+                    {{ getTotalVotes() }} Total Votes
+                </span>
+
+            </div>
+
+        </div>
 
         <div class="action-bar">
 

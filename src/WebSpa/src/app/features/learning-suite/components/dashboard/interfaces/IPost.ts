@@ -30,10 +30,10 @@ export interface IPostDetail {
     isScheduled?: boolean;
     courseOfferingId?: string;
     scheduledAt?: Date;
-    updateDate? :Date;
+    updateDate?: Date;
     isDeleted?: boolean;
     createdDate?: string;
-    visibilityText? : string; 
+    visibilityText?: string;
 
     // Poll
     poll?: IPoll;
@@ -43,16 +43,57 @@ export interface IPostDetail {
     discussions?: IPostDiscussion[];
 }
 
+// Poll
 export interface IPoll {
+
     id?: string;
+
     question?: string;
+
     options: IPollOption[];
+
+    totalVotes?: number;
+
+    hasVoted?: boolean;
+
+    selectedOptionId?: string;
+
+    votes?: IPollVote[];
 }
 
+
 export interface IPollOption {
+
     id?: string;
+
     optionText: string;
-    voteCount?: number;
+
+    voteCount: number;
+
+    votePercentage?: number;
+}
+
+
+export interface IPollVote {
+
+    id?: string;
+
+    pollOptionId: string;
+
+    optionText?: string;
+
+    enrollmentId: string;
+
+    voterName?: string;
+
+    voterEmail?: string;
+
+    votedAt: string;
+}
+
+export interface IPollVoteRequest {
+    pollOptionId: string
+    courseOfferingId: string
 }
 
 export enum EditorType {

@@ -390,7 +390,6 @@ export class PostsListComponent implements OnInit {
 
   editPost(post: IPostDetail): void {
     this.currentPost = post.id;
-    console.log(this.currentPost, "this.currentPost")
     this.drawerOpen = true;
 
     this.router.navigate([], {

@@ -39,7 +39,7 @@ namespace EduTrail.API.Controllers
             return Ok(await _mediator.Send(new GetPostViewByIdQuery
             {
                 Id = id,
-                
+
             }));
         }
 
@@ -49,6 +49,27 @@ namespace EduTrail.API.Controllers
         {
             var postDto = await _mediator.Send(command);
             return postDto;
+        }
+
+        [Authorize]
+        [HttpPost("vote")]
+        public async Task<ActionResult<PollVoteDto>> PollVote([FromBody] PollVoteCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpGet("poll/{pollId}/results")]
+        public async Task<ActionResult> GetPollResults(Guid pollId,  [FromQuery] Guid courseOfferingId)
+        {
+            return Ok(await _mediator.Send(new GetPollResultsQuery
+            {
+                PollId = pollId,
+                CourseOfferingId = courseOfferingId
+
+            }));
+
         }
 
         [Authorize]

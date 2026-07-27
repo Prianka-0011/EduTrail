@@ -63,12 +63,19 @@ export class ViewPostComponent implements OnInit {
     }
   }
 
+  courseOfferingId: string = '00000000-0000-0000-0000-000000000000';
+  selectedPollOptionId: string | null = null;
+  hasVoted = false;
   EMPTY_ID = '00000000-0000-0000-0000-000000000000';
   @Output() saved = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
   post?: IPostDetail;
 
   ngOnInit(): void {
+
+    this.courseOfferingId =
+      this.activeRoute.parent?.snapshot.paramMap.get('courseOfferingId')
+      ?? this.EMPTY_ID;
 
     const postId =
       this.activeRoute.snapshot.queryParamMap.get('id')
@@ -78,6 +85,7 @@ export class ViewPostComponent implements OnInit {
   }
 
   loadPost(postId: string): void {
+
     if (!postId) {
 
       console.error(
@@ -94,55 +102,43 @@ export class ViewPostComponent implements OnInit {
 
         next: (response) => {
 
-
           this.post = response.detailsDto!;
 
-          console.log(this.post, "Api post data")
+          console.log(
+            this.post,
+            "Api post data"
+          );
+
           console.log(
             'Post loaded',
             this.post
           );
 
-
+          // Load poll results if this post contains a poll
+          if (this.post.poll?.id) {
+            this.loadPollResults();
+          }
         },
 
-
         error: (error) => {
-
-
           console.error(
             'Failed to load post',
             error
           );
-
-
         }
-
       });
-
-
   }
-
-
 
   goBack(): void {
-
     window.history.back();
-
   }
 
-
-
   editPost(): void {
-
     console.log(
       'Edit post clicked',
       this.post?.id
     );
-
   }
-
-
 
   likePost(): void {
 
@@ -152,18 +148,13 @@ export class ViewPostComponent implements OnInit {
 
   }
 
-
-
   likeDiscussion(
     discussion: IPostDiscussion
   ): void {
 
     discussion.likes =
       (discussion.likes ?? 0) + 1;
-
   }
-
-
 
   likeReply(
     reply: IPostDiscussion
@@ -173,8 +164,6 @@ export class ViewPostComponent implements OnInit {
       (reply.likes ?? 0) + 1;
 
   }
-
-
 
   submitReply(
     discussion: IPostDiscussion
@@ -187,7 +176,123 @@ export class ViewPostComponent implements OnInit {
 
   }
 
+  votePoll(): void {
 
+    console.log("this.selectedPollOptionId", this.selectedPollOptionId)
+    if (!this.selectedPollOptionId) {
+
+      this.toast.warning(
+        'Please select an option.'
+      );
+
+      return;
+    }
+
+
+    const payload = {
+      pollOptionId: this.selectedPollOptionId,
+      courseOfferingId: this.courseOfferingId
+    };
+
+
+    this.postService
+      .votePoll(payload)
+      .subscribe({
+
+        next: () => {
+
+          this.toast.success(
+            'Vote submitted successfully'
+          );
+
+          if (this.post?.id) {
+
+            this.loadPost(
+              this.post.id
+            );
+
+          }
+
+        },
+
+
+        error: (error) => {
+
+          console.error(
+            'Poll vote failed',
+            error
+          );
+          this.toast.error(
+            "You already voted on this poll"
+          );
+
+        }
+
+      });
+
+  }
+
+  getTotalVotes(): number {
+
+    return this.post?.poll?.options.reduce(
+      (sum, x) => sum + x.voteCount,
+      0
+    ) ?? 0;
+  }
+
+  getVotePercentage(votes: number): number {
+
+    const total = this.getTotalVotes();
+
+    if (total === 0) {
+      return 0;
+    }
+
+    return Math.round((votes / total) * 100);
+  }
+
+  loadPollResults(): void {
+
+    if (!this.post?.poll?.id) {
+      return;
+    }
+
+    this.postService
+      .getPollResults(this.post.poll.id, this.courseOfferingId)
+      .subscribe({
+
+        next: (response) => {
+
+          console.log(
+            'Poll result data',
+            response
+          );
+
+          if (this.post?.poll) {
+
+            this.post.poll.options = response.options;
+
+            // Show progress bars if results exist
+            this.hasVoted = response.isCurrentUserVoted;
+            this.selectedPollOptionId =
+              response.options.find(
+                (c: any) => c.isSelectedByCurrentUser
+              )?.id ?? null;
+          }
+
+        },
+
+        error: (error) => {
+
+          console.error(
+            'Failed to load poll results',
+            error
+          );
+
+        }
+
+      });
+  }
 
   startDiscussion(): void {
 

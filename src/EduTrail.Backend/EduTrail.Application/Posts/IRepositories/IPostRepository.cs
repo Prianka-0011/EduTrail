@@ -21,5 +21,15 @@ namespace EduTrail.Application.Posts
 
         Task<IEnumerable<Folder>> GetFoldersByCourseOfferingAsync(Guid courseOfferingId);
         Task<List<Folder>> GetFoldersByIdsAsync(List<Guid> folderIds);
+
+        Task<PollOption?> GetPollOptionByIdAsync(Guid id);
+
+        Task<PollVote?> GetPollVoteByEnrollmentAsync(
+            Guid enrollmentId,
+            Guid pollId);
+        Task<Poll?> GetPollByIdAsync(Guid pollId);
+        Task AddPollVoteAsync(PollVote vote);
+
+        Task UpdatePollOptionAsync(PollOption option);
     }
 }

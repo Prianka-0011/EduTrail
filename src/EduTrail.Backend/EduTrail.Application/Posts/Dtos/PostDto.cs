@@ -62,6 +62,7 @@ namespace EduTrail.Application.Posts
         public Guid Id { get; set; }
         public string? Question { get; set; }
         public List<PollOptionDto> Options { get; set; } = new();
+        public List<PollVoteDto> Votes { get; set; } = new();
     }
 
     public class PollOptionDto
@@ -77,7 +78,16 @@ namespace EduTrail.Application.Posts
     {
         public Guid Id { get; set; }
 
-        public Guid EnrollmentId { get; set; }
+        public Guid PollOptionId { get; set; }
+
+        public string? OptionText { get; set; }
+
+        public Guid? EnrollmentId { get; set; }
+        public Guid CourseOfferingId { get; set; }
+
+        public string? VoterName { get; set; }
+
+        public string? VoterEmail { get; set; }
 
         public DateTimeOffset VotedAt { get; set; }
     }
