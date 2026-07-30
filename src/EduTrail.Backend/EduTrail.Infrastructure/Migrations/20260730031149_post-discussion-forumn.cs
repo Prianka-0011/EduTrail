@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EduTrail.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class addpazzaentity : Migration
+    public partial class postdiscussionforumn : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,6 +25,8 @@ namespace EduTrail.Infrastructure.Migrations
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     DisplayOrder = table.Column<int>(type: "integer", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CourseOfferingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ParentFolderId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
@@ -33,6 +35,17 @@ namespace EduTrail.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Folders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Folders_CourseOfferings_CourseOfferingId",
+                        column: x => x.CourseOfferingId,
+                        principalTable: "CourseOfferings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Folders_Folders_ParentFolderId",
+                        column: x => x.ParentFolderId,
+                        principalTable: "Folders",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -62,11 +75,12 @@ namespace EduTrail.Infrastructure.Migrations
                     Details = table.Column<string>(type: "text", nullable: true),
                     PostTypeId = table.Column<Guid>(type: "uuid", nullable: false),
                     EditorType = table.Column<int>(type: "integer", nullable: false),
-                    IsAnnouncement = table.Column<bool>(type: "boolean", nullable: false),
-                    SendEmailImmediately = table.Column<bool>(type: "boolean", nullable: false),
-                    IsScheduled = table.Column<bool>(type: "boolean", nullable: false),
+                    IsAnnouncement = table.Column<bool>(type: "boolean", nullable: true),
+                    SendEmailImmediately = table.Column<bool>(type: "boolean", nullable: true),
+                    IsScheduled = table.Column<bool>(type: "boolean", nullable: true),
+                    IsIndividual = table.Column<bool>(type: "boolean", nullable: true),
                     ScheduledAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: true),
                     CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
@@ -84,10 +98,35 @@ namespace EduTrail.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FolderPost",
+                columns: table => new
+                {
+                    FoldersId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PostsId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FolderPost", x => new { x.FoldersId, x.PostsId });
+                    table.ForeignKey(
+                        name: "FK_FolderPost_Folders_FoldersId",
+                        column: x => x.FoldersId,
+                        principalTable: "Folders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FolderPost_Posts_PostsId",
+                        column: x => x.PostsId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Polls",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Question = table.Column<string>(type: "text", nullable: true),
                     PostId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
@@ -99,6 +138,45 @@ namespace EduTrail.Infrastructure.Migrations
                     table.PrimaryKey("PK_Polls", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Polls_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostDiscussions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    PostId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ParentDiscussionId = table.Column<Guid>(type: "uuid", nullable: true),
+                    EnrollmentId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsVisibleToInstructor = table.Column<bool>(type: "boolean", nullable: true),
+                    Content = table.Column<string>(type: "text", nullable: false),
+                    EditorType = table.Column<int>(type: "integer", nullable: false),
+                    IsResolved = table.Column<bool>(type: "boolean", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostDiscussions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PostDiscussions_Enrollments_EnrollmentId",
+                        column: x => x.EnrollmentId,
+                        principalTable: "Enrollments",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PostDiscussions_PostDiscussions_ParentDiscussionId",
+                        column: x => x.ParentDiscussionId,
+                        principalTable: "PostDiscussions",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PostDiscussions_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
@@ -157,6 +235,21 @@ namespace EduTrail.Infrastructure.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FolderPost_PostsId",
+                table: "FolderPost",
+                column: "PostsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Folders_CourseOfferingId",
+                table: "Folders",
+                column: "CourseOfferingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Folders_ParentFolderId",
+                table: "Folders",
+                column: "ParentFolderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PollOptions_PollId",
                 table: "PollOptions",
                 column: "PollId");
@@ -164,7 +257,8 @@ namespace EduTrail.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Polls_PostId",
                 table: "Polls",
-                column: "PostId");
+                column: "PostId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PollVotes_EnrollmentId",
@@ -175,6 +269,21 @@ namespace EduTrail.Infrastructure.Migrations
                 name: "IX_PollVotes_PollOptionId",
                 table: "PollVotes",
                 column: "PollOptionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostDiscussions_EnrollmentId",
+                table: "PostDiscussions",
+                column: "EnrollmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostDiscussions_ParentDiscussionId",
+                table: "PostDiscussions",
+                column: "ParentDiscussionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostDiscussions_PostId",
+                table: "PostDiscussions",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_PostTypeId",
@@ -197,10 +306,16 @@ namespace EduTrail.Infrastructure.Migrations
                 table: "Enrollments");
 
             migrationBuilder.DropTable(
-                name: "Folders");
+                name: "FolderPost");
 
             migrationBuilder.DropTable(
                 name: "PollVotes");
+
+            migrationBuilder.DropTable(
+                name: "PostDiscussions");
+
+            migrationBuilder.DropTable(
+                name: "Folders");
 
             migrationBuilder.DropTable(
                 name: "PollOptions");

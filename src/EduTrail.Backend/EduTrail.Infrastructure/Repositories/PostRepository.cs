@@ -143,5 +143,30 @@ namespace EduTrail.Infrastructure.Repositories
             _context.PollOptions.Update(option);
             await _context.SaveChangesAsync();
         }
+        public async Task<PostDiscussion> CreateDiscussionAsync(PostDiscussion discussion)
+        {
+            _context.PostDiscussions.Add(discussion);
+
+            await _context.SaveChangesAsync();
+
+            return discussion;
+        }
+
+        public async Task<PostDiscussion?> GetDiscussionByIdAsync(
+            Guid id)
+        {
+            return await _context.PostDiscussions
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<PostDiscussion> UpdateDiscussionAsync(
+            PostDiscussion discussion)
+        {
+            _context.PostDiscussions.Update(discussion);
+
+            await _context.SaveChangesAsync();
+
+            return discussion;
+        }
     }
 }

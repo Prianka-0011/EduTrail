@@ -11,6 +11,13 @@
 ./src/EduTrail.Backend/EduTrail.Infrastructure/InitialDataMigration/reset-initial-migration.sh
 dotnet ef migrations add initial-migration -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
 
+# RoleBack Existing Migration
+dotnet ef migrations list -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
+# Till The one you want to roleback
+dotnet ef database update 20260605053924_initial_data_setup -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
+dotnet ef migrations remove -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
+
+
 ## **Folder Structure (Clean Architecture)**
 
 

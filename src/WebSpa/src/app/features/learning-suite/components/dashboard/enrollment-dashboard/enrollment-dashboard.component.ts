@@ -218,7 +218,7 @@ export class EnrollmentDashboardComponent implements OnInit {
             label: 'Manage Folders',
             icon: 'bi-gear',
             route: 'manage-folders',
-            rolesPermission: [CustomCategory.RoleType.Instructor, CustomCategory.RoleType.TA]
+            rolesPermission: [CustomCategory.RoleType.Instructor, CustomCategory.RoleType.TA, CustomCategory.RoleType.Student]
           },
           {
             label: 'Posts',

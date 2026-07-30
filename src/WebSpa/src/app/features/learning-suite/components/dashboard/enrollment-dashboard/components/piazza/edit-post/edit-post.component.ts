@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PostService } from '../../../../services/post.service';
+import { PostService } from '../services/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CustomCategory } from '../../../../../../../../shared/interface/customCategory';
 import { IDropdownItem } from '../../../../../../../../shared/interface/iDropdownItem';
-import { EditorType, IFolderTreeDto, IPostDetail } from '../../../../interfaces/IPost';
+import { EditorType, IFolderTreeDto, IPostDetail } from '../interfaces/IPost';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';

@@ -600,7 +600,7 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("PostDiscussion");
+                    b.ToTable("PostDiscussions");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.PostType", b =>

@@ -8,11 +8,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { QuillModule } from 'ngx-quill';
 import { MatRadioModule } from '@angular/material/radio';
-import { PostService } from '../../../../services/post.service';
+import { PostService } from '../services/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-import { EditorType, IFolderTreeDto, IPostDetail } from '../../../../interfaces/IPost';
+import { EditorType, IFolderTreeDto, IPostDetail } from '../interfaces/IPost';
 import { IDropdownItem } from '../../../../../../../../shared/interface/iDropdownItem';
 import { CustomCategory } from '../../../../../../../../shared/interface/customCategory';
 

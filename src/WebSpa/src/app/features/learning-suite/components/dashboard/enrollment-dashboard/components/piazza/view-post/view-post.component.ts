@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  ICreatePostDiscussionRequest,
   IPostDetail,
   IPostDiscussion
-} from '../../../../interfaces/IPost';
-
+} from '../interfaces/IPost';
+import { OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -12,11 +13,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { QuillModule } from 'ngx-quill';
-import { PostService } from '../../../../services/post.service';
+import { PostService } from '../services/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 import { CustomCategory } from '../../../../../../../../shared/interface/customCategory';
+import { PostDiscussionService } from '../services/post-discussion.service';
 
 @Component({
   selector: 'app-view-post',
@@ -35,14 +37,15 @@ import { CustomCategory } from '../../../../../../../../shared/interface/customC
   templateUrl: './view-post.component.html',
   styleUrl: './view-post.component.scss'
 })
-export class ViewPostComponent implements OnInit {
+export class ViewPostComponent implements OnInit, OnDestroy {
 
 
   constructor(
     private postService: PostService,
     private activeRoute: ActivatedRoute,
     private router: Router,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private discussionService: PostDiscussionService
   ) { }
 
   getPostTypeIcon(postTypeId?: string): string {
@@ -70,6 +73,9 @@ export class ViewPostComponent implements OnInit {
   @Output() saved = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
   post?: IPostDetail;
+  newDiscussion = '';
+  replyText: { [key: string]: string } = {};
+  selectedEditorType = 1;
 
   ngOnInit(): void {
 
@@ -104,22 +110,28 @@ export class ViewPostComponent implements OnInit {
 
           this.post = response.detailsDto!;
 
-          console.log(
-            this.post,
-            "Api post data"
+          this.discussionService.setDiscussions(
+            this.post.discussions ?? []
           );
 
-          console.log(
-            'Post loaded',
-            this.post
+          this.discussionService.joinPost(
+            this.post.id
           );
 
-          // Load poll results if this post contains a poll
+          this.discussionService.discussions$
+            .subscribe(x => {
+
+              if (this.post) {
+                this.post.discussions = x;
+              }
+
+            });
+
           if (this.post.poll?.id) {
             this.loadPollResults();
           }
-        },
 
+        },
         error: (error) => {
           console.error(
             'Failed to load post',
@@ -127,6 +139,66 @@ export class ViewPostComponent implements OnInit {
           );
         }
       });
+  }
+
+  ngOnDestroy(): void {
+
+    if (this.post?.id) {
+
+      this.discussionService.leavePost(
+        this.post.id
+      );
+    }
+  }
+
+  async startDiscussion(): Promise<void> {
+
+    if (!this.post) {
+      return;
+    }
+
+    if (!this.newDiscussion.trim()) {
+
+      this.toast.warning(
+        'Please enter discussion.'
+      );
+
+      return;
+    }
+
+    const request: ICreatePostDiscussionRequest = {
+
+      postId: this.post.id,
+
+      courseOfferingId: this.courseOfferingId,
+
+      parentDiscussionId: null,
+
+      enrollmentId: null,
+
+      content: this.newDiscussion,
+
+      editorType: this.selectedEditorType
+
+    };
+
+    try {
+
+      await this.discussionService.createDiscussion(
+        request
+      );
+
+      this.newDiscussion = '';
+
+    }
+    catch {
+
+      this.toast.error(
+        'Unable to create discussion.'
+      );
+
+    }
+
   }
 
   goBack(): void {
@@ -165,15 +237,54 @@ export class ViewPostComponent implements OnInit {
 
   }
 
-  submitReply(
+  async submitReply(
     discussion: IPostDiscussion
-  ): void {
+  ): Promise<void> {
 
-    console.log(
-      'Reply submitted',
-      discussion
-    );
+    const text =
+      this.replyText[discussion.id!] ?? '';
 
+    if (!text.trim()) {
+
+      this.toast.warning(
+        'Please enter reply.'
+      );
+
+      return;
+    }
+
+    const request: ICreatePostDiscussionRequest = {
+
+      postId: discussion.postId!,
+
+      parentDiscussionId: discussion.id,
+
+      courseOfferingId: this.courseOfferingId,
+
+      enrollmentId: null,
+
+      content: text,
+
+      editorType: this.selectedEditorType
+
+    };
+
+    try {
+
+      await this.discussionService.createDiscussion(
+        request
+      );
+
+      this.replyText[discussion.id!] = '';
+
+    }
+    catch {
+
+      this.toast.error(
+        'Unable to submit reply.'
+      );
+
+    }
   }
 
   votePoll(): void {
@@ -293,13 +404,4 @@ export class ViewPostComponent implements OnInit {
 
       });
   }
-
-  startDiscussion(): void {
-
-    console.log(
-      'New discussion submitted'
-    );
-
-  }
-
 }

@@ -1,4 +1,4 @@
-import { IDropdownItem } from "../../../../../shared/interface/iDropdownItem";
+import { IDropdownItem } from "../../../../../../../../shared/interface/iDropdownItem";
 
 export interface IPost {
     detailsDto?: IPostDetail;
@@ -109,7 +109,7 @@ export interface IPostDiscussion {
     postId?: string;
 
     parentDiscussionId?: string | null;
-
+    courseOfferingId: string;
     enrollmentId?: string;
 
 
@@ -135,3 +135,18 @@ export interface IPostDiscussion {
 
     replies?: IPostDiscussion[];
 }
+
+export interface ICreatePostDiscussionRequest {
+
+  postId: string;
+
+  courseOfferingId: string;
+
+  parentDiscussionId?: string | null;
+
+  content: string;
+
+  editorType: EditorType;
+  enrollmentId?: string | null;
+}
+

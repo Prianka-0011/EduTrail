@@ -111,13 +111,13 @@ namespace EduTrail.Application.Posts
 
         public Guid? ParentDiscussionId { get; set; }
 
+        public Guid CourseOfferingId { get; set; }
+
         public Guid? EnrollmentId { get; set; }
 
-        // Author information
         public string? AuthorName { get; set; }
 
         public string? AuthorEmail { get; set; }
-
 
         public string Content { get; set; } = string.Empty;
 
@@ -136,5 +136,21 @@ namespace EduTrail.Application.Posts
         public Guid? UpdatedById { get; set; }
 
         public List<PostDiscussionDto> Replies { get; set; } = new();
+    }
+
+
+    public class CreatePostDiscussionDto
+    {
+        public Guid PostId { get; set; }
+
+        public Guid CourseOfferingId { get; set; }
+
+        public Guid? ParentDiscussionId { get; set; }
+
+        public Guid? EnrollmentId { get; set; }
+
+        public string Content { get; set; } = string.Empty;
+
+        public EditorType EditorType { get; set; }
     }
 }

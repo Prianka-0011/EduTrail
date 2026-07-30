@@ -50,6 +50,7 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<PollOption> PollOptions { get; set; }
         public DbSet<PollVote> PollVotes { get; set; }
         public DbSet<Folder> Folders { get; set; }
+        public DbSet<PostDiscussion> PostDiscussions { get; set; } = null!;
         
         #region QUARTZ
 

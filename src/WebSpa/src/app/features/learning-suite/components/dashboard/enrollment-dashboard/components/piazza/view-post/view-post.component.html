@@ -70,7 +70,7 @@
             </h4>
 
             <!-- <mat-radio-group [(ngModel)]="selectedPollOptionId" [disabled]="hasVoted"> -->
-            <mat-radio-group [(ngModel)]="selectedPollOptionId"  [disabled]="hasVoted">
+            <mat-radio-group [(ngModel)]="selectedPollOptionId" [disabled]="hasVoted">
                 <div class="poll-option" *ngFor="let option of post.poll.options">
 
                     <mat-radio-button [value]="option.id">
@@ -355,34 +355,18 @@
 
                 </label>
 
-
                 <label>
-
                     <input type="radio" [checked]="post.editorType === 2">
-
                     Plain Text
-
                 </label>
-
 
                 <label>
-
                     <input type="radio" [checked]="post.editorType === 3">
-
                     Markdown
-
                 </label>
-
 
             </div>
-
-
-
-            <textarea rows="6" placeholder="Write your discussion...">
-            </textarea>
-
-
-
+            <textarea rows="6" [(ngModel)]="newDiscussion" placeholder="Write your discussion..."></textarea>
             <div class="editor-actions">
 
 

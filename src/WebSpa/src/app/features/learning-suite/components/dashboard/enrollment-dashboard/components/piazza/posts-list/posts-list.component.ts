@@ -5,8 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { SideDrawerComponent } from '../../../../../../../../shared/components/side-drawer/side-drawer.component';
-import { PostService } from '../../../../services/post.service';
-import { IPostDetail } from '../../../../interfaces/IPost';
+import { PostService } from '../services/post.service';
+import { IPostDetail } from '../interfaces/IPost';
 import { NewPostComponent } from '../new-post/new-post.component';
 import { StripHtmlPipe } from '../../../../../../../../shared/pipes/strip-html.pipe';
 import { CustomCategory } from '../../../../../../../../shared/interface/customCategory';

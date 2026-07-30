@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260617053018_update-folder-table-sub-folder")]
-    partial class updatefoldertablesubfolder
+    [Migration("20260730034722_insert-record")]
+    partial class insertrecord
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -431,6 +431,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<Guid>("PostId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Question")
+                        .HasColumnType("text");
+
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uuid");
 
@@ -439,7 +442,8 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("PostId")
+                        .IsUnique();
 
                     b.ToTable("Polls");
                 });
@@ -509,13 +513,16 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<int>("EditorType")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("IsAnnouncement")
+                    b.Property<bool?>("IsAnnouncement")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsScheduled")
+                    b.Property<bool?>("IsIndividual")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("IsScheduled")
                         .HasColumnType("boolean");
 
                     b.Property<Guid>("PostTypeId")
@@ -524,7 +531,7 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("ScheduledAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("SendEmailImmediately")
+                    b.Property<bool?>("SendEmailImmediately")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Summary")
@@ -543,6 +550,60 @@ namespace EduTrail.Infrastructure.Migrations
                     b.HasIndex("PostTypeId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostDiscussion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("EditorType")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("EnrollmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsResolved")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("IsVisibleToInstructor")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("ParentDiscussionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.HasIndex("ParentDiscussionId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostDiscussions");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.PostType", b =>
@@ -1281,6 +1342,21 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("AuditEntries");
                 });
 
+            modelBuilder.Entity("FolderPost", b =>
+                {
+                    b.Property<Guid>("FoldersId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PostsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("FoldersId", "PostsId");
+
+                    b.HasIndex("PostsId");
+
+                    b.ToTable("FolderPost");
+                });
+
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.Property<Guid>("RolesId")
@@ -1448,8 +1524,8 @@ namespace EduTrail.Infrastructure.Migrations
             modelBuilder.Entity("EduTrail.Domain.Entities.Poll", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
+                        .WithOne("Poll")
+                        .HasForeignKey("EduTrail.Domain.Entities.Poll", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1495,6 +1571,29 @@ namespace EduTrail.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("PostType");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostDiscussion", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
+                        .WithMany()
+                        .HasForeignKey("EnrollmentId");
+
+                    b.HasOne("EduTrail.Domain.Entities.PostDiscussion", "ParentDiscussion")
+                        .WithMany("Replies")
+                        .HasForeignKey("ParentDiscussionId");
+
+                    b.HasOne("EduTrail.Domain.Entities.Post", "Post")
+                        .WithMany("Discussions")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Enrollment");
+
+                    b.Navigation("ParentDiscussion");
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
@@ -1615,6 +1714,21 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("TermType");
                 });
 
+            modelBuilder.Entity("FolderPost", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Folder", null)
+                        .WithMany()
+                        .HasForeignKey("FoldersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduTrail.Domain.Entities.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Role", null)
@@ -1669,7 +1783,16 @@ namespace EduTrail.Infrastructure.Migrations
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Post", b =>
                 {
+                    b.Navigation("Discussions");
+
                     b.Navigation("Enrollments");
+
+                    b.Navigation("Poll");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostDiscussion", b =>
+                {
+                    b.Navigation("Replies");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>

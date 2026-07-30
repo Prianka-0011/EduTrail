@@ -18,18 +18,19 @@ namespace EduTrail.Application.Posts
 
         // Add this
         Task<List<Enrollment>> GetEnrollmentsByIdsAsync(List<Guid> enrollmentIds);
-
         Task<IEnumerable<Folder>> GetFoldersByCourseOfferingAsync(Guid courseOfferingId);
         Task<List<Folder>> GetFoldersByIdsAsync(List<Guid> folderIds);
 
         Task<PollOption?> GetPollOptionByIdAsync(Guid id);
-
-        Task<PollVote?> GetPollVoteByEnrollmentAsync(
-            Guid enrollmentId,
-            Guid pollId);
+        Task<PollVote?> GetPollVoteByEnrollmentAsync(Guid enrollmentId, Guid pollId);
         Task<Poll?> GetPollByIdAsync(Guid pollId);
         Task AddPollVoteAsync(PollVote vote);
-
         Task UpdatePollOptionAsync(PollOption option);
+
+        Task<PostDiscussion> CreateDiscussionAsync(PostDiscussion discussion);
+        Task<PostDiscussion?> GetDiscussionByIdAsync(Guid id);
+
+        Task<PostDiscussion> UpdateDiscussionAsync(
+            PostDiscussion discussion);
     }
 }
