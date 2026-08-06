@@ -1,6 +1,8 @@
 using AutoMapper;
 using MediatR;
 using EduTrail.Domain.Entities;
+using EduTrail.Application.Shared;
+using EduTrail.Application.UserDashboards;
 
 namespace EduTrail.Application.Posts
 {
@@ -8,11 +10,6 @@ namespace EduTrail.Application.Posts
         : IRequest<PostDiscussionDto>
     {
         public CreatePostDiscussionDto DiscussionDto { get; set; } = new();
-
-        public Guid CreatedById { get; set; }
-
-        public Guid PostId =>
-            DiscussionDto.PostId;
 
 
         public class Handler
@@ -22,13 +19,19 @@ namespace EduTrail.Application.Posts
         {
             private readonly IPostRepository _repository;
             private readonly IMapper _mapper;
+            private ICommonService _commonService;
+            private readonly IUserCourseOfferingRepository _courseRepository;
 
             public Handler(
                 IPostRepository repository,
-                IMapper mapper)
+                IMapper mapper,
+                ICommonService commonService,
+                IUserCourseOfferingRepository courseRepository)
             {
                 _repository = repository;
                 _mapper = mapper;
+                _commonService = commonService;
+                _courseRepository = courseRepository;
             }
 
             public async Task<PostDiscussionDto> Handle(
@@ -40,13 +43,14 @@ namespace EduTrail.Application.Posts
                 var discussion =
                     _mapper.Map<PostDiscussion>(dto);
 
-                discussion.Id = Guid.NewGuid();
+                var currentLoginUserId = _commonService._CurrentUserService.GetUserId();
+                var enrolement = await _courseRepository.GetEnrollmentByUserIdAsync(currentLoginUserId, request.DiscussionDto.CourseOfferingId);
 
-                discussion.CreatedById =
-                    request.CreatedById;
 
                 discussion.CreatedDate =
                     DateTimeOffset.UtcNow;
+                discussion.CreatedById = currentLoginUserId;
+                discussion.EnrollmentId = enrolement.Id;
 
                 discussion.IsDeleted = false;
 
@@ -55,9 +59,10 @@ namespace EduTrail.Application.Posts
                 var result =
                     await _repository.CreateDiscussionAsync(
                         discussion);
-
-                return _mapper.Map<PostDiscussionDto>(
+                var res = _mapper.Map<PostDiscussionDto>(
                     result);
+                res.AuthorName = enrolement?.User?.FirstName + " " + enrolement?.User?.LastName;
+                return res;
             }
         }
     }

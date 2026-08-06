@@ -1,18 +1,18 @@
 using AutoMapper;
 using MediatR;
-using EduTrail.Domain.Entities;
 
 namespace EduTrail.Application.Posts
 {
-    public class UpdatePostDiscussionCommand
+    public class ResolvePostDiscussionCommand
         : IRequest<PostDiscussionDto>
     {
-       public CreatePostDiscussionDto DiscussionDto { get; set; } = new();
+        public Guid DiscussionId { get; set; }
 
+        public bool IsResolved { get; set; }
 
         public class Handler
             : IRequestHandler<
-                UpdatePostDiscussionCommand,
+                ResolvePostDiscussionCommand,
                 PostDiscussionDto>
         {
             private readonly IPostRepository _repository;
@@ -27,12 +27,12 @@ namespace EduTrail.Application.Posts
             }
 
             public async Task<PostDiscussionDto> Handle(
-                UpdatePostDiscussionCommand request,
+                ResolvePostDiscussionCommand request,
                 CancellationToken cancellationToken)
             {
                 var discussion =
                     await _repository.GetDiscussionByIdAsync(
-                        request.DiscussionDto.Id ?? Guid.Empty);
+                        request.DiscussionId);
 
                 if (discussion == null)
                 {
@@ -40,14 +40,8 @@ namespace EduTrail.Application.Posts
                         "Discussion not found.");
                 }
 
-                discussion.Content =
-                    request.DiscussionDto.Content;
-
-                discussion.EditorType =
-                    request.DiscussionDto.EditorType;
-
                 discussion.IsResolved =
-                    request.DiscussionDto.IsResolved ?? false;
+                    request.IsResolved;
 
                 discussion.UpdatedDate =
                     DateTimeOffset.UtcNow;

@@ -19,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 import { CustomCategory } from '../../../../../../../../shared/interface/customCategory';
 import { PostDiscussionService } from '../services/post-discussion.service';
+import { TimeAgoPipe } from '../../../../../../../../shared/pipes/TimeAgoPipe';
 
 @Component({
   selector: 'app-view-post',
@@ -32,7 +33,8 @@ import { PostDiscussionService } from '../services/post-discussion.service';
     MatSlideToggleModule,
     QuillModule,
     MatRadioModule,
-    MatIconModule
+    MatIconModule,
+    TimeAgoPipe
   ],
   templateUrl: './view-post.component.html',
   styleUrl: './view-post.component.scss'
@@ -77,6 +79,7 @@ export class ViewPostComponent implements OnInit, OnDestroy {
   replyText: { [key: string]: string } = {};
   selectedEditorType = 1;
 
+
   ngOnInit(): void {
 
     this.courseOfferingId =
@@ -107,7 +110,7 @@ export class ViewPostComponent implements OnInit, OnDestroy {
       .subscribe({
 
         next: (response) => {
-
+          console.log("Post Detail", response)
           this.post = response.detailsDto!;
 
           this.discussionService.setDiscussions(
@@ -153,6 +156,7 @@ export class ViewPostComponent implements OnInit, OnDestroy {
 
   async startDiscussion(): Promise<void> {
 
+
     if (!this.post) {
       return;
     }
@@ -181,7 +185,7 @@ export class ViewPostComponent implements OnInit, OnDestroy {
       editorType: this.selectedEditorType
 
     };
-
+    console.log("initial replay", request)
     try {
 
       await this.discussionService.createDiscussion(
@@ -219,71 +223,152 @@ export class ViewPostComponent implements OnInit, OnDestroy {
     );
 
   }
-
-  likeDiscussion(
-    discussion: IPostDiscussion
+  replayToDiscussion(discussion: IPostDiscussion
   ): void {
+    discussion.isReplayBoxShown = true;
+  }
 
-    discussion.likes =
-      (discussion.likes ?? 0) + 1;
+  async likeDiscussion(
+    discussion: IPostDiscussion
+  ): Promise<void> {
+
+    console.log(discussion.id, "discussion");
+    if (!discussion.id || discussion.isLiking) {
+      return;
+    }
+
+    discussion.isLiking = true;
+
+    try {
+
+      await this.discussionService.likeDiscussion(
+        discussion.id,
+        this.courseOfferingId
+      );
+      if (this.post?.id) {
+
+        this.loadPost(
+          this.post.id
+        );
+      }
+
+    } catch (error) {
+
+      console.error(
+        'Discussion like failed',
+        error
+      );
+
+      this.toast.error(
+        'Unable to like discussion.'
+      );
+
+    }
+    finally {
+
+      discussion.isLiking = false;
+
+    }
+
   }
 
   likeReply(
     reply: IPostDiscussion
   ): void {
 
-    reply.likes =
-      (reply.likes ?? 0) + 1;
+    this.discussionService
+      .likeDiscussion(reply.id!, this.courseOfferingId)
+      .catch(error => {
+
+        console.error(
+          'Like failed',
+          error
+        );
+
+      });
 
   }
 
-  async submitReply(
-    discussion: IPostDiscussion
-  ): Promise<void> {
+  async submitReply(discussion: IPostDiscussion): Promise<void> {
 
-    const text =
-      this.replyText[discussion.id!] ?? '';
+    const text = this.replyText[discussion.id!] ?? '';
 
     if (!text.trim()) {
-
-      this.toast.warning(
-        'Please enter reply.'
-      );
-
+      this.toast.warning('Please enter reply.');
       return;
     }
 
     const request: ICreatePostDiscussionRequest = {
-
       postId: discussion.postId!,
-
       parentDiscussionId: discussion.id,
-
       courseOfferingId: this.courseOfferingId,
-
       enrollmentId: null,
-
       content: text,
-
       editorType: this.selectedEditorType
-
     };
 
     try {
 
-      await this.discussionService.createDiscussion(
-        request
-      );
-
+      await this.discussionService.createDiscussion(request);
       this.replyText[discussion.id!] = '';
+      discussion.isReplayBoxShown = false;
+      if (this.post?.id) {
 
-    }
-    catch {
+        this.loadPost(
+          this.post.id
+        );
+      }
 
+    } catch (error) {
       this.toast.error(
         'Unable to submit reply.'
       );
 
+    }
+  }
+
+  getInitials(name?: string | null): string {
+    if (!name || !name.trim()) {
+      return 'U';
+    }
+
+    const names = name.trim().split(/\s+/);
+
+    if (names.length === 1) {
+      return names[0][0].toUpperCase();
+    }
+
+    return (
+      names[0][0] +
+      names[names.length - 1][0]
+    ).toUpperCase();
+  }
+
+  async toggleResolved(
+    discussion: IPostDiscussion
+  ): Promise<void> {
+
+    if (!discussion.id) {
+      return;
+    }
+
+    try {
+
+      await this.discussionService.resolveDiscussion(
+        discussion.id,
+        !discussion.isResolved
+      );
+
+    } catch (error) {
+
+      console.error(
+        'Resolve discussion failed',
+        error
+      );
+
+      this.toast.error(
+        'Unable to update discussion.'
+      );
     }
   }
 

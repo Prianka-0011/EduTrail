@@ -1,4 +1,6 @@
 using EduTrail.Application.Posts;
+using EduTrail.Application.Shared;
+using EduTrail.Application.UserDashboards;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
@@ -51,26 +53,11 @@ namespace EduTrail.API.Hubs
                 return;
             }
 
-            var userIdClaim =
-                Context.User?.FindFirst("sub")?.Value
-                ?? Context.User?.FindFirst(
-                    ClaimTypes.NameIdentifier)?.Value;
-
-            if (!Guid.TryParse(
-                userIdClaim,
-                out var userId))
-            {
-                throw new HubException(
-                    "User is not authenticated.");
-            }
-
-            command.CreatedById = userId;
-
             var result =
                 await _mediator.Send(command);
 
             var groupName =
-                GetPostGroupName(command.PostId);
+                GetPostGroupName(command.DiscussionDto.PostId);
 
             await Clients
                 .Group(groupName)
@@ -91,7 +78,7 @@ namespace EduTrail.API.Hubs
                 await _mediator.Send(command);
 
             var groupName =
-                GetPostGroupName(command.PostId);
+                GetPostGroupName(command.DiscussionDto.PostId);
 
             await Clients
                 .Group(groupName)
@@ -130,6 +117,47 @@ namespace EduTrail.API.Hubs
             Guid postId)
         {
             return $"post:{postId}";
+        }
+
+        public async Task LikeDiscussion(LikePostDiscussionCommand command)
+        {
+            if (command == null)
+            {
+                return;
+            }
+
+            var result =
+                await _mediator.Send(command);
+
+            var groupName =
+                GetPostGroupName(result.PostId);
+
+            await Clients
+                .Group(groupName)
+                .SendAsync(
+                    "DiscussionUpdated",
+                    result);
+        }
+
+        public async Task ResolveDiscussion(
+    ResolvePostDiscussionCommand command)
+        {
+            if (command == null)
+            {
+                return;
+            }
+
+            var result =
+                await _mediator.Send(command);
+
+            var groupName =
+                GetPostGroupName(result.PostId);
+
+            await Clients
+                .Group(groupName)
+                .SendAsync(
+                    "DiscussionResolved",
+                    result);
         }
     }
 }

@@ -40,6 +40,7 @@ namespace EduTrail.Application.Posts
                     dest => dest.CreatedDate,
                     opt => opt.MapFrom(src => DateTimeOffset.UtcNow)
                 );
+                
 
 
             CreateMap<PostDiscussion, PostDiscussionDto>()
@@ -54,6 +55,10 @@ namespace EduTrail.Application.Posts
                 .ForMember(
                     dest => dest.Replies,
                     opt => opt.MapFrom(src => src.Replies)
+                )
+                .ForMember(
+                    dest => dest.Likes,
+                    opt => opt.MapFrom(src => src.Likes)
                 );
         }
     }

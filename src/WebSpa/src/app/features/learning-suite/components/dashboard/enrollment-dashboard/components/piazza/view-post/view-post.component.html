@@ -16,7 +16,10 @@
 
                 <div class="post-meta">
 
-                    <img src="https://ui-avatars.com/api/?name=User" class="avatar">
+                    <!-- <img src="https://ui-avatars.com/api/?name=User" class="avatar"> -->
+                    <div class="avatar">
+                        {{ getInitials(post.postOwnerName) }}
+                    </div>
 
                     <div>
                         <div class="d-flex align-items-center gap-2">
@@ -162,150 +165,131 @@
         </div>
 
 
-        <div class="discussion" *ngFor="let discussion of post.discussions ?? []">
+        <div class="discussion" *ngFor="let discussion of post.discussions">
 
+            <div class="discussion-header">
 
-            <div class="discussion-top">
+                <mat-slide-toggle color="primary" [checked]="discussion.isResolved"
+                    (change)="toggleResolved(discussion)">
+                </mat-slide-toggle>
 
-                <div class="status unresolved" *ngIf="!discussion.isResolved">
-
-                    Unresolved
-
-                </div>
-
-
-                <div class="status resolved" *ngIf="discussion.isResolved">
-
-                    Resolved
-
-                </div>
+                <span class="status" [class.resolved]="discussion.isResolved">
+                    {{ discussion.isResolved ? 'Resolved' : 'Unresolved' }}
+                </span>
 
             </div>
 
-
             <div class="discussion-body">
 
-
-                <img [src]="'https://ui-avatars.com/api/?name=' + (discussion.authorName ?? 'User')" class="avatar">
-
+                <div class="avatar">
+                    {{ getInitials(discussion.authorName) }}
+                </div>
 
                 <div class="discussion-content">
 
+                    <div class="discussion-info">
 
-                    <div class="discussion-author">
+                        <div class="author-row">
 
-                        <strong>
+                            <span class="author">
+                                {{ discussion.authorName || 'Unknown User' }}
+                            </span>
 
-                            {{ discussion.authorName ?? 'Unknown User' }}
+                            <span class="time">
+                                {{ discussion.createdDate | timeAgo }}
+                            </span>
 
-                        </strong>
+                        </div>
 
+                        <div class="discussion-text">
 
-                        <span>
+                            {{ discussion.content }}
 
-                            {{ discussion.createdDate }}
-
-                        </span>
+                        </div>
 
                     </div>
 
-
-                    <p>
-
-                        {{ discussion.content }}
-
-                    </p>
-
-
                     <div class="discussion-actions">
 
+                        <button mat-button color="primary" (click)="likeDiscussion(discussion)"
+                            [disabled]="discussion.isLiking">
 
-                        <button (click)="likeDiscussion(discussion)">
+                            <mat-icon>
+                                {{ discussion.isLiked ? 'thumb_up' : 'thumb_up_off_alt' }}
+                            </mat-icon>
 
-                            👍 {{ discussion.likes ?? 0 }}
+                            {{ discussion.likes || 0 }}
 
                         </button>
 
+                        <button *ngIf="!discussion.isReplayBoxShown" mat-button
+                            (click)="replayToDiscussion(discussion)">
 
-                        <button>
+                            <mat-icon>reply</mat-icon>
 
                             Reply
 
                         </button>
 
-
                     </div>
 
-
-
                     <!-- Replies -->
+                    <div class="reply-box" *ngFor="let reply of discussion.replies">
 
-                    <div class="reply-box" *ngFor="let reply of discussion.replies ?? []">
-
-
-                        <img [src]="'https://ui-avatars.com/api/?name=' + (reply.authorName ?? 'User')"
-                            class="avatar small">
-
+                        <div class="avatar small">
+                            {{ getInitials(reply.authorName) }}
+                        </div>
 
                         <div class="reply-content">
 
+                            <div class="author-row">
 
-                            <div>
+                                <span class="author">
 
-                                <strong>
-
-                                    {{ reply.authorName ?? 'Unknown User' }}
-
-                                </strong>
-
-
-                                <span>
-
-                                    {{ reply.createdDate }}
+                                    {{ reply.authorName }}
 
                                 </span>
 
+                                <span class="time">
+
+                                    {{ reply.createdDate | timeAgo }}
+
+                                </span>
 
                             </div>
 
-
-                            <p>
+                            <div class="reply-text">
 
                                 {{ reply.content }}
 
-                            </p>
+                            </div>
 
+                            <button mat-button color="primary" (click)="likeReply(reply)" [disabled]="reply.isLiking">
 
-                            <button (click)="likeReply(reply)">
+                                <mat-icon>
+                                    {{ reply.isLiked ? 'thumb_up' : 'thumb_up_off_alt' }}
+                                </mat-icon>
 
-                                👍 {{ reply.likes ?? 0 }}
+                                {{ reply.likes || 0 }}
 
                             </button>
 
-
                         </div>
-
 
                     </div>
 
-
-
                     <!-- Reply Editor -->
 
-                    <div class="reply-editor">
+                    <div *ngIf="discussion.isReplayBoxShown" class="reply-editor">
 
 
-                        <textarea rows="3" placeholder="Write a reply...">
+                        <textarea rows="3" [(ngModel)]="replyText[discussion.id!]" placeholder="Write a reply...">
                         </textarea>
-
 
                         <div class="editor-actions">
 
-
                             <button class="btn btn-primary" (click)="submitReply(discussion)">
-
                                 Reply
-
                             </button>
 
 
@@ -336,16 +320,11 @@
 
         <div class="new-discussion">
 
-
             <h5>
-
                 Start a Follow-up Discussion
-
             </h5>
 
-
             <div class="editor-type">
-
 
                 <label>
 
@@ -366,39 +345,24 @@
                 </label>
 
             </div>
+
             <textarea rows="6" [(ngModel)]="newDiscussion" placeholder="Write your discussion..."></textarea>
+
             <div class="editor-actions">
 
-
                 <button class="btn btn-primary" (click)="startDiscussion()">
-
                     Submit
-
                 </button>
-
-
                 <button class="btn btn-outline-secondary">
-
                     Save Draft
-
                 </button>
-
-
                 <button class="btn btn-light">
-
                     Cancel
-
                 </button>
-
-
             </div>
-
-
         </div>
 
-
     </div>
-
 
 </div>
 

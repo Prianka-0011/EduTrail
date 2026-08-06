@@ -28,11 +28,12 @@ namespace EduTrail.Infrastructure.Repositories
             return await _context.Posts
                 .Include(x => x.Folders)
                 .Include(x => x.Enrollments)
-                .Include(c => c.PostType)
+                .Include(x => x.PostType)
                 .Include(x => x.Poll)
-                .ThenInclude(x => x!.Options)
-                .Where(x => x.Folders.Any(f =>
-                    f.CourseOfferingId == courseOfferingId))
+                    .ThenInclude(x => x!.Options)
+                .Where(x =>
+                    !x.IsArchived &&
+                    x.Folders.Any(f => f.CourseOfferingId == courseOfferingId))
                 .ToListAsync();
         }
 
@@ -45,6 +46,8 @@ namespace EduTrail.Infrastructure.Repositories
                 .Include(x => x.Poll)
                     .ThenInclude(x => x.Options)
                 .Include(x => x.PostType)
+                .Include(x => x.Discussions)
+                    .ThenInclude(x => x.Replies)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
         public void RemovePollOption(PollOption option)
@@ -145,17 +148,24 @@ namespace EduTrail.Infrastructure.Repositories
         }
         public async Task<PostDiscussion> CreateDiscussionAsync(PostDiscussion discussion)
         {
-            _context.PostDiscussions.Add(discussion);
+            try
+            {
+                _context.PostDiscussions.Add(discussion);
+                await _context.SaveChangesAsync();
 
-            await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
 
+            }
             return discussion;
         }
-
         public async Task<PostDiscussion?> GetDiscussionByIdAsync(
             Guid id)
         {
-            return await _context.PostDiscussions
+            return await _context.PostDiscussions.
+                Include(c => c.Enrollment)
+                .ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -167,6 +177,52 @@ namespace EduTrail.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             return discussion;
+        }
+
+        public async Task<Post> ArchivePostAsync(Guid id)
+        {
+            var post =
+                await _context.Posts
+                    .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (post == null)
+            {
+                throw new KeyNotFoundException(
+                    "Post not found.");
+            }
+
+            post.IsArchived = true;
+            post.UpdatedDate = DateTimeOffset.UtcNow;
+
+            await _context.SaveChangesAsync();
+
+            return post;
+        }
+
+        public async Task<PostUserAction?> GetPostUserActionAsync(Guid postId, Guid userId)
+        {
+            return await _context.PostUserActions
+                .FirstOrDefaultAsync(x =>
+                    x.PostId == postId &&
+                    x.UserId == userId);
+        }
+
+        public async Task<PostUserAction> AddPostUserActionAsync(PostUserAction action)
+        {
+            _context.PostUserActions.Add(action);
+
+            await _context.SaveChangesAsync();
+
+            return action;
+        }
+
+        public async Task<PostUserAction> UpdatePostUserActionAsync(PostUserAction action)
+        {
+            _context.PostUserActions.Update(action);
+
+            await _context.SaveChangesAsync();
+
+            return action;
         }
     }
 }

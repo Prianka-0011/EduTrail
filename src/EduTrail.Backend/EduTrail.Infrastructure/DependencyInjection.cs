@@ -89,7 +89,7 @@ namespace EduTrail.Infrastructure
             //         });
             //         s.PerformSchemaValidation = false;
             //     });
-              
+
             //     q.UseDefaultThreadPool(tp =>
             //     {
             //         tp.MaxConcurrency = 10;
@@ -119,7 +119,7 @@ namespace EduTrail.Infrastructure
             services.AddScoped<IHelpRequestDashboardRepository, HelpRequestDashboardRepository>();
             services.AddScoped<IFolderRepository, FolderRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
-
+            services.AddScoped<AuditInterceptor>();
             return services;
         }
     }

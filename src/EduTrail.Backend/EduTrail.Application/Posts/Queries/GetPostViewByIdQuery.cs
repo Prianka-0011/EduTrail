@@ -1,5 +1,6 @@
 using AutoMapper;
 using EduTrail.Application.Shared.Dtos;
+using EduTrail.Application.Users;
 using MediatR;
 
 namespace EduTrail.Application.Posts
@@ -14,14 +15,17 @@ namespace EduTrail.Application.Posts
         {
             private readonly IPostRepository _postRepository;
             private readonly IMapper _mapper;
+            private readonly IUserRepository _userRepository;
 
 
             public Handler(
                 IPostRepository postRepository,
-                IMapper mapper)
+                IMapper mapper,
+                IUserRepository userRepository)
             {
                 _postRepository = postRepository;
                 _mapper = mapper;
+                _userRepository = userRepository;
             }
 
 
@@ -46,7 +50,8 @@ namespace EduTrail.Application.Posts
 
                 postDto.EditorType = post.EditorType;
 
-
+                var user = await _userRepository.GetByIdAsync(post.CreatedById ?? Guid.Empty);
+                postDto.PostOwnerName = user?.FirstName + " " + user?.LastName;
                 // Folders
                 postDto.FolderIds = post.Folders
                     .Select(x => x.Id)
@@ -100,24 +105,50 @@ namespace EduTrail.Application.Posts
 
 
                 // Discussions
+                var discussionUserIds = post.Discussions
+                .SelectMany(x => new[] { x }.Concat(x.Replies))
+                .Where(x => x.CreatedById.HasValue)
+                .Select(x => x.CreatedById!.Value)
+                .Distinct()
+                .ToList();
+
+                var users = await _userRepository.GetByIdsAsync(discussionUserIds);
+
+                var userDictionary = users.ToDictionary(
+                    x => x.Id,
+                    x => $"{x.FirstName} {x.LastName}"
+                );
+
+
                 postDto.Discussions = post.Discussions
+                    .Where(x => x.ParentDiscussionId == null)
                     .Select(x => new PostDiscussionDto
                     {
                         Id = x.Id,
                         Content = x.Content,
                         CreatedDate = x.CreatedDate,
                         IsResolved = x.IsResolved,
-
+                        PostId = x.PostId,
+                        AuthorName = x.CreatedById.HasValue &&
+                                     userDictionary.TryGetValue(x.CreatedById.Value, out var author)
+                                     ? author
+                                     : "Unknown",
+                        Likes = x.Likes,
                         Replies = x.Replies
                             .Select(r => new PostDiscussionDto
                             {
                                 Id = r.Id,
                                 Content = r.Content,
                                 CreatedDate = r.CreatedDate,
-                                IsResolved = r.IsResolved
+                                IsResolved = r.IsResolved,
+                                PostId = x.PostId,
+                                AuthorName = r.CreatedById.HasValue &&
+                                             userDictionary.TryGetValue(r.CreatedById.Value, out var replyAuthor)
+                                             ? replyAuthor
+                                             : "Unknown",
+                                Likes = r.Likes,
                             })
                             .ToList()
-
                     })
                     .ToList();
 

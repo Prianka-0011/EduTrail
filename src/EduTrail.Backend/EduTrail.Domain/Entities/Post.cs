@@ -35,6 +35,11 @@ namespace EduTrail.Domain.Entities
         public DateTimeOffset? ScheduledAt { get; set; }
 
         public bool? IsDeleted { get; set; } = false;
+        public bool IsArchived { get; set; }
+        public bool IsPinned { get; set; }
+        public DateTime? PinnedDate { get; set; }
+        public ICollection<PostUserAction> UserActions { get; set; }
+                = new List<PostUserAction>();
 
         public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
         public ICollection<PostDiscussion> Discussions { get; set; } = new List<PostDiscussion>();

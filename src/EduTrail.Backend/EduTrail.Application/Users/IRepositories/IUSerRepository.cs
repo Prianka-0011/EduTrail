@@ -9,11 +9,12 @@ namespace EduTrail.Application.Users
         Task<User> CreateNotSaveChangeAsync(User user);
         Task<IEnumerable<User>> GetAllAsync();
         Task<User> GetByIdAsync(Guid id);
-         Task<User> GetByEmailAsync(string email);
+        Task<User> GetByEmailAsync(string email);
         Task<User> UpdateAsync(User user);
         Task<bool> DeleteAsync(Guid id);
         Task<IEnumerable<Role>> GetAllRolesAsync();
         Task<IEnumerable<Role>> GetRolesByIdsAsync(IEnumerable<DropdownItemDto> roleIds);
+        Task<List<User>> GetByIdsAsync(List<Guid> ids);
         Task SaveChangesAsync();
     }
 }

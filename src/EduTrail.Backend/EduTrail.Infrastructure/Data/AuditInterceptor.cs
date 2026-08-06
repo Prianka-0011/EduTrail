@@ -1,18 +1,19 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using EduTrail.Domain.Entities;
-using  EduTrail.Domain.Interfaces;
+using EduTrail.Domain.Interfaces;
 using System.Text.Json;
+using EduTrail.Application.Shared;
 
 namespace EduTrail.Infrastructure.Data
 {
     public class AuditInterceptor : SaveChangesInterceptor
     {
-        private readonly Guid _currentUserId;
+        private readonly ICurrentUserService _currentUserService;
 
-        public AuditInterceptor(Guid currentUserId)
+        public AuditInterceptor(ICurrentUserService currentUserService)
         {
-            _currentUserId = currentUserId;
+            _currentUserService = currentUserService;
         }
 
         public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
@@ -44,12 +45,12 @@ namespace EduTrail.Infrastructure.Data
                 if (entry.State == EntityState.Added)
                 {
                     auditableEntity.CreatedDate = now;
-                    auditableEntity.CreatedById = _currentUserId;
+                    auditableEntity.CreatedById = _currentUserService.GetUserId();
                 }
                 else if (entry.State == EntityState.Modified)
                 {
                     auditableEntity.UpdatedDate = now;
-                    auditableEntity.UpdatedById = _currentUserId;
+                    auditableEntity.UpdatedById = _currentUserService.GetUserId();
                 }
 
                 var recordIdProperty = entry.Properties.FirstOrDefault(p => p.Metadata.Name == "Id");
@@ -68,7 +69,7 @@ namespace EduTrail.Infrastructure.Data
                     RecordId = recordId,
                     Operation = entry.State.ToString(),
                     ChangeDate = now,
-                    ChangedById = _currentUserId,
+                    ChangedById = _currentUserService.GetUserId(),
                     OldValues = entry.State == EntityState.Modified ? JsonSerializer.Serialize(entry.OriginalValues.ToObject()) : null,
                     NewValues = JsonSerializer.Serialize(entry.CurrentValues.ToObject()),
                     ChangedProperties = modifiedProps.Any() ? JsonSerializer.Serialize(modifiedProps) : null

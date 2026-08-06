@@ -14,15 +14,19 @@ namespace EduTrail.Domain.Entities
 
         [ForeignKey(nameof(PostId))]
         public Post Post { get; set; } = null!;
+
         public Guid? ParentDiscussionId { get; set; }
 
-         [ForeignKey(nameof(EnrollmentId))]
+        [ForeignKey(nameof(EnrollmentId))]
         public Enrollment Enrollment { get; set; } = null!;
+
         public Guid? EnrollmentId { get; set; }
 
         [ForeignKey(nameof(ParentDiscussionId))]
         public PostDiscussion? ParentDiscussion { get; set; }
+
         public bool? IsVisibleToInstructor { get; set; }
+
         public ICollection<PostDiscussion> Replies { get; set; }
             = new List<PostDiscussion>();
 
@@ -35,6 +39,11 @@ namespace EduTrail.Domain.Entities
         public bool IsResolved { get; set; }
 
         public bool IsDeleted { get; set; }
+
+
+        // Add this
+        public int Likes { get; set; } = 0;
+
 
         public DateTimeOffset? CreatedDate { get; set; }
 

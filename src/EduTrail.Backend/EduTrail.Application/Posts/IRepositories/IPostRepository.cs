@@ -32,5 +32,16 @@ namespace EduTrail.Application.Posts
 
         Task<PostDiscussion> UpdateDiscussionAsync(
             PostDiscussion discussion);
+        Task<Post> ArchivePostAsync(Guid id);
+
+        Task<PostUserAction?> GetPostUserActionAsync(
+    Guid postId,
+    Guid userId);
+
+        Task<PostUserAction> AddPostUserActionAsync(
+            PostUserAction action);
+
+        Task<PostUserAction> UpdatePostUserActionAsync(
+            PostUserAction action);
     }
 }

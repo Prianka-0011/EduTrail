@@ -399,21 +399,173 @@ export class PostsListComponent implements OnInit {
   }
 
   archivePost(post: IPostDetail): void {
-    console.log('Archive Post:', post);
-  }
 
-  deleteFromEveryone(post: IPostDetail): void {
-    console.log('Delete from everyone:', post);
+    if (
+      !confirm(
+        'Are you sure you want to archive this post?'
+      )
+    ) {
+      return;
+    }
 
-    // this.deletePost(post.id);
+    this.postService
+      .archivePost(post.id)
+      .subscribe({
+
+        next: () => {
+
+          this.toast.success(
+            'Post archived successfully.'
+          );
+
+          this.getAllPosts(
+            this.courseOfferingId
+          );
+
+        },
+
+        error: () => {
+
+          this.toast.error(
+            'Failed to archive post.'
+          );
+
+        }
+
+      });
+
   }
 
   pinPost(post: IPostDetail): void {
-    console.log('Pin Post:', post);
+
+    const newStatus = !post.isPinned;
+
+    this.postService
+      .pinPost(post.id, newStatus)
+      .subscribe({
+
+        next: () => {
+
+          // post.isPinned = newStatus;
+
+          this.toast.success(
+            newStatus
+              ? 'Post pinned successfully.'
+              : 'Post unpinned successfully.'
+          );
+
+        },
+
+        error: () => {
+
+          this.toast.error(
+            'Failed to update pin status.'
+          );
+
+        }
+
+      });
+
   }
 
   markAsUnread(post: IPostDetail): void {
-    console.log('Mark as unread:', post);
+
+    this.postService
+      .markAsReadUnread(post.id, false)
+      .subscribe({
+
+        next: () => {
+
+          // post.isRead = false;
+
+          this.toast.success(
+            'Post marked as unread.'
+          );
+
+        },
+
+        error: () => {
+
+          this.toast.error(
+            'Failed to mark post unread.'
+          );
+
+        }
+
+      });
+
+  }
+
+  deleteFromEveryone(post: IPostDetail): void {
+
+    if (
+      !confirm(
+        'Are you sure you want to delete this post?'
+      )
+    ) {
+      return;
+    }
+
+
+    this.postService
+      .deletePost(post.id)
+      .subscribe({
+
+        next: () => {
+
+          this.toast.success(
+            'Post deleted successfully.'
+          );
+
+
+          this.getAllPosts(
+            this.courseOfferingId
+          );
+
+        },
+
+
+        error: () => {
+
+          this.toast.error(
+            'Failed to delete post.'
+          );
+
+        }
+
+      });
+
+  }
+
+  favoritePost(post: IPostDetail): void {
+
+    const status = !post.isFavorite;
+
+    this.postService
+      .favoritePost(post.id, status)
+      .subscribe({
+
+        next: () => {
+
+          post.isFavorite = status;
+
+          this.toast.success(
+            status
+              ? 'Added to favorites.'
+              : 'Removed from favorites.'
+          );
+
+        },
+
+        error: () => {
+
+          this.toast.error(
+            'Failed to update favorite.'
+          );
+
+        }
+
+      });
   }
 
   toggleGroup(group: {

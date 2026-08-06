@@ -80,12 +80,17 @@
                         <i class="fa fa-edit"></i> Edit
                     </button>
 
+                    <button class="btn btn-sm btn-outline-secondary" (click)="favoritePost(post)">
+                        <i class="fa fa-star"></i>
+                        Favorite
+                    </button>
+
                     <button class="btn btn-sm btn-outline-secondary" (click)="archivePost(post)">
-                        <i class="fa fa-archive"></i> Archive
+                        <i class="fa fa-archive"></i>Archive
                     </button>
 
                     <button class="btn btn-sm btn-outline-secondary" (click)="pinPost(post)">
-                        <i class="fa fa-thumbtack"></i> Pin
+                        <i class="fa fa-thumbtack"></i>Pin
                     </button>
 
                     <button class="btn btn-sm btn-outline-secondary" (click)="markAsUnread(post)">
@@ -131,7 +136,8 @@
 
 </app-side-drawer>
 
-<app-side-drawer [opened]="viewDrawerOpen" width="1200px" (closed)="viewCloseDrawer()" [headerTemplate]="viewDrawerHeader">
+<app-side-drawer [opened]="viewDrawerOpen" width="1200px" (closed)="viewCloseDrawer()"
+    [headerTemplate]="viewDrawerHeader">
 
     <ng-container *ngIf="viewDrawerOpen">
         <app-view-post (cancel)="viewCloseDrawer()">

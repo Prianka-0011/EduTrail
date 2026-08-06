@@ -151,6 +151,54 @@ export class PostService {
     );
   }
 
+  archivePost(id: string): Observable<boolean> {
+
+    return this.http.put<boolean>(
+      `${this.baseUrl}/${id}/archive`,
+      {}
+    );
+
+  }
+
+  pinPost(id: string, isPinned: boolean): Observable<boolean> {
+
+    const params = new HttpParams()
+      .set('isPinned', isPinned);
+
+    return this.http.put<boolean>(
+      `${this.baseUrl}/${id}/pinned`,
+      {},
+      { params }
+    );
+
+  }
+
+  markAsReadUnread(id: string, isReaded: boolean): Observable<boolean> {
+
+    const params = new HttpParams()
+      .set('isReaded', isReaded);
+
+    return this.http.put<boolean>(
+      `${this.baseUrl}/${id}/readed`,
+      {},
+      { params }
+    );
+
+  }
+
+  favoritePost(id: string, isFavorite: boolean): Observable<boolean> {
+
+    const params = new HttpParams()
+      .set('IsFavorite', isFavorite);
+
+    return this.http.put<boolean>(
+      `${this.baseUrl}/${id}/favorite`,
+      {},
+      { params }
+    );
+
+  }
+
   deletePost(id: string): Observable<boolean> {
 
     return this.http.delete<boolean>(

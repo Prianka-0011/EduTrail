@@ -17,7 +17,7 @@ export interface IFolderTreeDto {
 
 export interface IPostDetail {
     id: string;
-
+    postOwnerName?: string | null;
     summary?: string;
     details?: string;
 
@@ -32,6 +32,9 @@ export interface IPostDetail {
     scheduledAt?: Date;
     updateDate?: Date;
     isDeleted?: boolean;
+    isPinned?: boolean;
+    isReaded?: boolean;
+    isFavorite?: boolean;
     createdDate?: string;
     visibilityText?: string;
 
@@ -131,22 +134,29 @@ export interface IPostDiscussion {
 
     updatedDate?: string;
 
+
     likes?: number;
+
+    isLiked?: boolean;
+
+    isLiking?: boolean;
+
+    isReplayBoxShown?: boolean;
 
     replies?: IPostDiscussion[];
 }
 
 export interface ICreatePostDiscussionRequest {
 
-  postId: string;
+    postId: string;
 
-  courseOfferingId: string;
+    courseOfferingId: string;
 
-  parentDiscussionId?: string | null;
+    parentDiscussionId?: string | null;
 
-  content: string;
+    content: string;
 
-  editorType: EditorType;
-  enrollmentId?: string | null;
+    editorType: EditorType;
+    enrollmentId?: string | null;
 }
 

@@ -32,10 +32,11 @@ export class PostDiscussionService {
   private connectionReady: Promise<void>;
 
   constructor() {
+
     this.connectionReady =
       this.startConnection();
-  }
 
+  }
 
   // ==========================================================
   // SIGNALR CONNECTION
@@ -58,10 +59,6 @@ export class PostDiscussionService {
 
       await this.hubConnection.start();
 
-      console.log(
-        'Post Discussion SignalR connected'
-      );
-
     } catch (error) {
 
       console.error(
@@ -75,16 +72,12 @@ export class PostDiscussionService {
           this.startConnection();
 
       }, 5000);
+
     }
+
   }
 
-
-  // ==========================================================
-  // SIGNALR EVENTS
-  // ==========================================================
-
   private registerEvents(): void {
-
     this.hubConnection.on(
       'DiscussionCreated',
       (discussion: IPostDiscussion) => {
@@ -94,30 +87,65 @@ export class PostDiscussionService {
           discussion
         );
 
-        const current =
-          this.discussionsSubject.value;
+        const discussions =
+          [...this.discussionsSubject.value];
 
-        // Prevent duplicate
-        const alreadyExists =
-          this.discussionExists(
-            current,
-            discussion.id
-          );
+        if (discussion.parentDiscussionId) {
 
-        if (!alreadyExists) {
+          const parent =
+            this.findDiscussion(
+              discussions,
+              discussion.parentDiscussionId
+            );
 
-          this.discussionsSubject.next([
-            ...current,
-            discussion
-          ]);
+          if (parent) {
+
+            parent.replies =
+              parent.replies ?? [];
+
+            const exists =
+              parent.replies.some(
+                x => x.id === discussion.id
+              );
+
+            if (!exists) {
+
+              parent.replies.push(
+                discussion
+              );
+
+            }
+
+          }
+
         }
+        else {
+
+          const exists =
+            discussions.some(
+              x => x.id === discussion.id
+            );
+
+          if (!exists) {
+
+            discussions.push(
+              discussion
+            );
+
+          }
+
+        }
+
+        this.discussionsSubject.next(
+          [...discussions]
+        );
 
         this.discussionSubject.next(
           discussion
         );
+
       }
     );
-
 
     this.hubConnection.on(
       'DiscussionUpdated',
@@ -128,26 +156,34 @@ export class PostDiscussionService {
           discussion
         );
 
-        const current =
-          this.discussionsSubject.value;
+        const discussions =
+          [...this.discussionsSubject.value];
 
-        const updated =
-          current.map(item =>
-            item.id === discussion.id
-              ? discussion
-              : item
+        const existing =
+          this.findDiscussion(
+            discussions,
+            discussion.id!
           );
 
-        this.discussionsSubject.next(
-          updated
-        );
+        if (existing) {
+
+          Object.assign(
+            existing,
+            discussion
+          );
+
+          this.discussionsSubject.next(
+            [...discussions]
+          );
+
+        }
 
         this.discussionSubject.next(
           discussion
         );
+
       }
     );
-
 
     this.hubConnection.on(
       'DiscussionDeleted',
@@ -158,25 +194,49 @@ export class PostDiscussionService {
           discussionId
         );
 
-        const current =
-          this.discussionsSubject.value;
+        const discussions =
+          [...this.discussionsSubject.value];
 
-        const filtered =
-          current.filter(
-            x => x.id !== discussionId
-          );
+        this.removeDiscussion(
+          discussions,
+          discussionId
+        );
 
         this.discussionsSubject.next(
-          filtered
+          [...discussions]
         );
+
       }
     );
+
+    this.hubConnection.on(
+      'DiscussionResolved',
+      (discussion: IPostDiscussion) => {
+
+        const discussions =
+          [...this.discussionsSubject.value];
+
+        const existing =
+          this.findDiscussion(
+            discussions,
+            discussion.id!
+          );
+
+        if (existing) {
+
+          existing.isResolved =
+            discussion.isResolved;
+
+          this.discussionsSubject.next(
+            [...discussions]
+          );
+
+        }
+
+      }
+    );
+
   }
-
-
-  // ==========================================================
-  // JOIN POST
-  // ==========================================================
 
   async joinPost(
     postId: string
@@ -204,13 +264,10 @@ export class PostDiscussionService {
         'JoinPost error:',
         error
       );
+
     }
+
   }
-
-
-  // ==========================================================
-  // LEAVE POST
-  // ==========================================================
 
   async leavePost(
     postId: string
@@ -225,16 +282,12 @@ export class PostDiscussionService {
         postId
       );
 
-      console.log(
-        'Left discussion group:',
-        postId
-      );
-
       if (
         this.currentPostId === postId
       ) {
 
         this.currentPostId = null;
+
       }
 
     } catch (error) {
@@ -243,13 +296,10 @@ export class PostDiscussionService {
         'LeavePost error:',
         error
       );
+
     }
+
   }
-
-
-  // ==========================================================
-  // CREATE DISCUSSION
-  // ==========================================================
 
   async createDiscussion(
     request: ICreatePostDiscussionRequest
@@ -257,11 +307,36 @@ export class PostDiscussionService {
 
     await this.connectionReady;
 
+    const payload = {
+
+      discussionDto: {
+
+        postId:
+          request.postId,
+
+        courseOfferingId:
+          request.courseOfferingId,
+
+        parentDiscussionId:
+          request.parentDiscussionId,
+
+        enrollmentId: null,
+
+        content:
+          request.content,
+
+        editorType:
+          request.editorType
+
+      }
+
+    };
+
     try {
 
       await this.hubConnection.invoke(
         'CreateDiscussion',
-        request
+        payload
       );
 
     } catch (error) {
@@ -272,13 +347,80 @@ export class PostDiscussionService {
       );
 
       throw error;
+
     }
+
   }
 
+  private findDiscussion(
+    discussions: IPostDiscussion[],
+    id: string
+  ): IPostDiscussion | null {
 
-  // ==========================================================
-  // SET INITIAL DISCUSSIONS
-  // ==========================================================
+    for (const discussion of discussions) {
+
+      if (discussion.id === id) {
+
+        return discussion;
+
+      }
+
+      if (
+        discussion.replies &&
+        discussion.replies.length
+      ) {
+
+        const found =
+          this.findDiscussion(
+            discussion.replies,
+            id
+          );
+
+        if (found) {
+
+          return found;
+
+        }
+
+      }
+
+    }
+
+    return null;
+
+  }
+
+  private removeDiscussion(
+    discussions: IPostDiscussion[],
+    id: string
+  ): boolean {
+
+    const index =
+      discussions.findIndex(
+        x => x.id === id
+      );
+
+    if (index >= 0) {
+      discussions.splice(
+        index,
+        1
+      );
+      return true;
+    }
+
+    for (const discussion of discussions) {
+      if (
+        discussion.replies &&
+        this.removeDiscussion(
+          discussion.replies,
+          id
+        )
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   setDiscussions(
     discussions: IPostDiscussion[]
@@ -289,43 +431,95 @@ export class PostDiscussionService {
     );
   }
 
-
-  // ==========================================================
-  // GET CURRENT DISCUSSIONS
-  // ==========================================================
-
   getCurrentDiscussions():
     IPostDiscussion[] {
-
     return this.discussionsSubject.value;
   }
 
-
-  // ==========================================================
-  // DUPLICATE CHECK
-  // ==========================================================
-
-  private discussionExists(
-    discussions: IPostDiscussion[],
-    id?: string
-  ): boolean {
-
-    if (!id) {
-      return false;
-    }
-
-    return discussions.some(
-      x => x.id === id
+  clearDiscussions(): void {
+    this.discussionsSubject.next(
+      []
     );
   }
 
+  private async ensureConnection(): Promise<void> {
 
-  // ==========================================================
-  // CLEAR
-  // ==========================================================
+    if (
+      this.hubConnection &&
+      this.hubConnection.state === signalR.HubConnectionState.Connected
+    ) {
+      return;
+    }
 
-  clearDiscussions(): void {
 
-    this.discussionsSubject.next([]);
+    if (
+      this.hubConnection &&
+      this.hubConnection.state === signalR.HubConnectionState.Disconnected
+    ) {
+
+      try {
+
+        await this.hubConnection.start();
+
+        console.log(
+          'SignalR connection restored'
+        );
+
+      } catch (error) {
+
+        console.error(
+          'SignalR reconnect failed',
+          error
+        );
+
+        throw error;
+
+      }
+
+    }
+
+  }
+
+  async likeDiscussion(
+    discussionId: string,
+    courseOfferingId:string
+  ): Promise<void> {
+
+    await this.connectionReady;
+
+    try {
+
+      await this.hubConnection.invoke(
+        'LikeDiscussion',
+        {
+          discussionId,
+          courseOfferingId
+        }
+      );
+
+    } catch (error) {
+      console.error(
+        'LikeDiscussion error:',
+        error
+      );
+      throw error;
+    }
+  }
+
+  async resolveDiscussion(
+    discussionId: string,
+    isResolved: boolean
+  ): Promise<void> {
+
+    await this.ensureConnection();
+
+    await this.hubConnection.invoke(
+      'ResolveDiscussion',
+      {
+        discussionId,
+        isResolved
+      }
+    );
+
   }
 }

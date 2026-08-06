@@ -17,6 +17,7 @@ namespace EduTrail.Application.Posts
         public Guid Id { get; set; }
 
         public string Summary { get; set; } = string.Empty;
+        public string PostOwnerName { get; set; } = string.Empty;
 
         public string? Details { get; set; }
         public string? VisibilityText { get; set; }
@@ -108,6 +109,7 @@ namespace EduTrail.Application.Posts
         public Guid Id { get; set; }
 
         public Guid PostId { get; set; }
+        public int Likes { get; set; }
 
         public Guid? ParentDiscussionId { get; set; }
 
@@ -141,6 +143,8 @@ namespace EduTrail.Application.Posts
 
     public class CreatePostDiscussionDto
     {
+
+        public Guid? Id { get; set; }
         public Guid PostId { get; set; }
 
         public Guid CourseOfferingId { get; set; }
@@ -149,8 +153,9 @@ namespace EduTrail.Application.Posts
 
         public Guid? EnrollmentId { get; set; }
 
-        public string Content { get; set; } = string.Empty;
-
+        public string? Content { get; set; } = string.Empty;
+        public bool IsDeleted { get; set; }
         public EditorType EditorType { get; set; }
+        public bool? IsResolved { get; set; } = false;
     }
 }

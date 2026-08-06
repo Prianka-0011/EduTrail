@@ -61,7 +61,7 @@ namespace EduTrail.API.Controllers
         }
 
         [HttpGet("poll/{pollId}/results")]
-        public async Task<ActionResult> GetPollResults(Guid pollId,  [FromQuery] Guid courseOfferingId)
+        public async Task<ActionResult> GetPollResults(Guid pollId, [FromQuery] Guid courseOfferingId)
         {
             return Ok(await _mediator.Send(new GetPollResultsQuery
             {
@@ -81,6 +81,57 @@ namespace EduTrail.API.Controllers
                 return BadRequest("Post ID mismatch");
             }
             return Ok(await _mediator.Send(command));
+        }
+
+        [Authorize]
+        [HttpPut("{id}/archive")]
+        public async Task<ActionResult<bool>> Archive(Guid id)
+        {
+            var result = await _mediator.Send(new ArchivePostCommand
+            {
+                PostId = id
+            });
+
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPut("{id}/pinned")]
+        public async Task<ActionResult<bool>> Pinned(Guid id, bool isPinned)
+        {
+            var result = await _mediator.Send(new PinPostCommand
+            {
+                PostId = id,
+                IsPinned = isPinned
+            });
+
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPut("{id}/readed")]
+        public async Task<ActionResult<bool>> Readed(Guid id, bool isReaded)
+        {
+            var result = await _mediator.Send(new ReadOrUnreadPostCommand
+            {
+                PostId = id,
+                IsRead = isReaded
+            });
+
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPut("{id}/favorite")]
+        public async Task<ActionResult<bool>> Favorite(Guid id, bool IsFavorite)
+        {
+            var result = await _mediator.Send(new IsFavoritePostCommand
+            {
+                PostId = id,
+                IsFavorite = IsFavorite
+            });
+
+            return Ok(result);
         }
 
         [Authorize]
