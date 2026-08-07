@@ -1,3 +1,41 @@
-<div class="calendar-wrapper">
-  <full-calendar [options]="calendarOptions"></full-calendar>
+<div class="calendar-page">
+
+  <div class="calendar-header">
+
+    <div class="header-content">
+
+      <div class="icon-box">
+        <mat-icon>calendar_month</mat-icon>
+      </div>
+
+      <div class="header-text">
+        <span class="header-badge">
+          Teaching Assistant
+        </span>
+
+        <h1>TA Lab Schedule</h1>
+
+        <p>
+          View upcoming laboratory hours and instructor availability.
+        </p>
+      </div>
+
+    </div>
+
+    <button mat-flat-button class="filter-btn">
+      <mat-icon>filter_list</mat-icon>
+      Filter
+    </button>
+
+  </div>
+
+
+
+  <div class="calendar-card">
+
+    <full-calendar [options]="calendarOptions">
+    </full-calendar>
+
+  </div>
+
 </div>

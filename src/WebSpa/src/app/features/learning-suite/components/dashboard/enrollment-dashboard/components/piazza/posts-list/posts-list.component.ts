@@ -13,7 +13,19 @@ import { CustomCategory } from '../../../../../../../../shared/interface/customC
 import { MatIconModule } from '@angular/material/icon';
 import { EditPostComponent } from '../edit-post/edit-post.component';
 import { ViewPostComponent } from '../view-post/view-post.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
+imports: [
+  CommonModule,
+  FormsModule,
+  SideDrawerComponent,
+  NewPostComponent,
+  StripHtmlPipe,
+  MatIconModule,
+  MatTooltipModule,
+  EditPostComponent,
+  ViewPostComponent
+]
 @Component({
   selector: 'app-posts-list',
   standalone: true,
@@ -24,6 +36,7 @@ import { ViewPostComponent } from '../view-post/view-post.component';
     NewPostComponent,
     StripHtmlPipe,
     MatIconModule,
+    MatTooltipModule,
     EditPostComponent,
     ViewPostComponent
   ],
@@ -31,6 +44,7 @@ import { ViewPostComponent } from '../view-post/view-post.component';
   styleUrl: './posts-list.component.scss'
 })
 export class PostsListComponent implements OnInit {
+
   constructor(
     private postService: PostService,
     private router: Router,
@@ -55,41 +69,63 @@ export class PostsListComponent implements OnInit {
   }[] = [];
 
   pageSizeOptions = [5, 10, 20];
+
   pageSize = 10;
   currentPage = 1;
+
   totalItems = 0;
+
   courseOfferingId = "";
+
   sortColumn: keyof IPostDetail | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
+
   searchText = '';
 
   ngOnInit(): void {
-    this.courseOfferingId =
-      this.activeRoute.parent?.snapshot.paramMap.get('courseOfferingId')
-      ?? this.EMPTY_ID;
 
-    this.getAllPosts(this.courseOfferingId);
+    this.courseOfferingId =
+      this.activeRoute.parent?.snapshot.paramMap.get(
+        'courseOfferingId'
+      ) ?? this.EMPTY_ID;
+
+    this.getAllPosts(
+      this.courseOfferingId
+    );
+
   }
 
   getAllPosts(courseOfferingId: string): void {
 
-    this.postService.getAllPosts(courseOfferingId)
+    this.postService
+      .getAllPosts(courseOfferingId)
       .subscribe({
-        next: res => {
 
-          this.posts = res.detailsListDto ?? [];
+        next: (res) => {
+
+          this.posts =
+            res.detailsListDto ?? [];
 
           this.applyFilter();
+
         },
-        error: err => {
-          console.error(err);
-          this.toast.error('Failed to load posts.');
+
+        error: () => {
+
+          this.toast.error(
+            'Failed to load posts.'
+          );
+
         }
+
       });
+
   }
 
   getPostTypeIcon(postTypeId?: string): string {
+
     switch (postTypeId) {
+
       case CustomCategory.PostTypes.Note:
         return 'note';
 
@@ -101,44 +137,53 @@ export class PostsListComponent implements OnInit {
 
       default:
         return 'article';
+
     }
+
   }
 
-  applyFilter() {
+  applyFilter(): void {
 
-    const value = this.searchText
-      .toLowerCase()
-      .trim();
-
-    this.filtered = this.posts.filter(p =>
-
-      (p.summary || '')
+    const value =
+      this.searchText
         .toLowerCase()
-        .includes(value)
+        .trim();
 
-      ||
+    this.filtered =
+      this.posts.filter(post =>
 
-      (p.details || '')
-        .toLowerCase()
-        .includes(value)
+        (post.summary ?? '')
+          .toLowerCase()
+          .includes(value)
 
-      ||
+        ||
 
-      (p.postTypeName || '')
-        .toLowerCase()
-        .includes(value)
-    );
+        (post.details ?? '')
+          .toLowerCase()
+          .includes(value)
 
-    this.totalItems = this.filtered.length;
+        ||
+
+        (post.postTypeName ?? '')
+          .toLowerCase()
+          .includes(value)
+
+      );
+
+    this.totalItems =
+      this.filtered.length;
 
     this.currentPage = 1;
 
     this.applySort();
 
-    this.groupPosts(this.filtered);
+    this.groupPosts(
+      this.filtered
+    );
+
   }
 
-  applySort(column?: keyof IPostDetail) {
+  applySort(column?: keyof IPostDetail): void {
 
     if (column) {
 
@@ -151,15 +196,21 @@ export class PostsListComponent implements OnInit {
 
       }
       else {
+
         this.sortColumn = column;
         this.sortDirection = 'asc';
+
       }
+
     }
 
     if (this.sortColumn) {
-      const key = this.sortColumn;
+
+      const key =
+        this.sortColumn;
 
       this.filtered.sort((a, b) => {
+
         const valueA =
           String(a[key] ?? '')
             .toLowerCase();
@@ -171,364 +222,392 @@ export class PostsListComponent implements OnInit {
         return this.sortDirection === 'asc'
           ? valueA.localeCompare(valueB)
           : valueB.localeCompare(valueA);
+
       });
+
     }
 
     this.updatePage();
+
   }
 
-  updatePage() {
-    const start =
-      (this.currentPage - 1) * this.pageSize;
+  updatePage(): void {
 
-    const end =
-      start + this.pageSize;
+    const start =
+      (this.currentPage - 1)
+      * this.pageSize;
 
     this.paged =
-      this.filtered.slice(start, end);
-  }
-
-  groupPosts(posts: IPostDetail[]) {
-    const groups: {
-      [key: string]: {
-        title: string;
-        posts: IPostDetail[];
-        expanded: boolean;
-      }
-    } = {};
-
-    posts.forEach(post => {
-      const date =
-        new Date(post.createdDate ?? new Date());
-      let title =
-        date.toLocaleDateString(
-          'en-US',
-          {
-            month: 'numeric',
-            day: 'numeric',
-            year: 'numeric'
-          }
-        );
-
-      const today = new Date();
-      const yesterday = new Date();
-
-      yesterday.setDate(
-        today.getDate() - 1
+      this.filtered.slice(
+        start,
+        start + this.pageSize
       );
 
-      if (
-        date.toDateString() ===
-        today.toDateString()
-      ) {
-        title = 'Today';
-      }
-      else if (
-        date.toDateString() ===
-        yesterday.toDateString()
-      ) {
-        title = 'Yesterday';
-      }
+  }
 
-      if (!groups[title]) {
+  // groupPosts(posts: IPostDetail[]): void {
 
-        groups[title] = {
-          title,
+  //   const now = new Date();
+
+  //   const startOfWeek = new Date(now);
+  //   startOfWeek.setDate(now.getDate() - now.getDay());
+
+  //   const getWeekRange = (week: number) => {
+
+  //     const start = new Date(startOfWeek);
+  //     start.setDate(startOfWeek.getDate() - (week - 1) * 7);
+
+  //     const end = new Date(start);
+  //     end.setDate(start.getDate() + 6);
+
+  //     return { start, end };
+  //   };
+
+  //   const pinned = posts.filter(x => x.isPinned);
+
+  //   const favorite = posts.filter(
+  //     x => x.isFavorite && !x.isPinned
+  //   );
+
+  //   const normalPosts = posts.filter(
+  //     x => !x.isPinned && !x.isFavorite
+  //   );
+
+  //   const groups = [];
+
+  //   if (pinned.length) {
+  //     groups.push({
+  //       title: '📌 Pinned Posts',
+  //       expanded: true,
+  //       posts: pinned
+  //     });
+  //   }
+
+  //   if (favorite.length) {
+  //     groups.push({
+  //       title: '⭐ Favorite Posts',
+  //       expanded: true,
+  //       posts: favorite
+  //     });
+  //   }
+
+  //   for (let i = 1; i <= 4; i++) {
+
+  //     const range = getWeekRange(i);
+
+  //     const weekPosts = normalPosts.filter(post => {
+
+  //       const date = new Date(post.createdDate ?? '');
+
+  //       return date >= range.start &&
+  //         date <= range.end;
+
+  //     });
+
+  //     if (weekPosts.length) {
+
+  //       groups.push({
+
+  //         title: `📅 Week ${i}`,
+
+  //         expanded: true,
+
+  //         posts: weekPosts
+
+  //       });
+
+  //     }
+
+  //   }
+
+  //   const olderPosts = normalPosts.filter(post => {
+
+  //     const date = new Date(post.createdDate ?? '');
+
+  //     const range = getWeekRange(4);
+
+  //     return date < range.start;
+
+  //   });
+
+  //   if (olderPosts.length) {
+
+  //     groups.push({
+
+  //       title: '📁 Older Posts',
+
+  //       expanded: true,
+
+  //       posts: olderPosts
+
+  //     });
+
+  //   }
+
+  //   this.groupedPosts = groups;
+
+  // }
+  groupPosts(posts: IPostDetail[]): void {
+
+    const now = new Date();
+
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay());
+
+
+    const formatDate = (date: Date): string => {
+      return date.toLocaleDateString('en-US', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    };
+
+
+    const getWeekRange = (week: number) => {
+
+      const start = new Date(startOfWeek);
+
+      start.setDate(
+        startOfWeek.getDate() - (week - 1) * 7
+      );
+
+
+      const end = new Date(start);
+
+      end.setDate(
+        start.getDate() + 6
+      );
+
+
+      return { start, end };
+
+    };
+
+
+    const pinned = posts.filter(
+      x => x.isPinned
+    );
+
+
+    const favorite = posts.filter(
+      x => x.isFavorite && !x.isPinned
+    );
+
+
+    const normalPosts = posts.filter(
+      x => !x.isPinned && !x.isFavorite
+    );
+
+
+    const groups: {
+      title: string;
+      expanded: boolean;
+      posts: IPostDetail[];
+    }[] = [];
+
+
+
+    if (pinned.length) {
+
+      groups.push({
+        title: '📌 Pinned Posts',
+        expanded: true,
+        posts: pinned
+      });
+
+    }
+
+
+
+    if (favorite.length) {
+
+      groups.push({
+        title: '⭐ Favorite Posts',
+        expanded: true,
+        posts: favorite
+      });
+
+    }
+
+
+
+    for (let i = 1; i <= 4; i++) {
+
+      const range = getWeekRange(i);
+
+
+      const weekPosts = normalPosts.filter(post => {
+
+        const date = new Date(post.createdDate ?? '');
+
+        return date >= range.start &&
+          date <= range.end;
+
+      });
+
+
+
+      if (weekPosts.length) {
+
+        groups.push({
+
+          title: `📅 Week ${i} (${formatDate(range.start)} - ${formatDate(range.end)})`,
+
           expanded: true,
-          posts: []
-        };
+
+          posts: weekPosts
+
+        });
 
       }
-      groups[title].posts.push(post);
+
+    }
+
+
+
+    const week4Range = getWeekRange(4);
+
+
+    const olderPosts = normalPosts.filter(post => {
+
+      const date = new Date(post.createdDate ?? '');
+
+      return date < week4Range.start;
+
     });
 
-    this.groupedPosts =
-      Object.values(groups);
-  }
 
-  changePageSize(size: number) {
-    this.pageSize = +size;
-    this.currentPage = 1;
-    this.updatePage();
-  }
 
-  goToPage(page: number) {
-    if (
-      page < 1 ||
-      page > this.totalPages
-    ) {
-      return;
-    }
-    this.currentPage = page;
-    this.updatePage();
-  }
+    if (olderPosts.length) {
 
-  get totalPages(): number {
-    return Math.ceil(
-      this.totalItems / this.pageSize
-    );
-  }
+      groups.push({
 
-  get rangeLabel(): string {
-    if (!this.totalItems) {
-      return '0 of 0';
+        title: `📁 Older Posts (Before ${formatDate(week4Range.start)})`,
+
+        expanded: true,
+
+        posts: olderPosts
+
+      });
+
     }
 
-    const start =
-      (this.currentPage - 1) *
-      this.pageSize + 1;
 
-    const end =
-      Math.min(
-        this.currentPage * this.pageSize,
-        this.totalItems
-      );
+    this.groupedPosts = groups;
 
-    return `${start} – ${end} of ${this.totalItems}`;
   }
 
-  openDetailDrawer(id: string = this.EMPTY_ID): void {
+  openDetailDrawer(
+    id: string = this.EMPTY_ID
+  ): void {
+
     this.currentPost = id;
     this.drawerOpen = true;
 
     this.router.navigate([], {
-      queryParams: { id },
+
+      queryParams: {
+        id
+      },
+
       queryParamsHandling: 'merge'
+
     });
+
   }
+
   closeDrawer(): void {
+
     this.drawerOpen = false;
     this.currentPost = this.EMPTY_ID;
 
-    this.getAllPosts(this.courseOfferingId);
+    this.getAllPosts(
+      this.courseOfferingId
+    );
 
     this.router.navigate([], {
+
       queryParams: {
         id: undefined
       },
+
       queryParamsHandling: 'merge'
+
     });
-  }
-
-  // deletePost(id: string) {
-
-
-  //   if (
-  //     !confirm(
-  //       'Are you sure you want to delete this post?'
-  //     )
-  //   ) {
-
-  //     return;
-
-  //   }
-
-
-
-  //   this.postService.deletePost(id)
-  //     .subscribe({
-
-  //       next: () => {
-
-  //         this.toast.success(
-  //           'Post deleted successfully.'
-  //         );
-
-  //         const courseOfferingId =
-  //           this.activeRoute.parent?.snapshot.paramMap.get('courseOfferingId')
-  //           ?? this.EMPTY_ID;
-  //         this.getAllPosts(courseOfferingId);;
-
-  //       },
-
-
-  //       error: () => {
-
-  //         this.toast.error(
-  //           'Failed to delete post.'
-  //         );
-
-  //       }
-
-  //     });
-
-
-  // }
-
-
-  openMenuId: string | null = null;
-
-  toggleMenu(id: string) {
-
-    this.openMenuId =
-      this.openMenuId === id
-        ? null
-        : id;
 
   }
 
   viewPost(post: IPostDetail): void {
+
     this.viewDrawerOpen = true;
-    const id = post.id;
+
     this.router.navigate([], {
-      queryParams: { id },
+
+      queryParams: {
+        id: post.id
+      },
+
       queryParamsHandling: 'merge'
+
     });
+
   }
 
   viewCloseDrawer(): void {
-    this.viewDrawerOpen = false;
-    this.getAllPosts(this.courseOfferingId);
 
-    this.router.navigate([], {
-      queryParams: {
-        id: undefined
-      },
-      queryParamsHandling: 'merge'
-    });
+    this.viewDrawerOpen = false;
+
+    this.getAllPosts(
+      this.courseOfferingId
+    );
+
   }
 
   editPost(post: IPostDetail): void {
-    this.currentPost = post.id;
+
+    this.currentPost =
+      post.id;
+
     this.drawerOpen = true;
 
     this.router.navigate([], {
-      queryParams: { id: post.id },
+
+      queryParams: {
+        id: post.id
+      },
+
       queryParamsHandling: 'merge'
+
     });
-  }
-
-  archivePost(post: IPostDetail): void {
-
-    if (
-      !confirm(
-        'Are you sure you want to archive this post?'
-      )
-    ) {
-      return;
-    }
-
-    this.postService
-      .archivePost(post.id)
-      .subscribe({
-
-        next: () => {
-
-          this.toast.success(
-            'Post archived successfully.'
-          );
-
-          this.getAllPosts(
-            this.courseOfferingId
-          );
-
-        },
-
-        error: () => {
-
-          this.toast.error(
-            'Failed to archive post.'
-          );
-
-        }
-
-      });
 
   }
 
   pinPost(post: IPostDetail): void {
 
-    const newStatus = !post.isPinned;
+    const status =
+      !post.isPinned;
 
     this.postService
-      .pinPost(post.id, newStatus)
-      .subscribe({
-
-        next: () => {
-
-          // post.isPinned = newStatus;
-
-          this.toast.success(
-            newStatus
-              ? 'Post pinned successfully.'
-              : 'Post unpinned successfully.'
-          );
-
-        },
-
-        error: () => {
-
-          this.toast.error(
-            'Failed to update pin status.'
-          );
-
-        }
-
-      });
-
-  }
-
-  markAsUnread(post: IPostDetail): void {
-
-    this.postService
-      .markAsReadUnread(post.id, false)
-      .subscribe({
-
-        next: () => {
-
-          // post.isRead = false;
-
-          this.toast.success(
-            'Post marked as unread.'
-          );
-
-        },
-
-        error: () => {
-
-          this.toast.error(
-            'Failed to mark post unread.'
-          );
-
-        }
-
-      });
-
-  }
-
-  deleteFromEveryone(post: IPostDetail): void {
-
-    if (
-      !confirm(
-        'Are you sure you want to delete this post?'
+      .pinPost(
+        post.id,
+        status,
+        this.courseOfferingId
       )
-    ) {
-      return;
-    }
-
-
-    this.postService
-      .deletePost(post.id)
       .subscribe({
 
         next: () => {
 
+          post.isPinned = status;
+
           this.toast.success(
-            'Post deleted successfully.'
+            status
+              ? 'Post pinned.'
+              : 'Post unpinned.'
           );
 
-
-          this.getAllPosts(
-            this.courseOfferingId
-          );
-
-        },
-
-
-        error: () => {
-
-          this.toast.error(
-            'Failed to delete post.'
+          this.groupPosts(
+            this.filtered
           );
 
         }
@@ -539,10 +618,15 @@ export class PostsListComponent implements OnInit {
 
   favoritePost(post: IPostDetail): void {
 
-    const status = !post.isFavorite;
+    const status =
+      !post.isFavorite;
 
     this.postService
-      .favoritePost(post.id, status)
+      .favoritePost(
+        post.id,
+        status,
+        this.courseOfferingId
+      )
       .subscribe({
 
         next: () => {
@@ -555,24 +639,136 @@ export class PostsListComponent implements OnInit {
               : 'Removed from favorites.'
           );
 
-        },
-
-        error: () => {
-
-          this.toast.error(
-            'Failed to update favorite.'
+          this.groupPosts(
+            this.filtered
           );
 
         }
 
       });
+
   }
 
-  toggleGroup(group: {
-    title: string;
-    expanded: boolean;
-    posts: IPostDetail[];
-  }): void {
-    group.expanded = !group.expanded;
+  markAsReadUnread(post: IPostDetail): void {
+
+    const status =
+      !post.isReaded;
+
+    this.postService
+      .markAsReadUnread(
+        post.id,
+        status,
+        this.courseOfferingId
+      )
+      .subscribe({
+
+        next: () => {
+
+          post.isReaded = status;
+
+          this.toast.success(
+            status
+              ? 'Marked as read.'
+              : 'Marked as unread.'
+          );
+
+          this.groupPosts(
+            this.filtered
+          );
+
+        }
+
+      });
+
   }
+
+  archivePost(post: IPostDetail): void {
+
+    this.postService
+      .archivePost(post.id)
+      .subscribe({
+
+        next: () => {
+
+          this.toast.success(
+            'Post archived.'
+          );
+
+          this.getAllPosts(
+            this.courseOfferingId
+          );
+
+        }
+
+      });
+
+  }
+
+  deleteFromEveryone(post: IPostDetail): void {
+
+    if (!confirm(
+      'Are you sure you want to delete this post?'
+    )) {
+      return;
+    }
+
+    this.postService
+      .deletePost(post.id)
+      .subscribe({
+
+        next: () => {
+
+          this.toast.success(
+            'Post deleted.'
+          );
+
+          this.getAllPosts(
+            this.courseOfferingId
+          );
+
+        }
+
+      });
+
+  }
+
+  toggleGroup(group: any): void {
+
+    group.expanded =
+      !group.expanded;
+
+  }
+
+  get totalPages(): number {
+
+    return Math.ceil(
+      this.totalItems / this.pageSize
+    );
+
+  }
+
+  changePageSize(size: number): void {
+
+    this.pageSize = size;
+    this.currentPage = 1;
+
+    this.updatePage();
+
+  }
+
+  goToPage(page: number): void {
+
+    if (
+      page < 1 ||
+      page > this.totalPages
+    ) {
+      return;
+    }
+
+    this.currentPage = page;
+
+    this.updatePage();
+
+  }
+
 }

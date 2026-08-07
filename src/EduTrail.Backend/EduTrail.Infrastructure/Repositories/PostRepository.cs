@@ -199,12 +199,12 @@ namespace EduTrail.Infrastructure.Repositories
             return post;
         }
 
-        public async Task<PostUserAction?> GetPostUserActionAsync(Guid postId, Guid userId)
+        public async Task<PostUserAction?> GetPostUserActionAsync(Guid postId, Guid enrollementId)
         {
             return await _context.PostUserActions
                 .FirstOrDefaultAsync(x =>
                     x.PostId == postId &&
-                    x.UserId == userId);
+                    x.EnrollmentId == enrollementId);
         }
 
         public async Task<PostUserAction> AddPostUserActionAsync(PostUserAction action)

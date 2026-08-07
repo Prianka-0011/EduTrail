@@ -160,43 +160,55 @@ export class PostService {
 
   }
 
-  pinPost(id: string, isPinned: boolean): Observable<boolean> {
+  pinPost(
+    id: string,
+    isPinned: boolean,
+    courseOfferingId: string
+  ): Observable<boolean> {
 
     const params = new HttpParams()
-      .set('isPinned', isPinned);
+      .set('isPinned', isPinned.toString())
+      .set('courseOfferingId', courseOfferingId);
 
     return this.http.put<boolean>(
       `${this.baseUrl}/${id}/pinned`,
       {},
       { params }
     );
-
   }
 
-  markAsReadUnread(id: string, isReaded: boolean): Observable<boolean> {
+  markAsReadUnread(
+    id: string,
+    isReaded: boolean,
+    courseOfferingId: string
+  ): Observable<boolean> {
 
     const params = new HttpParams()
-      .set('isReaded', isReaded);
+      .set('isReaded', isReaded.toString())
+      .set('courseOfferingId', courseOfferingId);
 
     return this.http.put<boolean>(
       `${this.baseUrl}/${id}/readed`,
       {},
       { params }
     );
-
   }
 
-  favoritePost(id: string, isFavorite: boolean): Observable<boolean> {
+  favoritePost(
+    id: string,
+    isFavorite: boolean,
+    courseOfferingId: string
+  ): Observable<boolean> {
 
     const params = new HttpParams()
-      .set('IsFavorite', isFavorite);
+      .set('isFavorite', isFavorite.toString())
+      .set('courseOfferingId', courseOfferingId);
 
     return this.http.put<boolean>(
       `${this.baseUrl}/${id}/favorite`,
       {},
       { params }
     );
-
   }
 
   deletePost(id: string): Observable<boolean> {

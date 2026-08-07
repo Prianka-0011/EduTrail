@@ -660,6 +660,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<DateTime?>("ArchivedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid?>("EnrollmentId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("FavoritedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -681,10 +684,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<DateTime?>("ReadDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
 
                     b.HasIndex("PostId");
 
@@ -1647,11 +1649,17 @@ namespace EduTrail.Infrastructure.Migrations
 
             modelBuilder.Entity("EduTrail.Domain.Entities.PostUserAction", b =>
                 {
+                    b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
+                        .WithMany()
+                        .HasForeignKey("EnrollmentId");
+
                     b.HasOne("EduTrail.Domain.Entities.Post", "Post")
                         .WithMany("UserActions")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Enrollment");
 
                     b.Navigation("Post");
                 });

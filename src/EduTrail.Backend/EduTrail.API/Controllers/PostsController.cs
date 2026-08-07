@@ -12,10 +12,20 @@ namespace EduTrail.API.Controllers
         public PostsController(IMediator mediator) : base(mediator) { }
 
         [Authorize]
+        [HttpGet("all-including-archive")]
+        public async Task<ActionResult> GetAllInclude([FromQuery] Guid courseOfferingId)
+        {
+            return Ok(await _mediator.Send(new GetAllPostQuery
+            {
+                CourseOfferingId = courseOfferingId
+            }));
+        }
+
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> GetAll([FromQuery] Guid courseOfferingId)
         {
-            return Ok(await _mediator.Send(new GetAllPostQuery
+            return Ok(await _mediator.Send(new GetAllPostByEnrolementAndByCourseQuery
             {
                 CourseOfferingId = courseOfferingId
             }));
@@ -97,12 +107,16 @@ namespace EduTrail.API.Controllers
 
         [Authorize]
         [HttpPut("{id}/pinned")]
-        public async Task<ActionResult<bool>> Pinned(Guid id, bool isPinned)
+        public async Task<ActionResult<bool>> Pinned(
+    Guid id,
+    [FromQuery] bool isPinned,
+    [FromQuery] Guid courseOfferingId)
         {
             var result = await _mediator.Send(new PinPostCommand
             {
                 PostId = id,
-                IsPinned = isPinned
+                IsPinned = isPinned,
+                CourseOfferingId = courseOfferingId
             });
 
             return Ok(result);
@@ -110,12 +124,16 @@ namespace EduTrail.API.Controllers
 
         [Authorize]
         [HttpPut("{id}/readed")]
-        public async Task<ActionResult<bool>> Readed(Guid id, bool isReaded)
+        public async Task<ActionResult<bool>> Readed(
+            Guid id,
+            [FromQuery] bool isReaded,
+            [FromQuery] Guid courseOfferingId)
         {
             var result = await _mediator.Send(new ReadOrUnreadPostCommand
             {
                 PostId = id,
-                IsRead = isReaded
+                IsRead = isReaded,
+                CourseOfferingId = courseOfferingId
             });
 
             return Ok(result);
@@ -123,12 +141,16 @@ namespace EduTrail.API.Controllers
 
         [Authorize]
         [HttpPut("{id}/favorite")]
-        public async Task<ActionResult<bool>> Favorite(Guid id, bool IsFavorite)
+        public async Task<ActionResult<bool>> Favorite(
+            Guid id,
+            [FromQuery] bool isFavorite,
+            [FromQuery] Guid courseOfferingId)
         {
             var result = await _mediator.Send(new IsFavoritePostCommand
             {
                 PostId = id,
-                IsFavorite = IsFavorite
+                IsFavorite = isFavorite,
+                CourseOfferingId = courseOfferingId
             });
 
             return Ok(result);

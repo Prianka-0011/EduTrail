@@ -1,124 +1,127 @@
 <div class="posts-container">
-
-    <!-- Header -->
     <div class="posts-header">
-
         <div class="title-section">
             <i class="bi bi-filter"></i>
             <h2>All Posts</h2>
         </div>
 
-
         <div class="header-actions">
-            <!-- <button class="icon-btn">
-                <i class="bi bi-arrow-down-up"></i>
-            </button>
-
-            <button class="icon-btn">
-                <i class="bi bi-three-dots-vertical"></i>
-            </button> -->
-
             <button class="btn btn-primary btn-sm" (click)="openDetailDrawer(EMPTY_ID)">
                 <i class="bi bi-plus-lg me-1"></i>
                 New Post
             </button>
         </div>
-
     </div>
 
-
-    <!-- Group -->
     <div class="post-group" *ngFor="let group of groupedPosts">
-
         <div class="group-header" (click)="toggleGroup(group)">
-            <i class="bi" [ngClass]="group.expanded ? 'bi-chevron-down' : 'bi-chevron-right'">
-            </i>
-
+            <i class="bi" [ngClass]="group.expanded ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
             <span>{{ group.title }}</span>
         </div>
 
         <div *ngIf="group.expanded">
-
-            <div class="post-card" *ngFor="let post of group.posts" (click)="openDetailDrawer(post.id)">
+            <div class="post-card" *ngFor="let post of group.posts" [class.unread]="!post.isReaded"
+                [class.read]="post.isReaded" [class.pinned]="post.isPinned" [class.favorite]="post.isFavorite"
+                (click)="openDetailDrawer(post.id)">
 
                 <div class="post-top">
-
                     <div class="post-type">
-                        <span class="type-box" [class.instructor]="post.isIndividual === false">
-                        </span>
-
-                        <span>
-                            {{ post.isIndividual ? 'Private' : 'Instructor' }}
-                        </span>
+                        <span class="type-box" [class.instructor]="post.isIndividual === false"></span>
+                        <span>{{ post.isIndividual ? 'Private' : 'Instructor' }}</span>
 
                         <span class="post-type-name">
-                            <mat-icon>
-                                {{ getPostTypeIcon(post.postTypeId) }}
-                            </mat-icon>
+                            <mat-icon>{{ getPostTypeIcon(post.postTypeId) }}</mat-icon>
                             {{ post.postTypeName }}
                         </span>
                     </div>
 
                     <div class="post-date">
                         {{ post.createdDate | date:'MM/dd/yy' }}
-                    </div>
 
+                        <span class="read-status" [class.read]="post.isReaded" [class.unread]="!post.isReaded">
+
+                            <i class="fa" [ngClass]="post.isReaded ? 'fa-check-circle' : 'fa-circle'">
+                            </i>
+
+                            {{ post.isReaded ? 'Read' : 'Unread' }}
+                        </span>
+                    </div>
                 </div>
 
                 <div class="post-content">
-                    <h3>{{ post.summary }}</h3>
+                    <h3 [class.unread-title]="!post.isReaded">
+
+                        <span *ngIf="post.isPinned" class="post-badge pinned">
+                            <i class="fa fa-thumbtack"></i>
+                            Pinned
+                        </span>
+
+                        <span *ngIf="post.isFavorite" class="post-badge favorite">
+                            <i class="fa fa-star"></i>
+                            Favorite
+                        </span>
+
+                        <span *ngIf="!post.isReaded" class="post-badge unread">
+                            <i class="fa fa-circle"></i>
+                            New
+                        </span>
+
+                        {{ post.summary }}
+                    </h3>
+
                     <div [innerHTML]="post.details"></div>
                 </div>
 
                 <div class="post-actions" (click)="$event.stopPropagation()">
 
-                    <button class="btn btn-sm btn-outline-secondary" (click)="viewPost(post)">
-                        <i class="fa fa-eye"></i> View
+                    <button class="action-btn view" matTooltip="View" (click)="viewPost(post)">
+                        <mat-icon>visibility</mat-icon>
                     </button>
 
-                    <button class="btn btn-sm btn-outline-secondary" (click)="editPost(post)">
-                        <i class="fa fa-edit"></i> Edit
+
+                    <button class="action-btn edit" matTooltip="Edit" (click)="editPost(post)">
+                        <mat-icon>edit</mat-icon>
                     </button>
 
-                    <button class="btn btn-sm btn-outline-secondary" (click)="favoritePost(post)">
-                        <i class="fa fa-star"></i>
-                        Favorite
+
+                    <button class="action-btn favorite"
+                        matTooltip="{{ post.isFavorite ? 'Remove Favorite' : 'Favorite' }}"
+                        (click)="favoritePost(post)">
+                        <mat-icon>
+                            {{ post.isFavorite ? 'star' : 'star_border' }}
+                        </mat-icon>
                     </button>
 
-                    <button class="btn btn-sm btn-outline-secondary" (click)="archivePost(post)">
-                        <i class="fa fa-archive"></i>Archive
+
+                    <button class="action-btn pin" matTooltip="{{ post.isPinned ? 'Unpin' : 'Pin' }}"
+                        (click)="pinPost(post)">
+                        <mat-icon>push_pin</mat-icon>
                     </button>
 
-                    <button class="btn btn-sm btn-outline-secondary" (click)="pinPost(post)">
-                        <i class="fa fa-thumbtack"></i>Pin
+
+                    <button class="action-btn read" matTooltip="{{ post.isReaded ? 'Mark Unread' : 'Mark Read' }}"
+                        (click)="markAsReadUnread(post)">
+                        <mat-icon>
+                            {{ post.isReaded ? 'mark_email_read' : 'mark_email_unread' }}
+                        </mat-icon>
                     </button>
 
-                    <button class="btn btn-sm btn-outline-secondary" (click)="markAsUnread(post)">
-                        <i class="fa fa-flag"></i> Unread
+
+                    <button class="action-btn archive" matTooltip="Archive" (click)="archivePost(post)">
+                        <mat-icon>archive</mat-icon>
                     </button>
 
-                    <button class="btn btn-sm btn-outline-danger" (click)="deleteFromEveryone(post)">
-                        <i class="fa fa-trash"></i> Delete
+
+                    <button class="action-btn delete" matTooltip="Delete" (click)="deleteFromEveryone(post)">
+                        <mat-icon>delete</mat-icon>
                     </button>
 
                 </div>
 
             </div>
-
         </div>
-
     </div>
-
 </div>
-
-<app-side-drawer [opened]="drawerOpen" width="1200px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
-
-    <ng-container *ngIf="drawerOpen">
-        <app-new-post (cancel)="closeDrawer()">
-        </app-new-post>
-    </ng-container>
-
-</app-side-drawer>
 
 <app-side-drawer [opened]="drawerOpen" width="1200px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
 
@@ -146,17 +149,11 @@
 
 </app-side-drawer>
 
-
-<!-- Dynamic Drawer Header -->
 <ng-template #drawerHeader>
-
     <div class="d-flex align-items-center gap-2">
-
         <div class="post-header">
 
-            <i class="header-icon" [ngClass]="currentPost === EMPTY_ID 
-            ? 'bi bi-plus-circle' 
-            : 'bi bi-pencil-square'">
+            <i class="header-icon" [ngClass]="currentPost === EMPTY_ID ? 'bi bi-plus-circle' : 'bi bi-pencil-square'">
             </i>
 
             <h2>
@@ -164,25 +161,14 @@
             </h2>
 
         </div>
-
     </div>
-
 </ng-template>
 
 <ng-template #viewDrawerHeader>
-
     <div class="d-flex align-items-center gap-2">
-
         <div class="post-header">
-
             <i class="header-icon bi bi-eye"></i>
-
-            <h2>
-                View Post
-            </h2>
-
+            <h2>View Post</h2>
         </div>
-
     </div>
-
 </ng-template>

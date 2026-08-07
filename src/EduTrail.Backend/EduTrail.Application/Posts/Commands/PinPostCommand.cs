@@ -1,5 +1,6 @@
 using AutoMapper;
 using EduTrail.Application.Shared;
+using EduTrail.Application.UserDashboards;
 using EduTrail.Application.Users;
 using EduTrail.Domain.Entities;
 using EduTrail.Shared;
@@ -11,6 +12,7 @@ namespace EduTrail.Application.Posts
     {
         public Guid PostId { get; set; }
         public bool IsPinned { get; set; }
+        public Guid CourseOfferingId { get; set; }
 
         public class Handler : IRequestHandler<PinPostCommand, PostDetailDto>
         {
@@ -18,17 +20,20 @@ namespace EduTrail.Application.Posts
             private readonly IMapper _mapper;
             private readonly ICommonService _commonService;
             private readonly IUserRepository _userRepository;
+            private readonly IUserCourseOfferingRepository _courseRepository;
 
             public Handler(
                 IPostRepository repository,
                 IMapper mapper,
                 ICommonService commonService,
-                IUserRepository userRepository)
+                IUserRepository userRepository,
+                IUserCourseOfferingRepository courseRepository)
             {
                 _repository = repository;
                 _mapper = mapper;
                 _commonService = commonService;
                 _userRepository = userRepository;
+                _courseRepository = courseRepository;
             }
 
             public async Task<PostDetailDto> Handle(
@@ -36,6 +41,8 @@ namespace EduTrail.Application.Posts
                 CancellationToken cancellationToken)
             {
                 var userId = _commonService._CurrentUserService.GetUserId();
+                var enrolement = await _courseRepository.GetEnrollmentByUserIdAsync(userId, request.CourseOfferingId);
+
 
                 var post = await _repository.GetByIdAsync(request.PostId);
 
@@ -55,7 +62,7 @@ namespace EduTrail.Application.Posts
 
                 var postUserAction = await _repository.GetPostUserActionAsync(
                     request.PostId,
-                    userId);
+                    enrolement.Id);
 
                 if (postUserAction == null)
                 {
@@ -63,7 +70,7 @@ namespace EduTrail.Application.Posts
                     {
                         Id = Guid.NewGuid(),
                         PostId = request.PostId,
-                        UserId = userId,
+                        EnrollmentId = enrolement.Id,
                         IsPinned = request.IsPinned,
                     };
 

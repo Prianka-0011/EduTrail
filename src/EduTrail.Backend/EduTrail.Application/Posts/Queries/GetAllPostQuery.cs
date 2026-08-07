@@ -21,7 +21,6 @@ namespace EduTrail.Application.Posts
             public async Task<PostDto> Handle(GetAllPostQuery request, CancellationToken cancellationToken)
             {
                 var posts = await _repository.GetAllAsync(request.CourseOfferingId);
-
                 var postDtos = _mapper.Map<List<PostDetailDto>>(posts);
 
                 return new PostDto

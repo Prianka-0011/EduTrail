@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260806045049_update-postdiscussion-model-addd-post-action-for-user")]
-    partial class updatepostdiscussionmodeladddpostactionforuser
+    [Migration("20260806195030_update-postdiscussion-model-addd-post-action-hh-for-user")]
+    partial class updatepostdiscussionmodeladddpostactionhhforuser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -663,6 +663,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<DateTime?>("ArchivedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid?>("EnrollmentId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("FavoritedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -684,10 +687,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<DateTime?>("ReadDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
 
                     b.HasIndex("PostId");
 
@@ -1650,11 +1652,17 @@ namespace EduTrail.Infrastructure.Migrations
 
             modelBuilder.Entity("EduTrail.Domain.Entities.PostUserAction", b =>
                 {
+                    b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
+                        .WithMany()
+                        .HasForeignKey("EnrollmentId");
+
                     b.HasOne("EduTrail.Domain.Entities.Post", "Post")
                         .WithMany("UserActions")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Enrollment");
 
                     b.Navigation("Post");
                 });

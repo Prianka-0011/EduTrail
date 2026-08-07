@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EduTrail.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class updatepostdiscussionmodeladddpostactionforuser : Migration
+    public partial class updatepostdiscussionmodeladddpostactionhhforuser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,7 +44,7 @@ namespace EduTrail.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     PostId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    EnrollmentId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsFavorite = table.Column<bool>(type: "boolean", nullable: false),
                     IsPinned = table.Column<bool>(type: "boolean", nullable: false),
                     IsRead = table.Column<bool>(type: "boolean", nullable: false),
@@ -57,12 +57,22 @@ namespace EduTrail.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_PostUserActions", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_PostUserActions_Enrollments_EnrollmentId",
+                        column: x => x.EnrollmentId,
+                        principalTable: "Enrollments",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_PostUserActions_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostUserActions_EnrollmentId",
+                table: "PostUserActions",
+                column: "EnrollmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostUserActions_PostId",

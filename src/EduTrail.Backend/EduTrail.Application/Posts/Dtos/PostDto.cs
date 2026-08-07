@@ -46,7 +46,11 @@ namespace EduTrail.Application.Posts
 
         public bool? IsIndividual { get; set; } = false;
 
+        public bool IsFavorite { get; set; }
+        public bool IsPinned { get; set; }
 
+        public bool IsRead { get; set; }
+        public bool IsArchived { get; set; }
         // Folder selection
         public List<Guid> FolderIds { get; set; } = new();
         public List<Guid> EnrollmentIds { get; set; } = new();

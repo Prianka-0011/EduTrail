@@ -34,9 +34,7 @@ namespace EduTrail.Application.Posts
             PostDiscussion discussion);
         Task<Post> ArchivePostAsync(Guid id);
 
-        Task<PostUserAction?> GetPostUserActionAsync(
-    Guid postId,
-    Guid userId);
+        Task<PostUserAction?> GetPostUserActionAsync(Guid postId, Guid enrollementId);
 
         Task<PostUserAction> AddPostUserActionAsync(
             PostUserAction action);
