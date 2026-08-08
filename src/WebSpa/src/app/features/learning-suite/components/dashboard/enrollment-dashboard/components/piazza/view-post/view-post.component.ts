@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CustomCategory } from '../../../../../../../../shared/interface/customCategory';
 import { PostDiscussionService } from '../services/post-discussion.service';
 import { TimeAgoPipe } from '../../../../../../../../shared/pipes/TimeAgoPipe';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-view-post',
@@ -32,6 +33,8 @@ import { TimeAgoPipe } from '../../../../../../../../shared/pipes/TimeAgoPipe';
     MatCheckboxModule,
     MatSlideToggleModule,
     QuillModule,
+    MatIconModule,
+    MatTooltipModule,
     MatRadioModule,
     MatIconModule,
     TimeAgoPipe
@@ -106,7 +109,7 @@ export class ViewPostComponent implements OnInit, OnDestroy {
     }
 
     this.postService
-      .getViewPostById(postId)
+      .getViewPostById(postId, this.courseOfferingId)
       .subscribe({
 
         next: (response) => {
@@ -155,7 +158,6 @@ export class ViewPostComponent implements OnInit, OnDestroy {
   }
 
   async startDiscussion(): Promise<void> {
-
 
     if (!this.post) {
       return;
@@ -216,12 +218,172 @@ export class ViewPostComponent implements OnInit, OnDestroy {
     );
   }
 
-  likePost(): void {
+  bookmarkPost(): void {
 
-    console.log(
-      'Like post'
-    );
+    if (!this.post) {
+      return;
+    }
 
+    var bookmark = this.post.isBookmarked ?? false
+
+    this.postService
+      .bookmarkPost(
+        this.post.id,
+        !bookmark,
+        this.courseOfferingId
+      )
+      .subscribe({
+
+        next: () => {
+
+          this.post!.isBookmarked =
+            !bookmark;
+
+          this.toast.success(
+            this.post!.isBookmarked
+              ? 'Post bookmarked.'
+              : 'Bookmark removed.'
+          );
+
+        },
+
+        error: () => {
+
+          this.toast.error(
+            'Unable to update bookmark.'
+          );
+
+        }
+
+      });
+
+  }
+
+  async likePost(): Promise<void> {
+
+    if (!this.post) {
+      return;
+    }
+
+    try {
+      var like = this.post.isLiked ?? false
+      await this.discussionService.likePost(
+        this.post.id,
+        !like,
+        this.courseOfferingId
+      );
+      this.loadPost(this.post.id)
+
+    }
+    catch {
+
+      this.toast.error(
+        'Unable to like post.'
+      );
+
+    }
+
+  }
+
+  sharePost(): void {
+
+    if (!this.post) {
+      return;
+    }
+
+    navigator.clipboard.writeText(window.location.href);
+
+    this.postService
+      .sharePost(
+        this.post.id,
+        this.courseOfferingId
+      )
+      .subscribe({
+
+        next: () => {
+
+          if (this.post) {
+            this.post.shareCount =
+              (this.post.shareCount ?? 0) + 1;
+          }
+
+          this.toast.success(
+            'Link copied successfully.'
+          );
+
+        },
+
+        error: () => {
+
+          this.toast.error(
+            'Unable to share post.'
+          );
+
+        }
+
+      });
+
+  }
+
+  favoritePost(post: IPostDetail): void {
+
+    const status =
+      !post.isFavorite;
+
+    this.postService
+      .favoritePost(
+        post.id,
+        status,
+        this.courseOfferingId
+      )
+      .subscribe({
+
+        next: () => {
+
+          post.isFavorite = status;
+
+          this.toast.success(
+            status
+              ? 'Added to favorites.'
+              : 'Removed from favorites.'
+          );
+
+        }
+
+      });
+
+  }
+
+  copyPostLink(): void {
+
+    if (!this.post?.id) {
+      return;
+    }
+
+    const url =
+      `${window.location.origin}${window.location.pathname}?id=${this.post.id}`;
+
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+
+        this.toast.success(
+          'Post link copied successfully.'
+        );
+
+      })
+      .catch(error => {
+
+        console.error(
+          'Failed to copy post link:',
+          error
+        );
+
+        this.toast.error(
+          'Unable to copy post link.'
+        );
+
+      });
   }
   replayToDiscussion(discussion: IPostDiscussion
   ): void {

@@ -482,7 +482,7 @@ export class PostDiscussionService {
 
   async likeDiscussion(
     discussionId: string,
-    courseOfferingId:string
+    courseOfferingId: string
   ): Promise<void> {
 
     await this.connectionReady;
@@ -520,6 +520,22 @@ export class PostDiscussionService {
         isResolved
       }
     );
+  }
 
+  async likePost(
+    postId: string,
+    isLiked: boolean,
+    courseOfferingId: string
+  ): Promise<void> {
+
+    await this.connectionReady;
+
+    await this.hubConnection.invoke(
+      'LikePost',
+      {
+        postId,
+        isLiked,
+        courseOfferingId
+      });
   }
 }

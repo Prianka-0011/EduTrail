@@ -159,5 +159,22 @@ namespace EduTrail.API.Hubs
                     "DiscussionResolved",
                     result);
         }
+        public async Task LikePost(LikePostCommand command)
+        {
+            if (command == null)
+            {
+                return;
+            }
+
+            var result = await _mediator.Send(command);
+
+            var groupName = GetPostGroupName(command.PostId);
+
+            await Clients
+                .Group(groupName)
+                .SendAsync(
+                    "PostLiked",
+                    result);
+        }
     }
 }

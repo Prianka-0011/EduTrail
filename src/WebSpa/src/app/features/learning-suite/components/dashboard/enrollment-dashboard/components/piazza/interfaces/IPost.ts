@@ -34,10 +34,17 @@ export interface IPostDetail {
     isDeleted?: boolean;
     isPinned?: boolean;
     isReaded?: boolean;
-    isFavorite?: boolean;
     createdDate?: string;
     visibilityText?: string;
+    isLiked?: boolean;
 
+    isBookmarked?: boolean;
+    isArchived?: boolean;
+    isFavorite?: boolean;
+
+    likeCount?: number;
+
+    shareCount?: number;
     // Poll
     poll?: IPoll;
     folderIds?: string[];

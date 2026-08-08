@@ -481,10 +481,12 @@
     padding-bottom: 10px;
     border-bottom: 1px solid #e5e7eb;
 }
+
 .time {
     font-size: 12px;
     font-weight: 100;
 }
+
 .author {
     font-weight: 800;
 }
@@ -503,6 +505,161 @@
     background: rgba(46, 125, 50, 0.12); // transparent green
     color: #2e7d32;
 }
+
+/* Reaction Bar */
+
+.post-reaction-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 25px;
+}
+
+
+/* Reaction Button */
+
+.reaction-btn {
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid #e5e7eb;
+
+    background: #ffffff;
+
+    color: #64748b;
+
+    cursor: pointer;
+
+    transition: all .25s ease;
+
+
+    mat-icon {
+
+        font-size: 22px;
+        width: 22px;
+        height: 22px;
+
+        transition: .25s ease;
+    }
+
+
+    &:hover {
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 6px 15px rgba(0, 0, 0, .12);
+
+    }
+
+
+}
+
+
+/* Like */
+
+.reaction-btn.like {
+
+
+    &:hover,
+    &.active {
+
+        background: #fff1f2;
+
+        color: #e11d48;
+
+        border-color: #fecdd3;
+
+    }
+
+
+    &.active mat-icon {
+
+        color: #e11d48;
+
+    }
+
+}
+
+
+/* Bookmark */
+
+.reaction-btn.bookmark {
+
+
+    &:hover,
+    &.active {
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        border-color: #bfdbfe;
+
+    }
+
+
+    &.active mat-icon {
+
+        color: #2563eb;
+
+    }
+
+}
+
+
+
+/* Favorite */
+
+.reaction-btn.favorite {
+
+
+    &:hover,
+    &.active {
+
+        background: #fffbeb;
+
+        color: #d97706;
+
+        border-color: #fde68a;
+
+    }
+
+
+    &.active mat-icon {
+
+        color: #d97706;
+
+    }
+
+}
+
+
+/* Share */
+
+.reaction-btn.share {
+
+
+    &:hover {
+
+        background: #ecfdf5;
+
+        color: #059669;
+
+        border-color: #a7f3d0;
+
+    }
+
+}
+
 
 @media (max-width:768px) {
 

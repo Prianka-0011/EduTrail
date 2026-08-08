@@ -24,6 +24,17 @@ namespace EduTrail.Domain.Entities
         public DateTime? ReadDate { get; set; }
 
         public DateTime? FavoritedDate { get; set; }
+
+         // New
+    public bool IsBookmarked { get; set; }
+
+    public bool IsLiked { get; set; }
+
+    public int ShareCount { get; set; }
+
+    public DateTime? BookmarkedDate { get; set; }
+
+    public DateTime? LikedDate { get; set; }
     }
 
 }

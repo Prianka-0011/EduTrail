@@ -76,10 +76,10 @@ export class PostService {
 
   }
 
-  getViewPostById(id: string) {
+  getViewPostById(id: string , courseOfferingId:string) {
     console.log("Post is triggering with id", id)
     return this.http.get<IPost>(
-      `${this.baseUrl}/view/${id}`
+      `${this.baseUrl}/view/${id}?courseOfferingId=${courseOfferingId}`
     );
 
   }
@@ -206,6 +206,54 @@ export class PostService {
 
     return this.http.put<boolean>(
       `${this.baseUrl}/${id}/favorite`,
+      {},
+      { params }
+    );
+  }
+
+  likePost(
+    id: string,
+    isLiked: boolean,
+    courseOfferingId: string
+  ): Observable<boolean> {
+
+    const params = new HttpParams()
+      .set('isLiked', isLiked.toString())
+      .set('courseOfferingId', courseOfferingId);
+
+    return this.http.put<boolean>(
+      `${this.baseUrl}/${id}/like`,
+      {},
+      { params }
+    );
+  }
+
+  bookmarkPost(
+    id: string,
+    isBookmarked: boolean,
+    courseOfferingId: string
+  ): Observable<boolean> {
+
+    const params = new HttpParams()
+      .set('isBookmarked', isBookmarked.toString())
+      .set('courseOfferingId', courseOfferingId);
+    return this.http.put<boolean>(
+      `${this.baseUrl}/${id}/bookmark`,
+      {},
+      { params }
+    );
+  }
+
+  sharePost(
+    id: string,
+    courseOfferingId: string
+  ): Observable<boolean> {
+
+    const params = new HttpParams()
+      .set('courseOfferingId', courseOfferingId);
+
+    return this.http.put<boolean>(
+      `${this.baseUrl}/${id}/share`,
       {},
       { params }
     );

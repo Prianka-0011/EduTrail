@@ -72,19 +72,18 @@
                     <div [innerHTML]="post.details"></div>
                 </div>
 
+
                 <div class="post-actions" (click)="$event.stopPropagation()">
 
                     <button class="action-btn view" matTooltip="View" (click)="viewPost(post)">
                         <mat-icon>visibility</mat-icon>
                     </button>
 
-
                     <button class="action-btn edit" matTooltip="Edit" (click)="editPost(post)">
                         <mat-icon>edit</mat-icon>
                     </button>
 
-
-                    <button class="action-btn favorite"
+                    <button class="action-btn favorite" [class.active]="post.isFavorite"
                         matTooltip="{{ post.isFavorite ? 'Remove Favorite' : 'Favorite' }}"
                         (click)="favoritePost(post)">
                         <mat-icon>
@@ -92,25 +91,22 @@
                         </mat-icon>
                     </button>
 
-
-                    <button class="action-btn pin" matTooltip="{{ post.isPinned ? 'Unpin' : 'Pin' }}"
-                        (click)="pinPost(post)">
+                    <button class="action-btn pin" [class.active]="post.isPinned"
+                        matTooltip="{{ post.isPinned ? 'Unpin' : 'Pin' }}" (click)="pinPost(post)">
                         <mat-icon>push_pin</mat-icon>
                     </button>
 
-
-                    <button class="action-btn read" matTooltip="{{ post.isReaded ? 'Mark Unread' : 'Mark Read' }}"
-                        (click)="markAsReadUnread(post)">
+                    <button class="action-btn read" [class.active]="post.isReaded"
+                        matTooltip="{{ post.isReaded ? 'Mark Unread' : 'Mark Read' }}" (click)="markAsReadUnread(post)">
                         <mat-icon>
                             {{ post.isReaded ? 'mark_email_read' : 'mark_email_unread' }}
                         </mat-icon>
                     </button>
 
-
-                    <button class="action-btn archive" matTooltip="Archive" (click)="archivePost(post)">
+                    <button class="action-btn archive" [class.active]="post.isArchived" matTooltip="Archive"
+                        (click)="archivePost(post)">
                         <mat-icon>archive</mat-icon>
                     </button>
-
 
                     <button class="action-btn delete" matTooltip="Delete" (click)="deleteFromEveryone(post)">
                         <mat-icon>delete</mat-icon>

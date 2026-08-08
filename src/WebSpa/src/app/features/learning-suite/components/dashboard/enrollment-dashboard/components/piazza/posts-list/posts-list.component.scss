@@ -351,11 +351,10 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: .2s ease;
+  transition: all .2s ease;
 
-  &:hover {
-    transform: translateY(-2px);
-  }
+  background: transparent;
+  color: #6b7280;
 
   mat-icon {
     font-size: 20px;
@@ -363,37 +362,76 @@
     height: 20px;
   }
 
-  &.view {
+  &:hover {
+    transform: translateY(-2px);
+    background: #f3f4f6;
+  }
+
+  /* View */
+
+  &.view:hover {
     background: #e3f2fd;
     color: #1565c0;
   }
 
-  &.edit {
+  /* Edit */
+
+  &.edit:hover {
     background: #fff3e0;
     color: #ef6c00;
   }
 
-  &.favorite {
+  /* Favorite */
+
+  &.favorite.active {
     background: #fff8e1;
     color: #f9a825;
   }
 
-  &.pin {
+  &.favorite:hover {
+    background: #fff8e1;
+    color: #f9a825;
+  }
+
+  /* Pin */
+
+  &.pin.active {
     background: #f3e5f5;
     color: #7b1fa2;
   }
 
-  &.read {
+  &.pin:hover {
+    background: #f3e5f5;
+    color: #7b1fa2;
+  }
+
+  /* Read */
+
+  &.read.active {
     background: #e8f5e9;
     color: #2e7d32;
   }
 
-  &.archive {
+  &.read:hover {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  /* Archive */
+
+  &.archive.active {
     background: #eceff1;
     color: #455a64;
   }
 
-  &.delete {
+  &.archive:hover {
+    background: #eceff1;
+    color: #455a64;
+  }
+
+  /* Delete */
+
+  &.delete:hover {
     background: #ffebee;
     color: #c62828;
   }

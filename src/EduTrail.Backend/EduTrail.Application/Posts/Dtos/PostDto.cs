@@ -51,6 +51,11 @@ namespace EduTrail.Application.Posts
 
         public bool IsRead { get; set; }
         public bool IsArchived { get; set; }
+        public bool IsLiked { get; set; }
+        public bool IsBookmarked { get; set; }
+        public int LikeCount { get; set; }
+
+        public int ShareCount { get; set; }
         // Folder selection
         public List<Guid> FolderIds { get; set; } = new();
         public List<Guid> EnrollmentIds { get; set; } = new();

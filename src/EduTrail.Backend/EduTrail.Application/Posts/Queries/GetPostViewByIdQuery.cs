@@ -1,5 +1,6 @@
 using AutoMapper;
 using EduTrail.Application.Shared.Dtos;
+using EduTrail.Application.UserDashboards;
 using EduTrail.Application.Users;
 using MediatR;
 
@@ -16,16 +17,17 @@ namespace EduTrail.Application.Posts
             private readonly IPostRepository _postRepository;
             private readonly IMapper _mapper;
             private readonly IUserRepository _userRepository;
-
-
+            private readonly IUserCourseOfferingRepository _courseRepository;
             public Handler(
                 IPostRepository postRepository,
                 IMapper mapper,
-                IUserRepository userRepository)
+                IUserRepository userRepository,
+                IUserCourseOfferingRepository courseRepository)
             {
                 _postRepository = postRepository;
                 _mapper = mapper;
                 _userRepository = userRepository;
+                _courseRepository = courseRepository;
             }
 
 
@@ -51,6 +53,8 @@ namespace EduTrail.Application.Posts
                 postDto.EditorType = post.EditorType;
 
                 var user = await _userRepository.GetByIdAsync(post.CreatedById ?? Guid.Empty);
+                 var enrollment = await _courseRepository.GetEnrollmentByUserIdAsync(user.Id, request.CourseOfferingId);
+
                 postDto.PostOwnerName = user?.FirstName + " " + user?.LastName;
                 // Folders
                 postDto.FolderIds = post.Folders
@@ -152,7 +156,11 @@ namespace EduTrail.Application.Posts
                     })
                     .ToList();
 
-
+                var userAction = await _postRepository.GetPostUserActionAsync(post.Id, enrollment.Id);
+               
+                postDto.IsFavorite = userAction?.IsFavorite ?? false;
+                postDto.IsBookmarked = userAction?.IsBookmarked ?? false;
+                postDto.IsLiked = userAction?.IsLiked ?? false;
                 return new PostDto
                 {
                     DetailsDto = postDto

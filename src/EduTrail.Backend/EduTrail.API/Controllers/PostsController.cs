@@ -44,12 +44,12 @@ namespace EduTrail.API.Controllers
 
         [Authorize]
         [HttpGet("view/{id}")]
-        public async Task<ActionResult> GetViewById(Guid id)
+        public async Task<ActionResult> GetViewById(Guid id, [FromQuery] Guid courseOfferingId)
         {
             return Ok(await _mediator.Send(new GetPostViewByIdQuery
             {
                 Id = id,
-
+                CourseOfferingId = courseOfferingId
             }));
         }
 
@@ -108,9 +108,9 @@ namespace EduTrail.API.Controllers
         [Authorize]
         [HttpPut("{id}/pinned")]
         public async Task<ActionResult<bool>> Pinned(
-    Guid id,
-    [FromQuery] bool isPinned,
-    [FromQuery] Guid courseOfferingId)
+        Guid id,
+        [FromQuery] bool isPinned,
+        [FromQuery] Guid courseOfferingId)
         {
             var result = await _mediator.Send(new PinPostCommand
             {
@@ -155,12 +155,42 @@ namespace EduTrail.API.Controllers
 
             return Ok(result);
         }
-
+        [Authorize]
+        [HttpPut("{id}/like")]
+        public async Task<IActionResult> Like(Guid id)
+        {
+            return Ok(await _mediator.Send(new LikePostCommand
+            {
+                PostId = id
+            }));
+        }
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> Delete(Guid id)
         {
             return await _mediator.Send(new DeletePostCommand { Id = id });
+        }
+
+        [Authorize]
+        [HttpPut("{id}/bookmark")]
+        public async Task<IActionResult> Bookmark(Guid id,[FromQuery] bool isBookmarked, [FromQuery] Guid courseOfferingId)
+        {
+            return Ok(await _mediator.Send(new BookmarkPostCommand
+            {
+                PostId = id,
+                IsBookmarked = isBookmarked,
+                CourseOfferingId = courseOfferingId
+            }));
+        }
+
+        [Authorize]
+        [HttpPut("{id}/share")]
+        public async Task<IActionResult> Share(Guid id)
+        {
+            return Ok(await _mediator.Send(new SharePostCommand
+            {
+                PostId = id
+            }));
         }
     }
 }

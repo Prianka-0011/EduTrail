@@ -41,6 +41,7 @@ namespace EduTrail.Infrastructure.Repositories
         {
             return await _context.Posts
                 .Include(x => x.Folders)
+                .Include(c=>c.UserActions)
                 .Include(x => x.Enrollments)
                 .ThenInclude(c => c.User)
                 .Include(x => x.Poll)
@@ -201,10 +202,11 @@ namespace EduTrail.Infrastructure.Repositories
 
         public async Task<PostUserAction?> GetPostUserActionAsync(Guid postId, Guid enrollementId)
         {
-            return await _context.PostUserActions
+            var test =  await _context.PostUserActions
                 .FirstOrDefaultAsync(x =>
                     x.PostId == postId &&
                     x.EnrollmentId == enrollementId);
+                    return test;
         }
 
         public async Task<PostUserAction> AddPostUserActionAsync(PostUserAction action)

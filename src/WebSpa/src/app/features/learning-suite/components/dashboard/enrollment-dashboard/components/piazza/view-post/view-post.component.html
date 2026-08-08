@@ -123,30 +123,37 @@
 
         </div>
 
-        <div class="action-bar">
+        <div class="post-reaction-bar">
 
-            <button (click)="likePost()">
+            <button class="reaction-btn like" [class.active]="post?.isLiked" mat-icon-button
+                matTooltip="{{ post?.isLiked ? 'Unlike' : 'Like' }}" (click)="likePost()">
 
-                👍
-
-            </button>
-
-            <button>
-
-                ⭐ Favorite
+                <mat-icon>
+                    {{ post?.isLiked ? 'favorite' : 'favorite_border' }}
+                </mat-icon>
 
             </button>
 
-            <button>
+            <button class="reaction-btn bookmark" [class.active]="post?.isBookmarked" mat-icon-button
+                matTooltip="{{ post?.isBookmarked ? 'Remove Bookmark' : 'Bookmark' }}" (click)="bookmarkPost()">
 
-                🔖 Bookmark
+                <mat-icon>
+                    {{ post?.isBookmarked ? 'bookmark' : 'bookmark_border' }}
+                </mat-icon>
 
             </button>
 
-            <button>
+            <button class="reaction-btn favorite" [class.active]="post?.isFavorite" mat-icon-button
+                matTooltip="{{ post?.isFavorite ? 'Remove Favorite' : 'Favorite' }}" (click)="favoritePost(post)">
 
-                🔗 Share
+                <mat-icon>
+                    {{ post?.isFavorite ? 'star' : 'star_border' }}
+                </mat-icon>
 
+            </button>
+
+            <button class="reaction-btn share" mat-icon-button matTooltip="Copy link" (click)="copyPostLink()">
+                <mat-icon>link</mat-icon>
             </button>
 
         </div>

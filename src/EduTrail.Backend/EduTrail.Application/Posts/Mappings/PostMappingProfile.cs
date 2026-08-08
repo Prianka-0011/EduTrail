@@ -39,9 +39,13 @@ namespace EduTrail.Application.Posts
                     opt => opt.MapFrom(src => src.PostType.Name))
 
                 .ForMember(dest => dest.CreatedDate,
-                    opt => opt.MapFrom(src => src.CreatedDate));
-
-
+                    opt => opt.MapFrom(src => src.CreatedDate))
+                .ForMember(
+                    d => d.IsLiked,
+                    o => o.MapFrom(s => s.UserActions.Any(x => x.IsLiked)))
+                .ForMember(
+                    d => d.LikeCount,
+                    o => o.MapFrom(s => s.UserActions.Count(x => x.IsLiked)));
             // Poll DTO -> Entity
             CreateMap<PollDto, Poll>()
                 .ForMember(dest => dest.Id,
