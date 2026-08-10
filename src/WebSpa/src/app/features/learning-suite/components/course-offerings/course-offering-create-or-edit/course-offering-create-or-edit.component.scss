@@ -1,0 +1,118 @@
+.modern-field {
+    width: 100%;
+
+    --mdc-outlined-text-field-container-shape: 12px;
+    --mdc-outlined-text-field-outline-color: #e2e8f0;
+    --mdc-outlined-text-field-hover-outline-color: #94a3b8;
+    --mdc-outlined-text-field-focus-outline-color: #4f46e5;
+    --mdc-outlined-text-field-label-text-color: #063466;
+    --mdc-outlined-text-field-focus-label-text-color: #4f46e5;
+}
+
+.modern-field .mat-mdc-select-value {
+    color: #1e293b;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.modern-field mat-icon {
+    color: #063466;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  width: 100%;
+  padding-top: 18px;
+  border-top: 1px solid #eef2f7;
+}
+
+.cancel-btn {
+    height: 40px;
+    border-radius: 10px !important;
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 100px;
+    color: #475569 !important;
+    border-color: #dbe2ea !important;
+    background: #fff !important;
+}
+
+.cancel-btn:hover {
+    background: #f8fafc !important;
+}
+
+.form-actions mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+::ng-deep .cdk-overlay-container {
+    z-index: 9999 !important;
+}
+
+::ng-deep .cdk-overlay-pane {
+    z-index: 10000 !important;
+}
+
+::ng-deep .mat-mdc-select-panel {
+    z-index: 10001 !important;
+}
+
+.add-course-btn {
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 17px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background: linear-gradient(135deg,
+            #78aef0 0%,
+            #669ce4 100%) !important;
+
+    color: #ffffff !important;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    letter-spacing: -0.05px;
+
+    box-shadow:
+        0 4px 10px rgba(102, 156, 228, 0.20) !important;
+
+    transition:
+        transform 0.16s ease,
+        box-shadow 0.16s ease,
+        filter 0.16s ease;
+}
+
+.add-course-btn:hover {
+    transform: translateY(-1px);
+
+    filter: brightness(1.02);
+
+    box-shadow:
+        0 7px 16px rgba(102, 156, 228, 0.26) !important;
+}
+
+.add-course-btn:active {
+    transform: translateY(0);
+}
+
+.add-course-btn mat-icon {
+    width: 19px;
+    height: 19px;
+
+    margin-left: 5px;
+    font-size: 19px;
+}

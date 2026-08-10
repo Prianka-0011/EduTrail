@@ -1,170 +1,394 @@
-<div class="table-container">
+<div class="list-toolbar">
 
-  <div class="row mb-3">
-    <div class="col-12 d-flex align-items-center">
+  <div class="list-toolbar-left">
 
-      <h2 class="mb-0">Enrollments</h2>
+    <div class="list-heading">
 
-      <div class="ms-auto d-flex gap-2">
-        <button (click)="openCreateDrawer()" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
-          <i class="bi bi-plus-lg"></i>
-          <span>Create</span>
-        </button>
+      <h2>Enrollments</h2>
 
-        <button (click)="openBulkCreateDrawer()" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
-          <i class="bi bi-plus-lg"></i>
-          <span>Bulk Create</span>
-        </button>
-      </div>
-    </div>
-  </div>
+      <span>
+        Manage your course enrollments
+      </span>
 
-  <div class="row justify-content-end">
-    <div class="col-md-4 col-10 mb-4">
-      <div class="search-input-wrapper">
-        <input type="text" class="form-control" placeholder="Search enrollments..." [(ngModel)]="searchText"
-          (input)="applyFilter()" />
-        <i class="bi bi-search search-icon"></i>
-      </div>
-    </div>
-  </div>
-
-  <div class="table-responsive">
-    <table class="table custom-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Enrollment Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <ng-container *ngFor="let enrolement of pagedEnrolements">
-
-          <!-- Parent row -->
-          <tr>
-            <td>{{ enrolement.studentName }}</td>
-            <td>{{ enrolement.studentEmail }}</td>
-            <td>{{ enrolement.enrolledDate }}</td>
-            <td>
-              <button class="edit-icon-btn" (click)="openEditDrawer(enrolement.id); $event.stopPropagation()">
-                <i class="bi bi-pencil-square"></i>
-              </button>
-            </td>
-          </tr>
-
-          <!-- Enrollment link -->
-          <!-- <tr
-            class="child-link-row"
-            role="button"
-            (click)="goToAssessment(enrolement.id)"
-          >
-            <td colspan="4">
-              <i class="bi bi-box-arrow-up-right me-2"></i>
-              <strong>TA Hours</strong>
-            </td>
-          </tr> -->
-
-          <!-- Expandable assessment section -->
-          <!-- <tr
-            class="child-toggle-row"
-            role="button"
-            (click)="toggleRow(offering.id)"
-          >
-            <td colspan="4">
-              <i
-                class="bi me-2"
-                [ngClass]="isRowExpanded(offering.id) ? 'bi-chevron-down' : 'bi-chevron-right'"
-              ></i>
-              <strong>Assessment</strong>
-            </td>
-          </tr> -->
-
-          <!-- <tr *ngIf="isRowExpanded(offering.id)" class="child-row">
-            <td colspan="4">
-              <div class="p-3 bg-light rounded">
-                <div><strong>Total Assessments:</strong> {{ offering.assessmentCount }}</div>
-                <div><strong>Graded:</strong> {{ offering.gradedCount }}</div>
-                <div><strong>Last Updated:</strong> {{ offering.lastAssessmentDate | date }}</div>
-              </div>
-            </td>
-          </tr> -->
-
-        </ng-container>
-
-        <tr *ngIf="pagedEnrolements.length === 0">
-          <td colspan="4" class="text-center py-4 text-muted">
-            No records found
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Pagination controls -->
-  <div class="custom-paginator d-flex align-items-center mt-4">
-
-    <div class="d-flex align-items-center gap-2">
-      <span>Items per page:</span>
-      <select class="form-select page-size-select" [value]="pageSize"
-        (change)="changePageSize($any($event.target).value)">
-        <option *ngFor="let size of pageSizeOptions" [value]="size">
-          {{ size }}
-        </option>
-      </select>
-    </div>
-
-    <span class="ms-auto">{{ rangeLabel }}</span>
-
-    <div class="d-flex gap-2 ms-3">
-      <button class="btn icon-btn" (click)="goToPage(1)">
-        <i class="bi bi-chevron-double-left"></i>
-      </button>
-      <button class="btn icon-btn" (click)="goToPage(currentPage - 1)">
-        <i class="bi bi-chevron-left"></i>
-      </button>
-      <button class="btn icon-btn" (click)="goToPage(currentPage + 1)">
-        <i class="bi bi-chevron-right"></i>
-      </button>
-      <button class="btn icon-btn" (click)="goToPage(totalPages)">
-        <i class="bi bi-chevron-double-right"></i>
-      </button>
     </div>
 
   </div>
+
+
+  <div class="toolbar-right">
+
+    <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+
+      <mat-icon matPrefix>
+        search
+      </mat-icon>
+
+      <input matInput type="text" placeholder="Search enrollments..." [(ngModel)]="searchText"
+        (input)="applyFilter()" />
+
+    </mat-form-field>
+
+
+    <button mat-flat-button class="add-btn" (click)="openCreateDrawer()">
+
+      <mat-icon>
+        add
+      </mat-icon>
+
+      Create Enrollment
+
+    </button>
+
+
+    <button mat-flat-button class="add-btn secondary-add-btn" (click)="openBulkCreateDrawer()">
+
+      <mat-icon>
+        playlist_add
+      </mat-icon>
+
+      Bulk Create
+
+    </button>
+
+  </div>
+
 </div>
 
-<!-- Side drawer for create/edit -->
-<app-side-drawer [opened]="drawerOpen" width="1000px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+
+<!-- TABLE -->
+
+<div class="list-table-wrapper">
+
+  <table class="list-table">
+
+    <thead>
+
+      <tr>
+
+        <!-- STUDENT -->
+
+        <th>
+
+          <button type="button" class="list-column-heading" (click)="applySort('studentName')">
+
+            <span>
+              Student
+            </span>
+
+            <i class="bi" [ngClass]="{
+                'bi-caret-up-fill':
+                  sortColumn === 'studentName' &&
+                  sortDirection === 'asc',
+
+                'bi-caret-down-fill':
+                  sortColumn === 'studentName' &&
+                  sortDirection === 'desc',
+
+                'bi-unfold-more':
+                  sortColumn !== 'studentName'
+              }"></i>
+
+          </button>
+
+        </th>
+
+
+        <!-- EMAIL -->
+
+        <th>
+
+          <button type="button" class="list-column-heading" (click)="applySort('studentEmail')">
+
+            <span>
+              Email
+            </span>
+
+            <i class="bi" [ngClass]="{
+                'bi-caret-up-fill':
+                  sortColumn === 'studentEmail' &&
+                  sortDirection === 'asc',
+
+                'bi-caret-down-fill':
+                  sortColumn === 'studentEmail' &&
+                  sortDirection === 'desc',
+
+                'bi-unfold-more':
+                  sortColumn !== 'studentEmail'
+              }"></i>
+
+          </button>
+
+        </th>
+
+
+        <!-- ENROLLED DATE -->
+
+        <th>
+
+          <button type="button" class="list-column-heading" (click)="applySort('enrolledDate')">
+
+            <span>
+              Enrolled Date
+            </span>
+
+            <i class="bi" [ngClass]="{
+                'bi-caret-up-fill':
+                  sortColumn === 'enrolledDate' &&
+                  sortDirection === 'asc',
+
+                'bi-caret-down-fill':
+                  sortColumn === 'enrolledDate' &&
+                  sortDirection === 'desc',
+
+                'bi-unfold-more':
+                  sortColumn !== 'enrolledDate'
+              }"></i>
+
+          </button>
+
+        </th>
+
+
+        <!-- ACTION -->
+
+        <th class="list-action-column">
+          Action
+        </th>
+
+      </tr>
+
+    </thead>
+
+
+    <tbody>
+
+      <tr *ngFor="let enrollment of pagedEnrolements" class="list-row">
+
+        <!-- STUDENT -->
+
+        <td>
+
+          <div class="list-item-cell">
+
+            <div class="list-person-avatar">
+
+              {{ enrollment.studentName?.charAt(0) || '?' }}
+
+            </div>
+
+
+            <div class="list-item-details">
+
+              <span class="list-item-name">
+                {{ enrollment.studentName }}
+              </span>
+
+              <span class="list-item-subtitle">
+                Student
+              </span>
+
+            </div>
+
+          </div>
+
+        </td>
+
+
+        <!-- EMAIL -->
+
+        <td>
+
+          <span class="list-secondary-text">
+            {{ enrollment.studentEmail }}
+          </span>
+
+        </td>
+
+
+        <!-- ENROLLED DATE -->
+
+        <td>
+
+          <span class="list-secondary-text">
+            {{ enrollment.enrolledDate | date:'MMMM d, y' }}
+          </span>
+
+        </td>
+
+
+        <!-- ACTION -->
+
+        <td class="list-action-column">
+
+          <button type="button" class="list-action" title="Edit" (click)="
+              openEditDrawer(enrollment.id);
+              $event.stopPropagation()
+            ">
+
+            <i class="bi bi-pencil-square"></i>
+
+          </button>
+
+
+          <button type="button" class="list-action" title="More" (click)="$event.stopPropagation()">
+
+            <i class="bi bi-three-dots"></i>
+
+          </button>
+
+        </td>
+
+      </tr>
+
+
+      <!-- EMPTY -->
+
+      <tr *ngIf="pagedEnrolements.length === 0">
+
+        <td colspan="4" class="list-empty">
+
+          <i class="bi bi-search list-empty-icon"></i>
+
+          <strong>
+            No enrollments found
+          </strong>
+
+          <span>
+            Try adjusting your search criteria
+          </span>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<div class="list-footer">
+
+  <div class="list-rows-per-page">
+
+    <span>
+      Items per page
+    </span>
+
+
+    <select class="list-page-size" [value]="pageSize" (change)="changePageSize($any($event.target).value)">
+
+      <option *ngFor="let size of pageSizeOptions" [value]="size">
+
+        {{ size }}
+
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <span class="list-range">
+    {{ rangeLabel }}
+  </span>
+
+
+  <div class="list-pagination">
+
+    <button type="button" class="list-pagination-icon" [disabled]="currentPage === 1" (click)="goToPage(1)"
+      title="First page">
+
+      <i class="bi bi-chevron-double-left"></i>
+
+    </button>
+
+
+    <button type="button" class="list-pagination-icon" [disabled]="currentPage === 1"
+      (click)="goToPage(currentPage - 1)" title="Previous page">
+
+      <i class="bi bi-chevron-left"></i>
+
+    </button>
+
+
+    <span class="list-page-number">
+      {{ currentPage }}
+    </span>
+
+
+    <button type="button" class="list-pagination-icon" [disabled]="currentPage === totalPages"
+      (click)="goToPage(currentPage + 1)" title="Next page">
+
+      <i class="bi bi-chevron-right"></i>
+
+    </button>
+
+
+    <button type="button" class="list-pagination-icon" [disabled]="currentPage === totalPages"
+      (click)="goToPage(totalPages)" title="Last page">
+
+      <i class="bi bi-chevron-double-right"></i>
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<app-side-drawer [opened]="drawerOpen" width="600px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+
   <ng-container *ngIf="drawerOpen">
-    <app-enrolement-create-or-edit (saved)="onEnrolementSaved()"
-      (cancel)="closeDrawer()"></app-enrolement-create-or-edit>
+
+    <app-enrolement-create-or-edit (saved)="onEnrolementSaved()" (cancel)="closeDrawer()">
+    </app-enrolement-create-or-edit>
+
   </ng-container>
+
 </app-side-drawer>
 
-<app-side-drawer [opened]="bulkDrawerOpen" width="1000px" (closed)="closeBulkDrawer()" [headerTemplate]="drawerHeaderBulk">
-   <ng-container *ngIf="bulkDrawerOpen">
-    <app-create-bulk-enrollments (saved)="onEnrolementBulkSaved()"
-      (cancel)="closeBulkDrawer()"></app-create-bulk-enrollments>
+
+<app-side-drawer [opened]="bulkDrawerOpen" width="600px" (closed)="closeBulkDrawer()"
+  [headerTemplate]="drawerHeaderBulk">
+
+  <ng-container *ngIf="bulkDrawerOpen">
+
+    <app-create-bulk-enrollments (saved)="onEnrolementBulkSaved()" (cancel)="closeBulkDrawer()">
+    </app-create-bulk-enrollments>
+
   </ng-container>
+
 </app-side-drawer>
+
 
 <ng-template #drawerHeader>
-  <div class="d-flex align-items-center gap-2">
-    <i class="bi bi-journal-bookmark"></i>
-    <span>
-      {{ selectedEnrolementId ? 'Edit Enrollment' : 'Create Enrollment' }}
-    </span>
+
+  <div class="drawer-header-icon">
+    <mat-icon>person</mat-icon>
   </div>
+
+  <span>
+    {{
+    selectedEnrolementId
+    ? 'Update the enrollment information below'
+    : 'Create a new student enrollment'
+    }}
+  </span>
+
 </ng-template>
 
+
 <ng-template #drawerHeaderBulk>
-  <div class="d-flex align-items-center gap-2">
-    <i class="bi bi-journal-bookmark"></i>
-    <span>
-      Create Bulk Enrollment
-    </span>
+
+  <div class="drawer-header-icon">
+    <mat-icon>group</mat-icon>
   </div>
+  <span>
+    Create enrollments for multiple students
+  </span>
+
 </ng-template>

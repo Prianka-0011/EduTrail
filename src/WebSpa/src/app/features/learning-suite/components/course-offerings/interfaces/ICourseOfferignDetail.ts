@@ -6,4 +6,5 @@ export interface ICourseOfferingDetail {
     termName?: string;
     instructorId?: string | null;
     instructorName?: string | null;
+    termTypeId?: string | null;
 }

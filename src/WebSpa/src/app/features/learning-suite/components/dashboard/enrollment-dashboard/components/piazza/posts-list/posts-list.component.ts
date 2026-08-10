@@ -102,7 +102,7 @@ export class PostsListComponent implements OnInit {
       .subscribe({
 
         next: (res) => {
-
+          console.log(res, "Post List")
           this.posts =
             res.detailsListDto ?? [];
 
@@ -249,10 +249,6 @@ export class PostsListComponent implements OnInit {
 
     const now = new Date();
 
-    const startOfWeek = new Date(now);
-    startOfWeek.setDate(now.getDate() - now.getDay());
-
-
     const formatDate = (date: Date): string => {
       return date.toLocaleDateString('en-US', {
         month: 'numeric',
@@ -261,42 +257,64 @@ export class PostsListComponent implements OnInit {
       });
     };
 
+    // Get first day of current month
+    const firstDayOfMonth = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      1
+    );
 
-    const getWeekRange = (week: number) => {
+    // Get last day of current month
+    const lastDayOfMonth = new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      0
+    );
 
-      const start = new Date(startOfWeek);
+    const getWeekRange = (weekNumber: number) => {
 
-      start.setDate(
-        startOfWeek.getDate() - (week - 1) * 7
+      const start = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        1 + ((weekNumber - 1) * 7)
       );
 
+      start.setHours(0, 0, 0, 0);
 
-      const end = new Date(start);
-
-      end.setDate(
-        start.getDate() + 6
+      const end = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        7 + ((weekNumber - 1) * 7)
       );
 
+      // Don't go beyond the end of the month
+      if (end > lastDayOfMonth) {
+        end.setTime(lastDayOfMonth.getTime());
+      }
 
-      return { start, end };
+      end.setHours(23, 59, 59, 999);
 
+      return {
+        start,
+        end
+      };
     };
 
-
     const pinned = posts.filter(
-      x => x.isPinned
+      post => post.isPinned === true
     );
-
 
     const favorite = posts.filter(
-      x => x.isFavorite && !x.isPinned
+      post =>
+        post.isFavorite === true &&
+        post.isPinned !== true
     );
-
 
     const normalPosts = posts.filter(
-      x => !x.isPinned && !x.isFavorite
+      post =>
+        post.isPinned !== true &&
+        post.isFavorite !== true
     );
-
 
     const groups: {
       title: string;
@@ -304,9 +322,11 @@ export class PostsListComponent implements OnInit {
       posts: IPostDetail[];
     }[] = [];
 
+    // -------------------------
+    // PINNED
+    // -------------------------
 
-
-    if (pinned.length) {
+    if (pinned.length > 0) {
 
       groups.push({
         title: '📌 Pinned Posts',
@@ -316,9 +336,11 @@ export class PostsListComponent implements OnInit {
 
     }
 
+    // -------------------------
+    // FAVORITE
+    // -------------------------
 
-
-    if (favorite.length) {
+    if (favorite.length > 0) {
 
       groups.push({
         title: '⭐ Favorite Posts',
@@ -328,72 +350,88 @@ export class PostsListComponent implements OnInit {
 
     }
 
+    // -------------------------
+    // MONTH WEEKS
+    // -------------------------
 
+    const numberOfWeeks = Math.ceil(
+      lastDayOfMonth.getDate() / 7
+    );
 
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= numberOfWeeks; i++) {
 
       const range = getWeekRange(i);
 
-
       const weekPosts = normalPosts.filter(post => {
 
-        const date = new Date(post.createdDate ?? '');
+        if (!post.createdDate) {
+          return false;
+        }
 
-        return date >= range.start &&
-          date <= range.end;
+        const date = new Date(post.createdDate);
+
+        if (isNaN(date.getTime())) {
+          return false;
+        }
+
+        return (
+          date >= range.start &&
+          date <= range.end
+        );
 
       });
 
+      if (weekPosts.length > 0) {
 
-
-      if (weekPosts.length) {
+        weekPosts.sort(
+          (a, b) =>
+            new Date(b.createdDate ?? '').getTime() -
+            new Date(a.createdDate ?? '').getTime()
+        );
 
         groups.push({
-
-          title: `📅 Week ${i} (${formatDate(range.start)} - ${formatDate(range.end)})`,
-
+          title:
+            `📅 Week ${i} (${formatDate(range.start)} - ${formatDate(range.end)})`,
           expanded: true,
-
           posts: weekPosts
-
         });
 
       }
-
     }
 
-
-
-    const week4Range = getWeekRange(4);
-
+    // -------------------------
+    // OLDER POSTS
+    // -------------------------
 
     const olderPosts = normalPosts.filter(post => {
 
-      const date = new Date(post.createdDate ?? '');
+      if (!post.createdDate) {
+        return false;
+      }
 
-      return date < week4Range.start;
+      const date = new Date(post.createdDate);
+
+      return date < firstDayOfMonth;
 
     });
 
+    if (olderPosts.length > 0) {
 
-
-    if (olderPosts.length) {
+      olderPosts.sort(
+        (a, b) =>
+          new Date(b.createdDate ?? '').getTime() -
+          new Date(a.createdDate ?? '').getTime()
+      );
 
       groups.push({
-
-        title: `📁 Older Posts (Before ${formatDate(week4Range.start)})`,
-
+        title:
+          `📁 Older Posts (Before ${formatDate(firstDayOfMonth)})`,
         expanded: true,
-
         posts: olderPosts
-
       });
-
     }
 
-
     this.groupedPosts = groups;
-
   }
 
   openDetailDrawer(

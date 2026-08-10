@@ -1,0 +1,199 @@
+/* =========================================================
+   EXPANDED CHILD ROW
+   ========================================================= */
+
+.list-detail-row {
+  height: 0;
+}
+
+.list-expanded-detail {
+  padding: 0 !important;
+  border-bottom: 1px solid #edf1f5 !important;
+  background: #f8fafc;
+}
+
+.list-expanded-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  max-height: 0;
+  overflow: hidden;
+
+  /* More indentation from the main row */
+  padding: 0 55px 0 105px;
+
+  opacity: 0;
+  transform: translateY(-4px);
+
+  transition:
+    max-height 0.25s ease,
+    padding 0.25s ease,
+    opacity 0.2s ease,
+    transform 0.25s ease;
+}
+
+.list-expanded-content.show,
+.list-expanded-content {
+  max-height: 110px;
+
+  padding-top: 12px;
+  padding-bottom: 12px;
+
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   CHILD FEATURE CARDS
+   ========================================================= */
+
+.feature-card {
+  min-height: 58px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 9px 12px;
+
+  border: 1px solid #e7ecf2;
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.02);
+
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    transform 0.16s ease,
+    background 0.16s ease;
+}
+
+.feature-card:hover {
+  border-color: #dbe4ee;
+
+  background: #ffffff;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 14px rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================================================
+   CHILD ICON
+   ========================================================= */
+
+.feature-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+}
+
+.feature-icon i {
+  font-size: 17px;
+}
+
+.feature-icon.enrollment {
+  background: #edf5ff;
+  color: #6195cf;
+}
+
+.feature-icon.assessment {
+  background: #f2effb;
+  color: #8c7db5;
+}
+
+
+/* =========================================================
+   CHILD TEXT
+   ========================================================= */
+
+.feature-info {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.feature-info strong {
+  color: #3d4b60;
+
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.feature-info span {
+  overflow: hidden;
+
+  color: #9aa4b2;
+
+  font-size: 10px;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   CHILD ARROW
+   ========================================================= */
+
+.feature-arrow {
+  flex-shrink: 0;
+
+  color: #a4adba;
+
+  font-size: 15px;
+
+  transition:
+    transform 0.16s ease,
+    color 0.16s ease;
+}
+
+.feature-card:hover .feature-arrow {
+  color: #6c829b;
+
+  transform: translateX(3px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .list-expanded-content {
+    grid-template-columns: 1fr;
+
+    padding-left: 55px;
+    padding-right: 55px;
+
+    max-height: 190px;
+  }
+
+}

@@ -12,6 +12,7 @@ export interface ICourseOfferingByUserDetail {
     courseName?: string;
     termName?: string;
     instructorName?: string | null;
+    termTypeId?: string | null
 }
 
 // export interface IEnrolementDetail {

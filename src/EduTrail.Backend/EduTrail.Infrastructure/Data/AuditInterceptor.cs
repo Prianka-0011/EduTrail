@@ -45,12 +45,12 @@ namespace EduTrail.Infrastructure.Data
                 if (entry.State == EntityState.Added)
                 {
                     auditableEntity.CreatedDate = now;
-                    auditableEntity.CreatedById = _currentUserService.GetUserId();
+                    auditableEntity.CreatedById = _currentUserService.GetUserId()==Guid.Empty? null:_currentUserService.GetUserId();
                 }
                 else if (entry.State == EntityState.Modified)
                 {
                     auditableEntity.UpdatedDate = now;
-                    auditableEntity.UpdatedById = _currentUserService.GetUserId();
+                    auditableEntity.UpdatedById = _currentUserService.GetUserId()==Guid.Empty? null:_currentUserService.GetUserId();;
                 }
 
                 var recordIdProperty = entry.Properties.FirstOrDefault(p => p.Metadata.Name == "Id");

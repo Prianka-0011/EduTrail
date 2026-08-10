@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EduTrail.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class postdiscussionforumn : Migration
+    public partial class PostDiscussionAndUserActions : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -81,6 +81,9 @@ namespace EduTrail.Infrastructure.Migrations
                     IsIndividual = table.Column<bool>(type: "boolean", nullable: true),
                     ScheduledAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: true),
+                    IsArchived = table.Column<bool>(type: "boolean", nullable: false),
+                    IsPinned = table.Column<bool>(type: "boolean", nullable: false),
+                    PinnedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
@@ -157,6 +160,7 @@ namespace EduTrail.Infrastructure.Migrations
                     EditorType = table.Column<int>(type: "integer", nullable: false),
                     IsResolved = table.Column<bool>(type: "boolean", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    Likes = table.Column<int>(type: "integer", nullable: false),
                     CreatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedById = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
@@ -177,6 +181,42 @@ namespace EduTrail.Infrastructure.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PostDiscussions_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostUserActions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    PostId = table.Column<Guid>(type: "uuid", nullable: false),
+                    EnrollmentId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsFavorite = table.Column<bool>(type: "boolean", nullable: false),
+                    IsPinned = table.Column<bool>(type: "boolean", nullable: false),
+                    IsRead = table.Column<bool>(type: "boolean", nullable: false),
+                    IsArchived = table.Column<bool>(type: "boolean", nullable: false),
+                    ArchivedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ReadDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    FavoritedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    IsBookmarked = table.Column<bool>(type: "boolean", nullable: false),
+                    IsLiked = table.Column<bool>(type: "boolean", nullable: false),
+                    ShareCount = table.Column<int>(type: "integer", nullable: false),
+                    BookmarkedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LikedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostUserActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PostUserActions_Enrollments_EnrollmentId",
+                        column: x => x.EnrollmentId,
+                        principalTable: "Enrollments",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PostUserActions_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
@@ -290,6 +330,16 @@ namespace EduTrail.Infrastructure.Migrations
                 table: "Posts",
                 column: "PostTypeId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_PostUserActions_EnrollmentId",
+                table: "PostUserActions",
+                column: "EnrollmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostUserActions_PostId",
+                table: "PostUserActions",
+                column: "PostId");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_Enrollments_Posts_PostId",
                 table: "Enrollments",
@@ -313,6 +363,9 @@ namespace EduTrail.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "PostDiscussions");
+
+            migrationBuilder.DropTable(
+                name: "PostUserActions");
 
             migrationBuilder.DropTable(
                 name: "Folders");

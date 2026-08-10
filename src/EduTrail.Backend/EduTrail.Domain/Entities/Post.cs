@@ -41,14 +41,14 @@ namespace EduTrail.Domain.Entities
         public ICollection<PostUserAction> UserActions { get; set; }
                 = new List<PostUserAction>();
 
-        public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+        public ICollection<Enrollment> ? Enrollments { get; set; } = new List<Enrollment>();
         public ICollection<PostDiscussion> Discussions { get; set; } = new List<PostDiscussion>();
         public DateTimeOffset? CreatedDate { get; set; }
         public Guid? CreatedById { get; set; }
         public DateTimeOffset? UpdatedDate { get; set; }
         public Guid? UpdatedById { get; set; }
         public Poll? Poll { get; set; }
-        public ICollection<Folder> Folders { get; set; } = new List<Folder>();
+        public ICollection<Folder>? Folders { get; set; } = new List<Folder>();
     }
 
     public enum EditorType

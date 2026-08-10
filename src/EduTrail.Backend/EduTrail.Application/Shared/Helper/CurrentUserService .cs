@@ -29,7 +29,7 @@ namespace EduTrail.Application.Shared
                 .FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrWhiteSpace(userIdClaim))
-                throw new UnauthorizedAccessException("User not logged in");
+                return Guid.Empty;
 
             return Guid.Parse(userIdClaim);
         }

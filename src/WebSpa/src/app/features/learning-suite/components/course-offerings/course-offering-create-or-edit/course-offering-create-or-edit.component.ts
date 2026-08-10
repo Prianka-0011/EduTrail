@@ -6,12 +6,22 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CourseOfferingService } from '../services/course-offering.service';
 import { IDropdownItem } from '../../../../../shared/interface/iDropdownItem';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 @Component({
   selector: 'app-course-offering-create-or-edit',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule
+  ],
   templateUrl: './course-offering-create-or-edit.component.html',
   styleUrl: './course-offering-create-or-edit.component.scss'
 })
@@ -29,7 +39,7 @@ export class CourseOfferingCreateOrEditComponent implements OnInit {
   constructor(
     private courseOfferingService: CourseOfferingService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // this.loadDropdowns();

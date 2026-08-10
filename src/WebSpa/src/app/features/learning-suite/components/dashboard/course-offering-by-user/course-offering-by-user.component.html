@@ -1,122 +1,280 @@
-<!-- <div>{{pagedCourseOfferings | json}}</div> -->
-<div class="table-container">
+<div class="list-card">
 
-    <div class="row justify-content-start">
-        <div class="col-md-6 col-12 d-flex align-items-center gap-1">
-            <h2 class="mb-0">Courses</h2>
+  <!-- TOOLBAR -->
+  <div class="list-toolbar">
 
-            <!-- <button class="icon-btn" (click)="openCreateDrawer()">
-        <i class="bi bi-plus-lg"></i>
-      </button> -->
-        </div>
+    <div class="list-toolbar-left">
+
+      <div class="list-heading">
+        <h2>Course Offerings</h2>
+        <span>Manage course offerings assigned to you</span>
+      </div>
+
     </div>
 
-    <div class="row justify-content-end">
-        <div class="col-md-4 col-10 mb-4">
-            <div class="search-input-wrapper">
-                <input type="text" class="form-control" placeholder="Search course offerings..."
-                    [(ngModel)]="searchText" (input)="applyFilter()" />
-                <i class="bi bi-search search-icon"></i>
+    <div class="toolbar-right">
+
+      <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+        <mat-icon matPrefix>
+          search
+        </mat-icon>
+
+        <input matInput type="text" placeholder="Search course offerings..." [(ngModel)]="searchText"
+          (input)="applyFilter()" />
+      </mat-form-field>
+
+    </div>
+
+  </div>
+
+
+  <!-- TABLE -->
+  <div class="list-table-wrapper">
+
+    <table class="list-table">
+
+      <thead>
+        <tr>
+
+          <!-- COURSE -->
+          <th>
+            <button type="button" class="list-column-heading" (click)="applySort('courseName')">
+              <span>Course</span>
+
+              <i class="bi" [ngClass]="{
+                                    'bi-caret-up-fill':
+                                        sortColumn === 'courseName' &&
+                                        sortDirection === 'asc',
+
+                                    'bi-caret-down-fill':
+                                        sortColumn === 'courseName' &&
+                                        sortDirection === 'desc',
+
+                                    'bi-unfold-more':
+                                        sortColumn !== 'courseName'
+                                }"></i>
+            </button>
+          </th>
+
+
+          <!-- INSTRUCTOR -->
+          <th>
+            <button type="button" class="list-column-heading" (click)="applySort('instructorName')">
+              <span>Instructor</span>
+
+              <i class="bi" [ngClass]="{
+                                    'bi-caret-up-fill':
+                                        sortColumn === 'instructorName' &&
+                                        sortDirection === 'asc',
+
+                                    'bi-caret-down-fill':
+                                        sortColumn === 'instructorName' &&
+                                        sortDirection === 'desc',
+
+                                    'bi-unfold-more':
+                                        sortColumn !== 'instructorName'
+                                }"></i>
+            </button>
+          </th>
+
+
+          <!-- TERM -->
+          <th>
+            <button type="button" class="list-column-heading" (click)="applySort('termName')">
+              <span>Term</span>
+
+              <i class="bi" [ngClass]="{
+                                    'bi-caret-up-fill':
+                                        sortColumn === 'termName' &&
+                                        sortDirection === 'asc',
+
+                                    'bi-caret-down-fill':
+                                        sortColumn === 'termName' &&
+                                        sortDirection === 'desc',
+
+                                    'bi-unfold-more':
+                                        sortColumn !== 'termName'
+                                }"></i>
+            </button>
+          </th>
+
+
+          <!-- ACTION -->
+          <th class="list-action-column">
+            Action
+          </th>
+
+        </tr>
+      </thead>
+
+
+      <tbody>
+
+        <tr *ngFor="let item of pagedCourseOfferings" class="list-row">
+
+          <!-- COURSE -->
+          <td>
+
+            <div class="list-item-cell" (click)="gotoEnrollementDashboard(item.id)">
+
+              <div class="list-item-avatar">
+                <i class="bi bi-book"></i>
+              </div>
+
+              <div class="list-item-details">
+
+                <span class="list-item-name">
+                  {{ item.courseName || 'Unnamed Course' }}
+                </span>
+
+                <span class="list-item-subtitle">
+                  Course Offering
+                </span>
+
+              </div>
+
             </div>
-        </div>
-    </div>
 
-    <div class="table-responsive">
-        <table class="table custom-table">
-            <thead>
-                <tr>
-                    <th role="button" (click)="applySort('courseName')">Course</th>
-                    <th role="button" (click)="applySort('instructorName')">Instructor</th>
-                    <th role="button" (click)="applySort('termName')">Term</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
+          </td>
 
-            <tbody>
-                <ng-container *ngFor="let offering of pagedCourseOfferings">
 
-                    <!-- Parent row -->
-                    <tr role="button" (click)="toggleRow(offering.id)" class="parent-row">
-                        <td>
-                            <a class="course-link" (click)="gotoEnrollementDashboard(offering.id)">
-                                {{ offering.courseName }}
-                            </a>
-                        </td>
+          <!-- INSTRUCTOR -->
+          <td>
 
-                        <td>{{ offering.instructorName }}</td>
-                        <td>{{ offering.termName }}</td>
-                        <td>
-                            <button class="edit-icon-btn"
-                                (click)="openEditDrawer(offering.id); $event.stopPropagation()">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-                        </td>
-                    </tr>
+            <div class="list-item-cell">
 
-                    <!-- Collapsible child row with smooth transition -->
-                    <!-- <tr class="child-row">
-            <td colspan="4" class="p-0">
-              <div class="child-content-wrapper" [class.expanded]="isRowExpanded(offering.id)"
-                (click)="goToEnrollment(offering.id)">
-                <div class="child-content ">
-                  <i class="bi bi-box-arrow-up-right me-2"></i>
-                  <strong>Enrollment</strong>
-                </div>
+              <div class="list-person-avatar">
+
+                {{ item.instructorName?.charAt(0) || '?' }}
+
               </div>
-            </td>
-          </tr> -->
 
-                    <!-- <tr class="child-row">
-            <td colspan="4" class="p-0">
-              <div class="child-content-wrapper" [class.expanded]="isRowExpanded(offering.id)"
-                (click)="goToEnrollment(offering.id)">
-                <div class="child-content">
-                  <i class="bi bi-box-arrow-up-right me-2"></i>
-                  <strong>Assessment</strong>
-                </div>
+
+              <div class="list-item-details">
+
+                <span class="list-item-name">
+                  {{ item.instructorName || 'Not assigned' }}
+                </span>
+
               </div>
-            </td>
-          </tr> -->
-                </ng-container>
+
+            </div>
+          </td>
 
 
-                <tr *ngIf="pagedCourseOfferings.length === 0">
-                    <td colspan="4" class="text-center py-4 text-muted">
-                        No records found
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+          <!-- TERM -->
+          <td>
+
+            <span class="term-pill" [ngClass]="getTermClass(item.termTypeId)">
+              {{ item.termName }}
+            </span>
+
+          </td>
+
+
+          <!-- ACTION -->
+          <td class="list-action-column">
+
+            <button type="button" class="list-action" title="Open enrollment dashboard"
+              (click)="gotoEnrollementDashboard(item.id)">
+              <i class="bi bi-arrow-right-circle"></i>
+            </button>
+
+          </td>
+
+        </tr>
+
+
+        <!-- EMPTY -->
+        <tr *ngIf="pagedCourseOfferings.length === 0">
+          <td colspan="4" class="list-empty">
+
+            <i class="bi bi-search list-empty-icon"></i>
+
+            <strong>
+              No course offerings found
+            </strong>
+
+            <span>
+              Try adjusting your search criteria
+            </span>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <!-- FOOTER -->
+  <div class="list-footer">
+
+    <div class="list-rows-per-page">
+
+      <span>
+        Rows per page
+      </span>
+
+      <select class="list-page-size" [value]="pageSize" (change)="changePageSize($any($event.target).value)">
+
+        <option *ngFor="let size of pageSizeOptions" [value]="size">
+          {{ size }}
+        </option>
+
+      </select>
+
     </div>
 
-    <div class="custom-paginator d-flex align-items-center mt-4">
 
-        <div class="d-flex align-items-center gap-2">
-            <span>Items per page:</span>
-            <select class="form-select page-size-select" [value]="pageSize"
-                (change)="changePageSize($any($event.target).value)">
-                <option *ngFor="let size of pageSizeOptions" [value]="size">
-                    {{ size }}
-                </option>
-            </select>
-        </div>
+    <span class="list-range">
+      {{ rangeLabel }}
+    </span>
 
-        <span class="ms-auto">{{ rangeLabel }}</span>
 
-        <div class="d-flex gap-2 ms-3">
-            <button class="btn icon-btn" (click)="goToPage(1)">
-                <i class="bi bi-chevron-double-left"></i>
-            </button>
-            <button class="btn icon-btn" (click)="goToPage(currentPage - 1)">
-                <i class="bi bi-chevron-left"></i>
-            </button>
-            <button class="btn icon-btn" (click)="goToPage(currentPage + 1)">
-                <i class="bi bi-chevron-right"></i>
-            </button>
-            <button class="btn icon-btn" (click)="goToPage(totalPages)">
-                <i class="bi bi-chevron-double-right"></i>
-            </button>
-        </div>
+    <div class="list-pagination">
+
+      <!-- FIRST -->
+      <button type="button" class="list-pagination-icon" [disabled]="currentPage === 1 || totalPages === 0"
+        (click)="goToPage(1)" title="First page">
+        <i class="bi bi-chevron-double-left"></i>
+      </button>
+
+
+      <!-- PREVIOUS -->
+      <button type="button" class="list-pagination-icon" [disabled]="currentPage === 1 || totalPages === 0"
+        (click)="goToPage(currentPage - 1)" title="Previous page">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+
+      <!-- CURRENT PAGE -->
+      <span class="list-page-number">
+        {{ totalPages === 0 ? 0 : currentPage }}
+      </span>
+
+
+      <!-- NEXT -->
+      <button type="button" class="list-pagination-icon" [disabled]="
+                    totalPages === 0 ||
+                    currentPage >= totalPages
+                " (click)="goToPage(currentPage + 1)" title="Next page">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+
+      <!-- LAST -->
+      <button type="button" class="list-pagination-icon" [disabled]="
+                    totalPages === 0 ||
+                    currentPage >= totalPages
+                " (click)="goToPage(totalPages)" title="Last page">
+        <i class="bi bi-chevron-double-right"></i>
+      </button>
 
     </div>
+
+  </div>
+
 </div>

@@ -11,7 +11,9 @@ namespace EduTrail.Application.Posts
         Task<Post> UpdateAsync(Post post);
         void RemovePollOptions(IEnumerable<PollOption> options);
         void RemovePollOption(PollOption option);
-        Task<bool> DeleteAsync(Guid id);
+        Task<bool> DeleteAsync(
+               Guid postId,
+               CancellationToken cancellationToken = default);
         void RemovePoll(Poll poll);
 
         Task<IEnumerable<Enrollment>> GetEnrollmentsByCourseOfferingAsync(Guid courseOfferingId);

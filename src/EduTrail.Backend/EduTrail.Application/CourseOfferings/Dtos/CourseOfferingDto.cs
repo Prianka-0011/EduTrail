@@ -16,6 +16,7 @@ namespace EduTrail.Application.CourseOfferings
         public Guid? CourseId { get; set; }
         public string? CourseName { get; set; }
         public Guid? TermId { get; set; }
+        public Guid? TermTypeId { get; set; }
         public string? TermName { get; set; }
         public Guid? InstructorId { get; set; }
         public string? InstructorName { get; set; }

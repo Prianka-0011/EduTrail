@@ -8,17 +8,35 @@ import { TermService } from '../services/term.service';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { TermCreateOrUppdateComponent } from '../term-create-or-uppdate/term-create-or-uppdate.component';
 import { ITermDetails } from '../interfaces/ITerm';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-term-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, SideDrawerComponent, TermCreateOrUppdateComponent],
+  imports: [
+    TermCreateOrUppdateComponent,
+    CommonModule,
+    FormsModule,
+    SideDrawerComponent,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    SideDrawerComponent,
+    MatTableModule],
   templateUrl: './term-list.component.html',
   styleUrl: './term-list.component.scss'
 })
 export class TermListComponent implements OnInit {
-  constructor(private termService: TermService, private router: Router) {}
+  constructor(private termService: TermService, private router: Router) { }
 
   terms: ITermDetails[] = [];
   filtered: ITermDetails[] = [];

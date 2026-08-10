@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260730031149_post-discussion-forumn")]
-    partial class postdiscussionforumn
+    [Migration("20260809045917_Insert-Report")]
+    partial class InsertReport
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -516,14 +516,23 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<bool?>("IsAnnouncement")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<bool?>("IsIndividual")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsPinned")
+                        .HasColumnType("boolean");
+
                     b.Property<bool?>("IsScheduled")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("PinnedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("PostTypeId")
                         .HasColumnType("uuid");
@@ -583,6 +592,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<bool?>("IsVisibleToInstructor")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("Likes")
+                        .HasColumnType("integer");
+
                     b.Property<Guid?>("ParentDiscussionId")
                         .HasColumnType("uuid");
 
@@ -640,6 +652,63 @@ namespace EduTrail.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PostTypes");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostUserAction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ArchivedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("BookmarkedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("EnrollmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("FavoritedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsBookmarked")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsFavorite")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsLiked")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPinned")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LikedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ReadDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("ShareCount")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostUserActions");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
@@ -1596,6 +1665,23 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("Post");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostUserAction", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
+                        .WithMany()
+                        .HasForeignKey("EnrollmentId");
+
+                    b.HasOne("EduTrail.Domain.Entities.Post", "Post")
+                        .WithMany("UserActions")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Enrollment");
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Assessment", "Assessment")
@@ -1788,6 +1874,8 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("Enrollments");
 
                     b.Navigation("Poll");
+
+                    b.Navigation("UserActions");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.PostDiscussion", b =>

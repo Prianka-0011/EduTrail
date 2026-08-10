@@ -1,0 +1,179 @@
+<div class="material-table-container">
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    class="modern-mat-table">
+
+    <!-- Expand -->
+    <ng-container matColumnDef="expand">
+
+      <th mat-header-cell *matHeaderCellDef></th>
+
+      <td mat-cell *matCellDef="let row">
+
+        <button
+          mat-icon-button
+          class="expand-button"
+          (click)="onExpand(row, $event)"
+          matTooltip="Expand">
+
+          <mat-icon>
+            {{ isExpanded(row) ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}
+          </mat-icon>
+
+        </button>
+
+      </td>
+
+    </ng-container>
+
+
+    <!-- Dynamic columns -->
+    <ng-container
+      *ngFor="let column of columns"
+      [matColumnDef]="column.key">
+
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header>
+
+        {{ column.label }}
+
+      </th>
+
+      <td mat-cell *matCellDef="let row">
+
+        <ng-container
+          *ngIf="column.template; else defaultCell">
+
+          <ng-container
+            *ngTemplateOutlet="
+              column.template;
+              context: { $implicit: row }
+            ">
+          </ng-container>
+
+        </ng-container>
+
+        <ng-template #defaultCell>
+
+          <span class="cell-value">
+            {{ row[column.key] }}
+          </span>
+
+        </ng-template>
+
+      </td>
+
+    </ng-container>
+
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        class="actions-header">
+
+        Action
+
+      </th>
+
+      <td
+        mat-cell
+        *matCellDef="let row"
+        class="actions-cell">
+
+        <button
+          mat-icon-button
+          class="row-action edit"
+          matTooltip="Edit"
+          (click)="onEdit(row, $event)">
+
+          <mat-icon>edit</mat-icon>
+
+        </button>
+
+      </td>
+
+    </ng-container>
+
+
+    <!-- Header -->
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+      class="table-header">
+    </tr>
+
+
+    <!-- Data -->
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      class="table-row"
+      [class.row-expanded]="isExpanded(row)"
+      (click)="onRowClick(row)">
+    </tr>
+
+
+    <!-- Expanded -->
+    <ng-container matColumnDef="expandedDetail">
+
+      <td
+        mat-cell
+        *matCellDef="let row"
+        [attr.colspan]="displayedColumns.length"
+        class="expanded-cell">
+
+        <div
+          class="expanded-wrapper"
+          [class.expanded]="isExpanded(row)">
+
+          <ng-container
+            *ngTemplateOutlet="
+              expandedTemplate;
+              context: { $implicit: row }
+            ">
+          </ng-container>
+
+        </div>
+
+      </td>
+
+    </ng-container>
+
+
+    <tr
+      mat-row
+      *matRowDef="
+        let row;
+        columns: ['expandedDetail'];
+        when: isExpansionRow
+      "
+      class="expanded-row">
+    </tr>
+
+
+    <!-- Empty -->
+    <tr *matNoDataRow>
+
+      <td
+        class="no-data"
+        [attr.colspan]="displayedColumns.length">
+
+        <mat-icon>search_off</mat-icon>
+
+        <span>{{ emptyMessage }}</span>
+
+      </td>
+
+    </tr>
+
+  </table>
+
+</div>

@@ -5,10 +5,9 @@
 namespace EduTrail.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class insertrecord : Migration
+    public partial class InsertReport : Migration
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
+       protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
                             table: "PostTypes",
@@ -57,8 +56,6 @@ namespace EduTrail.Infrastructure.Migrations
                     }
                  });
         }
-
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(

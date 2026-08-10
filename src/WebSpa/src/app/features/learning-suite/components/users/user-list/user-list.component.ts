@@ -8,6 +8,13 @@ import { IUser } from '../interfaces/IUser';
 import { IUserDetail } from '../interfaces/IUserDetail';
 import { SideDrawerComponent } from '../../../../../shared/components/side-drawer/side-drawer.component';
 import { UserCreateOrEditComponent } from '../user-create-or-edit/user-create-or-edit.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 
 type SortableUserField =
   | 'firstName'
@@ -18,7 +25,18 @@ type SortableUserField =
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, SideDrawerComponent, FormsModule, UserCreateOrEditComponent],
+  imports: [CommonModule,
+    FormsModule,
+    SideDrawerComponent,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    SideDrawerComponent,
+    MatTableModule,
+    UserCreateOrEditComponent,],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
 })
@@ -27,7 +45,7 @@ export class UserListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router
-  ) {}
+  ) { }
 
   users: IUserDetail[] = [];
   filteredUsers: IUserDetail[] = [];
@@ -52,7 +70,7 @@ export class UserListComponent implements OnInit {
 
   getUsers() {
     this.userService.getAll().subscribe(user => {
-    console.log('Fetched users:', user.detailDtoList);
+      console.log('Fetched users:', user.detailDtoList);
       this.users = user.detailDtoList;
       this.applyFilter();
     });

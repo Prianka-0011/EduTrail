@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduTrail.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260806195030_update-postdiscussion-model-addd-post-action-hh-for-user")]
-    partial class updatepostdiscussionmodeladddpostactionhhforuser
+    [Migration("20260809041047_PostDiscussionAndUserActions")]
+    partial class PostDiscussionAndUserActions
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -663,6 +663,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<DateTime?>("ArchivedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime?>("BookmarkedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<Guid?>("EnrollmentId")
                         .HasColumnType("uuid");
 
@@ -672,7 +675,13 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsBookmarked")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsFavorite")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsLiked")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsPinned")
@@ -681,11 +690,17 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime?>("LikedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<Guid>("PostId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("ReadDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("ShareCount")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

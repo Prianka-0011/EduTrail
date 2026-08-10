@@ -1,144 +1,392 @@
-<div class="table-container">
-    <!-- Search -->
-    <div class="row justify-content-start">
-        <div class="col-md-6 col-12 d-flex align-items-center gap-1">
-            <h2 class="mb-0">Terms</h2>
+<div class="list-page">
 
-            <button class="icon-btn" (click)="openCreateDrawer()" aria-label="Create term">
-                <i class="bi bi-plus-lg me-1"></i>
-            </button>
-        </div>
+    <div class="list-card">
 
-    </div>
+        <!-- TOOLBAR -->
+        <div class="list-toolbar">
 
-    <div class="row justify-content-end">
+            <div class="list-toolbar-left">
 
-        <div class="col-md-4 col-10 mb-4">
-            <div class="search-input-wrapper">
-                <input type="text" class="form-control" placeholder="Search terms..." [(ngModel)]="searchText"
-                    (input)="applyFilter()" />
-                <i class="bi bi-search search-icon"></i>
+                <div class="list-heading">
+
+                    <h2>Terms</h2>
+
+                    <span>
+                        Manage your academic terms
+                    </span>
+
+                </div>
+
             </div>
-        </div>
-    </div>
+            <div class="toolbar-right">
 
-    <!-- Table -->
-    <div class="table-responsive">
-        <table class="table custom-table">
-            <thead>
-                <tr>
-                    <th (click)="applySort('name')" role="button">
-                        Name
-                        <i class="bi ms-1" [ngClass]="{
-                 'bi-caret-up-fill': sortColumn === 'name' && sortDirection === 'asc',
-                 'bi-caret-down-fill': sortColumn === 'name' && sortDirection === 'desc'
-               }">
-                        </i>
-                    </th>
+                <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
 
-                    <th (click)="applySort('year')" role="button">
-                        Year
-                        <i class="bi ms-1" [ngClass]="{
-                 'bi-caret-up-fill': sortColumn === 'year' && sortDirection === 'asc',
-                 'bi-caret-down-fill': sortColumn === 'year' && sortDirection === 'desc'
-               }">
-                        </i>
-                    </th>
-                    <th (click)="applySort('startDate')" role="button">
-                        Start Date
-                        <i class="bi ms-1" [ngClass]="{
-       'bi-caret-up-fill': sortColumn === 'startDate' && sortDirection === 'asc',
-       'bi-caret-down-fill': sortColumn === 'startDate' && sortDirection === 'desc'
-     }">
-                        </i>
-                    </th>
+                    <mat-icon matPrefix>
+                        search
+                    </mat-icon>
 
-                    <th (click)="applySort('endDate')" role="button">
-                        End Date
-                        <i class="bi ms-1" [ngClass]="{
-       'bi-caret-up-fill': sortColumn === 'endDate' && sortDirection === 'asc',
-       'bi-caret-down-fill': sortColumn === 'endDate' && sortDirection === 'desc'
-     }">
-                        </i>
-                    </th>
+                    <input matInput type="text" placeholder="Search terms..." [(ngModel)]="searchText"
+                        (input)="applyFilter()" />
 
-                    <th>
-                        Action
-                    </th>
-                </tr>
-            </thead>
+                </mat-form-field>
 
-            <tbody>
-                <tr *ngFor="let term of paged">
-                    <td>{{ term.name }}</td>
-                    <td>{{ term.year }}</td>
-                    <td>{{ term.startDate | date:'MMM dd, yyyy' }}</td>
-                    <td>{{ term.endDate | date:'MMM dd, yyyy' }}</td>
-                    <td><button class="edit-icon-btn" (click)="openEditDrawer(term.id)"><i
-                                class="bi bi-pencil-square"></i></button></td>
-                </tr>
 
-                <tr *ngIf="paged.length === 0">
-                    <td colspan="2" class="text-center py-4 text-muted">
-                        No records found
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                <button mat-flat-button class="add-btn" (click)="openCreateDrawer()">
 
-    <!-- Paginator -->
-    <div class="custom-paginator d-flex align-items-center mt-4">
+                    <mat-icon>add</mat-icon>
+                    Add Term
+                </button>
 
-        <div class="d-flex align-items-center gap-2">
-            <span class="page-size-label">Items per page:</span>
+            </div>
 
-            <select class="form-select page-size-select" [value]="pageSize"
-                (change)="changePageSize($any($event.target).value)">
-                <option *ngFor="let size of pageSizeOptions" [value]="size">
-                    {{ size }}
-                </option>
-            </select>
         </div>
 
-        <span class="range-label ms-auto">
-            {{ rangeLabel }}
-        </span>
 
-        <div class="d-flex gap-2 ms-3">
-            <button class="btn icon-btn" (click)="goToPage(1)">
-                <i class="bi bi-chevron-double-left"></i>
-            </button>
+        <!-- TABLE -->
+        <div class="list-table-wrapper">
 
-            <button class="btn icon-btn" (click)="goToPage(currentPage - 1)">
-                <i class="bi bi-chevron-left"></i>
-            </button>
+            <table class="list-table">
 
-            <button class="btn icon-btn" (click)="goToPage(currentPage + 1)">
-                <i class="bi bi-chevron-right"></i>
-            </button>
+                <thead>
 
-            <button class="btn icon-btn" (click)="goToPage(totalPages)">
-                <i class="bi bi-chevron-double-right"></i>
-            </button>
+                    <tr>
+
+                        <!-- NAME -->
+                        <th>
+
+                            <button type="button" class="list-column-heading" (click)="applySort('name')">
+
+                                <span>Name</span>
+
+                                <i class="bi" [ngClass]="{
+                    'bi-caret-up-fill':
+                      sortColumn === 'name' &&
+                      sortDirection === 'asc',
+
+                    'bi-caret-down-fill':
+                      sortColumn === 'name' &&
+                      sortDirection === 'desc',
+
+                    'bi-unfold-more':
+                      sortColumn !== 'name'
+                  }"></i>
+
+                            </button>
+
+                        </th>
+
+
+                        <!-- YEAR -->
+                        <th>
+
+                            <button type="button" class="list-column-heading" (click)="applySort('year')">
+
+                                <span>Year</span>
+
+                                <i class="bi" [ngClass]="{
+                    'bi-caret-up-fill':
+                      sortColumn === 'year' &&
+                      sortDirection === 'asc',
+
+                    'bi-caret-down-fill':
+                      sortColumn === 'year' &&
+                      sortDirection === 'desc',
+
+                    'bi-unfold-more':
+                      sortColumn !== 'year'
+                  }"></i>
+
+                            </button>
+
+                        </th>
+
+
+                        <!-- START DATE -->
+                        <th>
+
+                            <button type="button" class="list-column-heading" (click)="applySort('startDate')">
+
+                                <span>Start Date</span>
+
+                                <i class="bi" [ngClass]="{
+                    'bi-caret-up-fill':
+                      sortColumn === 'startDate' &&
+                      sortDirection === 'asc',
+
+                    'bi-caret-down-fill':
+                      sortColumn === 'startDate' &&
+                      sortDirection === 'desc',
+
+                    'bi-unfold-more':
+                      sortColumn !== 'startDate'
+                  }"></i>
+
+                            </button>
+
+                        </th>
+
+
+                        <!-- END DATE -->
+                        <th>
+
+                            <button type="button" class="list-column-heading" (click)="applySort('endDate')">
+
+                                <span>End Date</span>
+
+                                <i class="bi" [ngClass]="{
+                    'bi-caret-up-fill':
+                      sortColumn === 'endDate' &&
+                      sortDirection === 'asc',
+
+                    'bi-caret-down-fill':
+                      sortColumn === 'endDate' &&
+                      sortDirection === 'desc',
+
+                    'bi-unfold-more':
+                      sortColumn !== 'endDate'
+                  }"></i>
+
+                            </button>
+
+                        </th>
+
+
+                        <!-- ACTION -->
+                        <th class="list-action-column">
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr *ngFor="let term of paged" class="list-row">
+
+                        <!-- NAME -->
+                        <td>
+
+                            <div class="list-item-cell">
+
+                                <div class="list-item-avatar">
+
+                                    <i class="bi bi-calendar3"></i>
+
+                                </div>
+
+
+                                <div class="list-item-details">
+
+                                    <span class="list-item-name">
+                                        {{ term.name }}
+                                    </span>
+
+                                    <span class="list-item-subtitle">
+                                        Academic term
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- YEAR -->
+                        <td>
+
+                            <span class="list-value">
+                                {{ term.year }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- START DATE -->
+                        <td>
+
+                            <span class="list-date">
+                                {{ term.startDate | date:'MMM dd, yyyy' }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- END DATE -->
+                        <td>
+
+                            <span class="list-date">
+                                {{ term.endDate | date:'MMM dd, yyyy' }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- ACTION -->
+                        <td class="list-action-column">
+
+                            <button type="button" class="list-action" title="Edit" (click)="openEditDrawer(term.id)">
+
+                                <i class="bi bi-pencil-square"></i>
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- EMPTY -->
+                    <tr *ngIf="paged.length === 0">
+
+                        <td colspan="5" class="list-empty">
+
+                            <i class="bi bi-search list-empty-icon"></i>
+
+                            <strong>
+                                No terms found
+                            </strong>
+
+                            <span>
+                                Try adjusting your search criteria
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <div class="list-footer">
+
+            <div class="list-rows-per-page">
+
+                <span>
+                    Rows per page
+                </span>
+
+
+                <select class="list-page-size" [value]="pageSize" (change)="changePageSize($any($event.target).value)">
+
+                    <option *ngFor="let size of pageSizeOptions" [value]="size">
+                        {{ size }}
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <span class="list-range">
+                {{ rangeLabel }}
+            </span>
+
+
+            <div class="list-pagination">
+
+                <button type="button" class="list-pagination-icon" [disabled]="currentPage === 1" (click)="goToPage(1)"
+                    title="First page">
+
+                    <i class="bi bi-chevron-double-left"></i>
+
+                </button>
+
+
+                <button type="button" class="list-pagination-icon" [disabled]="currentPage === 1"
+                    (click)="goToPage(currentPage - 1)" title="Previous page">
+
+                    <i class="bi bi-chevron-left"></i>
+
+                </button>
+
+
+                <span class="list-page-number">
+                    {{ currentPage }}
+                </span>
+
+
+                <button type="button" class="list-pagination-icon" [disabled]="currentPage === totalPages"
+                    (click)="goToPage(currentPage + 1)" title="Next page">
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </button>
+
+
+                <button type="button" class="list-pagination-icon" [disabled]="currentPage === totalPages"
+                    (click)="goToPage(totalPages)" title="Last page">
+
+                    <i class="bi bi-chevron-double-right"></i>
+
+                </button>
+
+            </div>
+
         </div>
 
     </div>
 
 </div>
-<!-- SIDE DRAWER -->
+
+
+<!-- DRAWER -->
+
 <app-side-drawer [opened]="drawerOpen" width="600px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+
     <ng-container *ngIf="drawerOpen">
+
         <app-term-create-or-uppdate (saved)="onTermSaved()" (cancel)="closeDrawer()">
+
         </app-term-create-or-uppdate>
+
     </ng-container>
 
 </app-side-drawer>
 
-<!-- Custom header template -->
+
+<!-- DRAWER HEADER -->
+
+<app-side-drawer
+  [opened]="drawerOpen"
+  width="600px"
+  (closed)="closeDrawer()"
+  [headerTemplate]="drawerHeader"
+>
+
+  <ng-container *ngIf="drawerOpen">
+
+    <app-term-create-or-uppdate
+      (saved)="onTermSaved()"
+      (cancel)="closeDrawer()"
+    >
+    </app-term-create-or-uppdate>
+
+  </ng-container>
+
+</app-side-drawer>
+
+
 <ng-template #drawerHeader>
-    <div class="d-flex align-items-center gap-2">
-        <i class="bi" [ngClass]="selectedTermId   ? 'bi bi-book-half' : 'bi bi-book-half'"></i>
-        <span>{{ selectedTermId ? 'Edit Term Details' : 'Create New Term' }}</span>
-    </div>
+
+  <div class="drawer-header-icon">
+    <mat-icon>calendar_month</mat-icon>
+  </div>
+
+  <span>
+    {{
+      selectedTermId
+        ? 'Edit Term Details'
+        : 'Create New Term'
+    }}
+  </span>
+
 </ng-template>
