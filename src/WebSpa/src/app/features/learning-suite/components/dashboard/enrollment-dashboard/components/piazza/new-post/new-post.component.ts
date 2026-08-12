@@ -155,7 +155,7 @@ export class NewPostComponent implements OnInit {
 
     } else {
 
-      // this.postDetail.poll = undefined;
+      this.postDetail.poll = undefined;
 
     }
   }

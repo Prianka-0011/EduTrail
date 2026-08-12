@@ -15,9 +15,14 @@ export class CustomCategory {
     HelpRequestStatusType: "ce5e6303-3ac6-4af1-92b4-f708da026d20"
   };
 
-  static HelpRequestStatus = {
-    Pending: "627407c8-700d-46fc-a3e5-02dc368fb75e"
-  };
+  // static HelpRequestStatus = {
+  //   Pending: "627407c8-700d-46fc-a3e5-02dc368fb75e"
+  // };
+  static  HelpRequestStatus = {
+  Pending: '627407c8-700d-46fc-a3e5-02dc368fb75e',
+  Completed: 'EB57ECC1-678E-48F9-8DB0-0BD79973F52F',
+  InProgress: 'ED733676-90BE-49AA-AF3C-335169678B86'
+};
 
   static RoleType = {
     TA: "5a1e4c7d-9b82-4f36-a3c1-6d9e2f8b0a55",

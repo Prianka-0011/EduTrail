@@ -69,63 +69,111 @@ namespace EduTrail.Infrastructure.Repositories
         {
             _context.PollOptions.RemoveRange(options);
         }
+        //     public async Task<bool> DeleteAsync(
+        //  Guid postId,
+        //  CancellationToken cancellationToken = default)
+        //     {
+        //         var strategy = _context.Database.CreateExecutionStrategy();
+
+        //         return await strategy.ExecuteAsync(async () =>
+        //         {
+        //             await using var transaction =
+        //                 await _context.Database.BeginTransactionAsync(cancellationToken);
+
+        //             try
+        //             {
+        //                 var post = await _context.Posts
+        //                     .Include(x => x.UserActions)
+        //                     .Include(x => x.Discussions)
+        //                     .Include(x => x.Poll)
+        //                     .FirstOrDefaultAsync(
+        //                         x => x.Id == postId,
+        //                         cancellationToken);
+
+        //                 if (post == null)
+        //                 {
+        //                     await transaction.RollbackAsync(cancellationToken);
+        //                     return false;
+        //                 }
+
+        //                 if (post.UserActions.Any())
+        //                 {
+        //                     _context.PostUserActions.RemoveRange(post.UserActions);
+        //                 }
+
+        //                 if (post.Discussions.Any())
+        //                 {
+        //                     _context.PostDiscussions.RemoveRange(post.Discussions);
+        //                 }
+
+        //                 if (post.Poll != null)
+        //                 {
+        //                     _context.Polls.Remove(post.Poll);
+        //                 }
+
+        //                 _context.Posts.Remove(post);
+
+        //                 await _context.SaveChangesAsync(cancellationToken);
+
+        //                 await transaction.CommitAsync(cancellationToken);
+
+        //                 return true;
+        //             }
+        //             catch
+        //             {
+        //                 await transaction.RollbackAsync(cancellationToken);
+        //                 throw;
+        //             }
+        //         });
+        //     }
+
         public async Task<bool> DeleteAsync(
-     Guid postId,
-     CancellationToken cancellationToken = default)
+       Guid postId,
+       CancellationToken cancellationToken = default)
         {
-            var strategy = _context.Database.CreateExecutionStrategy();
+            var strategy =
+                _context.Database.CreateExecutionStrategy();
 
             return await strategy.ExecuteAsync(async () =>
             {
                 await using var transaction =
-                    await _context.Database.BeginTransactionAsync(cancellationToken);
+                    await _context.Database.BeginTransactionAsync(
+                        cancellationToken);
 
                 try
                 {
                     var post = await _context.Posts
-                        .Include(x => x.UserActions)
-                        .Include(x => x.Discussions)
-                        .Include(x => x.Poll)
                         .FirstOrDefaultAsync(
                             x => x.Id == postId,
                             cancellationToken);
 
                     if (post == null)
                     {
-                        await transaction.RollbackAsync(cancellationToken);
+                        await transaction.RollbackAsync(
+                            cancellationToken);
+
                         return false;
                     }
 
-                    if (post.UserActions.Any())
-                    {
-                        _context.PostUserActions.RemoveRange(post.UserActions);
-                    }
+                    // Soft delete
+                    post.IsDeleted = true;
+                    await _context.SaveChangesAsync(
+                        cancellationToken);
 
-                    if (post.Discussions.Any())
-                    {
-                        _context.PostDiscussions.RemoveRange(post.Discussions);
-                    }
-
-                    if (post.Poll != null)
-                    {
-                        _context.Polls.Remove(post.Poll);
-                    }
-
-                    _context.Posts.Remove(post);
-
-                    await _context.SaveChangesAsync(cancellationToken);
-
-                    await transaction.CommitAsync(cancellationToken);
+                    await transaction.CommitAsync(
+                        cancellationToken);
 
                     return true;
                 }
                 catch
                 {
-                    await transaction.RollbackAsync(cancellationToken);
+                    await transaction.RollbackAsync(
+                        cancellationToken);
+
                     throw;
                 }
             });
-        } 
+        }
         public async Task<IEnumerable<PostType>> GetAllTypeAsync()
         {
             return await _context.PostTypes.ToListAsync();
@@ -208,8 +256,9 @@ namespace EduTrail.Infrastructure.Repositories
         public async Task<PostDiscussion?> GetDiscussionByIdAsync(
             Guid id)
         {
-            return await _context.PostDiscussions.
-                Include(c => c.Enrollment)
+            return await _context.PostDiscussions
+                .Include(c => c.Replies)
+                .Include(c => c.Enrollment)
                 .ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }

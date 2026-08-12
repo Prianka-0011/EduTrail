@@ -5,10 +5,19 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LabRequestService } from '../../../services/lab-request.service';
 import { IHelpRequestDetail } from '../../../interfaces/IHelpRequest';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { CustomCategory } from '../../../../../../../shared/interface/customCategory';
 
 @Component({
   selector: 'app-current-user-help-request-list',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule],
   templateUrl: './current-user-help-request-list.component.html',
   styleUrl: './current-user-help-request-list.component.scss'
 })
@@ -23,7 +32,7 @@ export class CurrentUserHelpRequestListComponent implements OnInit {
   requests: IHelpRequestDetail[] = [];
   filtered: IHelpRequestDetail[] = [];
   paged: IHelpRequestDetail[] = [];
-  
+
   pageSizeOptions = [5, 10, 20];
   pageSize = 10;
   currentPage = 1;
@@ -38,6 +47,39 @@ export class CurrentUserHelpRequestListComponent implements OnInit {
     this.getAllRequests();
   }
 
+  getStatusName(statusId: string | null | undefined): string {
+    if (!statusId) {
+      return 'Unknown';
+    }
+
+    const status = statusId.toLowerCase();
+
+    if (
+      status ===
+      CustomCategory.HelpRequestStatus.Pending.toLowerCase()
+    ) {
+      return 'Pending';
+    }
+
+    if (
+      status ===
+      CustomCategory.HelpRequestStatus.InProgress.toLowerCase()
+    ) {
+      return 'In Progress';
+    }
+
+    if (
+      status ===
+      CustomCategory.HelpRequestStatus.Completed.toLowerCase()
+    ) {
+      return 'Completed';
+    }
+
+    return 'Unknown';
+  }
+
+
+
   getAllRequests() {
     const courseOfferingId = this.route.parent?.snapshot.paramMap.get('courseOfferingId') ?? this.EMPTY_ID;
     this.labRequestService.getAllLabRequestCurrentUser(courseOfferingId).subscribe({
@@ -50,7 +92,33 @@ export class CurrentUserHelpRequestListComponent implements OnInit {
     });
   }
 
+  getStatusClass(statusId: string | null | undefined): string {
+    if (!statusId) {
+      return 'status-default';
+    }
 
+    const status = statusId.toLowerCase();
+
+    if (
+      status === CustomCategory.HelpRequestStatus.Completed.toLowerCase()
+    ) {
+      return 'status-success';
+    }
+
+    if (
+      status === CustomCategory.HelpRequestStatus.Pending.toLowerCase()
+    ) {
+      return 'status-warning';
+    }
+
+    if (
+      status === CustomCategory.HelpRequestStatus.InProgress.toLowerCase()
+    ) {
+      return 'status-info';
+    }
+
+    return 'status-default';
+  }
 
   applyFilter() {
 

@@ -10,6 +10,9 @@ import { IDropdownItem } from '../../../../../../../shared/interface/iDropdownIt
 import { ToastrService } from 'ngx-toastr';
 import { HelpRequestDetailViewComponent } from '../help-request-detail-view/help-request-detail-view.component';
 import { SideDrawerComponent } from '../../../../../../../shared/components/side-drawer/side-drawer.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
@@ -18,7 +21,10 @@ import { SideDrawerComponent } from '../../../../../../../shared/components/side
     CommonModule,
     FormsModule,
     SideDrawerComponent,
-    HelpRequestDetailViewComponent
+    HelpRequestDetailViewComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule
   ],
   templateUrl: './help-request-list.component.html',
   styleUrl: './help-request-list.component.scss'
@@ -79,6 +85,49 @@ export class HelpRequestListComponent implements OnInit {
       }
     });
   }
+
+  getStatusClass(status: string | null | undefined): string {
+  if (!status) {
+    return 'status-default';
+  }
+
+  const value = status.toLowerCase();
+
+  if (
+    value.includes('complete') ||
+    value.includes('resolved') ||
+    value.includes('approved') ||
+    value.includes('closed')
+  ) {
+    return 'status-success';
+  }
+
+  if (
+    value.includes('pending') ||
+    value.includes('review') ||
+    value.includes('waiting')
+  ) {
+    return 'status-warning';
+  }
+
+  if (
+    value.includes('reject') ||
+    value.includes('cancel') ||
+    value.includes('failed')
+  ) {
+    return 'status-danger';
+  }
+
+  if (
+    value.includes('progress') ||
+    value.includes('assigned') ||
+    value.includes('active')
+  ) {
+    return 'status-info';
+  }
+
+  return 'status-default';
+}
 
   applyFilter() {
 
@@ -161,7 +210,7 @@ export class HelpRequestListComponent implements OnInit {
     return `${start} – ${end} of ${this.totalItems}`;
   }
 
-  openDetailDrawer(id:string) {
+  openDetailDrawer(id: string) {
     this.drawerOpen = true;
     this.router.navigate([], {
       queryParams: { id: id },

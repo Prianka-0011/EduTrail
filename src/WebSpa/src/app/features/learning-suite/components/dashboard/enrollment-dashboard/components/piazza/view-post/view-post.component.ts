@@ -385,6 +385,7 @@ export class ViewPostComponent implements OnInit, OnDestroy {
 
       });
   }
+  
   replayToDiscussion(discussion: IPostDiscussion
   ): void {
     discussion.isReplayBoxShown = true;

@@ -30,6 +30,8 @@ import { ChatService } from '../../../../../chat/services/chat.service';
 })
 export class EnrollmentDashboardComponent implements OnInit {
   activeUsers: IEnrollmentDetail[] = [];
+
+  currentUserId: string = "";
   isChatOpen = false;
   private hubConnection!: signalR.HubConnection;
   isTA = false;
@@ -49,7 +51,6 @@ export class EnrollmentDashboardComponent implements OnInit {
     roles: []
   };
   private messageSub!: Subscription;
-
   menu: MenuItem[] = [];
 
   constructor(
@@ -68,6 +69,7 @@ export class EnrollmentDashboardComponent implements OnInit {
     this.service.getCurrentLoginUser().subscribe({
       next: res => {
         this.userDetail = res;
+        this.currentUserId = res.id;
         this.chatService.setCurrentUser(this.userDetail.id);
         this.isTA = this.userDetail.roles?.some(
           r => r.id === CustomCategory.RoleType.TA

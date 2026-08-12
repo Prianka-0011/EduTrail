@@ -1,95 +1,538 @@
-<div class="table-container">
+<div class="list-card">
 
-  <!-- Header -->
-  <div class="row justify-content-start">
-    <div class="col-md-6 col-12 d-flex align-items-center gap-1">
-      <h2 class="mb-0">Lab Requests</h2>
-    </div>
-  </div>
+  <!-- TOOLBAR -->
+  <div class="list-toolbar">
 
-  <!-- Search -->
-  <div class="row justify-content-end">
-    <div class="col-md-4 col-10 mb-4">
-      <div class="search-input-wrapper">
-        <input type="text" class="form-control" placeholder="Search requests..." [(ngModel)]="searchText"
-          (input)="applyFilter()" />
-        <i class="bi bi-search search-icon"></i>
+    <div class="list-toolbar-left">
+
+      <div class="list-heading">
+        <h2>Lab Requests</h2>
+        <span>Review and manage submitted lab requests</span>
       </div>
+
     </div>
+
+    <div class="toolbar-right">
+
+      <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+
+        <mat-icon matPrefix>
+          search
+        </mat-icon>
+
+        <input matInput type="text" placeholder="Search lab requests..." [(ngModel)]="searchText"
+          (input)="applyFilter()" />
+
+      </mat-form-field>
+
+    </div>
+
   </div>
 
-  <!-- Table -->
-  <div class="table-responsive">
-    <table class="table custom-table">
+
+  <!-- TABLE -->
+  <div class="list-table-wrapper">
+
+    <table class="list-table">
+
       <thead>
+
         <tr>
-          <th (click)="applySort('requestNumber')" role="button">Request #</th>
-          <th (click)="applySort('issueTitle')" role="button">Issue Title</th>
-          <th (click)="applySort('studentName')" role="button">Student</th>
-          <th (click)="applySort('courseOfferingName')" role="button">Course</th>
-          <th (click)="applySort('requestedDate')" role="button">Requested Date</th>
-          <th (click)="applySort('assignedTeacherName')" role="button">Assigned Teacher</th>
-          <th>Status</th>
-          <th>Action</th>
+
+          <!-- REQUEST -->
+          <th>
+            <button type="button" class="list-column-heading" (click)="applySort('requestNumber')">
+
+              <span>Request #</span>
+
+              <i class="bi" [ngClass]="{
+                  'bi-caret-up-fill':
+                    sortColumn === 'requestNumber' &&
+                    sortDirection === 'asc',
+
+                  'bi-caret-down-fill':
+                    sortColumn === 'requestNumber' &&
+                    sortDirection === 'desc',
+
+                  'bi-unfold-more':
+                    sortColumn !== 'requestNumber'
+                }">
+              </i>
+
+            </button>
+          </th>
+
+
+          <!-- ISSUE -->
+          <th>
+            <button type="button" class="list-column-heading" (click)="applySort('issueTitle')">
+
+              <span>Issue</span>
+
+              <i class="bi" [ngClass]="{
+                  'bi-caret-up-fill':
+                    sortColumn === 'issueTitle' &&
+                    sortDirection === 'asc',
+
+                  'bi-caret-down-fill':
+                    sortColumn === 'issueTitle' &&
+                    sortDirection === 'desc',
+
+                  'bi-unfold-more':
+                    sortColumn !== 'issueTitle'
+                }">
+              </i>
+
+            </button>
+          </th>
+
+
+          <!-- STUDENT -->
+          <th>
+            <button type="button" class="list-column-heading" (click)="applySort('studentName')">
+
+              <span>Student</span>
+
+              <i class="bi" [ngClass]="{
+                  'bi-caret-up-fill':
+                    sortColumn === 'studentName' &&
+                    sortDirection === 'asc',
+
+                  'bi-caret-down-fill':
+                    sortColumn === 'studentName' &&
+                    sortDirection === 'desc',
+
+                  'bi-unfold-more':
+                    sortColumn !== 'studentName'
+                }">
+              </i>
+
+            </button>
+          </th>
+
+
+          <!-- COURSE -->
+          <th>
+            <button type="button" class="list-column-heading" (click)="applySort('courseOfferingName')">
+
+              <span>Course</span>
+
+              <i class="bi" [ngClass]="{
+                  'bi-caret-up-fill':
+                    sortColumn === 'courseOfferingName' &&
+                    sortDirection === 'asc',
+
+                  'bi-caret-down-fill':
+                    sortColumn === 'courseOfferingName' &&
+                    sortDirection === 'desc',
+
+                  'bi-unfold-more':
+                    sortColumn !== 'courseOfferingName'
+                }">
+              </i>
+
+            </button>
+          </th>
+
+
+          <!-- REQUESTED DATE -->
+          <th>
+            <button type="button" class="list-column-heading" (click)="applySort('requestedDate')">
+
+              <span>Requested Date</span>
+
+              <i class="bi" [ngClass]="{
+                  'bi-caret-up-fill':
+                    sortColumn === 'requestedDate' &&
+                    sortDirection === 'asc',
+
+                  'bi-caret-down-fill':
+                    sortColumn === 'requestedDate' &&
+                    sortDirection === 'desc',
+
+                  'bi-unfold-more':
+                    sortColumn !== 'requestedDate'
+                }">
+              </i>
+
+            </button>
+          </th>
+
+
+          <!-- ASSIGNED TEACHER -->
+          <th>
+            <button type="button" class="list-column-heading" (click)="applySort('assignedTeacherName')">
+
+              <span>Assigned Teacher</span>
+
+              <i class="bi" [ngClass]="{
+                  'bi-caret-up-fill':
+                    sortColumn === 'assignedTeacherName' &&
+                    sortDirection === 'asc',
+
+                  'bi-caret-down-fill':
+                    sortColumn === 'assignedTeacherName' &&
+                    sortDirection === 'desc',
+
+                  'bi-unfold-more':
+                    sortColumn !== 'assignedTeacherName'
+                }">
+              </i>
+
+            </button>
+          </th>
+
+
+          <!-- STATUS -->
+          <th>
+            <span class="list-column-heading static-heading">
+              Status
+            </span>
+          </th>
+
+
+          <!-- ACTION -->
+          <th class="list-action-column">
+            Action
+          </th>
+
         </tr>
+
       </thead>
 
+
       <tbody>
-        <tr *ngFor="let request of paged">
 
-          <td>{{ request.requestNumber }}</td>
-          <td>{{ request.issueTitle }}</td>
-          <td>{{ request.studentName }}</td>
-          <td>{{ request.courseOfferingName }}</td>
-          <td>{{ request.requestedDate | date:'MMM dd, yyyy' }}</td>
-          <td>{{ request.assignedTeacherName || '-' }}</td>
+        <tr *ngFor="let request of paged" class="list-row">
 
-          <!-- STATUS DROPDOWN -->
+
+          <!-- REQUEST -->
           <td>
-            <select class="form-select form-select-sm" [(ngModel)]="request.statusId">
-              <option *ngFor="let s of statusList" [value]="s.id">
-                {{ s.name }}
-              </option>
-            </select>
+
+            <div class="list-item-cell">
+
+              <div class="list-item-avatar">
+                <i class="bi bi-flask"></i>
+              </div>
+
+              <div class="list-item-details">
+
+                <span class="list-item-name">
+                  {{ request.requestNumber || '-' }}
+                </span>
+
+                <span class="list-item-subtitle">
+                  Lab Request
+                </span>
+
+              </div>
+
+            </div>
+
           </td>
 
-          <!-- SAVE BUTTON     [disabled]="request.statusId === request.statusId"-->
-          <td class="d-flex gap-3">
-            <button class="btn btn-sm btn-primary" (click)="saveStatus(request)">
-              Save
-            </button>
 
-            <button class="btn btn-sm btn-primary" (click)="openDetailDrawer(request.id)">
-              View
-            </button>
+          <!-- ISSUE -->
+          <td>
+
+            <div class="list-item-details">
+
+              <span class="list-item-name issue-title" [title]="request.issueTitle">
+
+                {{ request.issueTitle || 'No issue title' }}
+
+              </span>
+
+            </div>
+
+          </td>
+
+
+          <!-- STUDENT -->
+          <td>
+
+            <div class="list-item-cell">
+
+              <div class="list-person-avatar">
+
+                {{ request.studentName?.charAt(0)?.toUpperCase() || '?' }}
+
+              </div>
+
+              <div class="list-item-details">
+
+                <span class="list-item-name">
+                  {{ request.studentName || 'Unknown Student' }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <!-- COURSE -->
+          <td>
+
+            <div class="list-item-details">
+
+              <span class="list-item-name">
+                {{ request.courseOfferingName || 'Unknown Course' }}
+              </span>
+
+              <span class="list-item-subtitle">
+                Course Offering
+              </span>
+
+            </div>
+
+          </td>
+
+
+          <!-- REQUESTED DATE -->
+          <td>
+
+            <div class="date-cell">
+
+              <i class="bi bi-calendar3"></i>
+
+              <span>
+                {{ request.requestedDate | date:'MMM dd, yyyy' }}
+              </span>
+
+            </div>
+
+          </td>
+
+
+          <!-- ASSIGNED TEACHER -->
+          <td>
+
+            <div class="list-item-cell" *ngIf="request.assignedTeacherName; else noAssignedTeacher">
+
+              <div class="list-person-avatar teacher-avatar">
+
+                {{ request.assignedTeacherName.charAt(0).toUpperCase() }}
+
+              </div>
+
+              <div class="list-item-details">
+
+                <span class="list-item-name">
+                  {{ request.assignedTeacherName }}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <ng-template #noAssignedTeacher>
+
+              <span class="muted-value">
+                <i class="bi bi-dash-circle"></i>
+                Not assigned
+              </span>
+
+            </ng-template>
+
+          </td>
+
+
+          <!-- STATUS -->
+          <td>
+
+            <div class="status-edit-cell">
+
+              <select class="list-status-select" [(ngModel)]="request.statusId">
+
+                <option *ngFor="let s of statusList" [value]="s.id">
+
+                  {{ s.name }}
+
+                </option>
+
+              </select>
+
+            </div>
+
+          </td>
+
+
+          <!-- ACTION -->
+          <td class="list-action-column">
+
+            <div class="list-actions">
+
+              <!-- SAVE -->
+              <button type="button" class="list-action save-action" title="Save status" (click)="saveStatus(request)">
+
+                <i class="bi bi-check2"></i>
+
+              </button>
+
+
+              <!-- VIEW -->
+              <button type="button" class="list-action" title="View request details"
+                (click)="openDetailDrawer(request.id)">
+
+                <i class="bi bi-arrow-right-circle"></i>
+
+              </button>
+
+            </div>
+
           </td>
 
         </tr>
 
+
+        <!-- EMPTY -->
         <tr *ngIf="paged.length === 0">
-          <td colspan="8" class="text-center py-4 text-muted">
-            No records found
+
+          <td colspan="8" class="list-empty">
+
+            <i class="bi bi-search list-empty-icon"></i>
+
+            <strong>
+              No lab requests found
+            </strong>
+
+            <span>
+              Try adjusting your search criteria
+            </span>
+
           </td>
+
         </tr>
 
       </tbody>
+
     </table>
+
+  </div>
+
+
+  <!-- FOOTER -->
+  <div class="list-footer">
+
+    <!-- ROWS PER PAGE -->
+    <div class="list-rows-per-page">
+
+      <span>
+        Rows per page
+      </span>
+
+      <select class="list-page-size" [value]="pageSize" (change)="changePageSize($any($event.target).value)">
+
+        <option *ngFor="let size of pageSizeOptions" [value]="size">
+
+          {{ size }}
+
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- RANGE -->
+    <span class="list-range">
+      {{ rangeLabel }}
+    </span>
+
+
+    <!-- PAGINATION -->
+    <div class="list-pagination">
+
+      <!-- FIRST -->
+      <button type="button" class="list-pagination-icon" [disabled]="currentPage === 1 || totalPages === 0"
+        (click)="goToPage(1)" title="First page">
+
+        <i class="bi bi-chevron-double-left"></i>
+
+      </button>
+
+
+      <!-- PREVIOUS -->
+      <button type="button" class="list-pagination-icon" [disabled]="currentPage === 1 || totalPages === 0"
+        (click)="goToPage(currentPage - 1)" title="Previous page">
+
+        <i class="bi bi-chevron-left"></i>
+
+      </button>
+
+
+      <!-- CURRENT PAGE -->
+      <span class="list-page-number">
+        {{ totalPages === 0 ? 0 : currentPage }}
+      </span>
+
+
+      <!-- NEXT -->
+      <!-- NEXT -->
+      <button type="button" class="list-pagination-icon" [disabled]="
+    totalPages === 0 ||
+    currentPage >= totalPages
+  " (click)="goToPage(currentPage + 1)" title="Next page">
+
+        <mat-icon>chevron_right</mat-icon>
+
+      </button>
+
+
+      <!-- LAST -->
+      <button type="button" class="list-pagination-icon" [disabled]="
+    totalPages === 0 ||
+    currentPage >= totalPages
+  " (click)="goToPage(totalPages)" title="Last page">
+
+        <mat-icon>last_page</mat-icon>
+
+      </button>
+
+    </div>
+
   </div>
 
 </div>
 
-<!-- Side drawer for create/edit -->
+
+<!-- DETAIL DRAWER -->
 <app-side-drawer [opened]="drawerOpen" width="1000px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+
   <ng-container *ngIf="drawerOpen">
-    <app-help-request-detail-view (cancel)="closeDrawer()"></app-help-request-detail-view>
+
+    <app-help-request-detail-view (cancel)="closeDrawer()">
+    </app-help-request-detail-view>
+
   </ng-container>
+
 </app-side-drawer>
 
+
+<!-- DRAWER HEADER -->
 <ng-template #drawerHeader>
-  <div class="d-flex align-items-center gap-2">
-    <i class="bi bi-journal-bookmark"></i>
-    <span>
-      Help Request Detail
-    </span>
+
+  <div class="drawer-header-content">
+
+    <div class="drawer-header-icon">
+      <i class="bi bi-journal-bookmark"></i>
+    </div>
+
+    <div class="drawer-header-text">
+
+      <strong>
+        Help Request Detail
+      </strong>
+
+      <span>
+        Review lab request information
+      </span>
+
+    </div>
+
   </div>
+
 </ng-template>

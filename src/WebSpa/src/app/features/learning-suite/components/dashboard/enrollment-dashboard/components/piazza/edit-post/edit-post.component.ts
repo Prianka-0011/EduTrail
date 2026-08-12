@@ -143,7 +143,7 @@ export class EditPostComponent implements OnInit {
 
     } else {
 
-      // this.postDetail.poll = undefined;
+       this.postDetail.poll = undefined;
 
     }
   }
