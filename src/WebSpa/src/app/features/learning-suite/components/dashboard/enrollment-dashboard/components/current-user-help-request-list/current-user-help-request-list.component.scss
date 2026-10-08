@@ -1,0 +1,96 @@
+.issue-title {
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #5f6b7a;
+  font-size: 13px;
+  white-space: nowrap;
+
+  i {
+    font-size: 14px;
+    color: #8b95a5;
+  }
+}
+
+.queue-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.queue-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #f4f6f9;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.muted-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #9aa3af;
+  font-size: 13px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-success {
+  background: #edf8f1;
+  color: #25804b;
+}
+
+.status-warning {
+  background: #fff7e8;
+  color: #a66a00;
+}
+
+.status-danger {
+  background: #fff0f0;
+  color: #c53d3d;
+}
+
+.status-info {
+  background: #edf5ff;
+  color: #3574b8;
+}
+
+.status-default {
+  background: #f1f3f5;
+  color: #697386;
+}
+
+.teacher-avatar {
+  background: #f0f4f8;
+}

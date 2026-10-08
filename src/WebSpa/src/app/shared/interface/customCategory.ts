@@ -15,9 +15,14 @@ export class CustomCategory {
     HelpRequestStatusType: "ce5e6303-3ac6-4af1-92b4-f708da026d20"
   };
 
-  static HelpRequestStatus = {
-    Pending: "627407c8-700d-46fc-a3e5-02dc368fb75e"
-  };
+  // static HelpRequestStatus = {
+  //   Pending: "627407c8-700d-46fc-a3e5-02dc368fb75e"
+  // };
+  static  HelpRequestStatus = {
+  Pending: '627407c8-700d-46fc-a3e5-02dc368fb75e',
+  Completed: 'EB57ECC1-678E-48F9-8DB0-0BD79973F52F',
+  InProgress: 'ED733676-90BE-49AA-AF3C-335169678B86'
+};
 
   static RoleType = {
     TA: "5a1e4c7d-9b82-4f36-a3c1-6d9e2f8b0a55",
@@ -40,4 +45,16 @@ export class CustomCategory {
     December: 12
   };
 
+  static PostTypes = {
+    Note: "9efb883c-9348-41c1-b51e-1dd463ec1f5b",
+    Question: "3002fb15-b1f7-47ba-90e8-34db886a901a",
+    Poll: "f35db777-9824-4d40-976d-33262c1c23ce",
+  };
+
+  static EditorType = {
+    RichText: 1,
+    PlainText: 2,
+    Markdown: 3
+  };
+  
 }

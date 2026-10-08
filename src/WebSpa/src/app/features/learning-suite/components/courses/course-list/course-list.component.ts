@@ -7,12 +7,32 @@ import { SideDrawerComponent } from '../../../../../shared/components/side-drawe
 import { CourseCreateOrUpdateComponent } from '../course-create-or-update/course-create-or-update.component';
 import { Router } from '@angular/router';
 import { ICourse } from '../interfaces/ICourse';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 
 
 @Component({
   selector: 'app-course-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, SideDrawerComponent, CourseCreateOrUpdateComponent],
+  imports: [
+    CourseCreateOrUpdateComponent,
+    CommonModule,
+    FormsModule,
+    SideDrawerComponent,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    SideDrawerComponent,
+    MatTableModule
+  ],
   templateUrl: './course-list.component.html',
   styleUrl: './course-list.component.scss'
 })

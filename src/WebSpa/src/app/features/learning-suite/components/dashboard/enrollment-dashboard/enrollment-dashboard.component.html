@@ -33,18 +33,34 @@
       </ng-container>
 
       <div class="menu-group" *ngIf="isTA">
+
         <div class="menu-label" (click)="toggleActiveUsers()">
           Active Users
-          <i class="bi" [ngClass]="{'bi-chevron-down': !showActiveUsers, 'bi-chevron-up': showActiveUsers}"></i>
+
+          <i class="bi" [ngClass]="{
+        'bi-chevron-down': !showActiveUsers,
+        'bi-chevron-up': showActiveUsers
+      }">
+          </i>
         </div>
+
         <div class="submenu" *ngIf="showActiveUsers">
+
           <ul>
+
             <li *ngFor="let user of activeUsers" (click)="openChat(user)"
               [class.selected]="selectedChatUser?.id === user.id">
-              <span>{{ user.studentName }}</span>
+
+              <span>
+                {{ user.userId === currentUserId ? 'ME' : user.studentName }}
+              </span>
+
             </li>
+
           </ul>
+
         </div>
+
       </div>
 
     </nav>
@@ -55,7 +71,8 @@
 
     <!-- Chat Panel -->
     <section class="chat-panel" *ngIf="isChatOpen && selectedChatUser">
-      <app-chat [sender]="userDetail" [receiver]="selectedChatUser" [courseOfferingId]="courseOfferingId" (onClose)="closeChat()" ></app-chat>
+      <app-chat [sender]="userDetail" [receiver]="selectedChatUser" [courseOfferingId]="courseOfferingId"
+        (onClose)="closeChat()"></app-chat>
     </section>
   </main>
 </div>

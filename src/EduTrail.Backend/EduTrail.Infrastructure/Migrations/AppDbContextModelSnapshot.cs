@@ -238,6 +238,9 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
+                    b.Property<Guid?>("PostId")
+                        .HasColumnType("uuid");
+
                     b.Property<decimal?>("TotalWorkHoursPerWeek")
                         .HasColumnType("numeric");
 
@@ -254,9 +257,55 @@ namespace EduTrail.Infrastructure.Migrations
 
                     b.HasIndex("CourseOfferingId");
 
+                    b.HasIndex("PostId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Enrollments");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Folder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CourseOfferingId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid?>("ParentFolderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseOfferingId");
+
+                    b.HasIndex("ParentFolderId");
+
+                    b.ToTable("Folders");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Lab", b =>
@@ -362,6 +411,301 @@ namespace EduTrail.Infrastructure.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("LabRequests");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Poll", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId")
+                        .IsUnique();
+
+                    b.ToTable("Polls");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PollOption", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("OptionText")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("PollId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("VoteCount")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PollId");
+
+                    b.ToTable("PollOptions");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PollVote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EnrollmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PollOptionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("VotedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.HasIndex("PollOptionId");
+
+                    b.ToTable("PollVotes");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Post", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("text");
+
+                    b.Property<int>("EditorType")
+                        .HasColumnType("integer");
+
+                    b.Property<bool?>("IsAnnouncement")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("IsIndividual")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPinned")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("IsScheduled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("PinnedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PostTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("ScheduledAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool?>("SendEmailImmediately")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostTypeId");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostDiscussion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("EditorType")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("EnrollmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsResolved")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("IsVisibleToInstructor")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("ParentDiscussionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.HasIndex("ParentDiscussionId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostDiscussions");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostTypes");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostUserAction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ArchivedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("BookmarkedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("EnrollmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("FavoritedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsBookmarked")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsFavorite")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsLiked")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPinned")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LikedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ReadDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("ShareCount")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostUserActions");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
@@ -1064,6 +1408,21 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("AuditEntries");
                 });
 
+            modelBuilder.Entity("FolderPost", b =>
+                {
+                    b.Property<Guid>("FoldersId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PostsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("FoldersId", "PostsId");
+
+                    b.HasIndex("PostsId");
+
+                    b.ToTable("FolderPost");
+                });
+
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.Property<Guid>("RolesId")
@@ -1154,6 +1513,10 @@ namespace EduTrail.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EduTrail.Domain.Entities.Post", null)
+                        .WithMany("Enrollments")
+                        .HasForeignKey("PostId");
+
                     b.HasOne("EduTrail.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -1161,6 +1524,23 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("CourseOffering");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Folder", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.CourseOffering", "CourseOffering")
+                        .WithMany()
+                        .HasForeignKey("CourseOfferingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduTrail.Domain.Entities.Folder", "ParentFolder")
+                        .WithMany("SubFolders")
+                        .HasForeignKey("ParentFolderId");
+
+                    b.Navigation("CourseOffering");
+
+                    b.Navigation("ParentFolder");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Lab", b =>
@@ -1205,6 +1585,98 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("Status");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Poll", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Post", "Post")
+                        .WithOne("Poll")
+                        .HasForeignKey("EduTrail.Domain.Entities.Poll", "PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PollOption", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Poll", "Poll")
+                        .WithMany("Options")
+                        .HasForeignKey("PollId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Poll");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PollVote", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
+                        .WithMany()
+                        .HasForeignKey("EnrollmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduTrail.Domain.Entities.PollOption", "PollOption")
+                        .WithMany("Votes")
+                        .HasForeignKey("PollOptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Enrollment");
+
+                    b.Navigation("PollOption");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Post", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.PostType", "PostType")
+                        .WithMany()
+                        .HasForeignKey("PostTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PostType");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostDiscussion", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
+                        .WithMany()
+                        .HasForeignKey("EnrollmentId");
+
+                    b.HasOne("EduTrail.Domain.Entities.PostDiscussion", "ParentDiscussion")
+                        .WithMany("Replies")
+                        .HasForeignKey("ParentDiscussionId");
+
+                    b.HasOne("EduTrail.Domain.Entities.Post", "Post")
+                        .WithMany("Discussions")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Enrollment");
+
+                    b.Navigation("ParentDiscussion");
+
+                    b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostUserAction", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Enrollment", "Enrollment")
+                        .WithMany()
+                        .HasForeignKey("EnrollmentId");
+
+                    b.HasOne("EduTrail.Domain.Entities.Post", "Post")
+                        .WithMany("UserActions")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Enrollment");
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>
@@ -1325,6 +1797,21 @@ namespace EduTrail.Infrastructure.Migrations
                     b.Navigation("TermType");
                 });
 
+            modelBuilder.Entity("FolderPost", b =>
+                {
+                    b.HasOne("EduTrail.Domain.Entities.Folder", null)
+                        .WithMany()
+                        .HasForeignKey("FoldersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduTrail.Domain.Entities.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.HasOne("EduTrail.Domain.Entities.Role", null)
@@ -1360,6 +1847,37 @@ namespace EduTrail.Infrastructure.Migrations
             modelBuilder.Entity("EduTrail.Domain.Entities.Enrollment", b =>
                 {
                     b.Navigation("TALabMonths");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Folder", b =>
+                {
+                    b.Navigation("SubFolders");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Poll", b =>
+                {
+                    b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PollOption", b =>
+                {
+                    b.Navigation("Votes");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.Post", b =>
+                {
+                    b.Navigation("Discussions");
+
+                    b.Navigation("Enrollments");
+
+                    b.Navigation("Poll");
+
+                    b.Navigation("UserActions");
+                });
+
+            modelBuilder.Entity("EduTrail.Domain.Entities.PostDiscussion", b =>
+                {
+                    b.Navigation("Replies");
                 });
 
             modelBuilder.Entity("EduTrail.Domain.Entities.Question", b =>

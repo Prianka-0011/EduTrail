@@ -14,13 +14,25 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IDropdownItem } from '../../../../../shared/interface/iDropdownItem';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 const EMPTY_ID = '00000000-0000-0000-0000-000000000000';
 
 @Component({
   selector: 'app-term-create-or-uppdate',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+     CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule],
   templateUrl: './term-create-or-uppdate.component.html',
   styleUrl: './term-create-or-uppdate.component.scss'
 })
@@ -157,13 +169,6 @@ export class TermCreateOrUppdateComponent implements OnInit, OnChanges {
       this.term.endDate = '';
     }
   }
-
-  // syncDerivedFields(): void {
-  //   if (this.term.startDate) {
-  //     this.minEndDate = this.term.startDate;
-  //     this.term.year = new Date(this.term.startDate).getFullYear();
-  //   }
-  // }
 
   isDateRangeValid(): boolean {
     if (!this.term.startDate || !this.term.endDate) return true;

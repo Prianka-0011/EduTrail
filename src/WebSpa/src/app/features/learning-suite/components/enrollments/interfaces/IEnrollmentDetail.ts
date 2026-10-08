@@ -5,6 +5,7 @@ export interface IEnrollmentDetail {
   courseOfferingId: string;
   userId: string;
   studentName?: string | null;
+  studentEmail?: string | null;
   enrolledDate: string;
   isTa: boolean;
   isActive?: boolean;

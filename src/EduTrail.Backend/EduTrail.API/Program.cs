@@ -117,5 +117,6 @@ app.UseGlobalExceptionHandler();
 
 app.MapControllers();
 app.MapHub<ChatHub>("/hubs/chat");
+app.MapHub<PostDiscussionHub>("/hubs/post-discussion");
 
 app.Run();

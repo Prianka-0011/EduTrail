@@ -11,6 +11,13 @@
 ./src/EduTrail.Backend/EduTrail.Infrastructure/InitialDataMigration/reset-initial-migration.sh
 dotnet ef migrations add initial-migration -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
 
+# RoleBack Existing Migration
+dotnet ef migrations list -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
+# Till The one you want to roleback
+dotnet ef database update 20260605053924_initial_data_setup -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
+dotnet ef migrations remove -p src/EduTrail.Backend/EduTrail.Infrastructure -s src/EduTrail.Backend/EduTrail.API
+
+
 ## **Folder Structure (Clean Architecture)**
 
 
@@ -546,3 +553,74 @@ localhost+2-key.pem
 
 # $env:NODE_OPTIONS="--openssl-legacy-provider"
 # ng serve --ssl true --ssl-cert "./localhost+2.pem" --ssl-key "./localhost+2-key.pem"
+
+
+protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.InsertData(
+                            table: "PostTypes",
+                            columns: new[]
+                            {
+                    "Id",
+                    "Name",
+                    "Description",
+                    "IsActive",
+                    "CreatedDate",
+                    "CreatedById",
+                    "UpdatedDate",
+                    "UpdatedById"
+                            },
+                            values: new object[,]
+                            {
+                    {
+                        new Guid("9efb883c-9348-41c1-b51e-1dd463ec1f5b"),
+                        "Note",
+                        "Standard note post",
+                        true,
+                        DateTimeOffset.UtcNow,
+                        null,
+                        null,
+                        null
+                    },
+                    {
+                        new Guid("3002fb15-b1f7-47ba-90e8-34db886a901a"),
+                        "Question",
+                        "Question post",
+                        true,
+                        DateTimeOffset.UtcNow,
+                        null,
+                        null,
+                        null
+                    },
+                    {
+                        new Guid("f35db777-9824-4d40-976d-33262c1c23ce"),
+                        "Poll",
+                        "Poll post",
+                        true,
+                        DateTimeOffset.UtcNow,
+                        null,
+                        null,
+                        null
+                    }
+                 });
+        }
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DeleteData(
+                           table: "PostTypes",
+                           keyColumn: "Id",
+                           keyValue: new Guid("9efb883c-9348-41c1-b51e-1dd463ec1f5b"));
+
+            migrationBuilder.DeleteData(
+                table: "PostTypes",
+                keyColumn: "Id",
+                keyValue: new Guid("3002fb15-b1f7-47ba-90e8-34db886a901a"));
+
+            migrationBuilder.DeleteData(
+                table: "PostTypes",
+                keyColumn: "Id",
+                keyValue: new Guid("f35db777-9824-4d40-976d-33262c1c23ce"));
+        }
+    
+
+        

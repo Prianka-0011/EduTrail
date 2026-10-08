@@ -1,0 +1,438 @@
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+}
+
+.posts-container {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+.posts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  border-bottom: 1px solid #ddd;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  h2 {
+    margin: 0;
+    font-size: 22px;
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 25px;
+  background: #f5f5f5;
+  font-size: 20px;
+  font-weight: 700;
+  border-top: 1px solid #ddd;
+}
+
+.post-card {
+  position: relative;
+  padding: 18px 30px;
+  border-bottom: 1px solid #e9ecef;
+  cursor: pointer;
+  transition: all .2s ease;
+  background: #fff;
+
+  &:hover {
+    background: #f7faff;
+  }
+
+  &.unread {
+    border-left: 5px solid #0d6efd;
+    background: #f8fbff;
+
+    .post-content h3 {
+      font-weight: 700;
+    }
+  }
+
+  &.read {
+    opacity: .92;
+
+    .post-content h3 {
+      font-weight: 600;
+    }
+  }
+
+  &.pinned {
+    border-left: 5px solid #f59e0b;
+  }
+
+  &.favorite {
+    background: #fffdf4;
+  }
+}
+
+.post-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  i {
+    font-size: 15px;
+  }
+
+  .pin {
+    color: #f59e0b;
+  }
+
+  .favorite {
+    color: #ffc107;
+  }
+
+  .unread {
+    color: #0d6efd;
+    font-size: 10px;
+  }
+
+  .read {
+    color: #adb5bd;
+    font-size: 10px;
+  }
+}
+
+.post-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-type {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.type-box {
+  width: 20px;
+  height: 20px;
+  background: #777;
+  border-radius: 4px;
+
+  &.instructor {
+    background: #ffb000;
+  }
+}
+
+.post-date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.post-content {
+  max-width: 100%;
+  overflow: hidden;
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  div {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.5;
+  }
+
+  p {
+    margin: 0 0 10px;
+  }
+}
+
+.post-type-name {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.post-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.document-icon {
+  font-size: 28px;
+  color: #777;
+}
+
+.good-note {
+  background: #d9f7d9;
+  color: #176b2c;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.post-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 8px;
+  padding: 3px 8px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 600;
+
+  &.pinned {
+    background: #fff3cd;
+    color: #856404;
+  }
+
+  &.favorite {
+    background: #fff8e1;
+    color: #d39e00;
+  }
+
+  &.unread {
+    background: #fde2e2;
+    color: #dc3545;
+  }
+}
+
+.read-status {
+  margin-left: 12px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+
+  &.read {
+    background: #f1f3f5;
+    color: #198754;
+  }
+
+  &.unread {
+    background: #e8f2ff;
+    color: #dc3545;
+  }
+}
+
+.unread-title {
+  font-weight: 800;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+
+  .btn {
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 5px 12px;
+    transition: all .2s ease;
+  }
+
+  .btn-outline-secondary {
+    color: #495057;
+    border-color: #ced4da;
+    background: #fff;
+
+    &:hover {
+      background: #f8f9fa;
+      color: #212529;
+      border-color: #adb5bd;
+    }
+  }
+
+  .btn-outline-danger:hover {
+    background: #dc3545;
+    color: #fff;
+  }
+}
+
+.action-menu {
+  position: absolute;
+  right: 0;
+  top: 35px;
+  width: 320px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.18);
+  padding: 8px 0;
+  z-index: 100;
+
+  button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: none;
+    background: transparent;
+    padding: 12px 18px;
+    cursor: pointer;
+    text-align: left;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+  }
+
+  i {
+    font-size: 20px;
+    width: 25px;
+  }
+
+  span {
+    display: flex;
+    flex-direction: column;
+  }
+
+  small {
+    color: #6c757d;
+  }
+}
+
+.action-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .2s ease;
+
+  background: transparent;
+  color: #6b7280;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    background: #f3f4f6;
+  }
+
+  /* View */
+
+  &.view:hover {
+    background: #e3f2fd;
+    color: #1565c0;
+  }
+
+  /* Edit */
+
+  &.edit:hover {
+    background: #fff3e0;
+    color: #ef6c00;
+  }
+
+  /* Favorite */
+
+  &.favorite.active {
+    background: #fff8e1;
+    color: #f9a825;
+  }
+
+  &.favorite:hover {
+    background: #fff8e1;
+    color: #f9a825;
+  }
+
+  /* Pin */
+
+  &.pin.active {
+    background: #f3e5f5;
+    color: #7b1fa2;
+  }
+
+  &.pin:hover {
+    background: #f3e5f5;
+    color: #7b1fa2;
+  }
+
+  /* Read */
+
+  &.read.active {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  &.read:hover {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  /* Archive */
+
+  &.archive.active {
+    background: #eceff1;
+    color: #455a64;
+  }
+
+  &.archive:hover {
+    background: #eceff1;
+    color: #455a64;
+  }
+
+  /* Delete */
+
+  &.delete:hover {
+    background: #ffebee;
+    color: #c62828;
+  }
+}

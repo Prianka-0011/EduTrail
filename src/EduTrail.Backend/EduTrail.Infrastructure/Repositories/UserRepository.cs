@@ -28,6 +28,13 @@ namespace EduTrail.Infrastructure.Repositories
             return await _context.Users.ToListAsync();
         }
 
+        public async Task<List<User>> GetByIdsAsync(List<Guid> ids)
+        {
+            return await _context.Users
+                .Where(x => ids.Contains(x.Id))
+                .ToListAsync();
+        }
+
         public async Task<User> GetByIdAsync(Guid id)
         {
             return await _context.Users.Include(u => u.Roles).FirstOrDefaultAsync(u => u.Id == id);

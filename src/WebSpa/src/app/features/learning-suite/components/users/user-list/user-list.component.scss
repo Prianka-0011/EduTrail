@@ -1,0 +1,42 @@
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+}
+
+.status-active {
+  background: #ecfdf3;
+  color: #16834b;
+}
+
+.status-active .status-dot {
+  background: #22a861;
+}
+
+.status-inactive {
+  background: #fef2f2;
+  color: #c24141;
+}
+
+.status-inactive .status-dot {
+  background: #ef6b6b;
+}

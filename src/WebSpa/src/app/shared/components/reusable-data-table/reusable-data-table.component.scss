@@ -1,0 +1,154 @@
+.material-table-container {
+  width: 100%;
+  overflow-x: auto;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+
+  background: #ffffff;
+}
+
+.modern-mat-table {
+  width: 100%;
+  min-width: 760px;
+}
+
+/* Header */
+
+.table-header {
+  height: 56px;
+  background: #f8fafc;
+}
+
+.mat-mdc-header-cell {
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Rows */
+
+.table-row {
+  height: 64px;
+
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  cursor: pointer;
+}
+
+.mat-mdc-cell {
+  color: #334155;
+  font-size: 14px;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.table-row:hover {
+  background: #f8fafc;
+}
+
+.table-row.row-expanded {
+  background: #f8fafc;
+}
+
+/* Values */
+
+.cell-value {
+  color: #334155;
+  font-weight: 450;
+}
+
+/* Expand */
+
+.expand-button {
+  width: 36px;
+  height: 36px;
+
+  color: #64748b;
+}
+
+.expand-button:hover {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+/* Actions */
+
+.actions-header,
+.actions-cell {
+  width: 80px;
+  text-align: center;
+}
+
+.row-action {
+  width: 36px;
+  height: 36px;
+
+  color: #64748b;
+}
+
+.row-action:hover {
+  color: #4f46e5;
+  background: #eef2ff;
+}
+
+/* Expanded */
+
+.expanded-row {
+  height: 0;
+}
+
+.expanded-cell {
+  padding: 0 !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.expanded-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+
+  overflow: hidden;
+
+  transition:
+    grid-template-rows 220ms ease,
+    padding 220ms ease;
+
+  padding: 0 24px;
+}
+
+.expanded-wrapper.expanded {
+  grid-template-rows: 1fr;
+  padding: 14px 24px 18px;
+}
+
+.expanded-wrapper > * {
+  min-height: 0;
+}
+
+/* Empty */
+
+.no-data {
+  height: 180px;
+
+  text-align: center;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+}
+
+.no-data mat-icon {
+  display: block;
+
+  margin: 0 auto 8px;
+
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}

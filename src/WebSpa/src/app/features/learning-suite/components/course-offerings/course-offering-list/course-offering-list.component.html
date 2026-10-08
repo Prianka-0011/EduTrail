@@ -1,135 +1,551 @@
-<div class="table-container">
+<!-- TOOLBAR -->
+<div class="list-toolbar">
 
-  <div class="row justify-content-start">
-    <div class="col-md-6 col-12 d-flex align-items-center gap-1">
-      <h2 class="mb-0">Course Offerings</h2>
+  <div class="list-toolbar-left">
 
-      <button class="icon-btn" (click)="openCreateDrawer()">
-        <i class="bi bi-plus-lg"></i>
-      </button>
-    </div>
-  </div>
+    <div class="list-heading">
 
-  <div class="row justify-content-end">
-    <div class="col-md-4 col-10 mb-4">
-      <div class="search-input-wrapper">
-        <input type="text" class="form-control" placeholder="Search course offerings..." [(ngModel)]="searchText"
-          (input)="applyFilter()" />
-        <i class="bi bi-search search-icon"></i>
-      </div>
-    </div>
-  </div>
+      <h2>Course Offerings</h2>
 
-  <div class="table-responsive">
-    <table class="table custom-table">
-      <thead>
-        <tr>
-          <th role="button" (click)="applySort('courseName')">Course</th>
-          <th role="button" (click)="applySort('instructorName')">Instructor</th>
-          <th role="button" (click)="applySort('termName')">Term</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+      <span>
+        Manage your course offerings
+      </span>
 
-      <tbody>
-        <ng-container *ngFor="let offering of pagedCourseOfferings">
-
-          <!-- Parent row -->
-          <tr role="button" (click)="toggleRow(offering.id)" class="parent-row">
-            <td>
-              <i class="bi me-2" [ngClass]="isRowExpanded(offering.id) ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
-              {{ offering.courseName }}
-            </td>
-            <td>{{ offering.instructorName }}</td>
-            <td>{{ offering.termName }}</td>
-            <td>
-              <button class="edit-icon-btn" (click)="openEditDrawer(offering.id); $event.stopPropagation()">
-                <i class="bi bi-pencil-square"></i>
-              </button>
-            </td>
-          </tr>
-
-          <!-- Collapsible child row with smooth transition -->
-          <tr class="child-row">
-            <td colspan="4" class="p-0">
-              <div class="child-content-wrapper" [class.expanded]="isRowExpanded(offering.id)"
-                (click)="goToEnrollment(offering.id)">
-                <div class="child-content ">
-                  <i class="bi bi-box-arrow-up-right me-2"></i>
-                  <strong>Enrollment</strong>
-                </div>
-              </div>
-            </td>
-          </tr>
-
-           <tr class="child-row">
-            <td colspan="4" class="p-0">
-              <div class="child-content-wrapper" [class.expanded]="isRowExpanded(offering.id)"
-                (click)="goToEnrollment(offering.id)">
-                <div class="child-content">
-                  <i class="bi bi-box-arrow-up-right me-2"></i>
-                  <strong>Assessment</strong>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </ng-container>
-
-
-        <tr *ngIf="pagedCourseOfferings.length === 0">
-          <td colspan="4" class="text-center py-4 text-muted">
-            No records found
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="custom-paginator d-flex align-items-center mt-4">
-
-    <div class="d-flex align-items-center gap-2">
-      <span>Items per page:</span>
-      <select class="form-select page-size-select" [value]="pageSize"
-        (change)="changePageSize($any($event.target).value)">
-        <option *ngFor="let size of pageSizeOptions" [value]="size">
-          {{ size }}
-        </option>
-      </select>
-    </div>
-
-    <span class="ms-auto">{{ rangeLabel }}</span>
-
-    <div class="d-flex gap-2 ms-3">
-      <button class="btn icon-btn" (click)="goToPage(1)">
-        <i class="bi bi-chevron-double-left"></i>
-      </button>
-      <button class="btn icon-btn" (click)="goToPage(currentPage - 1)">
-        <i class="bi bi-chevron-left"></i>
-      </button>
-      <button class="btn icon-btn" (click)="goToPage(currentPage + 1)">
-        <i class="bi bi-chevron-right"></i>
-      </button>
-      <button class="btn icon-btn" (click)="goToPage(totalPages)">
-        <i class="bi bi-chevron-double-right"></i>
-      </button>
     </div>
 
   </div>
+
+
+  <div class="toolbar-right">
+
+    <mat-form-field
+      appearance="outline"
+      class="search-field"
+      subscriptSizing="dynamic"
+    >
+
+      <mat-icon matPrefix>
+        search
+      </mat-icon>
+
+      <input
+        matInput
+        type="text"
+        placeholder="Search course offerings..."
+        [(ngModel)]="searchText"
+        (input)="applyFilter()"
+      />
+
+    </mat-form-field>
+
+
+    <button
+      mat-flat-button
+      class="add-btn"
+      (click)="openCreateDrawer()"
+    >
+
+      <mat-icon>
+        add
+      </mat-icon>
+
+      Add Course Offering
+
+    </button>
+
+  </div>
+
 </div>
 
-<app-side-drawer [opened]="drawerOpen" width="600px" (closed)="closeDrawer()" [headerTemplate]="drawerHeader">
+
+<!-- TABLE -->
+<div class="list-table-wrapper">
+
+  <table class="list-table">
+
+    <thead>
+
+      <tr>
+
+        <th>
+
+          <button
+            type="button"
+            class="list-column-heading"
+            (click)="applySort('courseName')"
+          >
+
+            <span>
+              Course
+            </span>
+
+            <i
+              class="bi"
+              [ngClass]="{
+                'bi-caret-up-fill':
+                  sortColumn === 'courseName' &&
+                  sortDirection === 'asc',
+
+                'bi-caret-down-fill':
+                  sortColumn === 'courseName' &&
+                  sortDirection === 'desc',
+
+                'bi-unfold-more':
+                  sortColumn !== 'courseName'
+              }"
+            ></i>
+
+          </button>
+
+        </th>
+
+
+        <th>
+
+          <button
+            type="button"
+            class="list-column-heading"
+            (click)="applySort('instructorName')"
+          >
+
+            <span>
+              Instructor
+            </span>
+
+            <i
+              class="bi"
+              [ngClass]="{
+                'bi-caret-up-fill':
+                  sortColumn === 'instructorName' &&
+                  sortDirection === 'asc',
+
+                'bi-caret-down-fill':
+                  sortColumn === 'instructorName' &&
+                  sortDirection === 'desc',
+
+                'bi-unfold-more':
+                  sortColumn !== 'instructorName'
+              }"
+            ></i>
+
+          </button>
+
+        </th>
+
+
+        <th>
+
+          <button
+            type="button"
+            class="list-column-heading"
+            (click)="applySort('termName')"
+          >
+
+            <span>
+              Term
+            </span>
+
+            <i
+              class="bi"
+              [ngClass]="{
+                'bi-caret-up-fill':
+                  sortColumn === 'termName' &&
+                  sortDirection === 'asc',
+
+                'bi-caret-down-fill':
+                  sortColumn === 'termName' &&
+                  sortDirection === 'desc',
+
+                'bi-unfold-more':
+                  sortColumn !== 'termName'
+              }"
+            ></i>
+
+          </button>
+
+        </th>
+
+
+        <th class="list-action-column">
+          Action
+        </th>
+
+      </tr>
+
+    </thead>
+
+
+    <tbody>
+
+      <ng-container
+        *ngFor="let offering of pagedCourseOfferings"
+      >
+
+        <!-- MAIN ROW -->
+        <tr
+          class="list-row"
+          [class.expanded]="isRowExpanded(offering.id)"
+          (click)="toggleRow(offering.id)"
+        >
+
+          <!-- COURSE -->
+          <td>
+
+            <div class="list-item-cell">
+
+              <div class="list-item-avatar">
+
+                <i class="bi bi-book"></i>
+
+              </div>
+
+
+              <div class="list-item-details">
+
+                <span class="list-item-name">
+                  {{ offering.courseName }}
+                </span>
+
+                <span class="list-item-subtitle">
+                  Course offering
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <!-- INSTRUCTOR -->
+          <td>
+
+            <div class="list-item-cell">
+
+              <div class="list-person-avatar">
+
+                {{ offering.instructorName?.charAt(0) || '?' }}
+
+              </div>
+
+
+              <div class="list-item-details">
+
+                <span class="list-item-name">
+                  {{ offering.instructorName }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <!-- TERM -->
+          <td>
+
+            <span
+              class="term-pill"
+              [ngClass]="getTermClass(offering.termTypeId)"
+            >
+              {{ offering.termName }}
+            </span>
+
+          </td>
+
+
+          <!-- ACTION -->
+          <td class="list-action-column">
+
+            <button
+              type="button"
+              class="list-action"
+              title="Edit"
+              (click)="
+                openEditDrawer(offering.id);
+                $event.stopPropagation()
+              "
+            >
+
+              <i class="bi bi-pencil-square"></i>
+
+            </button>
+
+
+            <button
+              type="button"
+              class="list-action"
+              title="More"
+              (click)="$event.stopPropagation()"
+            >
+
+              <i class="bi bi-three-dots"></i>
+
+            </button>
+
+          </td>
+
+        </tr>
+
+
+        <!-- EXPANDED ROW -->
+        <tr
+          *ngIf="isRowExpanded(offering.id)"
+          class="list-detail-row"
+        >
+
+          <td
+            colspan="4"
+            class="list-expanded-detail"
+          >
+
+            <div class="list-expanded-content">
+
+
+              <!-- ENROLLMENT -->
+              <button
+                type="button"
+                class="feature-card"
+                (click)="
+                  goToEnrollment(offering.id);
+                  $event.stopPropagation()
+                "
+              >
+
+                <div class="feature-icon enrollment">
+
+                  <i class="bi bi-people"></i>
+
+                </div>
+
+
+                <div class="feature-info">
+
+                  <strong>
+                    Enrollment
+                  </strong>
+
+                  <span>
+                    Manage course enrollment
+                  </span>
+
+                </div>
+
+
+                <i class="bi bi-arrow-right feature-arrow"></i>
+
+              </button>
+
+
+              <!-- ASSESSMENT -->
+              <button
+                type="button"
+                class="feature-card"
+                (click)="$event.stopPropagation()"
+              >
+
+                <div class="feature-icon assessment">
+
+                  <i class="bi bi-clipboard-check"></i>
+
+                </div>
+
+
+                <div class="feature-info">
+
+                  <strong>
+                    Assessment
+                  </strong>
+
+                  <span>
+                    Manage course assessments
+                  </span>
+
+                </div>
+
+
+                <i class="bi bi-arrow-right feature-arrow"></i>
+
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      </ng-container>
+
+
+      <!-- EMPTY -->
+      <tr
+        *ngIf="pagedCourseOfferings.length === 0"
+      >
+
+        <td
+          colspan="4"
+          class="list-empty"
+        >
+
+          <i class="bi bi-search list-empty-icon"></i>
+
+          <strong>
+            No course offerings found
+          </strong>
+
+          <span>
+            Try adjusting your search criteria
+          </span>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+<!-- FOOTER -->
+<div class="list-footer">
+
+  <div class="list-rows-per-page">
+
+    <span>
+      Items per page
+    </span>
+
+
+    <select
+      class="list-page-size"
+      [value]="pageSize"
+      (change)="changePageSize($any($event.target).value)"
+    >
+
+      <option
+        *ngFor="let size of pageSizeOptions"
+        [value]="size"
+      >
+        {{ size }}
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <span class="list-range">
+    {{ rangeLabel }}
+  </span>
+
+
+  <div class="list-pagination">
+
+    <button
+      type="button"
+      class="list-pagination-icon"
+      [disabled]="currentPage === 1"
+      (click)="goToPage(1)"
+      title="First page"
+    >
+
+      <i class="bi bi-chevron-double-left"></i>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="list-pagination-icon"
+      [disabled]="currentPage === 1"
+      (click)="goToPage(currentPage - 1)"
+      title="Previous page"
+    >
+
+      <i class="bi bi-chevron-left"></i>
+
+    </button>
+
+
+    <span class="list-page-number">
+      {{ currentPage }}
+    </span>
+
+
+    <button
+      type="button"
+      class="list-pagination-icon"
+      [disabled]="currentPage === totalPages"
+      (click)="goToPage(currentPage + 1)"
+      title="Next page"
+    >
+
+      <i class="bi bi-chevron-right"></i>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="list-pagination-icon"
+      [disabled]="currentPage === totalPages"
+      (click)="goToPage(totalPages)"
+      title="Last page"
+    >
+
+      <i class="bi bi-chevron-double-right"></i>
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- DRAWER -->
+<app-side-drawer
+  [opened]="drawerOpen"
+  width="600px"
+  (closed)="closeDrawer()"
+  [headerTemplate]="drawerHeader"
+>
+
   <ng-container *ngIf="drawerOpen">
-    <app-course-offering-create-or-edit (saved)="onCourseOfferingSaved()" (cancel)="closeDrawer()">
+
+    <app-course-offering-create-or-edit
+      (saved)="onCourseOfferingSaved()"
+      (cancel)="closeDrawer()"
+    >
     </app-course-offering-create-or-edit>
+
   </ng-container>
+
 </app-side-drawer>
 
+
+<!-- DRAWER HEADER -->
 <ng-template #drawerHeader>
-  <div class="d-flex align-items-center gap-2">
-    <i class="bi bi-journal-bookmark"></i>
-    <span>
-      {{ selectedCourseOfferingId ? 'Edit Course Offering' : 'Create Course Offering' }}
-    </span>
+
+  <div class="drawer-header-icon">
+
+    <mat-icon>
+      menu_book
+    </mat-icon>
+
   </div>
+
+
+  <span>
+
+    {{
+      selectedCourseOfferingId
+        ? 'Edit Course Offering'
+        : 'Create Course Offering'
+    }}
+
+  </span>
+
 </ng-template>
-<!-- <router-outlet></router-outlet> -->

@@ -57,7 +57,9 @@ export class UserDashboardService {
             weekNumber: w.weekNumber,
             days: w.days?.map(d => ({
               id: d.id,
-              labDate: d.labDate ? new Date(d.labDate).toISOString() : null,
+              labDate:  d.labDate
+  ? `${d.labDate}T00:00:00Z`
+  : null,
               tALabWeekId: d.taLabWeekId,
               isActive: d.isActive,
               slots: d.slots?.map(s => ({

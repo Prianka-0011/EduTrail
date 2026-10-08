@@ -13,7 +13,7 @@ namespace EduTrail.API.Controllers
         public TermsController(IMediator mediator) : base(mediator)
         {
         }
-        
+
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<TermDto>>> GetAll()

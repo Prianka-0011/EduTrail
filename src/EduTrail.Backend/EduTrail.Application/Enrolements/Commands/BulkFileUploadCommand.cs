@@ -94,7 +94,8 @@ namespace EduTrail.Application.Enrolements
                             users.Add(user);
                         }
 
-                        var existing = await _repository.GetByCourseOfferingIdAndStudentIdAsync(request.DetailDto.CourseOfferingId, user.Id);
+                    }
+                    var existing = await _repository.GetByCourseOfferingIdAndStudentIdAsync(request.DetailDto.CourseOfferingId, user.Id);
                         if (existing != null) continue;
 
                         enrollments.Add(new Enrollment
@@ -105,7 +106,6 @@ namespace EduTrail.Application.Enrolements
                             EnrolledDate = DateTimeOffset.UtcNow,
                             IsActive = true
                         });
-                    }
                 }
                 await _repository.BulkInsertAsync(enrollments);
 

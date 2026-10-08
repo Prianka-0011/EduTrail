@@ -4,6 +4,7 @@ namespace EduTrail.Application.Shared.Dtos
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string? Desctiption { get; set; }
     }
 
 }

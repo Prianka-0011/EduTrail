@@ -7,14 +7,19 @@ namespace EduTrail.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
-        public Guid currentUserId { get; set; } = Guid.Empty;
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
+        private readonly AuditInterceptor _auditInterceptor;
 
+        public AppDbContext(
+            DbContextOptions<AppDbContext> options,
+            AuditInterceptor auditInterceptor
+        ) : base(options)
+        {
+            _auditInterceptor = auditInterceptor;
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.AddInterceptors(new AuditInterceptor(currentUserId));
+            optionsBuilder.AddInterceptors(_auditInterceptor);
         }
         public DbSet<AutoGenerateNumber> AutoGenerateNumbers { get; set; } = null!;
         public DbSet<AuditEntry> AuditEntries { get; set; } = null!;
@@ -43,7 +48,16 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<TALabDay> TALabDays { get; set; }
         public DbSet<TALabSlot> TALabSlots { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
-        
+        //Piazza
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<PostType> PostTypes { get; set; }
+        public DbSet<Poll> Polls { get; set; }
+        public DbSet<PollOption> PollOptions { get; set; }
+        public DbSet<PollVote> PollVotes { get; set; }
+        public DbSet<Folder> Folders { get; set; }
+        public DbSet<PostDiscussion> PostDiscussions { get; set; } = null!;
+           public DbSet<PostUserAction> PostUserActions { get; set; } = null!;
+
         #region QUARTZ
 
         // public virtual DbSet<QURTZ_BLOB_TRIGGER> QRTZ_BLOB_TRIGGERS { get; set; }
@@ -69,5 +83,27 @@ namespace EduTrail.Infrastructure.Data
         // public virtual DbSet<QURTZ_TRIGGER> QRTZ_TRIGGERS { get; set; }
 
         #endregion
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Post>()
+                .HasMany(p => p.Folders)
+                .WithMany(f => f.Posts)
+                .UsingEntity<Dictionary<string, object>>(
+                    "FolderPost",
+                    j => j
+                        .HasOne<Folder>()
+                        .WithMany()
+                        .HasForeignKey("FoldersId")
+                        .OnDelete(DeleteBehavior.Cascade),
+
+                    j => j
+                        .HasOne<Post>()
+                        .WithMany()
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade));
+        }
     }
 }

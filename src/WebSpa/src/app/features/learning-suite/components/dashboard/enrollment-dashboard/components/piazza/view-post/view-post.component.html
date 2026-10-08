@@ -1,0 +1,383 @@
+<div class="post-container" *ngIf="post">
+
+    <!-- Header -->
+    <div class="post-card">
+        <div class="post-type-badge">
+            <h5>
+                <mat-icon>
+                    {{ getPostTypeIcon(post.postTypeId) }}
+                </mat-icon> {{ post.postTypeName }}
+            </h5>
+        </div>
+
+        <div class="post-header">
+
+            <div class="post-title-section">
+
+                <div class="post-meta">
+
+                    <!-- <img src="https://ui-avatars.com/api/?name=User" class="avatar"> -->
+                    <div class="avatar">
+                        {{ getInitials(post.postOwnerName) }}
+                    </div>
+
+                    <div>
+                        <div class="d-flex align-items-center gap-2">
+
+                            <span class="visibility-badge">
+
+                                <h5>
+                                    {{ post.summary }}
+                                </h5>
+                                <!-- {{ post.isIndividual ? 'Private' : 'Instructor' }} -->
+                            </span>
+                        </div>
+
+                        <div class="text-muted">
+
+                            {{ post.createdDate | date:'MMMM dd, yyyy' }}
+                            <mat-icon class="small-icon">
+                                {{ post.isIndividual ? 'groups' : 'public' }}
+                            </mat-icon>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="visibility-box">
+            <i class="fa fa-eye"></i>
+
+            {{post.visibilityText}}
+        </div>
+
+
+        <div class="post-content" [innerHTML]="post.details">
+
+        </div>
+
+        <!-- Poll -->
+
+        <div class="poll-card" *ngIf="post.poll">
+
+            <h4 class="poll-title">
+                <mat-icon>
+                    {{ getPostTypeIcon(post.postTypeId) }}
+                </mat-icon> {{ post.poll.question }}
+            </h4>
+
+            <!-- <mat-radio-group [(ngModel)]="selectedPollOptionId" [disabled]="hasVoted"> -->
+            <mat-radio-group [(ngModel)]="selectedPollOptionId" [disabled]="hasVoted">
+                <div class="poll-option" *ngFor="let option of post.poll.options">
+
+                    <mat-radio-button [value]="option.id">
+
+                        {{ option.optionText }}
+
+                    </mat-radio-button>
+
+                    <div class="poll-result" *ngIf="hasVoted">
+
+                        <div class="progress">
+
+                            <div class="progress-bar" [style.width.%]="getVotePercentage(option.voteCount)">
+
+                            </div>
+
+                        </div>
+
+                        <span>
+                            {{ option.voteCount }}
+                            vote{{ option.voteCount !== 1 ? 's' : '' }}
+                            ({{ getVotePercentage(option.voteCount) }}%)
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </mat-radio-group>
+
+            <div class="poll-footer">
+
+                <!-- <button class="btn btn-primary" (click)="votePoll()" [disabled]="!selectedPollOptionId || hasVoted">
+
+                    Vote
+
+                </button> -->
+                <button class="btn btn-primary" (click)="votePoll()" [disabled]="!selectedPollOptionId || hasVoted">
+                    Vote
+                </button>
+
+                <span class="total-votes">
+                    {{ getTotalVotes() }} Total Votes
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="post-reaction-bar">
+
+            <button class="reaction-btn like" [class.active]="post?.isLiked" mat-icon-button
+                matTooltip="{{ post?.isLiked ? 'Unlike' : 'Like' }}" (click)="likePost()">
+
+                <mat-icon>
+                    {{ post?.isLiked ? 'favorite' : 'favorite_border' }}
+                </mat-icon>
+
+            </button>
+
+            <button class="reaction-btn bookmark" [class.active]="post?.isBookmarked" mat-icon-button
+                matTooltip="{{ post?.isBookmarked ? 'Remove Bookmark' : 'Bookmark' }}" (click)="bookmarkPost()">
+
+                <mat-icon>
+                    {{ post?.isBookmarked ? 'bookmark' : 'bookmark_border' }}
+                </mat-icon>
+
+            </button>
+
+            <button class="reaction-btn favorite" [class.active]="post?.isFavorite" mat-icon-button
+                matTooltip="{{ post?.isFavorite ? 'Remove Favorite' : 'Favorite' }}" (click)="favoritePost(post)">
+
+                <mat-icon>
+                    {{ post?.isFavorite ? 'star' : 'star_border' }}
+                </mat-icon>
+
+            </button>
+
+            <button class="reaction-btn share" mat-icon-button matTooltip="Copy link" (click)="copyPostLink()">
+                <mat-icon>link</mat-icon>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Follow-up Discussions -->
+
+    <div class="discussion-card">
+
+        <div class="discussion-header">
+
+            💬 {{ post.discussions?.length ?? 0 }} Follow-up Discussions
+
+        </div>
+
+
+        <div class="discussion" *ngFor="let discussion of post.discussions">
+
+            <div class="discussion-header">
+
+                <mat-slide-toggle color="primary" [checked]="discussion.isResolved"
+                    (change)="toggleResolved(discussion)">
+                </mat-slide-toggle>
+
+                <span class="status" [class.resolved]="discussion.isResolved">
+                    {{ discussion.isResolved ? 'Resolved' : 'Unresolved' }}
+                </span>
+
+            </div>
+
+            <div class="discussion-body">
+
+                <div class="avatar">
+                    {{ getInitials(discussion.authorName) }}
+                </div>
+
+                <div class="discussion-content">
+
+                    <div class="discussion-info">
+
+                        <div class="author-row">
+
+                            <span class="author">
+                                {{ discussion.authorName || 'Unknown User' }}
+                            </span>
+
+                            <span class="time">
+                                {{ discussion.createdDate | timeAgo }}
+                            </span>
+
+                        </div>
+
+                        <div class="discussion-text">
+
+                            {{ discussion.content }}
+
+                        </div>
+
+                    </div>
+
+                    <div class="discussion-actions">
+
+                        <button mat-button color="primary" (click)="likeDiscussion(discussion)"
+                            [disabled]="discussion.isLiking">
+
+                            <mat-icon>
+                                {{ discussion.isLiked ? 'thumb_up' : 'thumb_up_off_alt' }}
+                            </mat-icon>
+
+                            {{ discussion.likes || 0 }}
+
+                        </button>
+
+                        <button *ngIf="!discussion.isReplayBoxShown" mat-button
+                            (click)="replayToDiscussion(discussion)">
+
+                            <mat-icon>reply</mat-icon>
+
+                            Reply
+
+                        </button>
+
+                    </div>
+
+                    <!-- Replies -->
+                    <div class="reply-box" *ngFor="let reply of discussion.replies">
+
+                        <div class="avatar small">
+                            {{ getInitials(reply.authorName) }}
+                        </div>
+
+                        <div class="reply-content">
+
+                            <div class="author-row">
+
+                                <span class="author">
+
+                                    {{ reply.authorName }}
+
+                                </span>
+
+                                <span class="time">
+
+                                    {{ reply.createdDate | timeAgo }}
+
+                                </span>
+
+                            </div>
+
+                            <div class="reply-text">
+
+                                {{ reply.content }}
+
+                            </div>
+
+                            <button mat-button color="primary" (click)="likeReply(reply)" [disabled]="reply.isLiking">
+
+                                <mat-icon>
+                                    {{ reply.isLiked ? 'thumb_up' : 'thumb_up_off_alt' }}
+                                </mat-icon>
+
+                                {{ reply.likes || 0 }}
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Reply Editor -->
+
+                    <div *ngIf="discussion.isReplayBoxShown" class="reply-editor">
+
+
+                        <textarea rows="3" [(ngModel)]="replyText[discussion.id!]" placeholder="Write a reply...">
+                        </textarea>
+
+                        <div class="editor-actions">
+
+                            <button class="btn btn-primary" (click)="submitReply(discussion)">
+                                Reply
+                            </button>
+
+
+                            <button class="btn btn-light">
+
+                                Cancel
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- New Discussion -->
+
+        <div class="new-discussion">
+
+            <h5>
+                Start a Follow-up Discussion
+            </h5>
+
+            <div class="editor-type">
+
+                <label>
+
+                    <input type="radio" [checked]="post.editorType === 1">
+
+                    Rich Text
+
+                </label>
+
+                <label>
+                    <input type="radio" [checked]="post.editorType === 2">
+                    Plain Text
+                </label>
+
+                <label>
+                    <input type="radio" [checked]="post.editorType === 3">
+                    Markdown
+                </label>
+
+            </div>
+
+            <textarea rows="6" [(ngModel)]="newDiscussion" placeholder="Write your discussion..."></textarea>
+
+            <div class="editor-actions">
+
+                <button class="btn btn-primary" (click)="startDiscussion()">
+                    Submit
+                </button>
+                <button class="btn btn-outline-secondary">
+                    Save Draft
+                </button>
+                <button class="btn btn-light">
+                    Cancel
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Loading State -->
+
+<div class="text-center p-5" *ngIf="!post">
+
+    Loading post...
+
+</div>

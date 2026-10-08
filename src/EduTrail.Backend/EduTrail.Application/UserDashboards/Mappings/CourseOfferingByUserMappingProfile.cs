@@ -20,6 +20,7 @@ namespace EduTrail.Application.UserDashboards
             CreateMap<CourseOffering, UserCourseOfferingDetail>()
                 .ForMember(d => d.CourseName, o => o.MapFrom(s => s.Course.CourseName + " (" + s.Course.CourseCode + ")"))
                 .ForMember(d => d.TermName, o => o.MapFrom(s => s.Term.Name + " " + s.Term.Year))
+                .ForMember(d => d.TermTypeId, o => o.MapFrom(s => s.Term.TermTypeId))
                 .ForMember(d => d.InstructorName, o => o.MapFrom(s => s.Instructor != null ? s.Instructor.FirstName + " " + s.Instructor.LastName : null));
         }
     }

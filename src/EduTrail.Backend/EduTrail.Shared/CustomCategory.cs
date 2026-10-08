@@ -6,7 +6,7 @@ namespace EduTrail.Shared
         {
             public static string AuthTokenName = "Authorization";
         }
-        
+
         public static class TermType
         {
             public static Guid Spring { get; set; } = Guid.Parse("7E8F9F7E-75B3-4866-94A3-464F8711C544");
@@ -14,7 +14,7 @@ namespace EduTrail.Shared
             public static Guid Winter { get; set; } = Guid.Parse("855021E3-8D31-47B2-B787-65E1DDBB4FE0");
             public static Guid Summer { get; set; } = Guid.Parse("f2231caa-ad7f-42f6-8283-043d54af790c");
         }
-         public static class StatusType
+        public static class StatusType
         {
             public static Guid HelpRequestStatusType { get; set; } = Guid.Parse("ce5e6303-3ac6-4af1-92b4-f708da026d20");
         }
@@ -24,6 +24,14 @@ namespace EduTrail.Shared
             public static Guid Pending { get; set; } = Guid.Parse("627407c8-700d-46fc-a3e5-02dc368fb75e");
             public static Guid Completed { get; set; } = Guid.Parse("EB57ECC1-678E-48F9-8DB0-0BD79973F52F");
             public static Guid InProgress { get; set; } = Guid.Parse("ED733676-90BE-49AA-AF3C-335169678B86");
+
+        }
+
+        public static class PostTypes
+        {
+            public static Guid Note { get; set; } = Guid.Parse("9efb883c-9348-41c1-b51e-1dd463ec1f5b");
+            public static Guid Question { get; set; } = Guid.Parse("3002fb15-b1f7-47ba-90e8-34db886a901a");
+            public static Guid Poll { get; set; } = Guid.Parse("f35db777-9824-4d40-976d-33262c1c23ce");
 
         }
 

@@ -1,99 +1,141 @@
-<div class="container mt-5">
-  <div class="card border-1">
-    <div class="card-body">
-      <form #courseForm="ngForm" (ngSubmit)="onSubmit(courseForm)" novalidate>
-        <div class="row g-3">
+<div class="course-form">
 
-          <!-- Course Dropdown -->
-          <div class="col-md-12">
-            <div class="floating">
-              <select
-                name="courseId"
-                class="form-select"
-                [(ngModel)]="courseOffering.detailDto!.courseId"
-                #courseId="ngModel"
-                (focus)="isCourseFocused = true"
-                (blur)="isCourseFocused = false"
-                [ngClass]="{ 'active': courseOffering.detailDto!.courseId || isCourseFocused }"
-                required
-              >
-                <option *ngFor="let c of courseOffering.courses" [value]="c.id">
-                  {{ c.name }}
-                </option>
-              </select>
-              <label>Course *</label>
-            </div>
-            <div class="text-danger small" *ngIf="courseId.invalid && courseId.touched">
-              Course is required
-            </div>
-          </div>
+  <form #courseForm="ngForm" (ngSubmit)="onSubmit(courseForm)">
 
-          <!-- Term Dropdown -->
-          <div class="col-md-12">
-            <div class="floating">
-              <select
-                name="termId"
-                class="form-select"
-                [(ngModel)]="courseOffering.detailDto!.termId"
-                #termId="ngModel"
-                (focus)="isTermFocused = true"
-                (blur)="isTermFocused = false"
-                [ngClass]="{ 'active': courseOffering.detailDto!.termId || isTermFocused }"
-                required
-              >
-                <option *ngFor="let t of courseOffering.terms" [value]="t.id">
-                  {{ t.name }}
-                </option>
-              </select>
-              <label>Term *</label>
-            </div>
-            <div class="text-danger small" *ngIf="termId.invalid && termId.touched">
-              Term is required
-            </div>
-          </div>
+    <div class="row g-3">
 
-          <!-- Instructor Dropdown -->
-          <div class="col-md-12">
-            <div class="floating">
-              <select
-                name="instructorId"
-                class="form-select"
-                [(ngModel)]="courseOffering.detailDto!.instructorId"
-                #instructorId="ngModel"
-                (focus)="isInstructorFocused = true"
-                (blur)="isInstructorFocused = false"
-                [ngClass]="{ 'active': courseOffering.detailDto!.instructorId || isInstructorFocused }"
-                required
-              >
-                <option *ngFor="let i of courseOffering.instructors" [value]="i.id">
-                  {{ i.name }}
-                </option>
-              </select>
-              <label>Instructor *</label>
-            </div>
-            <div class="text-danger small" *ngIf="instructorId.invalid && instructorId.touched">
-              Instructor is required
-            </div>
-          </div>
+      <!-- Course -->
+      <div class="col-md-12">
+        <mat-form-field appearance="outline" class="modern-field">
+          <mat-label>Course</mat-label>
 
+          <mat-select
+            name="courseId"
+            [(ngModel)]="courseOffering.detailDto!.courseId"
+            #courseId="ngModel"
+            required
+          >
+            <mat-option
+              *ngFor="let c of courseOffering.courses"
+              [value]="c.id"
+            >
+              {{ c.name }}
+            </mat-option>
+          </mat-select>
+
+          <mat-icon matSuffix>school</mat-icon>
+        </mat-form-field>
+
+        <div
+          class="text-danger small"
+          *ngIf="courseId.invalid && courseId.touched"
+        >
+          Course is required
         </div>
+      </div>
 
-        <!-- Action Buttons -->
-        <div class="mt-4 d-flex justify-content-end">
-          <button type="button" class="btn btn-secondary me-2" (click)="onCancel()">
-            Cancel
-          </button>
 
-          <button type="submit" class="btn btn-primary">
-            {{
-              courseOffering.detailDto!.id !== '00000000-0000-0000-0000-000000000000'
-                ? 'Update Course Offering'
-                : 'Create Course Offering'
-            }}
-          </button>
+      <!-- Term -->
+      <div class="col-md-12">
+        <mat-form-field appearance="outline" class="modern-field">
+          <mat-label>Term</mat-label>
+
+          <mat-select
+            name="termId"
+            [(ngModel)]="courseOffering.detailDto!.termId"
+            #termId="ngModel"
+            required
+          >
+            <mat-option
+              *ngFor="let t of courseOffering.terms"
+              [value]="t.id"
+            >
+              {{ t.name }}
+            </mat-option>
+          </mat-select>
+
+          <mat-icon matSuffix>calendar_month</mat-icon>
+        </mat-form-field>
+
+        <div
+          class="text-danger small"
+          *ngIf="termId.invalid && termId.touched"
+        >
+          Term is required
         </div>
+      </div>
 
-      </form>
+
+      <!-- Instructor -->
+      <div class="col-md-12">
+        <mat-form-field appearance="outline" class="modern-field">
+          <mat-label>Instructor</mat-label>
+
+          <mat-select
+            name="instructorId"
+            [(ngModel)]="courseOffering.detailDto!.instructorId"
+            #instructorId="ngModel"
+            required
+          >
+            <mat-option
+              *ngFor="let i of courseOffering.instructors"
+              [value]="i.id"
+            >
+              {{ i.name }}
+            </mat-option>
+          </mat-select>
+
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <div
+          class="text-danger small"
+          *ngIf="instructorId.invalid && instructorId.touched"
+        >
+          Instructor is required
+        </div>
+      </div>
+
     </div>
-  </div>
+
+
+    <!-- Actions -->
+    <div class="form-actions">
+
+      <button
+        mat-stroked-button
+        type="button"
+        class="cancel-btn"
+        (click)="onCancel()"
+      >
+        <mat-icon>close</mat-icon>
+        Cancel
+      </button>
+
+      <button
+        mat-flat-button
+        type="submit"
+        class="add-course-btn"
+      >
+        <mat-icon>
+          {{
+            courseOffering.detailDto!.id !==
+            '00000000-0000-0000-0000-000000000000'
+              ? 'save'
+              : 'add'
+          }}
+        </mat-icon>
+
+        {{
+          courseOffering.detailDto!.id !==
+          '00000000-0000-0000-0000-000000000000'
+            ? 'Update Course Offering'
+            : 'Create Course Offering'
+        }}
+      </button>
+
+    </div>
+
+  </form>
+
 </div>

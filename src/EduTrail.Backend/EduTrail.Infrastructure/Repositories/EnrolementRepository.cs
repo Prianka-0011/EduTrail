@@ -19,7 +19,7 @@ namespace EduTrail.Infrastructure.Repositories
         {
             var query = _context.Enrollments
             .Include(c => c.CourseOffering)
-            .Include(c => c.User).ThenInclude(C=>C.Roles).AsQueryable();
+            .Include(c => c.User).ThenInclude(C => C.Roles).AsQueryable();
             if (courseOfferingId.HasValue)
             {
                 query = query.Where(e => e.CourseOfferingId == courseOfferingId.Value);
@@ -80,15 +80,24 @@ namespace EduTrail.Infrastructure.Repositories
 
         public async Task BulkInsertAsync(IEnumerable<Enrollment> enrollments)
         {
-            await _context.Enrollments.AddRangeAsync(enrollments);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                await _context.Enrollments.AddRangeAsync(enrollments);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                
+            }
+
         }
 
         public async Task<IEnumerable<Enrollment>> GetAllActiveTAsAsync(Guid? courseOfferingId = null, Guid? RoleId = null)
         {
-             var query = _context.Enrollments
-            .Include(c => c.CourseOffering)
-            .Include(c => c.User).ThenInclude(C=>C.Roles).AsQueryable();
+            var query = _context.Enrollments
+           .Include(c => c.CourseOffering)
+           .Include(c => c.User).ThenInclude(C => C.Roles).AsQueryable();
             if (courseOfferingId.HasValue)
             {
                 query = query.Where(e => e.CourseOfferingId == courseOfferingId.Value && e.User.Roles.Any(r => r.Id == RoleId.Value));
