@@ -1,0 +1,23 @@
+<pl-question-panel>
+  <p>The binary search tree below was built by inserting values one at a time:</p>
+</pl-question-panel>
+<pl-bst nodes="{{params.nodes}}"></pl-bst>
+
+<pl-question-panel>
+  <p><strong>Part A — In-order traversal</strong></p>
+  <p>Drag the nodes into the correct <strong>in-order traversal</strong> order.</p>
+</pl-question-panel>
+<pl-order-blocks answers-name="traversal" options="{{params.traversal_opts}}"></pl-order-blocks>
+
+<pl-question-panel>
+  <p><strong>Part B — Tree height</strong></p>
+  <p>What is the <strong>height</strong> of this tree?</p>
+  <small>(Height = number of edges on the longest root-to-leaf path. A single-node tree has height 0.)</small>
+</pl-question-panel>
+<pl-number-input answers-name="height"></pl-number-input>
+
+<pl-question-panel>
+  <p><strong>Part C — Insertion</strong></p>
+  <p>If you insert <strong>{{params.target}}</strong> into the tree, which existing node becomes its <strong>parent</strong>?</p>
+</pl-question-panel>
+<pl-multiple-choice answers-name="insert_parent" options="{{params.choices}}"></pl-multiple-choice>

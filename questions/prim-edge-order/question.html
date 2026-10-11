@@ -1,0 +1,9 @@
+<pl-question-panel>
+  <p>
+    The weighted undirected graph below has <strong>5 nodes (A–E)</strong>.
+    Using <strong>Prim's algorithm</strong> starting from node <strong>A</strong>,
+    arrange the MST edges in the <strong>order Prim's algorithm adds them</strong>.
+  </p>
+</pl-question-panel>
+<pl-graph nodes="{{params.nodes}}" edges="{{params.edges}}"></pl-graph>
+<pl-order-blocks answers-name="mst_order" options="{{params.edge_opts}}"></pl-order-blocks>

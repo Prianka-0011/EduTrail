@@ -21,6 +21,8 @@ using EduTrail.Application.Chats;
 using EduTrail.Application.HelpRequestDashboards;
 using EduTrail.Application.Folders;
 using EduTrail.Application.Posts;
+using EduTrail.Application.QuestionCatalog;
+using EduTrail.Infrastructure.Services;
 
 namespace EduTrail.Infrastructure
 {
@@ -119,6 +121,7 @@ namespace EduTrail.Infrastructure
             services.AddScoped<IHelpRequestDashboardRepository, HelpRequestDashboardRepository>();
             services.AddScoped<IFolderRepository, FolderRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IQuestionCatalogReader, QuestionCatalogReader>();
             services.AddScoped<AuditInterceptor>();
             return services;
         }

@@ -57,7 +57,15 @@ export class LearningSuiteComponent implements OnInit {
         CustomCategory.RoleType.TA
       ],
     },
-    // { label: 'Questions', icon: 'bi bi-person-vcard', route: 'questions' },
+    {
+      label: 'Questions',
+      icon: 'patch-question',
+      route: 'questions',
+      rolesPermission: [
+        CustomCategory.RoleType.Instructor,
+        CustomCategory.RoleType.TA
+      ],
+    },
 
     // {
     //   label: 'Courses',

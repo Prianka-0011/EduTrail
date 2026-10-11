@@ -1,0 +1,9 @@
+<pl-question-panel>
+  <p>Compute the following modular arithmetic expression:</p>
+  <p style="font-size:1.5rem;font-weight:bold;text-align:center;margin:1.5rem 0;">
+    ({{params.a}} &times; {{params.b}}) mod {{params.m}} = ?
+  </p>
+  <p>Recall: <code>a mod m</code> is the remainder when <code>a</code> is divided by <code>m</code>.</p>
+  <p>For example: (3 &times; 4) mod 5 = 12 mod 5 = <strong>2</strong></p>
+</pl-question-panel>
+<pl-number-input answers-name="result" label="Your answer" atol="0" rtol="0"></pl-number-input>
