@@ -1,4 +1,5 @@
 using EduTrail.Application.QuestionCatalog;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
@@ -12,6 +13,7 @@ namespace EduTrail.API.Controllers
     {
         public QuestionCatalogController(IMediator mediator) : base(mediator) { }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<QuestionCatalogItemDto>>> GetCatalog()
         {
