@@ -12,7 +12,6 @@ namespace EduTrail.Domain.Entities
         public int OriginalValue { get; set; }
         public decimal MaxPoints { get; set; }
 
-
         [Required]
         public Guid QuestionTypeId { get; set; }
         public QuestionType QuestionType { get; set; }
