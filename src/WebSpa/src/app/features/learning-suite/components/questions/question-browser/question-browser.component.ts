@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { QuestionCatalogService } from '../services/question-catalog.service';
 import { IQuestionCatalogItem } from '../interfaces/IQuestionCatalogItem';
@@ -16,7 +17,11 @@ export class QuestionBrowserComponent implements OnInit {
   loading = true;
   error = '';
 
-  constructor(private catalogService: QuestionCatalogService) {}
+  constructor(
+    private catalogService: QuestionCatalogService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.catalogService.getCatalog().subscribe({
@@ -32,9 +37,8 @@ export class QuestionBrowserComponent implements OnInit {
     });
   }
 
-  // Clicking a card is intentionally a no-op for now; the question player
-  // (render question.html + server.py) is a later step.
-  open(_question: IQuestionCatalogItem): void {
-    // TODO: navigate to the question player once it exists.
+  // Open the interactive player for a question (learning-suite/questions/:slug).
+  open(question: IQuestionCatalogItem): void {
+    this.router.navigate([question.slug], { relativeTo: this.route });
   }
 }

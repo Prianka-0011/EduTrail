@@ -5,5 +5,9 @@ namespace EduTrail.Application.QuestionCatalog
     public interface IQuestionCatalogReader
     {
         Task<List<QuestionCatalogItemDto>> GetCatalogAsync();
+
+        // Reads server.py and question.html for a single question, or null if the slug
+        // is invalid or the files are missing.
+        Task<QuestionFiles?> GetQuestionFilesAsync(string slug);
     }
 }

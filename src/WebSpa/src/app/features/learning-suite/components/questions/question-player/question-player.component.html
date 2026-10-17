@@ -1,0 +1,42 @@
+<div class="question-player">
+  <span class="back" (click)="goBack()">← Back to questions</span>
+
+  <div *ngIf="loading" class="state">Loading question...</div>
+  <div *ngIf="error" class="state error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error">
+    <div [appDynamicQuestion]="renderedHtml"></div>
+
+    <div class="actions">
+      <button class="btn submit" (click)="submit()" [disabled]="submitting || shuffling">
+        {{ submitting ? 'Grading...' : 'Submit Answer' }}
+      </button>
+
+      <button class="btn shuffle" (click)="shuffle()" [disabled]="submitting || shuffling">
+        {{ shuffling ? 'Shuffling...' : '⟳ New Variant' }}
+      </button>
+
+      <button
+        *ngIf="showCorrectAnswer && !correctAnswers"
+        class="btn reveal"
+        (click)="revealAnswers()"
+        [disabled]="loadingAnswers">
+        {{ loadingAnswers ? 'Loading...' : 'Show Correct Answer' }}
+      </button>
+    </div>
+
+    <div *ngIf="result" class="result" [class.pass]="passed" [class.fail]="!passed">
+      <strong>Score: {{ scorePercent }}%</strong>
+      <span *ngIf="passed"> — All correct!</span>
+      <span *ngIf="!passed"> — Keep trying.</span>
+    </div>
+
+    <div *ngIf="correctAnswers" class="answers">
+      <h4>Correct Answers</h4>
+      <div *ngFor="let key of objectKeys(correctAnswers)" class="field">
+        <span class="field-name">{{ key }}:</span>
+        {{ formatAnswer(correctAnswers[key]) }}
+      </div>
+    </div>
+  </div>
+</div>

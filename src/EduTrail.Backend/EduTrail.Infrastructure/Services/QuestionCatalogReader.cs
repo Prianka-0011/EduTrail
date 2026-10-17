@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using EduTrail.Application.QuestionCatalog;
 
@@ -63,6 +64,27 @@ namespace EduTrail.Infrastructure.Services
             return items
                 .OrderBy(i => i.Title, StringComparer.OrdinalIgnoreCase)
                 .ToList();
+        }
+
+        public async Task<QuestionFiles?> GetQuestionFilesAsync(string slug)
+        {
+            // Only allow simple slugs; blocks path traversal (e.g. "../secrets").
+            if (string.IsNullOrWhiteSpace(slug) || !Regex.IsMatch(slug, "^[a-z0-9-]+$"))
+                return null;
+
+            var questionsPath = ResolveQuestionsPath();
+            if (questionsPath is null) return null;
+
+            var dir = Path.Combine(questionsPath, slug);
+            var pyPath = Path.Combine(dir, "server.py");
+            var htmlPath = Path.Combine(dir, "question.html");
+
+            if (!File.Exists(pyPath) || !File.Exists(htmlPath))
+                return null;
+
+            var serverPy = await File.ReadAllTextAsync(pyPath);
+            var questionHtml = await File.ReadAllTextAsync(htmlPath);
+            return new QuestionFiles(serverPy, questionHtml);
         }
 
         // Finds the questions directory. An absolute QuestionCatalog:QuestionsPath is used as-is;

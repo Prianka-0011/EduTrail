@@ -1,6 +1,8 @@
 using EduTrail.Infrastructure;
 using EduTrail.Application;
+using EduTrail.Application.QuestionCatalog;
 using EduTrail.Infrastructure.Data;
+using EduTrail.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using EduTrail.API.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,6 +21,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+// Typed HTTP client for the Python question sandbox service.
+builder.Services.AddHttpClient<IPythonQuestionClient, PythonQuestionClient>(client =>
+{
+    var baseUrl = builder.Configuration["PythonService:BaseUrl"] ?? "http://localhost:8001";
+    client.BaseAddress = new Uri(baseUrl);
+});
 
 builder.Services.AddHttpContextAccessor();
 

@@ -122,6 +122,8 @@ namespace EduTrail.Infrastructure
             services.AddScoped<IFolderRepository, FolderRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IQuestionCatalogReader, QuestionCatalogReader>();
+            services.AddSingleton<IQuestionInstanceStore, InMemoryQuestionInstanceStore>();
+            services.AddScoped<IQuestionGrader, QuestionGradingEngine>();
             services.AddScoped<AuditInterceptor>();
             return services;
         }
