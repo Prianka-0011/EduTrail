@@ -31,4 +31,14 @@ export class QuestionCatalogService {
   getCorrectAnswers(instanceId: string): Observable<Record<string, unknown>> {
     return this.http.get<Record<string, unknown>>(`${this.baseUrl}/instances/${instanceId}/correct`);
   }
+
+  createQuestion(req: {
+    title: string; topic: string; tags: string; questionHtml: string; serverPy: string;
+  }): Observable<{ slug: string }> {
+    return this.http.post<{ slug: string }>(this.baseUrl, req);
+  }
+
+  deleteQuestion(slug: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${slug}`);
+  }
 }

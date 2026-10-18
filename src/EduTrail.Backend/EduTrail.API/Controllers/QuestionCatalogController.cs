@@ -40,6 +40,32 @@ namespace EduTrail.API.Controllers
             return result is null ? NotFound("Instance not found.") : Ok(result);
         }
 
+        // Create a new file-based question (Add Question). Instructor-only; the role
+        // check is enforced in the handler since roles aren't carried in the JWT.
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> Create([FromBody] CreateCatalogQuestionCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.Forbidden) return Forbid();
+            if (result.Error is not null) return BadRequest(result.Error);
+            return Ok(new { slug = result.Slug });
+        }
+
+        // Delete a file-based question (Browse page). Instructor-only; enforced in the handler.
+        [Authorize]
+        [HttpDelete("{slug}")]
+        public async Task<ActionResult> Delete(string slug)
+        {
+            var outcome = await _mediator.Send(new DeleteCatalogQuestionCommand { Slug = slug });
+            return outcome switch
+            {
+                DeleteCatalogQuestionOutcome.Deleted => NoContent(),
+                DeleteCatalogQuestionOutcome.Forbidden => Forbid(),
+                _ => NotFound($"Question '{slug}' not found.")
+            };
+        }
+
         // Return the correct answers for an instance ("Show Correct Answer").
         [Authorize]
         [HttpGet("instances/{id:guid}/correct")]

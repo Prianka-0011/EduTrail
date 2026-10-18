@@ -14,6 +14,10 @@
       (click)="open(question)">
       <i class="bi bi-patch-question card-icon"></i>
       <span class="card-title">{{ question.title }}</span>
+      <i *ngIf="isInstructor"
+         class="bi bi-x-lg delete-btn"
+         title="Delete question"
+         (click)="deleteQuestion(question, $event)"></i>
     </button>
   </div>
 

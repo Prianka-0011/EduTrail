@@ -8,7 +8,7 @@ namespace EduTrail.Infrastructure.Services
     // Scans the questions folder at request time and builds catalog entries from each
     // folder's info.json. A folder is only treated as a question when it has info.json,
     // question.html and server.py, matching the reference PrairieLearn layout.
-    public class QuestionCatalogReader : IQuestionCatalogReader
+    public class QuestionCatalogReader : IQuestionCatalogReader, IQuestionCatalogWriter
     {
         private readonly IConfiguration _configuration;
 
@@ -85,6 +85,68 @@ namespace EduTrail.Infrastructure.Services
             var serverPy = await File.ReadAllTextAsync(pyPath);
             var questionHtml = await File.ReadAllTextAsync(htmlPath);
             return new QuestionFiles(serverPy, questionHtml);
+        }
+
+        public async Task<string?> CreateQuestionAsync(QuestionDraft draft)
+        {
+            var questionsPath = ResolveQuestionsPath();
+            if (questionsPath is null) return null;
+
+            // Derive a filesystem-safe slug from the title; slugify only yields [a-z0-9-],
+            // so the resulting path can't escape the questions directory.
+            var baseSlug = Slugify(draft.Title);
+            if (string.IsNullOrEmpty(baseSlug)) baseSlug = "question";
+
+            var slug = baseSlug;
+            var counter = 2;
+            while (Directory.Exists(Path.Combine(questionsPath, slug)))
+                slug = $"{baseSlug}-{counter++}";
+
+            var dir = Path.Combine(questionsPath, slug);
+            Directory.CreateDirectory(dir);
+
+            var info = new
+            {
+                uuid = Guid.NewGuid().ToString(),
+                title = draft.Title,
+                topic = draft.Topic,
+                tags = draft.Tags,
+                type = "v3",
+                showCorrectAnswer = true
+            };
+
+            var jsonOpts = new JsonSerializerOptions { WriteIndented = true };
+            await File.WriteAllTextAsync(Path.Combine(dir, "info.json"), JsonSerializer.Serialize(info, jsonOpts));
+            await File.WriteAllTextAsync(Path.Combine(dir, "question.html"), draft.QuestionHtml);
+            await File.WriteAllTextAsync(Path.Combine(dir, "server.py"), draft.ServerPy);
+
+            return slug;
+        }
+
+        private static string Slugify(string title) =>
+            Regex.Replace(title.ToLowerInvariant().Trim(), "[^a-z0-9]+", "-").Trim('-');
+
+        public bool DeleteQuestion(string slug)
+        {
+            // Reject anything other than a simple slug before touching the filesystem.
+            if (string.IsNullOrWhiteSpace(slug) || !Regex.IsMatch(slug, "^[a-z0-9-]+$"))
+                return false;
+
+            var questionsPath = ResolveQuestionsPath();
+            if (questionsPath is null) return false;
+
+            var root = Path.GetFullPath(questionsPath);
+            var dir = Path.GetFullPath(Path.Combine(root, slug));
+
+            // Containment check: the resolved path must be strictly inside the questions root.
+            var rootWithSep = root.EndsWith(Path.DirectorySeparatorChar) ? root : root + Path.DirectorySeparatorChar;
+            if (!dir.StartsWith(rootWithSep, StringComparison.Ordinal))
+                return false;
+
+            if (!Directory.Exists(dir)) return false;
+
+            Directory.Delete(dir, recursive: true);
+            return true;
         }
 
         // Finds the questions directory. An absolute QuestionCatalog:QuestionsPath is used as-is;

@@ -1,0 +1,52 @@
+<div class="exam-page">
+
+  <!-- Loading -->
+  <div *ngIf="phase === 'loading'" class="loading-screen">
+    <p *ngIf="!loadError">Preparing your exam…</p>
+    <div *ngIf="loadError" class="load-error">
+      <p>Failed to prepare exam.</p>
+      <button class="retry-btn" (click)="setup()">Try again</button>
+    </div>
+  </div>
+
+  <!-- Exam / Submitting -->
+  <div *ngIf="phase === 'exam' || phase === 'submitting'">
+    <div class="exam-header">
+      <span class="progress">Question {{ currentIndex + 1 }} of {{ examQuestions.length }}</span>
+      <span class="timer" [class.urgent]="secondsLeft <= 120">{{ formatTime(secondsLeft) }}</span>
+    </div>
+
+    <!-- All questions rendered; only the current one is visible -->
+    <div *ngFor="let q of examQuestions; let i = index"
+         [style.display]="i === currentIndex ? 'block' : 'none'">
+      <div [appDynamicQuestion]="q.renderedHtml"></div>
+    </div>
+
+    <div *ngIf="showConfirm" class="confirm-box">
+      <p>You have {{ unansweredCount }} unanswered question(s). Submit anyway?</p>
+      <div class="confirm-actions">
+        <button class="confirm-btn" (click)="doSubmit()" [disabled]="phase === 'submitting'">Confirm Submit</button>
+        <button class="back-btn" (click)="showConfirm = false" [disabled]="phase === 'submitting'">Go back</button>
+      </div>
+    </div>
+
+    <div *ngIf="!showConfirm" class="nav-actions">
+      <button *ngIf="currentIndex > 0" class="nav-btn" (click)="prev()" [disabled]="phase === 'submitting'">← Previous</button>
+      <button *ngIf="currentIndex < examQuestions.length - 1" class="nav-btn" (click)="next()" [disabled]="phase === 'submitting'">Next →</button>
+      <button *ngIf="currentIndex === examQuestions.length - 1" class="submit-exam-btn" (click)="onSubmitClick()" [disabled]="phase === 'submitting'">
+        {{ phase === 'submitting' ? 'Submitting…' : 'Submit Exam' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div *ngIf="phase === 'results'" class="results-screen">
+    <div class="result-card" [class.pass]="passed" [class.fail]="!passed">
+      <h2>Exam Complete</h2>
+      <p class="score-text">You scored <strong>{{ correctCount }} / {{ examQuestions.length }}</strong> ({{ scorePercent }}%)</p>
+      <p class="verdict">{{ passed ? 'Well done!' : 'Keep practising!' }}</p>
+      <button class="home-btn" (click)="goHome()">Return to dashboard</button>
+    </div>
+  </div>
+
+</div>
