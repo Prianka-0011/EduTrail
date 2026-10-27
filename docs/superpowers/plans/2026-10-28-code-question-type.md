@@ -4,7 +4,7 @@
 
 **Goal:** Add a question type where a student writes C/C++ in an in-browser editor, runs it to see output, and submits for grading against test cases — each compile/run isolated in a short-lived Docker container.
 
-**Architecture:** The existing `python-service` gains Docker-backed `/run-code` and `/grade-code` endpoints (compile + run `g++` inside a locked-down container). The .NET backend forwards Run requests and, on Submit, grades `pl-code-editor` answers by calling the runner. The frontend adds a CodeMirror-based `pl-code-editor` component that Runs code and emits it as the answer. Instances stay in-memory.
+**Architecture:** A **separate, dedicated `code-runner` service** (FastAPI, port 8002) exposes Docker-backed `/run-code` and `/grade-code` endpoints (compile + run `g++` inside a locked-down container). It is kept distinct from `python-service` because it has the opposite trust profile — it runs *untrusted student code* and is the only component with Docker access (≈ host root), so it gets its own process, port, shared-secret auth, and rate limits. `python-service` is unchanged. The .NET backend forwards Run requests and, on Submit, grades `pl-code-editor` answers by calling the runner. The frontend adds a CodeMirror-based `pl-code-editor` component that Runs code and emits it as the answer. Instances stay in-memory.
 
 **Tech Stack:** Python 3.12 / FastAPI, Docker (`gcc:13`), .NET 10 / MediatR, Angular 19 standalone + CodeMirror 6.
 
@@ -17,7 +17,10 @@
 - New backend code lives under the existing `QuestionCatalog` feature; follow MediatR command/handler + typed-HttpClient + `[Authorize]` patterns already there.
 - CodeMirror must initialize **client-only** (guard with `isPlatformBrowser`); WebSpa uses Angular SSR.
 - Test-case comparison is `trim(stdout) == trim(expected)`; score = passed / total; compile failure = score 0.
-- Runner base URL reuses config key `PythonService:BaseUrl`.
+- The `code-runner` service is a **separate process on port 8002**, bound to `127.0.0.1`. Config: `CodeRunner:BaseUrl` (default `http://localhost:8002`), `CodeRunner:Secret`.
+- **Both internal services stay localhost-only:** `code-runner` (8002) and the existing `python-service` (8001) bind to `127.0.0.1` and are never exposed off-box; only the .NET backend calls them. (uvicorn's default host is already `127.0.0.1`; don't pass `--host 0.0.0.0`.)
+- **Shared-secret auth:** the backend sends header `X-Runner-Secret: <CodeRunner:Secret>` on every runner call; the runner rejects any request missing/mismatching it with HTTP 401. The secret is read from env `CODE_RUNNER_SECRET` on the runner side.
+- **Rate limits (abuse control):** per authenticated user, max 10 code executions / minute and max 2 concurrent in flight (Run and Submit both count); a global cap of 8 concurrent runner calls. Over-limit → HTTP 429 with a clear message.
 
 ## Review Focus
 
@@ -26,14 +29,17 @@
 - **Oversized output** (program prints megabytes): output truncated to 64 KB, request still returns. → Task 1.
 - **Empty / whitespace-only submission:** compile fails cleanly → score 0, friendly message; no crash. → Task 6.
 - **Runner/sandbox unavailable** (service down or Docker missing): Run and Submit surface a clear error, backend returns 502-style message rather than 500. → Task 4, Task 5.
+- **Abuse / flooding** (a logged-in user scripts many runs): over the per-user or global limit returns HTTP 429, host stays responsive. → Task 9.
+- **Direct runner access without the secret** (request to :8002 not from the backend): rejected with 401. → Task 3.
 
 ---
 
-### Task 1: Python runner — compile & run one program in Docker
+### Task 1: `code-runner` service — compile & run one program in Docker
 
 **Files:**
-- Create: `python-service/runner.py`
-- Test: `python-service/tests/test_runner.py`
+- Create: `code-runner/runner.py`
+- Create: `code-runner/requirements.txt` (`fastapi`, `uvicorn[standard]`)
+- Test: `code-runner/tests/test_runner.py`
 
 **Interfaces:**
 - Produces: `run_code(language: str, code: str, stdin: str) -> dict` returning
@@ -44,16 +50,16 @@
   - `test_runs_and_returns_stdout`: a program echoing `a+b` from stdin `"3 4"` → `stdout.strip() == "7"`, `compiled is True`, `exitCode == 0`.
   - `test_compile_error_reported`: `code="int main(){"` → `compiled is False`, `compileOutput` non-empty.
   - `test_timeout_flagged`: `int main(){while(1){}}` → `timedOut is True` within the run timeout.
-- [ ] **Step 2: Run** `python -m pytest tests/test_runner.py -v` → FAIL (no `runner` module).
+- [ ] **Step 2: Run** (from `code-runner/`) `python -m pytest tests/test_runner.py -v` → FAIL (no `runner` module).
 - [ ] **Step 3: Implement** `run_code` in `runner.py`: write `code` to a temp dir, `docker run` `gcc:13` with the Global-Constraints flags, mount the temp dir read-only at `/src`, `sh -c "cp /src/main.cpp /work && g++ /work/main.cpp -o /work/a.out 2> /work/cerr && /work/a.out"`, pipe `stdin`, enforce timeouts via `subprocess` `timeout=` wrapped around `docker run` plus a `docker kill`, truncate outputs to 64 KB. Map a compile failure (nonzero g++) to `compiled=False` with `compileOutput`.
 - [ ] **Step 4: Run** the tests → PASS.
-- [ ] **Step 5: Commit** (`git add python-service/runner.py python-service/tests/test_runner.py`).
+- [ ] **Step 5: Commit** (`git add code-runner/runner.py code-runner/tests/test_runner.py code-runner/requirements.txt`).
 
 ### Task 2: Python grader — compile once, run cases
 
 **Files:**
-- Modify: `python-service/runner.py`
-- Test: `python-service/tests/test_runner.py`
+- Modify: `code-runner/runner.py`
+- Test: `code-runner/tests/test_runner.py`
 
 **Interfaces:**
 - Produces: `grade_code(language: str, code: str, tests: list[dict]) -> dict` where each test is `{"input": str, "expected": str}`, returning `{"compiled": bool, "compileOutput": str, "results": [{"passed": bool, "stdout": str}]}`. Compiles once, runs each case.
@@ -70,15 +76,17 @@
 ### Task 3: FastAPI endpoints
 
 **Files:**
-- Modify: `python-service/main.py`
-- Test: `python-service/tests/test_main.py`
+- Modify: `code-runner/main.py`
+- Test: `code-runner/tests/test_main.py`
 
 **Interfaces:**
-- Produces: `POST /run-code` `{language, code, stdin}` → `run_code` result; `POST /grade-code` `{language, code, tests}` → `grade_code` result. `ValueError` → HTTP 422.
+- Produces: `POST /run-code` `{language, code, stdin}` → `run_code` result; `POST /grade-code` `{language, code, tests}` → `grade_code` result. `ValueError` → HTTP 422. **Both require header `X-Runner-Secret` matching env `CODE_RUNNER_SECRET`**; missing/mismatched → HTTP 401. App binds to `127.0.0.1:8002`.
 
-- [ ] **Step 1: Write failing tests** with FastAPI `TestClient` (skip if Docker absent): post a sum program to `/run-code` with stdin `"2 3"` → 200, `stdout.strip()=="5"`; post to `/grade-code` with one passing case → `results[0].passed is True`.
+- [ ] **Step 1: Write failing tests** with FastAPI `TestClient`:
+  - `test_requires_secret`: POST `/run-code` **without** the header → 401 (no Docker needed).
+  - (Docker-gated, skip if absent) with the correct header: sum program + stdin `"2 3"` → 200, `stdout.strip()=="5"`; `/grade-code` one passing case → `results[0].passed is True`.
 - [ ] **Step 2: Run** `python -m pytest tests/test_main.py -v` → FAIL.
-- [ ] **Step 3: Implement** two Pydantic request models and the two routes delegating to `runner`.
+- [ ] **Step 3: Implement** two Pydantic request models, a FastAPI dependency that checks `X-Runner-Secret` against `CODE_RUNNER_SECRET` (401 on mismatch), and the two routes delegating to `runner`. Document the env var in `code-runner/README.md` or a comment.
 - [ ] **Step 4: Run** → PASS.
 - [ ] **Step 5: Commit.**
 
@@ -98,8 +106,9 @@
 
 - [ ] **Step 1:** If a test project exists, write a failing test that `CodeRunnerClient.RunAsync` posts to `/run-code` and maps the JSON (use a stub `HttpMessageHandler`); assert the mapped `Stdout`. Else skip to Step 3 and rely on Task 8.
 - [ ] **Step 2:** Run the test → FAIL.
-- [ ] **Step 3: Implement** `CodeRunnerClient` (JSON `snake_case`/case-insensitive like `PythonQuestionClient`), and register it in `Program.cs`:
-  `builder.Services.AddHttpClient<ICodeRunnerClient, CodeRunnerClient>(c => c.BaseAddress = new Uri(config["PythonService:BaseUrl"] ?? "http://localhost:8001"));`
+- [ ] **Step 3: Implement** `CodeRunnerClient` (JSON case-insensitive like `PythonQuestionClient`); it adds header `X-Runner-Secret: <CodeRunner:Secret>` to every request. Register in `Program.cs`:
+  `builder.Services.AddHttpClient<ICodeRunnerClient, CodeRunnerClient>(c => { c.BaseAddress = new Uri(config["CodeRunner:BaseUrl"] ?? "http://localhost:8002"); c.DefaultRequestHeaders.Add("X-Runner-Secret", config["CodeRunner:Secret"] ?? ""); });`
+  Add `"CodeRunner": { "BaseUrl": "http://localhost:8002", "Secret": "<dev secret>" }` to `appsettings.json`.
 - [ ] **Step 4:** Run the test (if any) → PASS; else `dotnet build` the API project → success.
 - [ ] **Step 5: Commit.**
 
@@ -154,10 +163,27 @@
 - [ ] **Step 3: Verify** `npx ng build --configuration development` → "bundle generation complete", no errors for the new files.
 - [ ] **Step 4: Commit.**
 
-### Task 8: Sample question + end-to-end verification
+### Task 8: Abuse controls — rate limit & concurrency cap
+
+**Files:**
+- Modify: `src/EduTrail.Backend/EduTrail.API/Program.cs` (register a rate limiter)
+- Modify: `src/EduTrail.Backend/EduTrail.API/Controllers/QuestionCatalogController.cs` (apply the limiter to `run-code` and `submit`)
+- Create: `src/EduTrail.Backend/EduTrail.Infrastructure/Services/CodeRunConcurrencyLimiter.cs` (a `SemaphoreSlim`-based global cap, max 8)
+
+**Interfaces:**
+- Consumes: the runner client calls from Task 5/6.
+- Produces: a named rate-limit policy `"code-exec"` (per-user: 10/min, queue 0) applied to the two code-executing endpoints → HTTP 429 when exceeded; `CodeRunConcurrencyLimiter.RunAsync(Func<Task<T>>)` that bounds concurrent runner calls globally (max 8) and is used by both the Run handler and the code grader; the per-user 2-concurrent cap is enforced via the limiter keyed by user id.
+
+- [ ] **Step 1: Implement** ASP.NET rate limiting (`builder.Services.AddRateLimiter(...)`, `app.UseRateLimiter()`), a partitioned policy keyed by the authenticated user id (`NameIdentifier`): 10 permits/minute. Add `[EnableRateLimiting("code-exec")]` to the `run-code` and `submit` actions. Add `CodeRunConcurrencyLimiter` (global `SemaphoreSlim(8)` + per-user count map, cap 2) and wrap the runner calls in Task 5 and Task 6 with it (over per-user cap → 429-style result).
+- [ ] **Step 2: Build** the API project → success.
+- [ ] **Step 3: Verify** in Task 9: 11 rapid `run-code` calls as one user → the 11th returns 429; a parallel 3rd concurrent run → 429.
+- [ ] **Step 4: Commit.**
+
+### Task 9: Sample question + end-to-end verification
 
 **Files:**
 - Create: `questions/sum-two-numbers/info.json`, `questions/sum-two-numbers/question.html`, `questions/sum-two-numbers/server.py`
+- Modify: `HOWTORUN.md` (add the `code-runner` service: port 8002, `CODE_RUNNER_SECRET`, `docker pull gcc:13`)
 
 **Interfaces:**
 - Consumes: all prior tasks.
