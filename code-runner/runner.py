@@ -92,3 +92,20 @@ def run_code(language: str, code: str, stdin: str) -> dict:
         "timedOut": timed_out,
         "exitCode": proc.returncode,
     }
+
+
+def grade_code(language: str, code: str, tests: list) -> dict:
+    """Run `code` against each test case, comparing trimmed stdout to expected.
+
+    v1 runs each case in its own isolated container (via run_code), so the
+    program is recompiled per case — acceptable for the handful of cases a
+    question carries. A compile failure on the first case short-circuits.
+    """
+    results = []
+    for tc in tests:
+        r = run_code(language, code, tc.get("input", ""))
+        if not r["compiled"]:
+            return {"compiled": False, "compileOutput": r["compileOutput"], "results": []}
+        passed = r["stdout"].strip() == str(tc.get("expected", "")).strip()
+        results.append({"passed": passed, "stdout": r["stdout"]})
+    return {"compiled": True, "compileOutput": "", "results": results}

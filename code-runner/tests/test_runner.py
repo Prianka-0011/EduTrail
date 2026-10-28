@@ -32,3 +32,29 @@ def test_timeout_flagged():
 def test_unknown_language_raises():
     with pytest.raises(ValueError):
         run_code("python", "x=1", "")
+
+
+from runner import grade_code
+
+ALWAYS_ZERO = "#include <iostream>\nint main(){std::cout<<0;return 0;}\n"
+
+
+@needs_docker
+def test_grade_all_pass():
+    r = grade_code("cpp", SUM, [{"input": "1 2", "expected": "3"}, {"input": "5 5", "expected": "10"}])
+    assert r["compiled"] is True
+    assert all(c["passed"] for c in r["results"])
+
+
+@needs_docker
+def test_grade_mixed():
+    r = grade_code("cpp", ALWAYS_ZERO, [{"input": "1 2", "expected": "3"}, {"input": "0 0", "expected": "0"}])
+    assert r["results"][0]["passed"] is False
+    assert r["results"][1]["passed"] is True
+
+
+@needs_docker
+def test_grade_compile_error():
+    r = grade_code("cpp", "int main(){", [{"input": "1 2", "expected": "3"}])
+    assert r["compiled"] is False
+    assert r["results"] == []
