@@ -71,6 +71,37 @@ before you open or create a question.
 
 ---
 
+## 2b. Code runner (run from `code-runner/`) — for C/C++ code questions
+
+This service compiles and runs student C/C++ in isolated Docker containers, so
+**Docker Desktop must be running** and the compiler image pulled once:
+
+```powershell
+docker pull gcc:13
+```
+
+First time only — virtual environment and dependencies:
+
+```powershell
+cd code-runner
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Every time — start the service with a shared secret (must match the backend's
+`CodeRunner:Secret` in `appsettings.json`):
+
+```powershell
+cd code-runner
+$env:CODE_RUNNER_SECRET = "dev-code-runner-secret-change-me"
+.\.venv\Scripts\python.exe -m uvicorn main:app --port 8002
+```
+
+It listens on `127.0.0.1:8002` (localhost only) — do not pass `--host 0.0.0.0`.
+Only needed for the code-editor question type; other questions work without it.
+
+---
+
 ## 3. Backend API (run from the repo root)
 
 ```powershell
@@ -117,10 +148,14 @@ docker compose up -d database-edu-trail
 # Terminal 2 — python-service/
 .\.venv\Scripts\python.exe -m uvicorn main:app --port 8001
 
-# Terminal 3 — repo root
+# Terminal 3 — code-runner/ (only for C/C++ code questions; needs Docker)
+$env:CODE_RUNNER_SECRET = "dev-code-runner-secret-change-me"
+.\.venv\Scripts\python.exe -m uvicorn main:app --port 8002
+
+# Terminal 4 — repo root
 dotnet run --project src/EduTrail.Backend/EduTrail.API --launch-profile https
 
-# Terminal 4 — src/WebSpa/
+# Terminal 5 — src/WebSpa/
 npm start
 ```
 
