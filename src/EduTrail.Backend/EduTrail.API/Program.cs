@@ -16,6 +16,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
+
+// Per-user rate limit for the code-execution endpoints (run-code, submit).
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    options.AddPolicy("code-exec", httpContext =>
+    {
+        var key = httpContext.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                  ?? httpContext.Connection.RemoteIpAddress?.ToString()
+                  ?? "anon";
+        return System.Threading.RateLimiting.RateLimitPartition.GetFixedWindowLimiter(key,
+            _ => new System.Threading.RateLimiting.FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 10,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            });
+    });
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -27,6 +46,14 @@ builder.Services.AddHttpClient<IPythonQuestionClient, PythonQuestionClient>(clie
 {
     var baseUrl = builder.Configuration["PythonService:BaseUrl"] ?? "http://localhost:8001";
     client.BaseAddress = new Uri(baseUrl);
+});
+
+// Typed HTTP client for the isolated code-runner service (C/C++ execution).
+builder.Services.AddHttpClient<ICodeRunnerClient, CodeRunnerClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["CodeRunner:BaseUrl"] ?? "http://localhost:8002");
+    client.DefaultRequestHeaders.Add("X-Runner-Secret", builder.Configuration["CodeRunner:Secret"] ?? "");
+    client.Timeout = TimeSpan.FromSeconds(60);
 });
 
 builder.Services.AddHttpContextAccessor();
@@ -121,6 +148,7 @@ if (!app.Environment.IsDevelopment())
 app.UseCors("AllowWebSpa");
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRateLimiter();
 
 app.UseGlobalExceptionHandler();
 

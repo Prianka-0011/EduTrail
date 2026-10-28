@@ -28,8 +28,9 @@ namespace EduTrail.Application.QuestionCatalog
     }
 
     // Grades a submission against the stored correct answers for a question.
+    // Async because some component types (code) execute the answer via the runner.
     public interface IQuestionGrader
     {
-        Dictionary<string, FieldFeedbackDto> Grade(string questionHtml, JsonElement submittedAnswers, JsonElement correctAnswers);
+        Task<Dictionary<string, FieldFeedbackDto>> GradeAsync(string questionHtml, JsonElement submittedAnswers, JsonElement correctAnswers);
     }
 }

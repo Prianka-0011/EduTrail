@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using EduTrail.Application.QuestionCatalog;
+using EduTrail.Application.Shared;
 
 namespace EduTrail.Infrastructure.Services
 {
@@ -25,9 +26,21 @@ namespace EduTrail.Infrastructure.Services
             ["pl-multiple-choice"] = "exact",
             ["pl-order-blocks"] = "sequence",
             ["pl-graph-select"] = "set",
+            ["pl-code-editor"] = "code",
         };
 
-        public Dictionary<string, FieldFeedbackDto> Grade(string questionHtml, JsonElement submittedAnswers, JsonElement correctAnswers)
+        private readonly ICodeRunnerClient _runner;
+        private readonly ICodeRunConcurrencyLimiter _limiter;
+        private readonly ICurrentUserService _currentUser;
+
+        public QuestionGradingEngine(ICodeRunnerClient runner, ICodeRunConcurrencyLimiter limiter, ICurrentUserService currentUser)
+        {
+            _runner = runner;
+            _limiter = limiter;
+            _currentUser = currentUser;
+        }
+
+        public async Task<Dictionary<string, FieldFeedbackDto>> GradeAsync(string questionHtml, JsonElement submittedAnswers, JsonElement correctAnswers)
         {
             var results = new Dictionary<string, FieldFeedbackDto>();
             if (submittedAnswers.ValueKind != JsonValueKind.Object)
@@ -59,11 +72,61 @@ namespace EduTrail.Infrastructure.Services
                     "exact" => GradeExact(prop.Value, correct),
                     "sequence" => GradeSequence(prop.Value, correct),
                     "set" => GradeSet(prop.Value, correct),
+                    "code" => await GradeCodeAsync(prop.Value, correct, component.Attrs),
                     _ => new FieldFeedbackDto(true, 1f, "Display-only component."),
                 };
             }
 
             return results;
+        }
+
+        // Compiles and runs the submitted code against the stored test cases
+        // (correctAnswers[answers-name] = [{input, expected}, ...]) in the isolated runner.
+        private async Task<FieldFeedbackDto> GradeCodeAsync(JsonElement student, JsonElement correct, Dictionary<string, string> attrs)
+        {
+            var code = student.ValueKind == JsonValueKind.String ? student.GetString() ?? "" : student.ToString();
+            if (string.IsNullOrWhiteSpace(code))
+                return new FieldFeedbackDto(false, 0f, "No code submitted.");
+
+            var language = attrs.GetValueOrDefault("language", "cpp");
+
+            var tests = new List<CodeTestCase>();
+            if (correct.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var tc in correct.EnumerateArray())
+                {
+                    var input = tc.TryGetProperty("input", out var i) ? i.GetString() ?? "" : "";
+                    var expected = tc.TryGetProperty("expected", out var e)
+                        ? (e.ValueKind == JsonValueKind.String ? e.GetString() ?? "" : e.ToString())
+                        : "";
+                    tests.Add(new CodeTestCase(input, expected));
+                }
+            }
+            if (tests.Count == 0)
+                return new FieldFeedbackDto(false, 0f, "No test cases defined for this question.");
+
+            GradeCodeResult result;
+            try
+            {
+                result = await _limiter.RunAsync(_currentUser.GetUserId(),
+                    () => _runner.GradeAsync(language, code, tests));
+            }
+            catch (CodeRunLimitExceededException ex)
+            {
+                return new FieldFeedbackDto(false, 0f, ex.Message);
+            }
+
+            if (!result.Compiled)
+            {
+                var firstLine = (result.CompileOutput ?? "").Split('\n').FirstOrDefault()?.Trim();
+                return new FieldFeedbackDto(false, 0f, string.IsNullOrEmpty(firstLine) ? "Compilation failed." : $"Compilation failed: {firstLine}");
+            }
+
+            var passed = result.Results.Count(r => r.Passed);
+            var total = result.Results.Count;
+            float score = total == 0 ? 0f : (float)passed / total;
+            bool ok = score >= 1f;
+            return new FieldFeedbackDto(ok, score, ok ? "All test cases passed!" : $"{passed} of {total} test cases passed.");
         }
 
         // ----- graders -----

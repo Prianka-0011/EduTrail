@@ -2,6 +2,7 @@ using System.Text.Json;
 using EduTrail.Application.QuestionCatalog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MediatR;
 
 namespace EduTrail.API.Controllers
@@ -32,12 +33,33 @@ namespace EduTrail.API.Controllers
 
         // Grade a submitted set of answers for an instance.
         [Authorize]
+        [EnableRateLimiting("code-exec")]
         [HttpPost("instances/{id:guid}/submit")]
         public async Task<ActionResult<SubmissionResultDto>> Submit(Guid id, [FromBody] JsonElement body)
         {
             var answers = body.TryGetProperty("answers", out var a) ? a : body;
             var result = await _mediator.Send(new SubmitAnswerCommand { InstanceId = id, Answers = answers });
             return result is null ? NotFound("Instance not found.") : Ok(result);
+        }
+
+        // Compile + run a code snippet once (the Run button in the code editor).
+        [Authorize]
+        [EnableRateLimiting("code-exec")]
+        [HttpPost("run-code")]
+        public async Task<ActionResult<RunCodeResult>> RunCode([FromBody] RunCodeCommand command)
+        {
+            try
+            {
+                return Ok(await _mediator.Send(command));
+            }
+            catch (CodeRunLimitExceededException ex)
+            {
+                return StatusCode(429, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(502, "Code runner unavailable: " + ex.Message);
+            }
         }
 
         // Create a new file-based question (Add Question). Instructor-only; the role

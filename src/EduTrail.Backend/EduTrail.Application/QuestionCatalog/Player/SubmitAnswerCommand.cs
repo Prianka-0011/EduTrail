@@ -30,7 +30,7 @@ namespace EduTrail.Application.QuestionCatalog
                 var files = await _reader.GetQuestionFilesAsync(instance.Slug);
                 if (files is null) return null;
 
-                var feedback = _grader.Grade(files.QuestionHtml, request.Answers, instance.CorrectAnswers);
+                var feedback = await _grader.GradeAsync(files.QuestionHtml, request.Answers, instance.CorrectAnswers);
 
                 var overallScore = feedback.Count > 0
                     ? feedback.Values.Average(f => f.Score)
