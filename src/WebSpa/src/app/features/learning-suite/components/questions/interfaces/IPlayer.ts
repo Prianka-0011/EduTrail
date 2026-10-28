@@ -16,3 +16,12 @@ export interface SubmissionResult {
   score: number;
   feedback: Record<string, FieldFeedback>;
 }
+
+export interface RunCodeResult {
+  compiled: boolean;
+  compileOutput: string;
+  stdout: string;
+  stderr: string;
+  timedOut: boolean;
+  exitCode: number;
+}

@@ -6,6 +6,7 @@ import { PlOrderBlocksComponent } from './pl-order-blocks.component';
 import { PlGraphComponent } from './pl-graph.component';
 import { PlBstComponent } from './pl-bst.component';
 import { PlGraphSelectComponent } from './pl-graph-select.component';
+import { PlCodeEditorComponent } from './pl-code-editor.component';
 
 // Maps pl-* tag names to the Angular components that render them.
 const registry: ComponentRegistry = {
@@ -15,6 +16,7 @@ const registry: ComponentRegistry = {
   'pl-graph': PlGraphComponent,
   'pl-bst': PlBstComponent,
   'pl-graph-select': PlGraphSelectComponent,
+  'pl-code-editor': PlCodeEditorComponent,
 };
 
 export const COMPONENT_REGISTRY_PROVIDER: Provider = {

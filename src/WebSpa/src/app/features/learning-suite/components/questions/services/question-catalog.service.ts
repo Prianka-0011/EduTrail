@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
 
 import { IQuestionCatalogItem } from '../interfaces/IQuestionCatalogItem';
-import { QuestionInstance, SubmissionResult } from '../interfaces/IPlayer';
+import { QuestionInstance, SubmissionResult, RunCodeResult } from '../interfaces/IPlayer';
 
 // Reads the PrairieLearn-style question catalog (folders on the backend) and
 // drives the interactive player (instances, submissions, correct answers).
@@ -40,5 +40,9 @@ export class QuestionCatalogService {
 
   deleteQuestion(slug: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${slug}`);
+  }
+
+  runCode(language: string, code: string, stdin: string): Observable<RunCodeResult> {
+    return this.http.post<RunCodeResult>(`${this.baseUrl}/run-code`, { language, code, stdin });
   }
 }
