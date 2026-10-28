@@ -7,6 +7,7 @@ Run (dev):
 uvicorn's default host is 127.0.0.1 — do NOT pass --host 0.0.0.0.
 """
 
+import hmac
 import os
 
 from fastapi import Depends, FastAPI, Header, HTTPException
@@ -20,8 +21,8 @@ app = FastAPI(title="EduTrail code-runner")
 def verify_secret(x_runner_secret: str = Header(default="")) -> None:
     expected = os.environ.get("CODE_RUNNER_SECRET", "")
     # A missing/empty configured secret rejects everything, rather than
-    # silently allowing unauthenticated access.
-    if not expected or x_runner_secret != expected:
+    # silently allowing unauthenticated access. compare_digest is constant-time.
+    if not expected or not hmac.compare_digest(x_runner_secret, expected):
         raise HTTPException(status_code=401, detail="invalid or missing runner secret")
 
 

@@ -58,3 +58,9 @@ def test_grade_compile_error():
     r = grade_code("cpp", "int main(){", [{"input": "1 2", "expected": "3"}])
     assert r["compiled"] is False
     assert r["results"] == []
+
+
+def test_grade_rejects_too_many_cases():
+    many = [{"input": "1 2", "expected": "3"}] * 51
+    with pytest.raises(ValueError):
+        grade_code("cpp", SUM, many)

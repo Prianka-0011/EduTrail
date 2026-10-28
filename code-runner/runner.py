@@ -94,13 +94,20 @@ def run_code(language: str, code: str, stdin: str) -> dict:
     }
 
 
+MAX_TEST_CASES = 50
+
+
 def grade_code(language: str, code: str, tests: list) -> dict:
     """Run `code` against each test case, comparing trimmed stdout to expected.
 
     v1 runs each case in its own isolated container (via run_code), so the
     program is recompiled per case — acceptable for the handful of cases a
     question carries. A compile failure on the first case short-circuits.
+    The case count is capped to bound container fan-out.
     """
+    if len(tests) > MAX_TEST_CASES:
+        raise ValueError(f"too many test cases: {len(tests)} (max {MAX_TEST_CASES})")
+
     results = []
     for tc in tests:
         r = run_code(language, code, tc.get("input", ""))
