@@ -115,6 +115,11 @@ namespace EduTrail.Infrastructure.Services
             {
                 return new FieldFeedbackDto(false, 0f, ex.Message);
             }
+            catch (Exception)
+            {
+                // Runner/network failure during grading: show feedback, not a 500.
+                return new FieldFeedbackDto(false, 0f, "Could not run your code — the code runner is unavailable. Please try again.");
+            }
 
             if (!result.Compiled)
             {
