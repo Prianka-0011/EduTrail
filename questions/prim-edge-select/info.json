@@ -1,0 +1,8 @@
+{
+  "uuid": "b2e14c83-7f91-4d3a-a5c0-9e28d3f61074",
+  "title": "Prim's MST — Edge Selection",
+  "topic": "Graph Algorithms",
+  "tags": ["prim", "mst", "graphs"],
+  "type": "v3",
+  "showCorrectAnswer": true
+}

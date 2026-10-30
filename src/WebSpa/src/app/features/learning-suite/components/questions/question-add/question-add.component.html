@@ -1,0 +1,59 @@
+<div class="question-add">
+  <span class="back" (click)="goBack()">← Back to questions</span>
+  <h2>Add Question</h2>
+
+  <div class="tabs">
+    <button class="tab-btn" [class.active]="activeTab === 'form'" (click)="activeTab = 'form'">Form</button>
+    <button class="tab-btn" [class.active]="activeTab === 'preview'" (click)="activeTab = 'preview'">Preview</button>
+  </div>
+
+  <div *ngIf="activeTab === 'preview'" class="preview-panel">
+    <p class="preview-note">Live preview — <code>{{ '{{' }}params.x{{ '}}' }}</code> placeholders aren't substituted until the question is saved and run.</p>
+    <div class="preview-body" [appDynamicQuestion]="questionHtml"></div>
+  </div>
+
+  <div *ngIf="activeTab === 'form'" class="form-grid">
+    <div class="meta-col">
+      <div class="field">
+        <label>Title</label>
+        <input type="text" [(ngModel)]="title" placeholder="e.g. Binary Search Steps" />
+      </div>
+      <div class="field">
+        <label>Topic</label>
+        <input type="text" [(ngModel)]="topic" placeholder="e.g. Algorithms" />
+      </div>
+      <div class="field">
+        <label>Tags <span class="hint">(comma-separated)</span></label>
+        <input type="text" [(ngModel)]="tags" placeholder="e.g. sorting, python" />
+      </div>
+
+      <div class="component-ref">
+        <div class="ref-title">Available input components</div>
+        <code>&lt;pl-number-input answers-name="x" atol="0"&gt;</code>
+        <code>&lt;pl-multiple-choice answers-name="x" options="{{ '{{' }}params.opts{{ '}}' }}"&gt;</code>
+        <code>&lt;pl-order-blocks answers-name="x" options="{{ '{{' }}params.opts{{ '}}' }}"&gt;</code>
+        <code>&lt;pl-graph-select answers-name="x" nodes="..." edges="..."&gt;</code>
+      </div>
+    </div>
+
+    <div class="code-col">
+      <div class="field">
+        <label>question.html</label>
+        <textarea [(ngModel)]="questionHtml" rows="10" spellcheck="false"></textarea>
+      </div>
+      <div class="field">
+        <label>server.py</label>
+        <textarea [(ngModel)]="serverPy" rows="10" spellcheck="false"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 'form' && error" class="error">{{ error }}</div>
+
+  <div *ngIf="activeTab === 'form'" class="actions">
+    <button class="submit-btn" (click)="save()" [disabled]="saving">
+      {{ saving ? 'Saving...' : 'Save Question' }}
+    </button>
+    <button class="cancel-btn" (click)="goBack()" [disabled]="saving">Cancel</button>
+  </div>
+</div>

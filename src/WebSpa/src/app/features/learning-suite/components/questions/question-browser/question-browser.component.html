@@ -1,0 +1,27 @@
+<div class="question-browser">
+  <div class="browser-header">
+    <h2 class="mb-0">Questions</h2>
+  </div>
+
+  <div *ngIf="loading" class="state-msg">Loading questions...</div>
+  <div *ngIf="error" class="state-msg error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error" class="card-grid">
+    <button
+      type="button"
+      class="question-card"
+      *ngFor="let question of questions"
+      (click)="open(question)">
+      <i class="bi bi-patch-question card-icon"></i>
+      <span class="card-title">{{ question.title }}</span>
+      <i *ngIf="isInstructor"
+         class="bi bi-x-lg delete-btn"
+         title="Delete question"
+         (click)="deleteQuestion(question, $event)"></i>
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !error && questions.length === 0" class="state-msg">
+    No questions found.
+  </div>
+</div>

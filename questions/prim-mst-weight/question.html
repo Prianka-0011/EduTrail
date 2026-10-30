@@ -1,0 +1,9 @@
+<pl-question-panel>
+  <p>
+    The weighted undirected graph below has <strong>5 nodes (A–E)</strong>.
+    Using <strong>Prim's algorithm</strong> starting from node <strong>A</strong>,
+    what is the <strong>total weight</strong> of the Minimum Spanning Tree?
+  </p>
+</pl-question-panel>
+<pl-graph nodes="{{params.nodes}}" edges="{{params.edges}}"></pl-graph>
+<pl-multiple-choice answers-name="mst_weight" options="{{params.choices}}"></pl-multiple-choice>

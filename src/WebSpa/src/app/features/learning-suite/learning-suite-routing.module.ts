@@ -4,7 +4,10 @@ import { CourseListComponent } from "./components/courses/course-list/course-lis
 import { CourseCreateOrUpdateComponent } from "./components/courses/course-create-or-update/course-create-or-update.component";
 
 import { TermListComponent } from "./components/terms/term-list/term-list.component";
-import { QuestionListComponent } from "./components/questions/question-list/question-list.component";
+import { QuestionBrowserComponent } from "./components/questions/question-browser/question-browser.component";
+import { QuestionPlayerComponent } from "./components/questions/question-player/question-player.component";
+import { QuestionAddComponent } from "./components/questions/question-add/question-add.component";
+import { QuestionExamComponent } from "./components/questions/question-exam/question-exam.component";
 import { AssessmentListComponent } from "./components/assesments/assessment-list/assessment-list.component";
 import { QuestionTypeListComponent } from "./components/question-type/question-type-list/question-type-list.component";
 import { CourseOfferingListComponent } from "./components/course-offerings/course-offering-list/course-offering-list.component";
@@ -39,7 +42,19 @@ export const learningSuiteRoutes: Routes = [
   },
   {
     path: 'questions',
-    component: QuestionListComponent
+    component: QuestionBrowserComponent
+  },
+  {
+    path: 'questions/new',
+    component: QuestionAddComponent
+  },
+  {
+    path: 'exam',
+    component: QuestionExamComponent
+  },
+  {
+    path: 'questions/:slug',
+    component: QuestionPlayerComponent
   },
   {
     path: 'courses',

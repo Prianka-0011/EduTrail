@@ -57,7 +57,34 @@ export class LearningSuiteComponent implements OnInit {
         CustomCategory.RoleType.TA
       ],
     },
-    // { label: 'Questions', icon: 'bi bi-person-vcard', route: 'questions' },
+    {
+      label: 'Questions',
+      icon: 'patch-question',
+      isOpen: false,
+      rolesPermission: [
+        CustomCategory.RoleType.Instructor,
+        CustomCategory.RoleType.TA
+      ],
+      children: [
+        {
+          label: 'Browse',
+          icon: 'collection',
+          route: 'questions',
+          rolesPermission: [
+            CustomCategory.RoleType.Instructor,
+            CustomCategory.RoleType.TA
+          ],
+        },
+        {
+          label: 'Add Question',
+          icon: 'plus-circle',
+          route: 'questions/new',
+          rolesPermission: [
+            CustomCategory.RoleType.Instructor
+          ],
+        },
+      ],
+    },
 
     // {
     //   label: 'Courses',
@@ -68,6 +95,14 @@ export class LearningSuiteComponent implements OnInit {
     //     { label: 'Create Course', icon: 'plus-circle', route: 'courses/create' }
     //   ]
     // },
+    {
+      label: 'Start Exam',
+      icon: 'journal-check',
+      route: 'exam',
+      rolesPermission: [
+        CustomCategory.RoleType.Student
+      ],
+    },
     {
       label: 'Admin',
       icon: 'bi bi-gear',
