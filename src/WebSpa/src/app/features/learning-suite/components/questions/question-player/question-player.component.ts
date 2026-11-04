@@ -133,7 +133,21 @@ export class QuestionPlayerComponent implements OnInit {
   }
 
   get fieldKeys(): string[] {
-    return this.correctAnswers ? Object.keys(this.correctAnswers).filter(k => k !== 'solution') : [];
+    if (!this.correctAnswers) return [];
+    // Only render simple answer values. Never render object-shaped data (e.g. the
+    // grader's {input, expected} test cases) even if it reaches the client — the
+    // backend is the primary gate; this is defence in depth.
+    return Object.keys(this.correctAnswers)
+      .filter(k => k !== 'solution')
+      .filter(k => this.isDisplayable(this.correctAnswers![k]));
+  }
+
+  private isDisplayable(v: unknown): boolean {
+    if (v === null) return true;
+    const t = typeof v;
+    if (t === 'string' || t === 'number' || t === 'boolean') return true;
+    if (Array.isArray(v)) return v.every(e => this.isDisplayable(e));
+    return false; // plain objects (test-case shape) are never shown
   }
 
   get hasReveal(): boolean {
