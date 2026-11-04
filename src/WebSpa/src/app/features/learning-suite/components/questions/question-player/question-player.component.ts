@@ -125,6 +125,21 @@ export class QuestionPlayerComponent implements OnInit {
     return Object.keys(obj);
   }
 
+  // A code question may carry a model solution under the "solution" key,
+  // shown as a code block; everything else renders as plain fields.
+  get solutionCode(): string | null {
+    const s = this.correctAnswers?.['solution'];
+    return typeof s === 'string' ? s : null;
+  }
+
+  get fieldKeys(): string[] {
+    return this.correctAnswers ? Object.keys(this.correctAnswers).filter(k => k !== 'solution') : [];
+  }
+
+  get hasReveal(): boolean {
+    return !!this.solutionCode || this.fieldKeys.length > 0;
+  }
+
   formatAnswer(value: unknown): string {
     if (Array.isArray(value)) return value.join(', ');
     return String(value);

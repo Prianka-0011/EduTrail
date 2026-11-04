@@ -33,3 +33,28 @@ def generate(data):
     )
     # Test cases keyed by the answers-name (never exposed to the student).
     data["correct_answers"]["code"] = cases
+    # Model solution shown by "Show Correct Answer" (test cases stay hidden).
+    data["correct_answers"]["solution"] = r'''#include <iostream>
+#include <fstream>
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    ofstream out("numbers.txt");
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        out << x << "\n";
+    }
+    out.close();
+
+    ifstream in("numbers.txt");
+    int x, sum = 0, mx = -2147483647;
+    while (in >> x) {
+        sum += x;
+        if (x > mx) mx = x;
+    }
+    cout << "Sum: " << sum << "\n" << "Max: " << mx;
+    return 0;
+}
+'''

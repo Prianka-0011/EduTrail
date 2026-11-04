@@ -32,11 +32,16 @@
     </div>
 
     <div *ngIf="correctAnswers" class="answers">
-      <h4>Correct Answers</h4>
-      <div *ngFor="let key of objectKeys(correctAnswers)" class="field">
+      <h4>Correct Answer</h4>
+
+      <pre *ngIf="solutionCode" class="solution-code">{{ solutionCode }}</pre>
+
+      <div *ngFor="let key of fieldKeys" class="field">
         <span class="field-name">{{ key }}:</span>
         {{ formatAnswer(correctAnswers[key]) }}
       </div>
+
+      <div *ngIf="!hasReveal" class="no-answer">No reference answer is available for this question.</div>
     </div>
   </div>
 </div>

@@ -67,5 +67,21 @@
 
     .field { margin: 0.25rem 0; }
     .field-name { font-weight: 600; color: #343a40; }
+
+    .solution-code {
+      margin: 0.25rem 0 0;
+      padding: 0.75rem 0.9rem;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 0.375rem;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      white-space: pre;
+      overflow: auto;
+      max-height: 320px;
+    }
+
+    .no-answer { color: #6c757d; }
   }
 }
