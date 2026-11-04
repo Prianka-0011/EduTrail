@@ -1,0 +1,11 @@
+{
+  "uuid": "c7e2a1b9-4d3f-4a28-8b6c-2f9e1d0a5c34",
+  "title": "File Read & Write",
+  "topic": "File I/O",
+  "tags": [
+    "cpp",
+    "file-io"
+  ],
+  "type": "v3",
+  "showCorrectAnswer": false
+}
