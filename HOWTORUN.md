@@ -58,13 +58,16 @@ cd python-service
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
-
+# mac
+.venv/bin/python -m pip install -r requirements.txt
 Every time — start the service:
 
 ```powershell
 cd python-service
 .\.venv\Scripts\python.exe -m uvicorn main:app --port 8001
 ```
+# mac
+.venv/bin/python -m uvicorn main:app --port 8001 --reload
 
 Leave this terminal running. It executes each question's `server.py` and must be up
 before you open or create a question.
