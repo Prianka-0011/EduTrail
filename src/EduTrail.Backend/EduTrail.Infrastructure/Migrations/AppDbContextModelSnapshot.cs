@@ -801,6 +801,43 @@ namespace EduTrail.Infrastructure.Migrations
                     b.ToTable("QuestionAttempt");
                 });
 
+            modelBuilder.Entity("EduTrail.Domain.Entities.QuestionBestScore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("QuestionSlug")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<float>("Score")
+                        .HasColumnType("real");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "QuestionSlug")
+                        .IsUnique();
+
+                    b.ToTable("QuestionBestScores");
+                });
+
             modelBuilder.Entity("EduTrail.Domain.Entities.QuestionLine", b =>
                 {
                     b.Property<Guid>("Id")

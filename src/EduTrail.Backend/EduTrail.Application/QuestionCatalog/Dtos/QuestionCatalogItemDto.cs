@@ -8,5 +8,10 @@ namespace EduTrail.Application.QuestionCatalog
         public string Title { get; set; } = string.Empty;
         public string Topic { get; set; } = string.Empty;
         public List<string> Tags { get; set; } = new();
+
+        // Optional scheduling metadata, read from info.json. Used to group questions
+        // into a Week -> Day -> Questions tree. Null means the question is unscheduled.
+        public int? Week { get; set; }
+        public int? Day { get; set; }
     }
 }

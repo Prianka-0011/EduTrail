@@ -63,7 +63,8 @@ export class LearningSuiteComponent implements OnInit {
       isOpen: false,
       rolesPermission: [
         CustomCategory.RoleType.Instructor,
-        CustomCategory.RoleType.TA
+        CustomCategory.RoleType.TA,
+        CustomCategory.RoleType.Student
       ],
       children: [
         {
@@ -83,6 +84,32 @@ export class LearningSuiteComponent implements OnInit {
             CustomCategory.RoleType.Instructor
           ],
         },
+        {
+          label: 'Participants',
+          icon: 'people',
+          route: 'participants',
+          rolesPermission: [
+            CustomCategory.RoleType.Instructor,
+            CustomCategory.RoleType.TA,
+            CustomCategory.RoleType.Student
+          ],
+        },
+        {
+          label: 'Exam',
+          icon: 'journal-check',
+          route: 'exam',
+          rolesPermission: [
+            CustomCategory.RoleType.Student
+          ],
+        },
+        {
+          label: 'Practice',
+          icon: 'lightbulb',
+          route: 'questions',
+          rolesPermission: [
+            CustomCategory.RoleType.Student
+          ],
+        },
       ],
     },
 
@@ -95,14 +122,6 @@ export class LearningSuiteComponent implements OnInit {
     //     { label: 'Create Course', icon: 'plus-circle', route: 'courses/create' }
     //   ]
     // },
-    {
-      label: 'Start Exam',
-      icon: 'journal-check',
-      route: 'exam',
-      rolesPermission: [
-        CustomCategory.RoleType.Student
-      ],
-    },
     {
       label: 'Admin',
       icon: 'bi bi-gear',

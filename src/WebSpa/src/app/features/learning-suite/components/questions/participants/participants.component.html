@@ -1,0 +1,81 @@
+<div class="participants">
+  <div class="header">
+    <h2 class="mb-0">Participants</h2>
+    <p class="subtitle">
+      Questions organised by week and day.
+      <span *ngIf="isInstructor">Set a week and day for each question, then Save.</span>
+    </p>
+  </div>
+
+  <div *ngIf="loading" class="state-msg">Loading questions...</div>
+  <div *ngIf="error" class="state-msg error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error" class="tree">
+    <div class="week" *ngFor="let week of weeks">
+      <button type="button" class="week-head" (click)="toggleWeek(week)">
+        <i class="bi" [ngClass]="week.open ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
+        <span class="week-label">{{ week.label }}</span>
+        <span class="count">{{ totalQuestions(week) }}</span>
+      </button>
+
+      <div class="week-body" *ngIf="week.open">
+        <div class="day" *ngFor="let day of week.days">
+          <button type="button" class="day-head" (click)="toggleDay(week, day)">
+            <i class="bi" [ngClass]="day.open ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
+            <span class="day-label">{{ day.label }}</span>
+            <span class="count">{{ day.questions.length }}</span>
+          </button>
+
+          <div class="day-body" *ngIf="day.open">
+
+            <!-- Student / read-only: click opens the player -->
+            <ng-container *ngIf="!isInstructor">
+              <button
+                type="button"
+                class="question"
+                *ngFor="let q of day.questions"
+                (click)="open(q)">
+                <i class="bi bi-patch-question q-icon"></i>
+                <span class="q-title">{{ q.title }}</span>
+                <span class="q-topic" *ngIf="q.topic">{{ q.topic }}</span>
+              </button>
+            </ng-container>
+
+            <!-- Instructor: edit week/day inline -->
+            <ng-container *ngIf="isInstructor">
+              <div class="question editing" *ngFor="let q of day.questions">
+                <i class="bi bi-patch-question q-icon"></i>
+                <span class="q-title">{{ q.title }}</span>
+
+                <div class="sched-edit">
+                  <label>W
+                    <input type="number" min="1" class="num" [(ngModel)]="q.week" placeholder="–">
+                  </label>
+                  <label>D
+                    <input type="number" min="1" class="num" [(ngModel)]="q.day" placeholder="–">
+                  </label>
+
+                  <button type="button" class="save-btn"
+                          (click)="save(q)"
+                          [disabled]="savingSlug === q.slug">
+                    {{ savingSlug === q.slug ? 'Saving…' : 'Save' }}
+                  </button>
+
+                  <i class="bi bi-check-lg saved" *ngIf="savedSlug === q.slug" title="Saved"></i>
+                  <span class="row-err" *ngIf="rowError[q.slug]">{{ rowError[q.slug] }}</span>
+
+                  <button type="button" class="open-link" (click)="open(q)" title="Open question">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="weeks.length === 0" class="state-msg">No questions found.</div>
+  </div>
+</div>

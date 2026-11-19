@@ -6,5 +6,7 @@
     "ADD"
   ],
   "type": "v3",
-  "showCorrectAnswer": true
+  "showCorrectAnswer": true,
+  "week": 2,
+  "day": 1
 }

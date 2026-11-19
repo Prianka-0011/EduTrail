@@ -9,12 +9,14 @@ export interface QuestionInstance {
   renderedHtml: string;
   params: Record<string, unknown>;
   showCorrectAnswer: boolean;
+  bestScore?: number | null;
 }
 
 export interface SubmissionResult {
   submissionId: string;
   score: number;
   feedback: Record<string, FieldFeedback>;
+  bestScore?: number | null;
 }
 
 export interface RunCodeResult {

@@ -14,20 +14,24 @@ namespace EduTrail.Application.QuestionCatalog
     }
 
     // A rendered question instance returned to the frontend player.
+    // BestScore is the signed-in user's stored best for this question (null if none yet).
     public record QuestionInstanceDto(
         Guid InstanceId,
         string RenderedHtml,
         JsonElement Params,
-        bool ShowCorrectAnswer
+        bool ShowCorrectAnswer,
+        float? BestScore
     );
 
     // Per-field grading feedback.
     public record FieldFeedbackDto(bool IsCorrect, float Score, string Message);
 
-    // Result of grading a submission.
+    // Result of grading a submission. BestScore is the user's stored best after this
+    // attempt is recorded (>= Score; unchanged if this attempt didn't beat the old best).
     public record SubmissionResultDto(
         Guid SubmissionId,
         float Score,
-        Dictionary<string, FieldFeedbackDto> Feedback
+        Dictionary<string, FieldFeedbackDto> Feedback,
+        float? BestScore
     );
 }

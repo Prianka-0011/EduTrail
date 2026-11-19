@@ -34,6 +34,7 @@ namespace EduTrail.Infrastructure.Data
         public DbSet<QuestionLine> QuestionLines { get; set; } = null!;
         public DbSet<Assessment> Assessments { get; set; } = null!;
         public DbSet<Submission> Submissions { get; set; } = null!;
+        public DbSet<QuestionBestScore> QuestionBestScores { get; set; } = null!;
         public DbSet<Course> Courses { get; set; } = null!;
         public DbSet<Enrollment> Enrollments { get; set; } = null!;
         public DbSet<CourseOffering> CourseOfferings { get; set; } = null!;
@@ -87,6 +88,11 @@ namespace EduTrail.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // One best-score row per (user, question slug).
+            modelBuilder.Entity<QuestionBestScore>()
+                .HasIndex(s => new { s.UserId, s.QuestionSlug })
+                .IsUnique();
 
             modelBuilder.Entity<Post>()
                 .HasMany(p => p.Folders)

@@ -17,5 +17,10 @@ namespace EduTrail.Application.QuestionCatalog
         // Deletes a question folder. Returns true if removed, false if the slug is
         // invalid or the folder doesn't exist.
         bool DeleteQuestion(string slug);
+
+        // Sets (or clears, when null) the week/day scheduling fields in a question's
+        // info.json, preserving every other field. Returns true if written, false if
+        // the slug is invalid or the question doesn't exist.
+        Task<bool> SetScheduleAsync(string slug, int? week, int? day);
     }
 }

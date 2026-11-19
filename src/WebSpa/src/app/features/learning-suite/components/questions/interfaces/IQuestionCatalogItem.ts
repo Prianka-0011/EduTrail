@@ -3,4 +3,6 @@ export interface IQuestionCatalogItem {
   title: string;
   topic: string;
   tags: string[];
+  week?: number | null;
+  day?: number | null;
 }

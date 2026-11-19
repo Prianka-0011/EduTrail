@@ -8,6 +8,7 @@ import { QuestionBrowserComponent } from "./components/questions/question-browse
 import { QuestionPlayerComponent } from "./components/questions/question-player/question-player.component";
 import { QuestionAddComponent } from "./components/questions/question-add/question-add.component";
 import { QuestionExamComponent } from "./components/questions/question-exam/question-exam.component";
+import { ParticipantsComponent } from "./components/questions/participants/participants.component";
 import { AssessmentListComponent } from "./components/assesments/assessment-list/assessment-list.component";
 import { QuestionTypeListComponent } from "./components/question-type/question-type-list/question-type-list.component";
 import { CourseOfferingListComponent } from "./components/course-offerings/course-offering-list/course-offering-list.component";
@@ -51,6 +52,10 @@ export const learningSuiteRoutes: Routes = [
   {
     path: 'exam',
     component: QuestionExamComponent
+  },
+  {
+    path: 'participants',
+    component: ParticipantsComponent
   },
   {
     path: 'questions/:slug',

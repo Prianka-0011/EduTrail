@@ -126,6 +126,7 @@ namespace EduTrail.Infrastructure
             services.AddScoped<IQuestionCatalogWriter>(sp => sp.GetRequiredService<QuestionCatalogReader>());
             services.AddSingleton<IQuestionInstanceStore, InMemoryQuestionInstanceStore>();
             services.AddScoped<IQuestionGrader, QuestionGradingEngine>();
+            services.AddScoped<IQuestionScoreStore, QuestionScoreStore>();
             services.AddSingleton<ICodeRunConcurrencyLimiter, CodeRunConcurrencyLimiter>();
             services.AddScoped<AuditInterceptor>();
             return services;

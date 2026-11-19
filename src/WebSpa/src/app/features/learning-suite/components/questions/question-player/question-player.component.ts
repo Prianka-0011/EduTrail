@@ -34,6 +34,12 @@ export class QuestionPlayerComponent implements OnInit {
   correctAnswers: Record<string, unknown> | null = null;
   loadingAnswers = false;
 
+  // The user's stored best score for this question (0-1), shown on the right.
+  // null until an attempt has been scored.
+  bestScore: number | null = null;
+  // True briefly when the latest submission set a new personal best.
+  newBest = false;
+
   ngOnInit(): void {
     this.slug = this.route.snapshot.paramMap.get('slug')!;
     this.loadInstance();
@@ -45,6 +51,7 @@ export class QuestionPlayerComponent implements OnInit {
         this.instanceId = instance.instanceId;
         this.renderedHtml = instance.renderedHtml;
         this.showCorrectAnswer = instance.showCorrectAnswer;
+        this.bestScore = instance.bestScore ?? null;
         this.loading = false;
       },
       error: () => {
@@ -65,6 +72,12 @@ export class QuestionPlayerComponent implements OnInit {
         this.result = result;
         this.submitting = false;
         this.renderer.setFeedback(result.feedback);
+
+        // Update the stored best. The backend keeps only the maximum, so a lower
+        // attempt leaves bestScore unchanged; flag when this attempt is a new best.
+        const serverBest = result.bestScore ?? result.score;
+        this.newBest = this.bestScore === null || result.score > this.bestScore;
+        this.bestScore = serverBest;
       },
       error: () => {
         this.error = 'Submission failed. Please try again.';
@@ -76,6 +89,7 @@ export class QuestionPlayerComponent implements OnInit {
   shuffle(): void {
     this.shuffling = true;
     this.result = null;
+    this.newBest = false;
     this.error = '';
     this.correctAnswers = null;
     this.qs.createInstance(this.slug).subscribe({
@@ -85,6 +99,7 @@ export class QuestionPlayerComponent implements OnInit {
           this.instanceId = instance.instanceId;
           this.renderedHtml = instance.renderedHtml;
           this.showCorrectAnswer = instance.showCorrectAnswer;
+          this.bestScore = instance.bestScore ?? this.bestScore;
           this.shuffling = false;
         });
       },
@@ -110,11 +125,25 @@ export class QuestionPlayerComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/learning-suite/questions']);
+    // Return to wherever the question was opened from. Participants passes
+    // ?from=participants so Back lands on the week/day tree, not the Browse list.
+    const from = this.route.snapshot.queryParamMap.get('from');
+    const target = from === 'participants'
+      ? '/learning-suite/participants'
+      : '/learning-suite/questions';
+    this.router.navigate([target]);
   }
 
   get scorePercent(): number {
     return Math.round((this.result?.score ?? 0) * 100);
+  }
+
+  get bestScorePercent(): number {
+    return Math.round((this.bestScore ?? 0) * 100);
+  }
+
+  get hasBestScore(): boolean {
+    return this.bestScore !== null;
   }
 
   get passed(): boolean {

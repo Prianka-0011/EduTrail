@@ -7,5 +7,7 @@
     "file-io"
   ],
   "type": "v3",
-  "showCorrectAnswer": true
+  "showCorrectAnswer": true,
+  "week": 1,
+  "day": 2
 }

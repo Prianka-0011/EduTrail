@@ -1,0 +1,199 @@
+.participants {
+  padding: 1rem;
+
+  .header {
+    margin-bottom: 1.25rem;
+
+    .subtitle {
+      margin: 0.25rem 0 0;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+  }
+
+  .state-msg {
+    color: #6c757d;
+    padding: 1rem 0;
+
+    &.error { color: #dc3545; }
+  }
+
+  .tree {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 760px;
+  }
+
+  .count {
+    margin-left: auto;
+    min-width: 1.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #495057;
+    background: #e9ecef;
+    border-radius: 999px;
+    padding: 1px 8px;
+  }
+
+  // Week row
+  .week {
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .week-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: none;
+    background: #f8f9fa;
+    cursor: pointer;
+    font-weight: 600;
+    color: #212529;
+
+    &:hover { background: #f1f3f5; }
+
+    .bi { color: #0d6efd; font-size: 0.8rem; }
+    .week-label { font-size: 1rem; }
+  }
+
+  .week-body {
+    padding: 0.4rem 0.5rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  // Day row
+  .day-head {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 500;
+    color: #343a40;
+    border-radius: 0.4rem;
+
+    &:hover { background: #f1f3f5; }
+
+    .bi { color: #6c757d; font-size: 0.75rem; }
+  }
+
+  .day-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.2rem 0 0.4rem 1.6rem;
+  }
+
+  // Question row
+  .question {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    text-align: left;
+    border: 1px solid #e9ecef;
+    border-radius: 0.4rem;
+    padding: 0.6rem 0.8rem;
+    background: #fff;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+
+    &:hover {
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+      border-color: #adb5bd;
+    }
+
+    &:active { transform: translateY(1px); }
+
+    .q-icon { color: #0d6efd; font-size: 1.05rem; flex-shrink: 0; }
+    .q-title { font-size: 0.9rem; font-weight: 500; color: #212529; }
+    .q-topic {
+      margin-left: auto;
+      font-size: 0.72rem;
+      color: #6c757d;
+      background: #f1f3f5;
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+  }
+
+  // Instructor editing row (not a <button>, so no click-to-open).
+  .question.editing {
+    cursor: default;
+
+    &:hover { box-shadow: none; border-color: #e9ecef; }
+
+    .q-title { flex-shrink: 0; }
+
+    .sched-edit {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+
+      label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        margin: 0;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #6c757d;
+      }
+
+      .num {
+        width: 3.2rem;
+        padding: 0.25rem 0.4rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.3rem;
+        font-size: 0.85rem;
+        text-align: center;
+
+        &:focus { outline: none; border-color: #0d6efd; box-shadow: 0 0 0 2px rgba(13,110,253,0.15); }
+      }
+
+      .save-btn {
+        border: none;
+        background: #0d6efd;
+        color: #fff;
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 0.3rem 0.7rem;
+        border-radius: 0.3rem;
+        cursor: pointer;
+
+        &:hover:not(:disabled) { background: #0b5ed7; }
+        &:disabled { opacity: 0.6; cursor: default; }
+      }
+
+      .saved { color: #198754; font-size: 1rem; }
+
+      .row-err { color: #dc3545; font-size: 0.75rem; }
+
+      .open-link {
+        border: none;
+        background: transparent;
+        color: #6c757d;
+        cursor: pointer;
+        padding: 0.2rem 0.3rem;
+        border-radius: 0.3rem;
+
+        &:hover { color: #0d6efd; background: #eef4ff; }
+      }
+    }
+  }
+}

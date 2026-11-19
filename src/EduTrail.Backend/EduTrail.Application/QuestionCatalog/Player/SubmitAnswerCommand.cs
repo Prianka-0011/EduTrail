@@ -1,4 +1,5 @@
 using System.Text.Json;
+using EduTrail.Application.Shared;
 using MediatR;
 
 namespace EduTrail.Application.QuestionCatalog
@@ -14,12 +15,21 @@ namespace EduTrail.Application.QuestionCatalog
             private readonly IQuestionInstanceStore _store;
             private readonly IQuestionCatalogReader _reader;
             private readonly IQuestionGrader _grader;
+            private readonly IQuestionScoreStore _scores;
+            private readonly ICurrentUserService _currentUser;
 
-            public Handler(IQuestionInstanceStore store, IQuestionCatalogReader reader, IQuestionGrader grader)
+            public Handler(
+                IQuestionInstanceStore store,
+                IQuestionCatalogReader reader,
+                IQuestionGrader grader,
+                IQuestionScoreStore scores,
+                ICurrentUserService currentUser)
             {
                 _store = store;
                 _reader = reader;
                 _grader = grader;
+                _scores = scores;
+                _currentUser = currentUser;
             }
 
             public async Task<SubmissionResultDto?> Handle(SubmitAnswerCommand request, CancellationToken cancellationToken)
@@ -36,7 +46,11 @@ namespace EduTrail.Application.QuestionCatalog
                     ? feedback.Values.Average(f => f.Score)
                     : 0f;
 
-                return new SubmissionResultDto(Guid.NewGuid(), overallScore, feedback);
+                // Persist only the maximum score per (user, question); returns the best so far.
+                var bestScore = await _scores.RecordBestScoreAsync(
+                    _currentUser.GetUserId(), instance.Slug, overallScore, cancellationToken);
+
+                return new SubmissionResultDto(Guid.NewGuid(), overallScore, feedback, bestScore);
             }
         }
     }

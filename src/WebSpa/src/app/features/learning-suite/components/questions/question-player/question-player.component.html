@@ -4,44 +4,64 @@
   <div *ngIf="loading" class="state">Loading question...</div>
   <div *ngIf="error" class="state error">{{ error }}</div>
 
-  <div *ngIf="!loading && !error">
-    <div [appDynamicQuestion]="renderedHtml"></div>
+  <div *ngIf="!loading && !error" class="player-body">
+    <div class="player-main">
+      <div [appDynamicQuestion]="renderedHtml"></div>
 
-    <div class="actions">
-      <button class="btn submit" (click)="submit()" [disabled]="submitting || shuffling">
-        {{ submitting ? 'Grading...' : 'Submit Answer' }}
-      </button>
+      <div class="actions">
+        <button class="btn submit" (click)="submit()" [disabled]="submitting || shuffling">
+          {{ submitting ? 'Grading...' : 'Submit Answer' }}
+        </button>
 
-      <button class="btn shuffle" (click)="shuffle()" [disabled]="submitting || shuffling">
-        {{ shuffling ? 'Shuffling...' : '⟳ New Variant' }}
-      </button>
+        <button class="btn shuffle" (click)="shuffle()" [disabled]="submitting || shuffling">
+          {{ shuffling ? 'Shuffling...' : '⟳ New Variant' }}
+        </button>
 
-      <button
-        *ngIf="showCorrectAnswer && !correctAnswers"
-        class="btn reveal"
-        (click)="revealAnswers()"
-        [disabled]="loadingAnswers">
-        {{ loadingAnswers ? 'Loading...' : 'Show Correct Answer' }}
-      </button>
-    </div>
-
-    <div *ngIf="result" class="result" [class.pass]="passed" [class.fail]="!passed">
-      <strong>Score: {{ scorePercent }}%</strong>
-      <span *ngIf="passed"> — All correct!</span>
-      <span *ngIf="!passed"> — Keep trying.</span>
-    </div>
-
-    <div *ngIf="correctAnswers" class="answers">
-      <h4>Correct Answer</h4>
-
-      <pre *ngIf="solutionCode" class="solution-code">{{ solutionCode }}</pre>
-
-      <div *ngFor="let key of fieldKeys" class="field">
-        <span class="field-name">{{ key }}:</span>
-        {{ formatAnswer(correctAnswers[key]) }}
+        <button
+          *ngIf="showCorrectAnswer && !correctAnswers"
+          class="btn reveal"
+          (click)="revealAnswers()"
+          [disabled]="loadingAnswers">
+          {{ loadingAnswers ? 'Loading...' : 'Show Correct Answer' }}
+        </button>
       </div>
 
-      <div *ngIf="!hasReveal" class="no-answer">No reference answer is available for this question.</div>
+      <div *ngIf="result" class="result" [class.pass]="passed" [class.fail]="!passed">
+        <strong>Score: {{ scorePercent }}%</strong>
+        <span *ngIf="passed"> — All correct!</span>
+        <span *ngIf="!passed"> — Keep trying.</span>
+      </div>
+
+      <div *ngIf="correctAnswers" class="answers">
+        <h4>Correct Answer</h4>
+
+        <pre *ngIf="solutionCode" class="solution-code">{{ solutionCode }}</pre>
+
+        <div *ngFor="let key of fieldKeys" class="field">
+          <span class="field-name">{{ key }}:</span>
+          {{ formatAnswer(correctAnswers[key]) }}
+        </div>
+
+        <div *ngIf="!hasReveal" class="no-answer">No reference answer is available for this question.</div>
+      </div>
     </div>
+
+    <!-- Right side: the user's stored best score for this question -->
+    <aside class="player-aside">
+      <div class="score-card" [class.has-score]="hasBestScore">
+        <h4>Your Best Score</h4>
+
+        <ng-container *ngIf="hasBestScore; else noScore">
+          <div class="big-score">{{ bestScorePercent }}%</div>
+          <div class="new-best" *ngIf="newBest">★ New best!</div>
+          <div class="caption">Highest score across your attempts.</div>
+        </ng-container>
+
+        <ng-template #noScore>
+          <div class="big-score muted">—</div>
+          <div class="caption">Not attempted yet. Submit an answer to record your score.</div>
+        </ng-template>
+      </div>
+    </aside>
   </div>
 </div>

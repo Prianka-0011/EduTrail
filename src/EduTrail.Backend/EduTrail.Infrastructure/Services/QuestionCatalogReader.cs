@@ -57,7 +57,9 @@ namespace EduTrail.Infrastructure.Services
                     Slug = Path.GetFileName(dir),
                     Title = string.IsNullOrWhiteSpace(info.Title) ? Path.GetFileName(dir) : info.Title,
                     Topic = info.Topic ?? string.Empty,
-                    Tags = info.Tags ?? new List<string>()
+                    Tags = info.Tags ?? new List<string>(),
+                    Week = info.Week,
+                    Day = info.Day
                 });
             }
 
@@ -126,6 +128,39 @@ namespace EduTrail.Infrastructure.Services
         private static string Slugify(string title) =>
             Regex.Replace(title.ToLowerInvariant().Trim(), "[^a-z0-9]+", "-").Trim('-');
 
+        public async Task<bool> SetScheduleAsync(string slug, int? week, int? day)
+        {
+            // Reject anything other than a simple slug before touching the filesystem.
+            if (string.IsNullOrWhiteSpace(slug) || !Regex.IsMatch(slug, "^[a-z0-9-]+$"))
+                return false;
+
+            var questionsPath = ResolveQuestionsPath();
+            if (questionsPath is null) return false;
+
+            var infoPath = Path.Combine(questionsPath, slug, "info.json");
+            if (!File.Exists(infoPath)) return false;
+
+            System.Text.Json.Nodes.JsonObject obj;
+            try
+            {
+                var json = await File.ReadAllTextAsync(infoPath);
+                obj = System.Text.Json.Nodes.JsonNode.Parse(json) as System.Text.Json.Nodes.JsonObject
+                      ?? new System.Text.Json.Nodes.JsonObject();
+            }
+            catch (JsonException)
+            {
+                return false;
+            }
+
+            // Set the value, or remove the key entirely when clearing (null => unassigned).
+            if (week is null) obj.Remove("week"); else obj["week"] = week.Value;
+            if (day is null) obj.Remove("day"); else obj["day"] = day.Value;
+
+            var jsonOpts = new JsonSerializerOptions { WriteIndented = true };
+            await File.WriteAllTextAsync(infoPath, obj.ToJsonString(jsonOpts));
+            return true;
+        }
+
         public bool DeleteQuestion(string slug)
         {
             // Reject anything other than a simple slug before touching the filesystem.
@@ -181,6 +216,8 @@ namespace EduTrail.Infrastructure.Services
             public string? Title { get; set; }
             public string? Topic { get; set; }
             public List<string>? Tags { get; set; }
+            public int? Week { get; set; }
+            public int? Day { get; set; }
         }
     }
 }

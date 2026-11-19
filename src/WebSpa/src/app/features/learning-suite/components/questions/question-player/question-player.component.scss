@@ -1,5 +1,5 @@
 .question-player {
-  max-width: 800px;
+  max-width: 1120px;
   padding: 1rem;
 
   .back {
@@ -10,6 +10,71 @@
     display: inline-block;
 
     &:hover { text-decoration: underline; }
+  }
+
+  // Two columns: question on the left, best-score card on the right.
+  .player-body {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .player-main {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 800px;
+  }
+
+  .player-aside {
+    flex: 0 0 240px;
+    position: sticky;
+    top: 1rem;
+  }
+
+  .score-card {
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    background: #fff;
+    padding: 1.1rem 1.25rem;
+    text-align: center;
+
+    &.has-score { border-color: #a3cfbb; background: #f3fbf6; }
+
+    h4 {
+      margin: 0 0 0.6rem;
+      font-size: 0.78rem;
+      color: #6c757d;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .big-score {
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #0f5132;
+
+      &.muted { color: #adb5bd; }
+    }
+
+    .new-best {
+      margin-top: 0.3rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #198754;
+    }
+
+    .caption {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: #6c757d;
+    }
+  }
+
+  // Stack on narrow screens.
+  @media (max-width: 720px) {
+    .player-body { flex-direction: column-reverse; }
+    .player-aside { position: static; flex-basis: auto; width: 100%; }
   }
 
   .state {

@@ -42,6 +42,11 @@ export class QuestionCatalogService {
     return this.http.delete<void>(`${this.baseUrl}/${slug}`);
   }
 
+  // Assign a question to a week/day (instructor-only). null clears the assignment.
+  setSchedule(slug: string, week: number | null, day: number | null): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${slug}/schedule`, { week, day });
+  }
+
   runCode(language: string, code: string, stdin: string): Observable<RunCodeResult> {
     return this.http.post<RunCodeResult>(`${this.baseUrl}/run-code`, { language, code, stdin });
   }

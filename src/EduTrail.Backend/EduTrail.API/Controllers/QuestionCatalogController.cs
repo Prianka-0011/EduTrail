@@ -88,6 +88,23 @@ namespace EduTrail.API.Controllers
             };
         }
 
+        // Assign a question to a week/day (Participants page). Instructor-only; enforced
+        // in the handler. Body: { "week": 1, "day": 2 }  (null clears the assignment).
+        [Authorize]
+        [HttpPut("{slug}/schedule")]
+        public async Task<ActionResult> SetSchedule(string slug, [FromBody] SetQuestionScheduleCommand command)
+        {
+            command.Slug = slug;
+            var outcome = await _mediator.Send(command);
+            return outcome switch
+            {
+                SetQuestionScheduleOutcome.Updated => NoContent(),
+                SetQuestionScheduleOutcome.Forbidden => Forbid(),
+                SetQuestionScheduleOutcome.Invalid => BadRequest("Week and day must be 1 or greater, or null to clear."),
+                _ => NotFound($"Question '{slug}' not found.")
+            };
+        }
+
         // Return the correct answers for an instance ("Show Correct Answer").
         [Authorize]
         [HttpGet("instances/{id:guid}/correct")]
